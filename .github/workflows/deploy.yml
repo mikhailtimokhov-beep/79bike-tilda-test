@@ -1,0 +1,79 @@
+# Сборка → проверки → публикация тестовой главной 79BIKE на GitHub Pages.
+# Действующий сайт falcon-bike.ru и его проект Tilda этот процесс НЕ трогает.
+# Если проверки не прошли, публикация не происходит и на тестовом адресе остаётся прошлая рабочая версия.
+name: Тестовая главная — сборка и публикация
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Откат: опубликовать конкретный коммит или тег (пусто — последний main)"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Установить Playwright
+        run: |
+          npm install --no-save --no-audit --no-fund playwright@1.63.0
+          npx playwright install --with-deps chromium
+      - name: Сборка
+        env:
+          PUBLIC_BASE: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
+          BUILD_VERSION: ${{ github.run_number }}-${{ github.sha }}
+        run: node scripts/build.mjs
+      - name: Проверки (5 ширин экрана, JS, картинки, ссылки, прокрутка, встраивание в Tilda)
+        run: node scripts/check.mjs
+      - name: Отчёт проверок в сводку
+        if: always()
+        run: test -f check-report/report.md && cat check-report/report.md >> "$GITHUB_STEP_SUMMARY" || true
+      - name: Сохранить отчёт и скриншоты
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: check-report-${{ github.run_number }}
+          path: check-report/
+          retention-days: 30
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}site/rep/index.html
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+      - name: Убедиться, что опубликована именно эта сборка
+        run: |
+          BASE="${{ steps.deployment.outputs.page_url }}"
+          for i in 1 2 3 4 5 6; do
+            V=$(curl -fsS "${BASE}version.json?t=$(date +%s)" | grep -o '"version": *"[^"]*"' || true)
+            echo "$V" | grep -q "${{ github.run_number }}-" && { echo "Опубликовано: $V"; exit 0; }
+            sleep 10
+          done
+          echo "Новая версия не видна на ${BASE}"; exit 1

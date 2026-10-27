@@ -1,0 +1,1911 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>79BIKE в России — электромотоциклы Falcon, Lynx и Y-Volt</title>
+<meta name="description" content="Официальное представительство завода-производителя 79BIKE в России: электромотоциклы Falcon, Lynx и Y-Volt Surge V, гарантийное обслуживание, оригинальные запчасти, техподдержка на русском для официальных дилеров и клиентов Falcon-Bike, дилеры в регионах.">
+<meta name="claude:viewport-fit-sides" content="cover">
+
+
+<link rel="stylesheet" href="fonts.css?v=1">
+<!-- 25.10.2026: 79bike.ru в том же стиле, что и новый falcon-bike.ru (решение Михаила — преемственность сайтов).
+     rep.css — копия pub3/assets/site.css; старый ../assets/styles.css этой страницей больше не подключается.
+     Данные (модели, фото, тексты) и демо-формы — из общих ../assets/*.js, как раньше. -->
+<link rel="stylesheet" href="rep.css?v=20261027f">
+<script src="../assets/models.js?v=20261026k"></script>
+<script src="../assets/photos.js?v=20261026e"></script>
+<script src="../assets/content.js?v=20261026l"></script>
+<script src="../assets/videos.js?v=20261023"></script>
+<script src="blog.js?v=20261026r"></script>
+<script src="../assets/app.js?v=20261026b" defer></script>
+<script src="events.js?v=20261029" defer></script>
+<script src="events-ui.js?v=20261026" defer></script>
+<style>
+  /* ==========================================================================
+     79bike.ru — только то, чего нет в rep.css (стили falcon-bike.ru).
+     Компоненты те же: .top/.nav/.drop/.mega/.menu, .btn--main/--ghost, .chip, .model, .cmp, .card,
+     .callout, .foot, .dock. Ниже — блоки, которые есть только на 79bike.ru.
+     ========================================================================== */
+  :root { --warn:#F4C300; --warn-bg:#211C08; --warn-line:#5A4A0C; }
+  .skip{position:absolute;left:12px;top:-60px;z-index:80;padding:12px 16px;border-radius:12px;background:#fff;color:#000;font-weight:700;text-decoration:none}
+  .skip:focus{top:12px}
+  .icon{width:24px;height:24px;flex:none}
+  /* .vh внутри прокручиваемых лент (.models, .cmp) не должен расширять страницу на телефоне */
+  .btn,.model,.cmp{position:relative}
+  [id]{scroll-margin-top:84px}
+
+  /* ---------- шапка: логотип + подпись «в России» ---------- */
+  .rlogo{display:inline-flex;align-items:center;gap:12px;min-height:44px;text-decoration:none;flex:none}
+  .rlogo img{height:20px;width:114px}
+  .rlogo__plate{padding-left:12px;border-left:1px solid var(--line-3);font-size:12px;font-weight:600;line-height:1.25;color:var(--mute);max-width:15ch}
+  .top .btn{min-height:44px;padding:0 20px;font-size:15px}
+  .top .nav{flex:1;justify-content:center}
+  .nav>a,.nav__btn{white-space:nowrap}
+  @media (min-width:1181px){.top .wrap{gap:12px 16px}.top .nav>a,.top .nav__btn{padding:0 10px}}
+  @media (max-width:1400px){.top .top__phone{display:none}}
+  @media (max-width:1180px){.top .wrap{gap:8px}}
+  @media (max-width:380px){.rlogo{gap:10px}.rlogo img{width:100px;height:auto}.rlogo__plate{padding-left:10px;font-size:11px}}
+  .mega--rep{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .mega__pic img.is-cut,.menu__models img.is-cut{object-fit:contain;mix-blend-mode:normal;padding:6px 4px 4px}
+  .menu nav a{display:flex;align-items:center;min-height:52px}
+  .menu .btn{min-height:52px}
+
+  /* ---------- первый экран ---------- */
+  .hero h1{font-size:clamp(28px,3.1vw,44px);line-height:1.04}
+  @media (min-width:901px){.hero__grid{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr)}}
+  .rstage{position:relative;border-radius:var(--r-lg);background:var(--stage);color:var(--stage-ink);overflow:hidden}
+  .rstage__code{position:absolute;left:18px;top:12px;display:flex;flex-direction:column;line-height:.85;pointer-events:none;z-index:0}
+  .rstage__code b{font-weight:900;font-size:clamp(64px,9vw,130px);letter-spacing:-.05em;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .rstage__code span{margin-top:8px;font-weight:800;font-size:clamp(16px,1.6vw,22px);text-transform:uppercase;letter-spacing:.06em;color:var(--accent)}
+  .rstage .stage__pic{padding-top:clamp(72px,8vw,112px)}
+  .rstage .stage__img{height:100%}
+  .rstage__cap{position:relative;z-index:1;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;padding:0 clamp(16px,2.4vw,24px) clamp(14px,2vw,20px);font-size:14px;color:var(--stage-mute)}
+  .rstage__cap b{color:var(--stage-ink);font-weight:800;font-size:clamp(18px,1.8vw,22px)}
+  .rstage__vid{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px 0 6px;border-radius:999px;background:#fff;color:var(--stage-ink);font-weight:700;font-size:14px;text-decoration:none}
+  .rstage__vid i{width:32px;height:32px;border-radius:50%;background:var(--accent);display:grid;place-items:center}
+  .rstage__vid svg{width:14px;height:14px}
+  .hero .t-cap{margin-top:10px}
+  @media (max-width:560px){.hero .eyebrow{display:none}.hero h1{margin-top:0}}
+  @media (max-width:900px){.hero__grid{gap:0}.rstage{order:4;margin-top:22px}.hero .t-cap{order:7}}
+  @media (max-width:560px){.rstage .stage__pic{padding-top:64px}}
+
+  /* ---------- преимущества ---------- */
+  .adv{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+  .adv .card{flex-direction:row;align-items:center;gap:14px;padding:18px}
+  .adv .card h3{font-size:16px;line-height:1.3}
+  .adv .mark{flex:none}
+  .adv .card--cta{flex-direction:column;align-items:flex-start;justify-content:space-between;gap:12px;color:#fff}
+  .adv .card--cta b{font-size:17px;text-transform:none}
+  @media (max-width:1000px){.adv{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (max-width:560px){.adv{grid-template-columns:minmax(0,1fr);gap:8px}.adv .card{padding:12px 14px}.adv .mark{width:42px;height:42px}}
+
+  /* ---------- 79BIKE в России ---------- */
+  .brand{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(20px,4vw,64px)}
+  .brand .prose{font-size:17px}
+  .brand .trust{margin-top:24px}
+  @media (max-width:900px){.brand{grid-template-columns:minmax(0,1fr)}}
+
+  /* ---------- линейка ---------- */
+  .models--rep{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .models--rep .model{transition:none}
+  .models--rep .model:hover{transform:none}
+  /* 16:10 и коэффициент 0,7: ни один байк не упирается в ширину карточки — масштаб честный */
+  .models--rep .model__pic{aspect-ratio:16/10}
+  .model__pic img.is-cut{bottom:12px}
+  .model__for{font-size:14px;color:var(--soft);line-height:1.4}
+  .model__spec{font-variant-numeric:tabular-nums}
+  .model .btn{margin-top:auto}
+  .model__body .btn{width:100%}
+  .model__soon{position:absolute;right:12px;top:12px;z-index:1;padding:4px 10px;border-radius:999px;background:var(--accent);color:#fff;font-size:12px;font-weight:700}
+
+  /* ---------- селектор модели ---------- */
+  .sel-tools{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin-bottom:12px}
+  .sel-tools .tabs{margin:0;flex:0 1 auto;max-width:100%}
+  @media (max-width:560px){.sel-tools .tabs{flex:1 0 100%}.sel-tools .tab{min-width:44px}}
+  .tab[aria-pressed="true"]{background:#fff;color:#000}
+  .tab[aria-pressed="true"]:hover{background:#fff;color:#000}
+  .sel-tools__link{display:inline-flex;align-items:center;gap:6px;min-height:44px;color:var(--accent-ink);font-weight:700;font-size:15px;text-decoration:none}
+  .sel-tools__link svg{width:18px;height:18px}
+  .sel{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(16px,3vw,32px);align-items:start}
+  @media (max-width:960px){.sel{grid-template-columns:minmax(0,1fr)}}
+  .gal__main img{transition:opacity .2s}
+  .gal__main img.is-swapping{opacity:.35}
+  .gal__nav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:44px;height:44px;border-radius:50%;border:0;background:rgba(0,0,0,.72);color:#fff;display:grid;place-items:center;cursor:pointer}
+  .gal__nav:hover{background:#000}
+  .gal__nav svg{width:20px;height:20px}
+  .gal__nav--prev{left:12px}.gal__nav--next{right:12px}
+  .thumbs button{min-width:44px}
+  .gal__video{display:flex;align-items:center;gap:14px;margin-top:12px;min-height:64px;padding:10px 16px 10px 10px;border-radius:var(--r-md);background:var(--panel);text-decoration:none}
+  .gal__video:hover{background:var(--panel-2)}
+  .gal__video .play{position:static;transform:none;flex:none;width:44px;height:44px;box-shadow:none}
+  .gal__video span{display:flex;flex-direction:column;min-width:0}
+  .gal__video b{font-weight:700;font-size:15px;line-height:1.3}
+  .gal__video small{font-size:13px;color:var(--mute)}
+  .buy{top:84px}
+  .buy__for{color:var(--soft);font-size:15px;margin-top:6px}
+  .buy__text{display:flex;flex-direction:column;gap:8px;color:var(--mute);font-size:15px}
+  .cpick{padding:14px 16px;border-radius:16px;background:var(--panel-2)}
+  .cpick__label{min-width:76px;color:var(--soft)}
+  .chip{padding:0 14px;background:var(--panel)}
+  .chip:hover:not(:disabled){border-color:var(--line-2)}
+  .chip:disabled{text-decoration:none;border-style:dashed}
+  .cpick__hint{font-size:13px;color:var(--mute)}
+  .kpis dd{font-variant-numeric:tabular-nums;white-space:nowrap}
+  .buy__actions .btn{width:100%}
+  .consult{display:flex;flex-direction:column;gap:10px;padding-top:14px;border-top:1px solid var(--line)}
+  .consult p{color:var(--soft);font-size:14px}
+  @media (max-width:560px){.consult .form .btn{flex:1 0 100%}}
+
+  /* ---------- формы (демо-формы из ../assets/app.js) ---------- */
+  .form .btn{min-height:52px}
+  .form input[aria-invalid="true"]{box-shadow:inset 0 0 0 2px #FF6B6B}
+  .form-msg{flex:1 0 100%;font-size:14px;line-height:1.4}
+  .form-msg:empty{display:none}
+  .form-msg.is-ok{display:flex;gap:8px;align-items:flex-start;padding:10px 12px;border-radius:12px;background:#0F2A1C;color:#8EF0B5}
+  .form-msg.is-error{color:#FF9C9C;font-weight:600}
+  .form-msg .icon{width:18px;height:18px;margin-top:1px}
+  .pform{display:flex;flex-direction:column;gap:12px}
+  .pform label{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600}
+  .pform input{min-height:52px;padding:0 18px;border-radius:999px;border:0;background:#fff;color:#000;font:inherit;font-size:16px;width:100%}
+  .pform .btn{width:100%}
+  .pform__note{font-size:13px;color:var(--mute)}
+  .pform .pf-optl{font-weight:400;color:var(--mute)}
+  .pform label.form__check{flex-direction:row;font-weight:400;font-size:14px}
+  .pform .form__check input{min-height:0;width:22px;height:22px;padding:0;flex:none;border-radius:4px}
+  .form .form__check{flex:1 0 100%;font-weight:400}
+  .form .form__check input{flex:none;min-height:0;width:22px;height:22px;padding:0;border-radius:4px}
+  .form__check input[aria-invalid="true"]{outline:2px solid #FF6B6B;outline-offset:2px}
+
+  /* ---------- сравнение ---------- */
+  .cmp td{font-variant-numeric:tabular-nums}
+  .cmp tbody th{white-space:normal;min-width:180px}
+  .cmp thead th{vertical-align:bottom}
+  .cmp thead a{text-decoration:none}
+  .cmp thead a:hover{color:var(--accent-ink)}
+  .cmp .is-buy td{border-bottom:0;padding-top:16px;padding-bottom:16px}
+  .cmp .is-buy .btn{min-height:44px;font-size:14px;padding:0 18px}
+  .cmp .spec-colors{display:block}
+  .cmp .muted{color:var(--mute);font-weight:500}
+  .cmp-full td{white-space:normal}
+  .cmp-full td .nowrap,.nowrap{white-space:nowrap}
+  .soon{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:999px;background:var(--accent);color:#fff;font-size:12px;font-weight:700;vertical-align:2px}
+  .flag{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:999px;background:var(--warn);color:#2A2300;font-size:11px;font-weight:700;line-height:1.5;vertical-align:2px;white-space:nowrap}
+
+  /* ---------- предупреждение ---------- */
+  .warn{display:flex;gap:16px;align-items:flex-start;padding:clamp(18px,3vw,28px);border-radius:var(--r-lg);background:var(--warn-bg);box-shadow:inset 0 0 0 1px var(--warn-line)}
+  .warn>.icon{width:32px;height:32px;color:var(--warn)}
+  .warn h2{font-weight:800;font-size:clamp(20px,2.2vw,28px);line-height:1.15;text-transform:uppercase;max-width:30ch}
+  .warn p{margin-top:10px;color:var(--soft);max-width:70ch}
+  @media (max-width:520px){.warn{flex-direction:column;gap:10px}}
+
+  /* ---------- дилеры: схема и список ---------- */
+  .dealers{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(16px,3vw,32px);align-items:start;margin-top:clamp(32px,5vw,56px)}
+  .dealers>.sec-head{grid-column:1/-1;margin-bottom:0}
+  @media (max-width:900px){.dealers{grid-template-columns:minmax(0,1fr)}}
+  .map{margin:0;border-radius:var(--r-lg);background:var(--panel);overflow:hidden}
+  .map svg{display:block;width:100%;height:auto}
+  .map__dot{fill:#2A2B33}
+  .map__route{stroke:#4A4D57;stroke-width:1.5;stroke-dasharray:4 6;fill:none}
+  .map__pin--main .map__ring{fill:rgba(118,88,245,.22);stroke:var(--accent);stroke-width:2}
+  .map__pin--main .map__core{fill:var(--accent)}
+  .map__pin--city .map__ring{fill:var(--panel);stroke:var(--mute);stroke-width:2}
+  .map__pin--city .map__core{fill:var(--soft)}
+  .map__label{font-family:var(--font);font-size:15px;font-weight:700;fill:#fff;paint-order:stroke;stroke:var(--panel);stroke-width:4px;stroke-linejoin:round}
+  .map__sub{font-family:var(--font);font-size:12px;font-weight:500;fill:var(--mute);paint-order:stroke;stroke:var(--panel);stroke-width:4px;stroke-linejoin:round}
+  .map__pin--main .map__label{fill:var(--accent-ink)}
+  .map__break{stroke:var(--mute);stroke-width:1.5;fill:none}
+  .map__pin.is-active .map__ring{stroke-width:4}
+  .map__pin{cursor:pointer}
+  .map__pin:focus{outline:none}
+  .map__pin:focus-visible .map__ring{stroke:var(--accent-ink);stroke-width:4}
+  .dgroup.is-picked{box-shadow:inset 0 0 0 2px var(--accent)}
+  .map figcaption{padding:12px 16px;border-top:1px solid var(--line);font-size:13px;color:var(--mute)}
+  .dgroups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .dgroup{padding:14px 16px;border-radius:var(--r-md);background:var(--panel);outline-offset:2px}
+  .dgroup--wide{grid-column:1/-1}
+  .dgroup.is-active{box-shadow:inset 0 0 0 1px var(--line-2)}
+  .dgroup__city{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 12px;font-size:17px;font-weight:700;line-height:1.3}
+  .dgroup__count{font-size:13px;font-weight:500;color:var(--mute)}
+  .dgroup__list{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+  .dgroup__list li{padding:5px 12px;border-radius:999px;background:var(--panel-2);font-size:14px;font-weight:500;overflow-wrap:anywhere}
+  .dshop{display:flex;flex-direction:column;gap:4px;margin-top:10px;padding:14px;border-radius:16px;background:var(--accent-bg);box-shadow:inset 0 0 0 1px var(--accent-line)}
+  .dshop__name{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-weight:800}
+  .dshop__badge{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;background:var(--accent);color:#fff;font-size:12px;font-weight:700}
+  .dshop__badge .icon{width:14px;height:14px}
+  .dshop__meta{font-size:14px;color:var(--soft)}
+  .dshop__links{display:flex;flex-wrap:wrap;gap:0 18px;font-size:14px}
+  .dshop__links a{display:inline-flex;align-items:center;min-height:44px;color:var(--accent-ink);font-weight:700}
+  .dshop__links a[href^="tel:"]{color:var(--fg);font-variant-numeric:tabular-nums}
+
+  /* ---------- стать дилером ---------- */
+  .partner{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(20px,4vw,56px);align-items:start}
+  @media (max-width:900px){.partner{grid-template-columns:minmax(0,1fr)}}
+  .partner .t-lead{margin-top:14px}
+  .partner__terms{display:inline-flex;align-items:center;gap:8px;margin-top:16px;padding:10px 14px;border-radius:999px;background:var(--accent-bg);box-shadow:inset 0 0 0 1px var(--accent-line);color:var(--accent-ink);font-weight:700;font-size:15px}
+  .partner__terms .icon{width:20px;height:20px}
+  .partner .h3{margin:clamp(24px,3vw,32px) 0 12px}
+  .terms{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .terms li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;padding:16px;border-radius:var(--r-md);background:var(--panel)}
+  .terms .mark{grid-row:span 2;width:44px;height:44px}
+  .terms b{font-weight:700;line-height:1.3}
+  .terms span{font-size:14px;color:var(--mute)}
+  @media (max-width:640px){.terms{grid-template-columns:minmax(0,1fr)}}
+  .partner__form{position:sticky;top:84px;display:flex;flex-direction:column;gap:12px;padding:clamp(18px,3vw,28px);border-radius:var(--r-lg);background:var(--panel)}
+  .partner__form>p{color:var(--soft);font-size:15px}
+  @media (max-width:900px){.partner__form{position:static}}
+
+  /* ---------- о нас и контакты ---------- */
+  .about{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(20px,4vw,56px);align-items:start}
+  @media (max-width:900px){.about{grid-template-columns:minmax(0,1fr)}}
+  .about .prose{margin-top:16px;font-size:17px}
+  .about .btn{margin-top:22px}
+  .contacts{display:flex;flex-direction:column;gap:12px}
+  .contacts dl{margin:4px 0 0;display:grid;grid-template-columns:max-content minmax(0,1fr);gap:6px 16px;font-size:15px;align-items:center}
+  .contacts dt{color:var(--mute);font-size:13px;font-weight:600}
+  .contacts dd{margin:0}
+  .contacts dd a{display:inline-flex;align-items:center;min-height:44px;color:var(--accent-ink);font-weight:700}
+  a.room__phone{display:inline-flex;align-items:center;min-height:44px}
+
+  /* ---------- подвал и нижняя панель ---------- */
+  .foot__brand p{color:var(--mute);font-size:14px;max-width:36ch}
+  .foot .rlogo__plate{max-width:none}
+  .foot .room .btn{min-height:46px;margin-top:4px}
+  .dock__txt b{font-size:14px}
+  .dock__call{flex:none;width:46px;height:46px;border-radius:50%;background:var(--panel-2);display:grid;place-items:center;color:#fff;box-shadow:inset 0 0 0 1px var(--line-3)}
+  .dock__call svg{width:22px;height:22px}
+  @media (max-width:400px){.dock .dock__txt{display:none}.dock .btn{flex:1}}
+  .proto{margin-top:10px;font-size:13px;color:var(--mute)}
+
+  /* ---------- 25.10: правки Михаила ---------- */
+  /* кнопка фирменного магазина: две строки */
+  .shopbtn{flex-direction:column;gap:0;line-height:1.15;padding-top:8px;padding-bottom:8px}
+  .shopbtn small{font-size:12px;font-weight:600;opacity:.82}
+  /* первый экран: вся линейка */
+  .hero__dealer{display:inline-flex;align-items:center;min-height:44px;margin-top:4px;color:var(--accent-ink);font-weight:700;font-size:15px}
+  .lineup{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;align-self:center}
+  .lineup__it{display:flex;flex-direction:column;border-radius:var(--r-md);background:var(--stage);color:var(--stage-ink);text-decoration:none;overflow:hidden;transition:transform .2s}
+  .lineup__it:hover{transform:translateY(-2px)}
+  .lineup__pic{position:relative;display:block;aspect-ratio:16/10}
+  .lineup__pic img{position:absolute;left:50%;bottom:6px;transform:translateX(-50%);width:auto;max-width:94%;object-fit:contain;filter:drop-shadow(0 8px 8px rgba(0,0,0,.18))}
+  .lineup__soon{position:absolute;right:8px;top:8px;padding:2px 8px;border-radius:999px;background:var(--accent);color:#fff;font-size:11px;font-weight:700}
+  .lineup__n{padding:2px 12px 10px;font-weight:800;font-size:14px;line-height:1.2}
+  .hero__dealer{order:6}
+  .hero .trust{order:7}
+  @media (max-width:900px){.lineup{order:4;margin:20px 0 18px}}
+  @media (max-width:560px){.lineup{gap:6px}.lineup__n{padding:0 8px 8px;font-size:12px}}
+  /* плашки доверия — ссылки */
+  .trust a.fact{display:flex;align-items:center;gap:inherit;width:100%;color:inherit;text-decoration:none}
+  .trust a.fact>span{flex:1 1 auto}
+  .trust a.fact>svg:last-child{width:18px;height:18px;flex:none;color:var(--mute)}
+  .trust li:has(a.fact){padding:0}
+  .trust a.fact{padding:inherit}
+  /* технологии: байк с точками */
+  .hot{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:clamp(16px,3vw,32px);align-items:center}
+  .hot__stage{position:relative;border-radius:var(--r-lg);background:var(--stage);padding:clamp(16px,3vw,32px)}
+  .hot__stage>div{position:absolute;inset:clamp(16px,3vw,32px)}
+  .hot__img{display:block;width:100%;height:auto;filter:drop-shadow(0 16px 14px rgba(0,0,0,.16))}
+  .hot__dot{position:absolute;transform:translate(-50%,-50%);width:34px;height:34px;border-radius:50%;border:0;padding:0;background:var(--accent);color:#fff;font:800 14px/1 var(--font);cursor:pointer;box-shadow:0 0 0 6px rgba(118,88,245,.25);display:grid;place-items:center}
+  .hot__dot::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--accent);opacity:0;animation:hotp 2.2s infinite}
+  .hot__dot.is-on{background:#fff;color:var(--accent);box-shadow:0 0 0 6px rgba(118,88,245,.45)}
+  @keyframes hotp{0%{transform:scale(.8);opacity:.8}100%{transform:scale(1.6);opacity:0}}
+  @media (prefers-reduced-motion:reduce){.hot__dot::after{animation:none}}
+  .hot__list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+  .hot__it{display:grid;grid-template-columns:auto auto minmax(0,1fr);align-items:center;gap:12px;padding:12px 14px;border-radius:var(--r-md);background:var(--panel);cursor:pointer;outline-offset:2px}
+  .hot__it.is-on{background:var(--panel-2);box-shadow:inset 0 0 0 1px var(--accent)}
+  .hot__n{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:800;font-size:13px}
+  .hot__ic svg{width:24px;height:24px;color:var(--accent-ink)}
+  .hot__it b{display:block;font-size:15px;line-height:1.3}
+  .hot__it small{display:none;margin-top:4px;font-size:14px;color:var(--soft);line-height:1.4}
+  .hot__it.is-on small{display:block}
+  @media (max-width:900px){
+    .hot{grid-template-columns:minmax(0,1fr)}
+    .hot__dot{width:28px;height:28px;font-size:12px}
+    .hot__list{flex-direction:row;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;gap:8px;padding-bottom:4px}
+    .hot__list::-webkit-scrollbar{display:none}
+    .hot__it{flex:0 0 82%;scroll-snap-align:start;align-items:start}
+    .hot__it small{display:block}
+  }
+  /* селектор: цвет и обзоры прямо под фото */
+  .gal .cpick--c{margin-top:10px;padding:10px 12px;gap:6px}
+  .cpick--c .cpick__label{min-width:64px;font-size:13px}
+  .chip--c{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0 12px 0 8px;font-size:14px}
+  .chip--c[aria-pressed="true"]{box-shadow:inset 0 0 0 2px var(--accent);border-color:transparent}
+  .sw{display:inline-block;width:18px;height:18px;border-radius:50%;flex:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.35)}
+  .gal__main img.is-flip,.thumbs img.is-flip{transform:scaleX(-1)}
+  .revs{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .rev{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0 12px 0 4px;border-radius:999px;background:var(--panel);color:var(--fg);font-size:13px;font-weight:700;text-decoration:none}
+  .rev:hover{background:var(--panel-2)}
+  .rev i{width:28px;height:28px;border-radius:50%;background:var(--accent);display:grid;place-items:center}
+  .rev svg{width:12px;height:12px}
+  @media (max-width:560px){.gal .thumbs{margin-top:8px}.gal .thumbs button{width:64px}}
+  /* дилеры */
+  .tm-note{display:flex;gap:12px;align-items:flex-start;margin-top:16px;padding:14px 16px;border-radius:var(--r-md);background:var(--warn-bg);box-shadow:inset 0 0 0 1px var(--warn-line);font-size:14px;line-height:1.5;color:var(--soft)}
+  .tm-note .icon{color:var(--warn);width:22px;height:22px;margin-top:2px}
+  .tm-note b{color:var(--fg)}
+  .dgroup__shop{margin-top:10px;font-size:13px}
+  .dgroup__shop a{color:var(--accent-ink);font-weight:700}
+  .dgroup__list a{color:inherit}
+  .pmode{display:flex;gap:4px;padding:4px;border-radius:999px;background:var(--panel-2)}
+  .pmode__b{flex:1;min-height:40px;border:0;border-radius:999px;background:none;color:var(--soft);font:700 14px var(--font);cursor:pointer}
+  .pmode__b[aria-pressed="true"]{background:#fff;color:#000}
+  .rep-blog__fine{margin-top:14px;font-size:13px;color:var(--mute);line-height:1.5}
+  /* частые вопросы */
+  .rfaq{display:flex;flex-direction:column;gap:8px;max-width:900px}
+  .rfaq__it{border-radius:var(--r-md);background:var(--panel)}
+  .rfaq__it summary{display:flex;justify-content:space-between;gap:16px;align-items:center;min-height:56px;padding:12px 18px;cursor:pointer;font-weight:700;list-style:none}
+  .rfaq__it summary::-webkit-details-marker{display:none}
+  .rfaq__it summary::after{content:"+";font-size:22px;color:var(--accent-ink);flex:none}
+  .rfaq__it[open] summary::after{content:"−"}
+  .rfaq__it p{padding:0 18px 16px;color:var(--soft);font-size:15px;line-height:1.55}
+  .rfaq__it a{color:var(--accent-ink)}
+  /* 25.10.2026: плашки доверия — нормальные отступы и зона нажатия не меньше 44 px (раньше padding наследовал 0) */
+  .trust a.fact{box-sizing:border-box;min-height:48px;padding:12px 14px;border-radius:var(--r-md);transition:background .15s}
+  .trust a.fact:hover{background:var(--panel-2)}
+  .trust a.fact:hover>svg:last-child{color:var(--fg)}
+  .trust a.fact:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .trust a.fact>span b{margin-bottom:2px}
+  /* селектор моделей: на узких экранах вкладки не сжимаются до 53 px (длинные названия вылезали) — лента прокручивается */
+  @media (max-width:440px){.sel-tools .tabs{scroll-padding-inline:8px}.sel-tools .tab{flex:0 0 auto;padding:0 14px;font-size:14px}}
+  /* выбор цвета и обзоры под фото — зона нажатия 44 px */
+  .chip--c{min-height:44px}
+  .rev{min-height:44px}
+  /* 25.10: обзоры — миниатюры с названием */
+  .revs--th{display:flex;flex-wrap:nowrap;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin-top:12px;padding-bottom:2px}
+  .revs--th::-webkit-scrollbar{display:none}
+  .sel-revs__more{margin-top:16px;min-height:44px}
+  .sel-revs__all{margin-top:8px}
+  .sel-revs__g{margin:18px 0 0;font-size:15px;font-weight:700;color:var(--mute)}
+  .revs--grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(172px,1fr));gap:14px 10px;overflow:visible}
+  @media (max-width:560px){.revs--grid{grid-template-columns:1fr 1fr}}
+  .rvt{flex:0 0 172px;scroll-snap-align:start;display:flex;flex-direction:column;gap:6px;color:var(--fg);text-decoration:none;min-width:0}
+  .rvt__pic{position:relative;display:block;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:var(--panel)}
+  .rvt__pic img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s}
+  .rvt:hover .rvt__pic img{transform:scale(1.05)}
+  .rvt__pic i{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:36px;height:36px;border-radius:50%;background:rgba(118,88,245,.92);display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.35)}
+  .rvt__pic i svg{width:14px;height:14px;margin-left:2px}
+  .rvt__d{position:absolute;right:6px;bottom:6px;padding:1px 6px;border-radius:6px;background:rgba(0,0,0,.75);color:#fff;font-size:11px;font-weight:700}
+  .rvt__t{font-size:13px;font-weight:700;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .rvt__a{font-size:12px;color:var(--mute);margin-top:-2px}
+  .rvt:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:12px}
+  /* 25.10: блок про официальный канал — раскрывающийся */
+  .tm-note--fold{display:block;padding:0}
+  .tm-note--fold summary{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;cursor:pointer;list-style:none;min-height:44px}
+  .tm-note--fold summary::-webkit-details-marker{display:none}
+  .tm-note--fold summary b{flex:1;color:var(--fg);line-height:1.4}
+  .tm-note__chev{flex:none;width:20px;height:20px;margin-top:2px;color:var(--warn);transition:transform .2s}
+  .tm-note--fold[open] .tm-note__chev{transform:rotate(180deg)}
+  .tm-note--fold p{margin:0;padding:0 16px 16px 50px}
+  @media (max-width:560px){.tm-note--fold p{padding-left:16px}}
+  .tm-note--fold summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:var(--r-md)}
+  /* 25.10: «Технологии» — истории */
+  .tst{display:grid;gap:16px}
+  .tst__ph{position:relative;aspect-ratio:4/5;max-height:78vh;border-radius:var(--r-lg);overflow:hidden;background:#111;isolation:isolate}
+  .tst__pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.06);transition:opacity .5s,transform 4.5s linear}
+  .tst__pic img.is-on{opacity:1;transform:scale(1)}
+  .tst__ph::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.4),rgba(0,0,0,0) 22%,rgba(0,0,0,0) 45%,rgba(0,0,0,.9))}
+  .tst__bars{position:absolute;z-index:2;left:12px;right:12px;top:12px;display:flex;gap:4px}
+  .tst__bars i{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.28);overflow:hidden}
+  .tst__bars i b{display:block;height:100%;width:0;background:#fff}
+  .tst__bars i.done b{width:100%}.tst__bars i.cur b{animation:tstfill 4.5s linear forwards}
+  @keyframes tstfill{to{width:100%}}
+  @media (prefers-reduced-motion:reduce){.tst__bars i.cur b{animation:none;width:100%}.tst__pic img{transition:opacity .2s}}
+  .tst__cap{position:absolute;z-index:2;left:18px;right:18px;bottom:18px;display:flex;flex-direction:column;gap:6px;color:#fff}
+  .tst__k{align-self:flex-start;background:var(--accent);font-size:12px;font-weight:800;border-radius:999px;padding:3px 10px}
+  .tst__t{font-size:clamp(20px,2.2vw,26px);font-weight:800;line-height:1.15}
+  .tst__d{font-size:15px;line-height:1.45;color:#d6d4e0}
+  .tst__tap{position:absolute;z-index:3;top:0;bottom:0;width:40%;border:0;background:none;cursor:pointer;padding:0}
+  .tst__tap--l{left:0}.tst__tap--r{right:0}
+  .tst__tap:focus-visible{outline:2px solid var(--accent);outline-offset:-4px;border-radius:var(--r-lg)}
+  .tst__list{display:none;list-style:none;margin:0;padding:0}
+  @media (min-width:901px){
+    .tst{grid-template-columns:minmax(0,420px) minmax(0,1fr);align-items:center;gap:clamp(24px,4vw,56px)}
+    .tst__list{display:flex;flex-direction:column;gap:6px}
+    .tst__it{display:flex;align-items:center;gap:12px;width:100%;min-height:52px;padding:10px 14px;border:0;border-radius:var(--r-md);background:var(--panel);color:var(--fg);font:700 15px/1.3 var(--font);text-align:left;cursor:pointer}
+    .tst__it[aria-current="true"]{background:var(--panel-2);box-shadow:inset 0 0 0 1px var(--accent)}
+    .tst__ic svg{width:22px;height:22px;color:var(--accent-ink)}
+  }
+  /* ---------- 25.10: первый экран с роликом ---------- */
+  .rlogo__plate{max-width:17ch;font-size:11px;line-height:1.2}
+  @media (max-width:380px){.rlogo__plate{font-size:10.5px}}
+  .hv{position:relative;overflow:hidden;isolation:isolate;background:#0b0b0f;padding:clamp(150px,30vh,300px) 0 22px}
+  .hv__bg{position:absolute;inset:0;z-index:-1}
+  .hv__video,.hv__f{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background-size:cover;background-position:center}
+  .hv__f{opacity:0;animation:hvfade 24s infinite}
+  .hv__f:nth-child(3){animation-delay:6s}.hv__f:nth-child(4){animation-delay:12s}.hv__f:nth-child(5){animation-delay:18s}
+  .hv.has-video .hv__f{display:none}
+  @keyframes hvfade{0%{opacity:0;transform:scale(1.02)}4%{opacity:1}25%{opacity:1}30%{opacity:0;transform:scale(1.1)}100%{opacity:0}}
+  @media (prefers-reduced-motion:reduce){.hv__f{animation:none}.hv__f:nth-child(2){opacity:1}}
+  .hv__bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.25) 0%,rgba(0,0,0,0) 22%,rgba(0,0,0,.35) 55%,rgba(0,0,0,.88) 100%)}
+  .hv__grid{display:grid;gap:18px;align-items:end}
+  /* подложка под текст — тёмное «стекло», текст читается на любом кадре */
+  .hv__card{padding:18px 18px 14px;border-radius:var(--r-lg);background:rgba(10,10,14,.58);-webkit-backdrop-filter:blur(14px) saturate(1.2);backdrop-filter:blur(14px) saturate(1.2);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)}
+  .hv h1{margin:0;font-weight:800;font-size:clamp(26px,3.2vw,46px);line-height:1.04;text-transform:uppercase;letter-spacing:-.005em;color:#fff;text-wrap:balance}
+  .hv__pts{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:10px}
+  .hv__pts li{display:flex;align-items:center;gap:12px;font-size:15px;font-weight:700;line-height:1.3;color:#fff}
+  .hv__ic{flex:none;width:38px;height:38px;border-radius:12px;background:var(--accent);display:grid;place-items:center;box-shadow:0 6px 16px rgba(118,88,245,.35)}
+  .hv__ic svg{width:20px;height:20px;color:#fff}
+  .hv__cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+  .hv__cta .shopbtn{flex:1 1 260px}
+  .hv .hero__dealer{margin-top:6px}
+  @media (max-width:900px){
+    .hv__all{display:none}
+    .hv .lineup{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:4px -16px 0;padding:0 16px 4px}
+    .hv .lineup::-webkit-scrollbar{display:none}
+    .hv .lineup__it{flex:0 0 132px;scroll-snap-align:start}
+  }
+  @media (min-width:901px){
+    .hv{min-height:min(760px,calc(100vh - 64px));display:flex;align-items:flex-end;padding:120px 0 40px}
+    .hv__grid{width:100%;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(24px,4vw,56px)}
+    .hv__card{padding:28px 28px 18px}
+    .hv__pts{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .hv__pts li{flex-direction:column;align-items:flex-start;gap:10px;font-size:14px}
+    .hv .lineup{align-self:end}
+  }
+  /* 25.10: первый экран — вариант D «Сплит»: ролик сверху, панель с буллитами и моделями ниже */
+  .hv.hv--split{padding:0;min-height:0;display:block;background:#000}
+  .hv.hv--split .hv__media{position:relative;height:clamp(260px,42vh,520px);overflow:hidden;background:#0b0b0f}
+  .hv.hv--split .hv__video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .hv.hv--split .hv__media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.15) 0%,rgba(0,0,0,0) 40%,rgba(0,0,0,.85) 100%);pointer-events:none}
+  .hv.hv--split .hv__title{position:absolute;left:0;right:0;bottom:16px;z-index:1}
+  .hv.hv--split h1{text-shadow:0 2px 16px rgba(0,0,0,.5)}
+  .hv.hv--split .hv__panel{background:#0d0d12;padding:14px 0 18px}
+  .hv.hv--split .hv__pgrid{display:grid;gap:12px}
+  .hv.hv--split .hv__pts{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0}
+  .hv.hv--split .hv__pts li{flex-direction:column;align-items:flex-start;gap:6px;font-size:12px;line-height:1.25}
+  .hv.hv--split .hv__ic{width:32px;height:32px;border-radius:10px}
+  .hv.hv--split .hv__ic svg{width:17px;height:17px}
+  .hv.hv--split .lineup{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:0;overflow:visible;padding:0}
+  .hv.hv--split .lineup__n{padding:0 6px 6px;font-size:11.5px}
+  .hv.hv--split .hv__cta--d,.hv.hv--split .hv__dl{display:none}
+  .hv.hv--split .hv__cta--m{display:flex;flex-direction:column;gap:2px;margin:0}
+  .hv.hv--split .hv__cta--m .hero__dealer{align-self:center}
+  @media (min-width:901px){
+    .hv.hv--split .hv__media{height:min(520px,52vh)}
+    .hv.hv--split .hv__panel{padding:24px 0 30px}
+    .hv.hv--split .hv__pgrid{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(24px,4vw,56px);align-items:center}
+    .hv.hv--split .hv__pts li{font-size:14px}
+    .hv.hv--split .hv__cta--d,.hv.hv--split .hv__dl{display:flex}.hv.hv--split .hv__cta--d{margin-top:18px}
+    .hv.hv--split .hv__cta--m{display:none}
+  }
+  .hv.hv--split .hv__cta--m .shopbtn{flex:none}
+  .hv.hv--split .lineup,.hv.hv--split .hv__left,.hv.hv--split .hv__cta--m{order:0}
+  /* 25.10.2026: «Ближайшее событие» на телефоне вылезало за экран (кнопки не переносились) — текст обрезался справа */
+  .ev-up{grid-template-columns:minmax(0,1fr)}
+  .ev-up__body{min-width:0}
+  .ev-up .btn{white-space:normal;text-align:center;height:auto;min-height:48px;padding-block:10px}
+  @media (min-width:900px){.ev-up{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)}}
+  /* названия видеообзоров — до 3 строк, чтобы не обрезались */
+  .rvt__t{-webkit-line-clamp:3}
+  .hv__snd{position:absolute;z-index:3;right:max(12px,env(safe-area-inset-right,0px));top:12px;width:44px;height:44px;border-radius:50%;border:0;background:rgba(0,0,0,.18);color:#fff;display:grid;place-items:center;cursor:pointer;opacity:.55;transition:opacity .2s,background .2s}
+.hv__snd:hover,.hv__snd:focus-visible,.hv__snd[aria-pressed="true"]{opacity:.9;background:rgba(0,0,0,.35)}
+  .hv__snd svg{width:18px;height:18px}.hv__snd .hv__snd-on{display:none}.hv__snd[aria-pressed="true"] .hv__snd-on{display:inline}.hv__snd[aria-pressed="true"] .hv__snd-off{display:none}
+  .hv__video::-webkit-media-controls-start-playback-button{display:none!important;-webkit-appearance:none}
+
+  .sel-revs{margin-top:clamp(24px,4vw,40px)}
+  .sel-revs__t{font-size:clamp(18px,2vw,22px);font-weight:800;margin:0}
+  .sel-revs .rvt{flex-basis:clamp(172px,24vw,260px)}
+
+/* 25.10 (Михаил): кнопка «Наверх» — появляется после прокрутки вниз, полупрозрачная */
+.totop{position:fixed;z-index:70;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(var(--totop-b,96px) + env(safe-area-inset-bottom,0px));width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.12);background:rgba(20,20,25,.38);color:rgba(255,255,255,.85);display:grid;place-items:center;cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transform:translateY(10px);pointer-events:none;transition:opacity .2s,transform .2s,background .2s,color .2s}
+.totop.is-on{opacity:.8;transform:none;pointer-events:auto}
+.totop:hover,.totop:focus-visible{opacity:1;background:#7658F5;border-color:#7658F5;color:#fff}
+.totop svg{width:20px;height:20px}
+@media (prefers-reduced-motion:reduce){.totop{transition:none}}
+
+
+  /* 26.10.2026: поп-апы (заявка блогера, техподдержка) */
+  .dlg__terms{padding:14px 16px;border-radius:16px;background:rgba(118,88,245,.12);border:1px solid rgba(160,139,255,.35)}
+  .dlg__tt{margin:0 0 8px;font-weight:700}
+  .hv__pts a.hv__ptb{color:inherit}
+  .dlg{width:min(560px,calc(100% - 24px));max-height:calc(100dvh - 24px);padding:0;border:1px solid rgba(255,255,255,.12);border-radius:24px;background:#16151C;color:#fff;overflow:auto;overscroll-behavior:contain}
+  .dlg::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
+  .dlg__body{padding:28px 22px 22px;display:flex;flex-direction:column;gap:14px}
+  .dlg__body .h3{margin:0;padding-right:40px}
+  .dlg__lead{margin:0;color:var(--soft,#C9C9D1);line-height:1.5}
+  .dlg__q{margin:4px 0 0;font-weight:700}
+  .dlg__x{position:sticky;top:10px;margin:10px 10px -50px auto;width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.08);color:#fff;display:grid;place-items:center;cursor:pointer;z-index:2}
+  .dlg__opts{display:flex;flex-direction:column;gap:8px}
+  .dlg__opt{min-height:52px;padding:12px 18px;border-radius:16px;border:1px solid rgba(160,139,255,.45);background:rgba(118,88,245,.12);color:#fff;font:inherit;font-weight:600;text-align:left;cursor:pointer}
+  .dlg__opt:hover{background:rgba(118,88,245,.24)}
+  .dlg__opt--mute{border-color:rgba(255,255,255,.18);background:transparent;color:var(--soft,#C9C9D1)}
+  .dlg__row{display:flex;gap:10px;flex-wrap:wrap}.dlg__row .btn{flex:1 1 180px}
+  .dlg__back{align-self:flex-start;border:0;background:none;color:var(--soft,#C9C9D1);font:inherit;cursor:pointer;padding:4px 0}
+  .dlg__ok{margin:0;padding:12px 14px;border-radius:12px;background:#0F2A1C;color:#8EF0B5;font-weight:600}
+  .dlg__list{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;line-height:1.45}
+  .dlg__fine{margin:0;font-size:13px;color:var(--mute,#8A8A96)}
+  .dlg .pform textarea,.dlg .dlg__sel{width:100%;padding:12px 18px;border-radius:20px;border:0;background:#fff;color:#000;font:inherit;font-size:16px;resize:vertical}
+  .dlg .dlg__sel{min-height:52px;border-radius:999px;appearance:auto}
+  .pchips{border:0;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+  .pchips legend{font-size:14px;font-weight:600;margin-bottom:8px;padding:0}
+  .pchip{position:relative;cursor:pointer}
+  .pchip input{position:absolute;opacity:0;width:1px;height:1px}
+  .pchip span{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border-radius:999px;border:1px solid rgba(255,255,255,.25);font-size:14px;font-weight:600}
+  .pchip input:checked+span{background:#fff;color:#000;border-color:#fff}
+  .pchip input:focus-visible+span{outline:2px solid #A08BFF;outline-offset:2px}
+  .hv__pts li:has(.hv__ptb){cursor:pointer}
+  .hv__ptb{all:unset;display:inherit;flex-direction:inherit;align-items:inherit;gap:inherit;cursor:pointer;text-decoration:underline;text-decoration-color:rgba(160,139,255,.6);text-underline-offset:4px}
+  .hv__ptb:focus-visible{outline:2px solid #A08BFF;outline-offset:4px;border-radius:8px}
+  html.dlg-open{overflow:hidden}
+  .chip__hint{font-size:12px;font-weight:500;color:var(--mute,#8A8A96);margin-left:4px;white-space:nowrap} /* 27.10: подсказка у недоступной вставки */
+  /* 27.10 (Михаил, 136): нижняя панель — вариант 3: всё в одной кнопке, зелёный чат справа */
+  .dock .dock__shop{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;justify-content:center;line-height:1.15;padding:6px 16px}
+  .dock .dock__shop span{font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+  .dock .dock__shop small{font-size:12px;font-weight:500;opacity:.88}
+  .dock .dock__msgs{right:12px;left:auto}
+  .ina-more{margin-top:14px}
+  .ina-more__btn{width:100%;max-width:360px}
+  .ina-more__box{margin-top:16px;display:flex;flex-direction:column;gap:18px}
+  .ina-more__t{margin:0 0 8px;font-weight:700;font-size:15px}
+  .ina-more__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+  .ina-more__it{position:relative;display:block;border-radius:14px;overflow:hidden;aspect-ratio:4/3;background:#111}
+  .ina-more__it img{width:100%;height:100%;object-fit:cover;display:block}
+  .ina-more__it .ina__cap{position:absolute;left:10px;bottom:8px;font-size:13px}
+  @media (min-width:900px){.ina-more__grid{grid-template-columns:repeat(4,1fr)}}
+</style>
+<script data-top>/* 26.10 (Михаил): переход на другую страницу — всегда с самого верха (если в ссылке нет #раздела) */
+try{if("scrollRestoration" in history)history.scrollRestoration="manual"}catch(e){}
+(function(){var moved=false,t0=Date.now();["wheel","touchstart","keydown","mousedown"].forEach(function(ev){window.addEventListener(ev,function(){moved=true},{passive:true,once:true})});
+function top(){if(!location.hash&&!moved&&Date.now()-t0<4000)window.scrollTo(0,0)}
+top();document.addEventListener("DOMContentLoaded",top);window.addEventListener("load",function(){top();setTimeout(top,60)});window.addEventListener("pageshow",function(e){if(!e.persisted)top()})})();</script>
+<link rel="stylesheet" href="cookie-banner.css?v=3"><script>window.COOKIE_BANNER_CONFIG={policyUrl:"https://falcon-bike.ru/privacy",operator:"ИП Тимоховым М. С."};</script><script src="cookie-banner.js?v=2" defer></script>
+</head>
+<body data-root="../" data-page="rep">
+<a class="skip" href="#main">К содержимому</a>
+
+<!-- ШАПКА 79bike.ru: по правилам шапки falcon-bike.ru (липкая, мега-меню моделей, на телефоне — звонок и меню) -->
+<header class="top">
+  <div class="wrap">
+    <a class="rlogo" href="index.html" aria-label="79BIKE — официальное представительство в России, на главную">
+      <img src="logo-white.svg" alt="" width="114" height="20">
+      <span class="rlogo__plate">Официальное представительство в России</span>
+    </a>
+    <nav class="nav" aria-label="Основное меню">
+      <div class="nav__item">
+        <button class="nav__btn" type="button" aria-expanded="false" aria-controls="dd-models">Модели<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="drop mega mega--rep" id="dd-models" hidden></div>
+      </div>
+      <a href="#official">Где купить</a>
+      <div class="nav__item">
+        <button class="nav__btn" type="button" aria-expanded="false" aria-controls="dd-service">Сервис<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="drop" id="dd-service" hidden><a href="warranty.html">Гарантия<span>Условия и порядок ремонта</span></a><a href="instructions.html">Инструкции<span>Сборка и эксплуатация</span></a><a href="https://falcon-bike.ru/accessories" target="_blank" rel="noopener">Запчасти<span>В фирменном магазине</span></a><a href="#faq">Частые вопросы<span>Пробег, заряд, дождь</span></a></div>
+      </div>
+      <div class="nav__item">
+        <button class="nav__btn" type="button" aria-expanded="false" aria-controls="dd-partners">Партнёрам<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="drop" id="dd-partners" hidden><a href="#dealers">Стать дилером<span>Условия и заявка</span></a><a href="#bloggers">Блогерам<span>Тест-драйв для обзора</span></a></div>
+      </div>
+      <div class="nav__item">
+        <button class="nav__btn" type="button" aria-expanded="false" aria-controls="dd-brand">О бренде<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="drop" id="dd-brand" hidden><a href="#about">О нас<span>Представительство 79BIKE</span></a><a href="#events">События<span>Выставки и тест-драйвы</span></a><a href="blog.html">Блог<span>Статьи и новости</span></a></div>
+      </div>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <a class="top__phone" href="tel:+79999005588">+7 (999) 900-55-88</a>
+    <a class="btn btn--main" href="https://falcon-bike.ru/">Фирменный магазин</a>
+    <div style="display:flex;gap:2px">
+      <a class="icon-btn" href="tel:+79999005588" aria-label="Позвонить: +7 (999) 900-55-88"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></a>
+      <button class="icon-btn" type="button" id="menu-open" aria-label="Открыть меню" aria-expanded="false" aria-controls="menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<div class="menu" id="menu" hidden role="dialog" aria-modal="true" aria-label="Меню">
+  <div class="menu__head">
+    <span class="rlogo"><img src="logo-white.svg" alt="79BIKE" width="114" height="20"><span class="rlogo__plate">Официальное представительство в России</span></span>
+    <button class="icon-btn" type="button" id="menu-close" aria-label="Закрыть меню" style="display:inline-flex"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <div class="menu__group"><span>Модели</span><div class="menu__models" id="menu-models"></div></div>
+  <nav aria-label="Разделы" class="menu__nav">
+    <span class="menu__h">Выбрать и купить</span>
+    <a href="#official">Где купить — официальные дилеры</a>
+    <a href="#compare">Сравнение моделей</a>
+    <span class="menu__h">Владельцам</span>
+    <a href="warranty.html">Гарантия</a>
+    <a href="instructions.html">Инструкции</a>
+    <a href="https://falcon-bike.ru/accessories" target="_blank" rel="noopener">Запчасти</a>
+    <a href="#faq">Частые вопросы</a>
+    <span class="menu__h">Партнёрам</span>
+    <a href="#dealers">Стать дилером</a>
+    <a href="#bloggers">Блогерам</a>
+    <span class="menu__h">О бренде</span>
+    <a href="#about">О нас</a>
+    <a href="factory.html">Производство</a>
+    <a href="#events">События</a>
+    <a href="blog.html">Блог</a>
+    <a class="btn btn--ghost menu__cta" href="#contacts">Контакты</a>
+  </nav>
+  <div class="room">
+    <a class="room__phone" href="tel:+79999005588" style="text-decoration:none">+7 (999) 900-55-88</a>
+    <span class="room__row">Москва · <a href="mailto:Sales@79bike.ru" style="color:var(--accent-ink)">Sales@79bike.ru</a></span>
+    <a class="btn btn--main shopbtn" href="https://falcon-bike.ru/"><span>Фирменный магазин 79BIKE</span><small>Быстрая доставка по РФ</small></a>
+  </div>
+</div>
+
+<main id="main">
+
+  <!-- 1. ПЕРВЫЙ ЭКРАН: вся линейка одним кадром -->
+  <!-- 25.10: первый экран с роликом на фоне (пока нет файла ролика — смена кадров из галереи) -->
+  <section class="hv hv--split" id="top" aria-labelledby="hero-title">
+    <div class="hv__media">
+      <video class="hv__video" id="hv-video" muted loop playsinline autoplay preload="metadata" poster="hero/poster.jpg?v=5" aria-hidden="true"></video><script>/* 26.10.2026: ролик выбирается до загрузки — на телефоне и планшете (до 900 px) только лёгкий hero-m.mp4, ПК-ролик не запрашивается */(function(){var v=document.getElementById("hv-video");if(!v)return;var m=window.matchMedia&&matchMedia("(max-width: 900px)").matches;v.setAttribute("data-mob",m?"1":"0");v.src=m?"hero/hero-m.mp4?v=6":"hero/hero.mp4?v=6";})();</script><button type="button" class="hv__snd" aria-pressed="false" aria-label="Включить звук"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="hv__snd-off" d="M16 9l5 6M21 9l-5 6"/><path class="hv__snd-on" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/></svg></button>
+      <div class="wrap hv__title"><h1 id="hero-title">Электромотоциклы 79BIKE в России</h1></div>
+    </div>
+    <div class="hv__panel">
+      <div class="wrap hv__pgrid">
+        <div class="hv__left">
+          <ul class="hv__pts">
+            <li><a class="hv__ptb" href="warranty.html"><span class="hv__ic"><svg aria-hidden="true" focusable="false"><use href="../assets/icons.svg#shield"></use></svg></span>Официальная гарантия</a></li>
+            <li><button type="button" class="hv__ptb" data-dlg="dlg-support"><span class="hv__ic"><svg aria-hidden="true" focusable="false"><use href="../assets/icons.svg#phone"></use></svg></span>Техническая поддержка</button></li>
+            <li><a class="hv__ptb" href="https://falcon-bike.ru/accessories" target="_blank" rel="noopener"><span class="hv__ic"><svg aria-hidden="true" focusable="false"><use href="../assets/icons.svg#wrench"></use></svg></span>Оригинальные запчасти и сервис</a></li>
+          </ul>
+          <div class="hv__cta hv__cta--d"><a class="btn btn--main shopbtn" href="https://falcon-bike.ru/"><span>Фирменный магазин 79BIKE</span><small>Быстрая доставка по РФ</small></a></div>
+          <a class="hero__dealer hv__dl" href="#official">Найти дилера в своём городе</a>
+        </div>
+        <div class="lineup" id="hero-lineup" role="list" aria-label="Линейка 79BIKE"></div>
+        <div class="hv__cta hv__cta--m"><a class="btn btn--main shopbtn" href="https://falcon-bike.ru/"><span>Фирменный магазин 79BIKE</span><small>Быстрая доставка по РФ</small></a><a class="hero__dealer" href="#official">Найти дилера в своём городе</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. ТЕХНОЛОГИИ: байк с точками (свои формулировки, не тексты магазина) -->
+  <section class="sec" id="advantages" aria-labelledby="adv-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="h2" id="adv-title">Технологии Falcon</h2>
+      </div>
+      <div class="tst" id="hot">
+        <div class="tst__ph" id="tst" aria-roledescription="карусель" aria-label="Технологии Falcon">
+          <div class="tst__pic" id="tst-pic"></div>
+          <div class="tst__bars" id="tst-bars" aria-hidden="true"></div>
+          <div class="tst__cap" id="tst-cap" aria-live="polite"></div>
+          <button type="button" class="tst__tap tst__tap--l" id="tst-prev" aria-label="Предыдущая технология"></button>
+          <button type="button" class="tst__tap tst__tap--r" id="tst-next" aria-label="Следующая технология"></button>
+        </div>
+        <ol class="tst__list" id="hot-list"></ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 79BIKE В РОССИИ -->
+  <section class="sec" id="brand" aria-labelledby="brand-title">
+    <div class="wrap brand">
+      <h2 class="h2" id="brand-title">79BIKE в России</h2>
+      <div>
+        <div class="prose">
+          <p>В линейку 79BIKE в России входят электромотоциклы Falcon Lite, Falcon Pro и Falcon GT, Lynx Trail и Lynx X (старт продаж — 2027). Также мы реализуем полноразмерный эндуро <span class="nowrap">Y-Volt</span> Surge V.</p>
+          <p>Мы обеспечиваем сервисную поддержку официальных дилеров техники 79BIKE, а также клиентов фирменного магазина <a href="https://falcon-bike.ru/" target="_blank" rel="noopener" style="color:var(--accent-ink)">Falcon-bike</a>.</p>
+          <p>Купить байк можно в официальном магазине 79BIKE в Москве — с доставкой по всей России — или у официальных дилеров бренда в регионах.</p>
+        </div>
+        <ul class="trust" id="brand-facts"></ul>
+      </div>
+    </div>
+    <!-- 26.10.2026: «79BIKE в деле» — серии кадров (решение Михаила 27.10): Пригород (первым, Михаил 27.10) · Бездорожье (вместе с кадрами у воды) · Горы.
+         Фото неактивных серий — в data-src/data-srcset, подставляются при первом выборе серии. Клик по фото — модель в блоке «Выберите модель» (#select-…). -->
+    <div class="wrap ina" id="inaction" role="region" aria-labelledby="ina-title">
+      <div class="ina__head">
+        <h3 class="h3 ina__title" id="ina-title">79BIKE в деле</h3>
+        <div class="tabs ina__tabs" role="tablist" aria-label="Серии фото «79BIKE в деле»">
+          <button type="button" class="tab" role="tab" id="ina-tab-city" aria-controls="ina-city" aria-selected="true" tabindex="0" data-ina="city">Пригород</button><button type="button" class="tab" role="tab" id="ina-tab-offroad" aria-controls="ina-offroad" aria-selected="false" tabindex="-1" data-ina="offroad">Бездорожье</button><button type="button" class="tab" role="tab" id="ina-tab-mountains" aria-controls="ina-mountains" aria-selected="false" tabindex="-1" data-ina="mountains">Горы</button>
+        </div>
+      </div>
+      <div class="ina__box">
+      <div class="ina__rail" role="tabpanel" id="ina-city" aria-labelledby="ina-tab-city">
+        <a class="ina__it" href="#select-pro" data-select="pro"><img src="inaction/city/pro-600.webp" srcset="inaction/city/pro-600.webp 600w, inaction/city/pro-1200.webp 1200w" sizes="(max-width:900px) 80vw, 400px" width="600" height="450" alt="Falcon Pro — пригород" loading="lazy" decoding="async"><span class="ina__cap">Falcon Pro</span></a>
+        <a class="ina__it" href="#select-lynx-trail" data-select="lynx-trail"><img src="inaction/city/lynx-trail-600.webp" srcset="inaction/city/lynx-trail-600.webp 600w, inaction/city/lynx-trail-1200.webp 1200w" sizes="(max-width:900px) 80vw, 400px" width="600" height="450" alt="Falcon Lynx Trail — пригород" loading="lazy" decoding="async"><span class="ina__cap">Falcon Lynx Trail</span></a>
+        <a class="ina__it" href="#select-light" data-select="light"><img src="inaction/city/lite-600.webp" srcset="inaction/city/lite-600.webp 600w, inaction/city/lite-1200.webp 1200w" sizes="(max-width:900px) 80vw, 400px" width="600" height="450" alt="Falcon Lite — пригород" loading="lazy" decoding="async"><span class="ina__cap">Falcon Lite</span></a>
+        <a class="ina__it" href="#select-surge-v" data-select="surge-v"><img src="inaction/city/surge-v-600.webp" srcset="inaction/city/surge-v-600.webp 600w, inaction/city/surge-v-1200.webp 1200w" sizes="(max-width:900px) 80vw, 400px" width="600" height="450" alt="Y-Volt Surge V — пригород" loading="lazy" decoding="async"><span class="ina__cap">Y‑Volt Surge V</span></a>
+      </div>
+      <div class="ina__rail" role="tabpanel" id="ina-offroad" aria-labelledby="ina-tab-offroad" hidden>
+        <a class="ina__it" href="#select-gt" data-select="gt"><img data-src="inaction/offroad/gt-600.webp" data-srcset="inaction/offroad/gt-600.webp 600w, inaction/offroad/gt-1200.webp 1200w" sizes="(max-width:900px) 80vw, 400px" width="600" height="450" alt="Falcon GT — бездорожье" loading="lazy" decoding="async"><span class="ina__cap">Falcon GT</span></a>
+        <a class="ina__it" href="#select-pro" data-select="pro"><img data-src="inaction/offroad/pro-600.webp" data-srcset="inaction/offroad/pro-600.webp 600w, inaction/offroad/pro-1200.webp 1200w" sizes="(max-width:900px) 80vw, 400px" width="600" height="450" alt="Falcon Pro — бездорожье" loading="lazy" decoding="async"><span class="ina__cap">Falcon Pro</span></a>
+        <a class="ina__it" href="#select-lynx-trail" data-select="lynx-trail"><img data-src="inaction/offroad/lynx-trail-600.webp" data-srcset="inaction/offroad/lynx-trail-600.webp 600w, inaction/offroad/lynx-trail-1200.webp 1200w" sizes="(max-width:900px) 80vw, 400px" width="600" height="450" alt="Falcon Lynx Trail — бездорожье" loading="lazy" decoding="async"><span class="ina__cap">Falcon Lynx Trail</span></a>
+        <a class="ina__it" href="#select-light" data-select="light"><img data-src="inaction/offroad/lite-600.webp" data-srcset="inaction/offroad/lite-600.webp 600w, inaction/offroad/lite-1200.webp 1114w" sizes="(max-width:900px) 80vw, 400px" width="600" height="450" alt="Falcon Lite — бездорожье" loading="lazy" decoding="async"><span class="ina__cap">Falcon Lite</span></a>
+        <a class="ina__it" href="#select-surge-v" data-select="surge-v"><img data-src="inaction/offroad/surge-v-600.webp" data-srcset="inaction/offroad/surge-v-600.webp 600w, inaction/offroad/surge-v-1200.webp 1200w" sizes="(max-width:900px) 80vw, 400px" width="600" height="450" alt="Y-Volt Surge V — бездорожье" loading="lazy" decoding="async"><span class="ina__cap">Y‑Volt Surge V</span></a>
+        <a class="ina__it" href="#select-lynx-x" data-select="lynx-x"><img data-src="inaction/offroad/lynx-x-600.webp" data-srcset="inaction/offroad/lynx-x-600.webp 600w, inaction/offroad/lynx-x-1200.webp 1200w" sizes="(max-width:900px) 80vw, 400px" width="600" height="450" alt="Falcon Lynx X — бездорожье" loading="lazy" decoding="async"><span class="ina__cap">Falcon Lynx X</span></a>
+        <a class="ina__it" href="#select-pro" data-select="pro"><img data-src="inaction/water/pro-600.webp" data-srcset="inaction/water/pro-600.webp 600w, inaction/water/pro-1200.webp 1200w" sizes="(max-width:900px) 80vw, 400px" width="600" height="450" alt="Falcon Pro — у воды" loading="lazy" decoding="async"><span class="ina__cap">Falcon Pro</span></a>
+        <a class="ina__it" href="#select-lynx-trail" data-select="lynx-trail"><img data-src="inaction/water/lynx-trail-600.webp" data-srcset="inaction/water/lynx-trail-600.webp 600w, inaction/water/lynx-trail-1200.webp 1200w" sizes="(max-width:900px) 80vw, 400px" width="600" height="450" alt="Falcon Lynx Trail — у воды" loading="lazy" decoding="async"><span class="ina__cap">Falcon Lynx Trail</span></a>
+        <a class="ina__it" href="#select-light" data-select="light"><img data-src="inaction/water/lite-600.webp" data-srcset="inaction/water/lite-600.webp 600w, inaction/water/lite-1200.webp 1200w" sizes="(max-width:900px) 80vw, 400px" width="600" height="450" alt="Falcon Lite — у воды" loading="lazy" decoding="async"><span class="ina__cap">Falcon Lite</span></a>
+        <a class="ina__it" href="#select-surge-v" data-select="surge-v"><img data-src="inaction/water/surge-v-600.webp" data-srcset="inaction/water/surge-v-600.webp 600w, inaction/water/surge-v-1200.webp 1200w" sizes="(max-width:900px) 80vw, 400px" width="600" height="450" alt="Y-Volt Surge V — у воды" loading="lazy" decoding="async"><span class="ina__cap">Y‑Volt Surge V</span></a>
+      </div>
+      <div class="ina__rail" role="tabpanel" id="ina-mountains" aria-labelledby="ina-tab-mountains" hidden>
+        <a class="ina__it" href="#select-gt" data-select="gt"><img data-src="inaction/mountains/gt-600.webp" data-srcset="inaction/mountains/gt-600.webp 600w, inaction/mountains/gt-1200.webp 1200w" sizes="(max-width:900px) 80vw, 400px" width="600" height="450" alt="Falcon GT — горы" loading="lazy" decoding="async"><span class="ina__cap">Falcon GT</span></a>
+        <a class="ina__it" href="#select-pro" data-select="pro"><img data-src="inaction/mountains/pro-600.webp" data-srcset="inaction/mountains/pro-600.webp 600w, inaction/mountains/pro-1200.webp 1200w" sizes="(max-width:900px) 80vw, 400px" width="600" height="450" alt="Falcon Pro — горы" loading="lazy" decoding="async"><span class="ina__cap">Falcon Pro</span></a>
+        <a class="ina__it" href="#select-light" data-select="light"><img data-src="inaction/mountains/lite-600.webp" data-srcset="inaction/mountains/lite-600.webp 600w, inaction/mountains/lite-1200.webp 1200w" sizes="(max-width:900px) 80vw, 400px" width="600" height="450" alt="Falcon Lite — горы" loading="lazy" decoding="async"><span class="ina__cap">Falcon Lite</span></a>
+        <a class="ina__it" href="#select-surge-v" data-select="surge-v"><img data-src="inaction/mountains/surge-v-600.webp" data-srcset="inaction/mountains/surge-v-600.webp 600w, inaction/mountains/surge-v-1200.webp 1197w" sizes="(max-width:900px) 80vw, 400px" width="600" height="450" alt="Y-Volt Surge V — горы" loading="lazy" decoding="async"><span class="ina__cap">Y‑Volt Surge V</span></a>
+      </div>
+        <button type="button" class="ina__nav ina__nav--prev" data-ina-step="-1" aria-label="Предыдущие фото"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <button type="button" class="ina__nav ina__nav--next" data-ina-step="1" aria-label="Следующие фото"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+      </div>
+      <!-- 27.10.2026 (Михаил, 135): «Ещё фото» — кадры из Instagram 79bike_official по сериям, раскрываются по кнопке -->
+      <div class="ina-more"><button type="button" class="btn btn--ghost ina-more__btn" aria-expanded="false" aria-controls="ina-more">Ещё фото (10)</button>
+      <div class="ina-more__box" id="ina-more" hidden><div class="ina-more__g"><p class="ina-more__t">Пригород</p><div class="ina-more__grid"><a class="ina-more__it" href="#select-light" data-select="light"><img data-src="inaction/more/city-1-600.webp" data-srcset="inaction/more/city-1-600.webp 600w, inaction/more/city-1-1200.webp 1200w" sizes="(max-width:900px) 48vw, 300px" alt="Falcon Lite — пригород" loading="lazy" decoding="async"><span class="ina__cap">Falcon Lite</span></a><a class="ina-more__it" href="#select-light" data-select="light"><img data-src="inaction/more/city-2-600.webp" data-srcset="inaction/more/city-2-600.webp 600w, inaction/more/city-2-1200.webp 1200w" sizes="(max-width:900px) 48vw, 300px" alt="Falcon Lite — пригород" loading="lazy" decoding="async"><span class="ina__cap">Falcon Lite</span></a><a class="ina-more__it" href="#select-lynx-trail" data-select="lynx-trail"><img data-src="inaction/more/city-3-600.webp" data-srcset="inaction/more/city-3-600.webp 600w, inaction/more/city-3-1200.webp 1200w" sizes="(max-width:900px) 48vw, 300px" alt="Falcon Lynx Trail — пригород" loading="lazy" decoding="async"><span class="ina__cap">Falcon Lynx Trail</span></a><a class="ina-more__it" href="#select-lynx-trail" data-select="lynx-trail"><img data-src="inaction/more/city-4-600.webp" data-srcset="inaction/more/city-4-600.webp 600w, inaction/more/city-4-1200.webp 1200w" sizes="(max-width:900px) 48vw, 300px" alt="Falcon Lynx Trail — пригород" loading="lazy" decoding="async"><span class="ina__cap">Falcon Lynx Trail</span></a></div></div><div class="ina-more__g"><p class="ina-more__t">Бездорожье</p><div class="ina-more__grid"><a class="ina-more__it" href="#select-light" data-select="light"><img data-src="inaction/more/off-1-600.webp" data-srcset="inaction/more/off-1-600.webp 600w, inaction/more/off-1-1200.webp 1200w" sizes="(max-width:900px) 48vw, 300px" alt="Falcon Lite — бездорожье" loading="lazy" decoding="async"><span class="ina__cap">Falcon Lite</span></a><a class="ina-more__it" href="#select-lynx-trail" data-select="lynx-trail"><img data-src="inaction/more/off-2-600.webp" data-srcset="inaction/more/off-2-600.webp 600w, inaction/more/off-2-1200.webp 1200w" sizes="(max-width:900px) 48vw, 300px" alt="Falcon Lynx Trail — бездорожье" loading="lazy" decoding="async"><span class="ina__cap">Falcon Lynx Trail</span></a><a class="ina-more__it" href="#select-lynx-trail" data-select="lynx-trail"><img data-src="inaction/more/off-3-600.webp" data-srcset="inaction/more/off-3-600.webp 600w, inaction/more/off-3-1200.webp 1200w" sizes="(max-width:900px) 48vw, 300px" alt="Falcon Lynx Trail — бездорожье" loading="lazy" decoding="async"><span class="ina__cap">Falcon Lynx Trail</span></a></div></div><div class="ina-more__g"><p class="ina-more__t">Горы</p><div class="ina-more__grid"><a class="ina-more__it" href="#select-pro" data-select="pro"><img data-src="inaction/more/gory-1-600.webp" data-srcset="inaction/more/gory-1-600.webp 600w, inaction/more/gory-1-1200.webp 1200w" sizes="(max-width:900px) 48vw, 300px" alt="Falcon Pro — горы" loading="lazy" decoding="async"><span class="ina__cap">Falcon Pro</span></a><a class="ina-more__it" href="#select-lynx-trail" data-select="lynx-trail"><img data-src="inaction/more/gory-2-600.webp" data-srcset="inaction/more/gory-2-600.webp 600w, inaction/more/gory-2-1200.webp 1200w" sizes="(max-width:900px) 48vw, 300px" alt="Falcon Lynx Trail — горы" loading="lazy" decoding="async"><span class="ina__cap">Falcon Lynx Trail</span></a><a class="ina-more__it" href="#select-pro" data-select="pro"><img data-src="inaction/more/gory-3-600.webp" data-srcset="inaction/more/gory-3-600.webp 600w, inaction/more/gory-3-1200.webp 1200w" sizes="(max-width:900px) 48vw, 300px" alt="Falcon Pro — горы" loading="lazy" decoding="async"><span class="ina__cap">Falcon Pro</span></a></div></div></div></div>
+    </div>
+  </section>
+
+  <!-- 4. ЛИНЕЙКА -->
+  <section class="sec" id="models" aria-labelledby="models-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="h2" id="models-title">Линейка 79BIKE</h2>
+        <p>Шесть моделей: от лёгкого байка для первых выездов до полноразмерного эндуро. Нажмите «Выбрать», чтобы посмотреть модель в цвете и с цифрами.</p>
+      </div>
+      <div class="models models--rep" id="model-cards"></div>
+    </div>
+  </section>
+
+  <!-- 5. СЕЛЕКТОР МОДЕЛЕЙ + ЦВЕТ «РАМА / ВСТАВКИ» -->
+  <section class="sec" id="select" aria-labelledby="select-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="h2" id="select-title">Выберите модель</h2>
+      </div>
+      <div class="sel-tools">
+        <div class="tabs" role="group" aria-label="Модель" id="picker"></div>
+        <a class="sel-tools__link" href="#compare"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4v16M17 4v16M3 8h8M13 16h8"/></svg>Сравнить модели</a>
+      </div>
+      <div class="sel">
+        <div class="gal" id="cfg"></div>
+        <div class="buy" id="sel-panel" aria-live="polite"></div>
+      </div>
+      <div class="sel-revs" id="sel-revs" hidden></div>
+    </div>
+  </section>
+
+  <!-- 6. СРАВНЕНИЕ -->
+  <section class="sec" id="compare" aria-labelledby="compare-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <h2 class="h2" id="compare-title">Сравнение моделей</h2>
+          <p>Цифры всей линейки в одной таблице. «Купить» откроет модель в фирменном магазине 79BIKE.</p>
+        </div>
+        <a class="btn btn--ghost" href="https://claude.ai/artifact/AyD6SKmq1hL2juyCRy7Tk1" data-release-href="https://falcon-bike.ru/compare" style="min-height:44px">Полное сравнение</a>
+      </div>
+      <div class="cmp cmp-full" id="compare-table" tabindex="0" role="region" aria-label="Сравнение характеристик моделей"></div>
+      <p class="cmp-hint">Таблица прокручивается вбок</p>
+    </div>
+  </section>
+
+  <!-- 7. ПРЕДУПРЕЖДЕНИЕ + ДИЛЕРЫ + КАРТА -->
+  <section class="sec" id="official" aria-labelledby="grey-title">
+    <div class="wrap">
+      <div class="warn" role="note">
+        <svg class="icon" aria-hidden="true" focusable="false"><use href="../assets/icons.svg#alert"></use></svg>
+        <div>
+          <h2 id="grey-title">Покупайте байки 79BIKE только в официальном магазине и у дилеров бренда в России</h2>
+          <p>Байки из других стран не имеют гарантийного обслуживания и техподдержки. Такие байки блокируются автоматически на территории РФ через некоторое время после активации. Разблокировать такой байк не сможет даже официальный дилер. Запчасти для таких байков могут быть несовместимы с официальными версиями.</p>
+        </div>
+      </div>
+
+      <div class="dealers" id="dealers-map">
+        <div class="sec-head"><h2 class="h2">Дилеры 79BIKE в России</h2></div>
+        <figure class="map">
+          <svg viewBox="0 0 1000 620" role="group" aria-labelledby="map-title map-desc" id="map-svg">
+            <title id="map-title">Карта дилеров 79BIKE в России</title>
+            <desc id="map-desc">Карта городов с дилерами 79BIKE: Москва (фирменный магазин 79BIKE и ещё шесть дилеров), Санкт-Петербург, Нижний Новгород, Чебоксары, Киров, Краснодар, Аксай, Кореновск и Барнаул. Полный список — под картой.</desc>
+            <image id="map-base" href="map/dealers-d.svg" x="0" y="0" width="1000" height="620"></image>
+            <g id="map-pins"></g>
+          </svg>
+          <figcaption>Города на своих местах. Нажмите на город — откроется список его дилеров.</figcaption>
+        </figure>
+        <div class="dgroups" id="dealer-list" role="list" aria-label="Дилеры 79BIKE по городам"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. ДИЛЕРАМ -->
+  <section class="sec" id="dealers" aria-labelledby="partner-title">
+    <div class="wrap partner">
+      <div>
+        <h2 class="h2" id="partner-title">Стать дилером 79BIKE</h2>
+        <p class="t-lead">Приглашаем к сотрудничеству только специализированных дилеров — магазины и мотосалоны мототехники в регионах России, где покупатели могут посмотреть технику вживую и обслужить её.</p>
+        <details class="tm-note tm-note--fold">
+          <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="../assets/icons.svg#alert"></use></svg><b>Реализация техники 79BIKE на территории РФ возможна только по согласованию с эксклюзивным представителем</b><svg class="tm-note__chev" aria-hidden="true" focusable="false"><use href="../assets/icons.svg#chevron-down"></use></svg></summary>
+          <p>Новая техника 79BIKE поступает в Россию только через официальный канал — по эксклюзивному договору с заводом-производителем. Продажа байков, ввезённых в обход этого канала, использование товарного знака, логотипа и официальных фото 79BIKE в объявлениях и на сайтах без разрешения, а также выдача себя за официального дилера нарушают исключительное право на товарный знак (ст. 1484 ГК РФ). За каждое нарушение суд может взыскать компенсацию до 5&nbsp;000&nbsp;000&nbsp;₽ (ст. 1515 ГК РФ), контрафактный товар изымается. Гарантия и техподдержка предоставляются на технику, купленную в фирменном магазине и у официальных дилеров.</p>
+        </details>
+        <h3 class="h3" id="req-title">Что мы ожидаем от партнёра</h3>
+        <ul class="terms" id="terms" aria-labelledby="req-title"></ul>
+        <h3 class="h3" id="plus-title">Будет плюсом</h3>
+        <ul class="list" id="pluses" aria-labelledby="plus-title"></ul>
+      </div>
+      <div class="partner__form">
+        <p class="partner__terms" style="margin:0 0 14px"><svg class="icon" aria-hidden="true" focusable="false"><use href="../assets/icons.svg#card"></use></svg>Условия сотрудничества — по запросу</p>
+        <h3 class="h3" id="partner-form-title">Заявка на дилерство</h3>
+        <div class="pmode" role="group" aria-label="Вид заявки">
+          <button type="button" class="pmode__b" data-pmode="full" aria-pressed="true">Подробная заявка</button>
+          <button type="button" class="pmode__b" data-pmode="quick" aria-pressed="false">Быстрая связь</button>
+        </div>
+        <p id="pform-lead">Оставьте контакты — менеджер 79BIKE позвонит, расскажет об условиях и пришлёт коммерческое предложение.</p>
+        <form class="pform js-demo-form" id="pform" aria-labelledby="partner-form-title" data-success="Заявка на дилерство принята — менеджер 79BIKE свяжется с вами." novalidate>
+          <label class="pf-full">Компания<input name="company" autocomplete="organization" placeholder="Название магазина или мотосалона" required></label>
+          <label class="pf-full">Город<input name="city" autocomplete="address-level2" placeholder="Например, Екатеринбург" required></label>
+          <label class="pf-full pf-opt"><span>Сайт компании <span class="pf-optl">(необязательно)</span></span><input type="url" name="site" inputmode="url" autocomplete="url" placeholder="https://"></label>
+          <label class="pf-full">Имя<input name="name" autocomplete="name" placeholder="Как к вам обращаться" required></label>
+          <fieldset class="fhow" data-how><legend>Как удобнее связаться</legend><label class="fhow__o"><input type="radio" name="how" value="call" checked><span>Позвонить</span></label><label class="fhow__o"><input type="radio" name="how" value="whatsapp"><span>WhatsApp</span></label><label class="fhow__o"><input type="radio" name="how" value="telegram"><span>Telegram</span></label><label class="fhow__o"><input type="radio" name="how" value="vk"><span>VK Мессенджер</span></label></fieldset>
+          <label><span data-tel-l>Телефон</span><input class="input--tel" type="tel" name="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" data-contact required></label>
+          <label class="form__check"><input type="checkbox" name="pd" data-req-check="Чтобы отправить заявку, отметьте согласие на обработку персональных данных."><span>Даю <a href="https://claude.ai/artifact/AyD6SKmq1hL2juyCRy7Tk1" data-release-href="https://falcon-bike.ru/consent" target="_blank" rel="noopener">согласие на обработку персональных данных</a>. Подробнее — в <a href="https://claude.ai/artifact/AyD6SKmq1hL2juyCRy7Tk1" data-release-href="https://falcon-bike.ru/privacy" target="_blank" rel="noopener">Политике обработки персональных данных</a>.</span></label>
+          <button class="btn btn--main" type="submit">Отправить заявку</button>
+          <p class="form-msg" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8a. БЛОГ ПРЕДСТАВИТЕЛЬСТВА (blog.js → карточки; статьи — blog.html?s=<slug>) -->
+  <section class="sec" id="blog" aria-labelledby="blog-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="h2" id="blog-title">Блог 79BIKE</h2>
+        <a class="btn btn--ghost" href="blog.html">Все статьи</a>
+      </div>
+      <div class="bgrid" id="rep-blog-cards"></div>
+      <p class="note">Как выбрать модель, сравнения и уход за байком — в <a href="https://falcon-bike.ru/blog">блоге фирменного магазина 79BIKE</a>.</p>
+    </div>
+  </section>
+  <script>
+  (function () {
+    var B = window.REP_BLOG, box = document.getElementById("rep-blog-cards");
+    if (!B || !box) { var s = document.getElementById("blog"); if (s) s.hidden = true; return; }
+    function esc(t) { return String(t == null ? "" : t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+    function rub(id) { for (var i = 0; i < B.rubrics.length; i++) if (B.rubrics[i].id === id) return B.rubrics[i].name; return ""; }
+    box.innerHTML = B.posts.slice(0, 3).map(function (p) {
+      return '<article class="bcard"><a href="blog.html?s=' + encodeURIComponent(p.slug) + '"><span class="bcard__pic"><img src="' + esc(p.cover) + '" alt="' + esc(p.coverAlt || p.title) + '" loading="lazy" decoding="async"></span><span class="bcard__body"><span class="bcard__meta">' + esc(rub(p.rubric)) + " · " + p.readMin + ' мин</span><span class="bcard__t">' + esc(p.title) + '</span><span class="bcard__lead">' + esc(p.lead) + "</span></span></a></article>";
+    }).join("");
+  })();
+  </script>
+
+  <!-- СОБЫТИЯ: данные events.js (общие с falcon-bike.ru/events), вывод — events-ui.js -->
+  <section class="sec" id="events" aria-labelledby="events-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="h2" id="events-title">События</h2>
+        <p>Выставки 79BIKE в России и мире, тест-драйвы и встречи с байками. Новые события появляются здесь первыми.</p>
+      </div>
+      <div id="rep-events"></div>
+    </div>
+  </section>
+
+
+  <!-- 26.10.2026 (Михаил): заявка блогера — прямо на 79bike, после отправки показываем условия; поп-ап «Техническая поддержка» -->
+  <dialog class="dlg" id="dlg-blog" aria-labelledby="dlg-blog-t">
+    <button type="button" class="dlg__x" data-dlg-close aria-label="Закрыть"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div class="dlg__body" data-step="form">
+      <h3 class="h3" id="dlg-blog-t">Заявка на сотрудничество</h3>
+      <p class="dlg__lead">Расскажите о себе — менеджер 79BIKE свяжется с вами и обсудит формат обзора.</p>
+      <div class="dlg__terms"><p class="dlg__tt">Условия сотрудничества</p>
+      <ul class="dlg__list">
+        <li>Каждый аккаунт рассматриваем индивидуально.</li>
+        <li>На тест-драйв даём Falcon Lite, Pro, GT или Lynx Trail.</li>
+        <li>Техника выдаётся только под залог полной стоимости.</li>
+        <li>Доставка оплачивается отдельно.</li>
+        <li>Готовый обзор публикуем в наших каналах и в каналах блогера.</li>
+      </ul></div>
+      <form class="pform js-demo-form" data-success="Заявка принята." novalidate>
+        <label>Имя<input name="name" autocomplete="name" placeholder="Как к вам обращаться" required></label>
+        <label>Ссылка на канал<input type="url" name="channel" inputmode="url" placeholder="https://" required></label>
+        <fieldset class="pchips"><legend>Площадки</legend><label class="pchip"><input type="checkbox" name="platforms" value="YouTube"><span>YouTube</span></label><label class="pchip"><input type="checkbox" name="platforms" value="VK Видео"><span>VK Видео</span></label><label class="pchip"><input type="checkbox" name="platforms" value="RUTUBE"><span>RUTUBE</span></label><label class="pchip"><input type="checkbox" name="platforms" value="Telegram"><span>Telegram</span></label><label class="pchip"><input type="checkbox" name="platforms" value="Instagram"><span>Instagram</span></label><label class="pchip"><input type="checkbox" name="platforms" value="TikTok"><span>TikTok</span></label><label class="pchip"><input type="checkbox" name="platforms" value="Дзен"><span>Дзен</span></label><label class="pchip"><input type="checkbox" name="platforms" value="Другая"><span>Другая</span></label></fieldset>
+        <fieldset class="fhow" data-how><legend>Как удобнее связаться</legend><label class="fhow__o"><input type="radio" name="how" value="call" checked><span>Позвонить</span></label><label class="fhow__o"><input type="radio" name="how" value="whatsapp"><span>WhatsApp</span></label><label class="fhow__o"><input type="radio" name="how" value="telegram"><span>Telegram</span></label><label class="fhow__o"><input type="radio" name="how" value="vk"><span>VK Мессенджер</span></label></fieldset><label><span data-tel-l>Телефон</span><input class="input--tel" type="tel" name="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" data-contact required></label><label class="form__check"><input type="checkbox" name="age18" data-req-check="Подтвердите, что вам есть 18 лет и вы готовы внести залог."><span>Мне есть 18 лет, я готов внести залог на случай повреждений</span></label>
+        <label class="form__check"><input type="checkbox" name="pd" data-req-check="Чтобы отправить заявку, отметьте согласие на обработку персональных данных."><span>Даю <a href="https://claude.ai/artifact/AyD6SKmq1hL2juyCRy7Tk1" data-release-href="https://falcon-bike.ru/consent" target="_blank" rel="noopener">согласие на обработку персональных данных</a>. Подробнее — в <a href="https://claude.ai/artifact/AyD6SKmq1hL2juyCRy7Tk1" data-release-href="https://falcon-bike.ru/privacy" target="_blank" rel="noopener">Политике обработки персональных данных</a>.</span></label>
+        <button class="btn btn--main" type="submit">Отправить заявку</button>
+        <p class="form-msg" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+    <div class="dlg__body" data-step="done" hidden>
+      <p class="dlg__ok">Заявка принята — менеджер 79BIKE свяжется с вами и обсудит формат обзора.</p>
+      <p class="dlg__fine">В прототипе заявка никуда не отправляется.</p>
+      <button type="button" class="btn btn--ghost" data-dlg-close>Понятно</button>
+    </div>
+  </dialog>
+
+  <dialog class="dlg" id="dlg-support" aria-labelledby="dlg-sup-t">
+    <button type="button" class="dlg__x" data-dlg-close aria-label="Закрыть"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div class="dlg__body" data-step="who">
+      <h3 class="h3" id="dlg-sup-t">Техническая поддержка</h3>
+      <p class="dlg__lead">Консультируем официальных дилеров 79BIKE и владельцев байков, купленных у официальных дилеров или в фирменном магазине Falcon-bike: эксплуатация, зарядка, коды ошибок, обслуживание и подбор оригинальных запчастей.</p>
+      <p class="dlg__q">Где вы купили байк?</p>
+      <div class="dlg__opts">
+        <button type="button" class="dlg__opt" data-sup="ok" data-src="Фирменный магазин Falcon-bike">В фирменном магазине Falcon-bike</button>
+        <button type="button" class="dlg__opt" data-sup="ok" data-src="Официальный дилер 79BIKE">У официального дилера 79BIKE</button>
+        <button type="button" class="dlg__opt" data-sup="ok" data-src="Я — официальный дилер">Я — официальный дилер 79BIKE</button>
+        <button type="button" class="dlg__opt dlg__opt--mute" data-sup="no">У другого продавца</button>
+      </div>
+    </div>
+    <div class="dlg__body" data-step="no" hidden>
+      <h3 class="h3">Обратитесь к своему продавцу</h3>
+      <p class="dlg__lead">Консультации и поддержку оказываем официальным дилерам 79BIKE и покупателям фирменного магазина Falcon-bike. Если байк куплен у другого продавца, поддержку и гарантию обеспечивает он — обратитесь к нему.</p>
+      <div class="dlg__row"><a class="btn btn--main" href="#official" data-dlg-close>Официальные дилеры</a><button type="button" class="btn btn--ghost" data-sup="back">Назад</button></div>
+    </div>
+    <div class="dlg__body" data-step="form" hidden>
+      <h3 class="h3">Консультация специалиста</h3>
+      <p class="dlg__lead">Опишите вопрос — специалист 79BIKE свяжется с вами удобным способом.</p>
+      <form class="pform js-demo-form" data-success="Заявка на консультацию принята — специалист 79BIKE свяжется с вами." novalidate>
+        <input type="hidden" name="source" value="">
+        <label>Имя<input name="name" autocomplete="name" placeholder="Как к вам обращаться" required></label>
+        <label>Модель<select name="model" class="dlg__sel"><option>Falcon GT</option><option>Falcon Pro</option><option>Falcon Lynx Trail</option><option>Falcon Lite</option><option>Y-Volt Surge V</option><option>Другая / несколько</option></select></label>
+        <label class="pf-opt"><span>Вопрос <span class="pf-optl">(необязательно)</span></span><textarea name="question" rows="3" placeholder="Например: какой код ошибки на дисплее"></textarea></label>
+        <fieldset class="fhow" data-how><legend>Как удобнее связаться</legend><label class="fhow__o"><input type="radio" name="how" value="call" checked><span>Позвонить</span></label><label class="fhow__o"><input type="radio" name="how" value="whatsapp"><span>WhatsApp</span></label><label class="fhow__o"><input type="radio" name="how" value="telegram"><span>Telegram</span></label><label class="fhow__o"><input type="radio" name="how" value="vk"><span>VK Мессенджер</span></label></fieldset><label><span data-tel-l>Телефон</span><input class="input--tel" type="tel" name="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" data-contact required></label><label class="form__check"><input type="checkbox" name="pd" data-req-check="Чтобы отправить заявку, отметьте согласие на обработку персональных данных."><span>Даю <a href="https://claude.ai/artifact/AyD6SKmq1hL2juyCRy7Tk1" data-release-href="https://falcon-bike.ru/consent" target="_blank" rel="noopener">согласие на обработку персональных данных</a>. Подробнее — в <a href="https://claude.ai/artifact/AyD6SKmq1hL2juyCRy7Tk1" data-release-href="https://falcon-bike.ru/privacy" target="_blank" rel="noopener">Политике обработки персональных данных</a>.</span></label>
+        <button class="btn btn--main" type="submit">Получить консультацию</button>
+        <p class="form-msg" role="status" aria-live="polite"></p>
+      </form>
+      <button type="button" class="dlg__back" data-sup="back">← Назад</button>
+    </div>
+  </dialog>
+  <!-- 8b. БЛОГЕРАМ И МЕДИА -->
+  <section class="sec" id="bloggers" aria-labelledby="bloggers-title">
+    <div class="wrap">
+      <div class="rep-blog">
+        <div class="rep-blog__text">
+          <p class="rep-blog__tag">Блогерам и медиа</p>
+          <h2 class="h2" id="bloggers-title">Снимаете обзоры мототехники?</h2>
+          <p>Дадим электромотоцикл 79BIKE на тест-драйв для обзора: Falcon Lite, Pro, GT или Lynx Trail. Поделимся официальными фото, видео и характеристиками. Условия партнёрства обсуждаем индивидуально.</p>
+          <ul class="rep-blog__list">
+            <li>Мото-, эндуро-, авто- и лайфстайл-блогеры</li>
+            <li>YouTube, VK Видео, RUTUBE, Telegram, Instagram</li>
+            <li>Честный обзор, отметка бренда и маркировка рекламы по закону</li>
+          </ul>
+          <p class="rep-blog__fine">Каждый аккаунт рассматриваем индивидуально. Байк передаём на съёмку только под залог его полной стоимости, а доставку до места съёмки и обратно блогер оплачивает сам.</p>
+        </div>
+        <div class="rep-blog__cta">
+          <button type="button" class="btn btn--main" data-dlg="dlg-blog">Оставить заявку</button>
+          <a class="rep-blog__mail" href="mailto:Sales@79bike.ru?subject=%D0%A1%D0%BE%D1%82%D1%80%D1%83%D0%B4%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%BE%20%D1%81%20%D0%B1%D0%BB%D0%BE%D0%B3%D0%B5%D1%80%D0%BE%D0%BC">Sales@79bike.ru</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ЧАСТЫЕ ВОПРОСЫ: свои тексты 79bike.ru (не копия FAQ магазина) -->
+  <section class="sec" id="faq" aria-labelledby="faq-title">
+    <div class="wrap">
+      <div class="sec-head"><h2 class="h2" id="faq-title">Частые вопросы</h2></div>
+      <div class="rfaq" id="rep-faq"></div>
+    </div>
+  </section>
+
+  <!-- 9. О НАС + КОНТАКТЫ -->
+  <section class="sec" id="about" aria-labelledby="about-title">
+    <div class="wrap about">
+      <div>
+        <h2 class="h2" id="about-title">О нас</h2>
+        <div class="prose">
+          <p>79BIKE в России — официальное представительство завода-производителя электромотоциклов 79BIKE в Российской Федерации, обладающее эксклюзивным правом на реализацию продукции 79BIKE в России.</p>
+          <p>Представительство развивает сеть официальных дилеров в регионах, организует гарантийное обслуживание, поставки оригинальных запчастей и техническую поддержку официальных дилеров и клиентов фирменного магазина на русском языке.</p>
+          <p>Фирменный магазин 79BIKE находится в Москве: в нём представлена вся линейка, а заказ можно оформить с доставкой по всей России.</p>
+        </div>
+        <a class="btn btn--main shopbtn" href="https://falcon-bike.ru/"><span>Фирменный магазин 79BIKE</span><small>Быстрая доставка по РФ</small></a>
+      </div>
+      <div class="room contacts" id="contacts" aria-labelledby="contacts-title">
+        <h2 class="h3" id="contacts-title">Контакты</h2>
+        <a class="room__phone" href="tel:+79999005588" style="text-decoration:none">+7 (999) 900-55-88</a>
+        <dl>
+          <dt>Почта</dt><dd><a href="mailto:Sales@79bike.ru">Sales@79bike.ru</a></dd>
+          <dt>Город</dt><dd>Москва</dd>
+        </dl>
+        <div class="social" id="contacts-messengers" aria-label="Мессенджеры"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ПОДВАЛ 79bike.ru: сетка и компоненты подвала falcon-bike.ru -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div class="foot__brand" style="display:flex;flex-direction:column;gap:14px">
+        <a class="rlogo" href="index.html" aria-label="79BIKE, на главную"><img src="logo-white.svg" alt="" width="114" height="20"><span class="rlogo__plate">Официальное представительство в России</span></a>
+        <p>Официальное представительство завода-производителя 79BIKE в России. Электромотоциклы Falcon, Lynx и <span class="nowrap">Y-Volt</span> Surge V с гарантией, запчастями в наличии и техподдержкой на русском языке для официальных дилеров и клиентов Falcon-Bike.</p>
+        <div class="social" id="footer-social"></div>
+      </div>
+      <div><h3>Модели</h3><ul id="footer-models"></ul></div>
+      <div><h3>Клиентам</h3>
+        <ul>
+          <li><a href="#faq">Частые вопросы</a></li>
+          <li><a href="warranty.html">Гарантийная политика</a></li>
+          <li><a href="https://falcon-bike.ru/accessories">Оригинальные запчасти</a></li>
+          <li><a href="instructions.html">Инструкции</a></li>
+          <li><a href="#official">Дилеры 79BIKE</a></li>
+          <li><a href="#dealers">Стать дилером</a></li>
+          <li><a href="#events">События</a></li>
+          <li><a href="blog.html">Блог 79BIKE</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="legal">
+      <span>© Официальное представительство 79BIKE в России. Копирование материалов сайта без письменного разрешения правообладателя не допускается.</span>
+      <span>Фирменный магазин 79BIKE — <a href="https://falcon-bike.ru/">falcon-bike.ru</a></span>
+      <a href="warranty.html">Гарантийная политика</a>
+      <a href="#official">Дилеры</a>
+      <a href="#dealers">Стать дилером</a>
+      <a href="https://claude.ai/artifact/AyD6SKmq1hL2juyCRy7Tk1" data-release-href="https://falcon-bike.ru/privacy" target="_blank" rel="noopener">Политика обработки персональных данных</a>
+      <a href="https://claude.ai/artifact/AyD6SKmq1hL2juyCRy7Tk1" data-release-href="https://falcon-bike.ru/consent" target="_blank" rel="noopener">Согласие на обработку ПД</a>
+    <a href="#cookie-settings" data-cookie-settings>Настройки cookie</a></div>
+  </div>
+</footer>
+
+<!-- нижняя панель на телефоне и планшете: появляется после первого экрана -->
+<div class="dock dock--page is-off" id="dock">
+  <div class="dock__msgs" id="dock-msgs" hidden><b>Написать нам</b><small style="display:block;max-width:240px;padding:0 8px 6px;font-size:12px;line-height:1.35;color:var(--mute,#aaa)">Помощь владельцам — покупателям Falcon-Bike и официальным дилерам. Купили у другого продавца — обратитесь к нему.</small><a data-l="telegram" target="_blank" rel="noopener">Telegram</a><a data-l="whatsapp" target="_blank" rel="noopener">WhatsApp</a><a href="https://vk.me/79bike" target="_blank" rel="noopener">VK Мессенджер</a><a href="tel:+79999005588">Позвонить: +7 (999) 900-55-88</a></div>
+  <a class="btn btn--main dock__shop" href="https://falcon-bike.ru/"><span>Фирменный магазин 79BIKE</span><small>Доставка по всей России</small></a>
+  <button type="button" class="dock__msg" id="dock-msg" aria-label="Написать в мессенджер" aria-expanded="false" aria-controls="dock-msgs"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.8-.8L3 20.5l1.4-4.6A8 8 0 0 1 3 11.5 8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5Z"/></svg></button>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  "use strict";
+  var UI = window.UI;
+  var C = window.CONTENT || {};
+  var esc = UI.esc, icon = UI.icon;
+  function $(id) { return document.getElementById(id); }
+
+  /* Подписи моделей для 79bike.ru (слайды 41–42 ТЗ) */
+  var REP = {
+    "gt": { for: "Флагман линейки для опытных райдеров", short: "GT", code: "GT" },
+    "pro": { for: "Для любителей и начинающих", short: "Pro", code: "PRO" },
+    "lynx-trail": { for: "Для высоких райдеров · Редуктор и музыка через Bluetooth", short: "Lynx Trail", code: "LYNX" },
+    "light": { for: "Для начинающих · Экономичный", short: "Lite", code: "LITE" },
+    "lynx-x": { for: "Старт продаж — 2027 · Самый мощный байк линейки Lynx", short: "Lynx X", code: "X" },
+    "surge-v": { for: "Для профессионалов · Полноразмерный эндуро", short: "Y-Volt", code: "SV" }
+  };
+  /* страницы моделей на falcon-bike.ru (адреса — как в SEO-плане нового сайта) */
+  var SHOP = "https://falcon-bike.ru/";
+  var LIVE = { "gt": "falcongt", "pro": "falcon-pro", "lynx-trail": "lynx", "light": "falcon_lite", "lynx-x": "lynx-x", "surge-v": "surge-v" };
+  function shopUrl(slug) { return SHOP + (LIVE[slug] || ""); }
+  /* вырезанные байки без фона (те же файлы, что на falcon-bike.ru), все развёрнуты вправо;
+     высота — в % от самой высокой модели: масштаб по реальной длине и высоте (как CUT_H в pub3/assets/app.js) */
+  var CUT_H = { "gt": 93.6, "pro": 90.5, "lynx-trail": 92.0, "light": 91.0, "lynx-x": 100.0, "surge-v": 96.4 };
+  function cut(slug) { return "../assets/photos/cut/" + slug + ".webp" + "?v=4"; }
+  var SELECTABLE = ["gt", "pro", "lynx-trail", "light", "surge-v", "lynx-x"];
+  var ORDER = UI.models.map(function (m) { return m.slug; });
+  function nb(t) { return String(t).replace(/Y-Volt/g, "Y‑Volt"); }
+  var ext = ' target="_blank" rel="noopener"';
+  var CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
+  /* 26.10.2026 (Михаил): у Y-Volt Surge V энергоёмкость в кВт·ч не указываем — ёмкость как в руководстве: «97 В, 45 А·ч» */
+  function batSV(m) { var sp = m.specs || {}; return m.slug === "surge-v" && sp.voltage && sp.capacityAh ? sp.voltage + "\u00a0В, " + sp.capacityAh + "\u00a0Ач" : ""; }
+  function kv(m) { return [UI.fmtSpecText(m, "powerKw"), UI.fmtSpecText(m, "speedKmh"), batSV(m) || UI.fmtSpecText(m, "capacityAh")].filter(Boolean).join(", "); }
+
+  /* ---------- шапка: мега-меню «Модели» и мобильное меню ---------- */
+  $("dd-models").innerHTML = SELECTABLE.map(function (s) {
+    var m = UI.modelBySlug(s);
+    return '<a href="#select-' + s + '"><span class="mega__pic"><img class="is-cut" src="' + cut(s) + '" alt="" loading="lazy" decoding="async"></span>' +
+      '<span style="display:flex;flex-direction:column;gap:2px;color:var(--fg);font-weight:700">' + esc(nb(m.name)) + "<span>" + esc(UI.fmtSpecText(m, "powerKw")) + "</span></span></a>";
+  }).join("") + '<a class="mega__all" href="#compare">Сравнить модели</a>';
+  $("menu-models").innerHTML = SELECTABLE.map(function (s) {
+    return '<a href="#select-' + s + '"><span class="mega__pic" style="width:100%;height:auto;aspect-ratio:16/10"><img class="is-cut" src="' + cut(s) + '" alt="" loading="lazy"></span>' + esc(nb(UI.modelBySlug(s).name)) + "</a>";
+  }).join("");
+
+  (function initHeader() {
+    var dd = document.querySelectorAll(".nav__btn[aria-controls]");
+    function closeDrops(except) {
+      dd.forEach(function (b) { if (b === except) return; b.setAttribute("aria-expanded", "false"); $(b.getAttribute("aria-controls")).hidden = true; });
+    }
+    dd.forEach(function (b) {
+      b.addEventListener("click", function (e) {
+        e.stopPropagation();
+        var open = b.getAttribute("aria-expanded") !== "true";
+        closeDrops(b);
+        b.setAttribute("aria-expanded", String(open));
+        $(b.getAttribute("aria-controls")).hidden = !open;
+      });
+    });
+    document.addEventListener("click", function (e) { if (!e.target.closest(".nav__item") || e.target.closest(".drop a")) closeDrops(); });
+    var menu = $("menu"), openBtn = $("menu-open"), closeBtn = $("menu-close");
+    function setMenu(open) {
+      menu.hidden = !open;
+      openBtn.setAttribute("aria-expanded", String(open));
+      document.documentElement.style.overflow = open ? "hidden" : "";
+      if (open) closeBtn.focus(); else openBtn.focus({ preventScroll: true });
+    }
+    openBtn.addEventListener("click", function () { setMenu(true); });
+    closeBtn.addEventListener("click", function () { setMenu(false); });
+    menu.addEventListener("click", function (e) { if (e.target.closest("a")) { menu.hidden = true; openBtn.setAttribute("aria-expanded", "false"); document.documentElement.style.overflow = ""; } });
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "Escape") return;
+      if (!menu.hidden) { setMenu(false); return; }
+      var ob = document.querySelector('.nav__btn[aria-expanded="true"]');
+      closeDrops(); if (ob) ob.focus();
+    });
+  })();
+
+  /* мессенджеры и соцсети — ссылки как в магазине (UI.links из ../assets/app.js) */
+  var L = UI.links;
+  function pills(list) {
+    return list.map(function (x) { return '<a href="' + esc(L[x[0]] || UI.RUTUBE) + '"' + ext + ">" + x[1] + "</a>"; }).join("");
+  }
+  $("contacts-messengers").innerHTML = pills([["telegram", "Telegram"], ["whatsapp", "WhatsApp"]]) + '<a href="https://vk.me/79bike"' + ext + '>VK Мессенджер</a>';
+  var SOC_IC2 = {
+    tg: '<path d="M3.75 11.7l15.75-6.45-2.85 13.95-6-4.5-2.4 2.55.15-4.65L16.5 7.35"/><path d="M3.75 11.7l4.65 1.95"/>',
+    wa: '<path d="M4 20l1.3-3.9A8.6 8.6 0 1 1 8.2 19z"/><path d="M9.2 8.4c-.4 1 .1 2.6 1.5 4s3 1.9 4 1.5l.8-1.3-1.8-1-.8.7a3.6 3.6 0 0 1-1.6-1.6l.7-.8-1-1.8z"/>',
+    vk: '<path d="M3.75 7.5l3 9 3-9M13.5 7.5v9M19.2 7.5L14.1 12l5.4 4.5"/>',
+    rt: '<path d="M6.3 18V6h5.4a3.2 3.2 0 0 1 0 6.4H6.3M11.4 12.4l4.3 5.6"/><path d="M17.6 6h.01" stroke-width="2.6"/>',
+    vkm: '<path d="M4 5.5h16v10.5H9.5L5 19.5V16H4z"/><path d="M7.6 8.6l1.6 4.4 1.6-4.4M12.6 8.6v4.4M16.4 8.6l-2.6 2.2 2.8 2.2"/>',
+    dz: '<path d="M9.76 5h5.74v11.2M9.76 5c0 5.32-1.12 9.24-2.8 11.2M5.7 16.2h12.6M5.7 16.2v2.8M18.3 16.2v2.8"/>'
+  };
+  /* 26.10 (Михаил): как на falcon — «Написать нам» (мессенджеры) отдельно от «Мы в соцсетях» */
+  (function () {
+    function a(k, t, h) { return '<a class="soc__a" href="' + esc(h) + '"' + ext + '><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + SOC_IC2[k] + "</svg>" + t + "</a>"; }
+    var el = $("footer-social"); el.className = "soc";
+    el.innerHTML = '<p class="soc__h">Написать нам</p><div class="soc__row">' + a("tg", "Telegram", L.telegram) + a("wa", "WhatsApp", L.whatsapp) + a("vkm", "VK Мессенджер", "https://vk.me/79bike") + "</div>" +
+      '<p class="soc__h">Мы в соцсетях</p><div class="soc__row">' + a("vk", "ВКонтакте", L.vk) + a("rt", "RUTUBE", L.rutube || UI.RUTUBE) + a("dz", "Дзен", L.dzen) + "</div>";
+  })();
+  $("footer-models").innerHTML = ORDER.map(function (s) {
+    return '<li><a href="' + shopUrl(s) + '">' + esc(nb(UI.modelBySlug(s).name)) + "</a></li>";
+  }).join("") + '<li><a href="' + SHOP + 'compare">Сравнение моделей</a></li>';
+
+  /* ---------- факты: гарантия (без срока — ссылка на политику), запчасти (каталог магазина), техподдержка ---------- */
+  var facts = [
+    { i: "shield", t: "Гарантия", d: "Гарантийный ремонт в России. Условия — в гарантийной политике.", href: "warranty.html" },
+    { i: "wrench", t: "Оригинальные запчасти", d: "Большой выбор, каталог — в фирменном магазине.", href: "https://falcon-bike.ru/accessories" },
+    { i: "phone", t: "Техническая поддержка", d: "Для официальных дилеров и клиентов фирменного магазина Falcon-bike.", href: "#support" }
+  ];
+  function factLi(f, full) { return '<li><a class="fact" href="' + f.href + '">' + icon(f.i) + "<span><b>" + esc(f.t) + "</b>" + (full ? esc(f.d) : "") + "</span>" + CHEV + "</a></li>"; }
+  $("brand-facts").innerHTML = facts.map(function (f) { return factLi(f, true); }).join("");
+
+  /* ---------- первый экран: вся линейка в одном кадре, в одном масштабе ---------- */
+  $("hero-lineup").innerHTML = ORDER.map(function (s) {
+    var m = UI.modelBySlug(s), soon = m.status === "soon";
+    return '<a class="lineup__it" role="listitem" href="#select-' + s + '" data-select="' + s + '"><span class="lineup__pic"><img class="is-cut" src="' + cut(s) + '" alt="' + esc(m.name) + '" style="height:' + (CUT_H[s] * 0.88).toFixed(1) + '%" decoding="async"' + (s === "gt" ? ' fetchpriority="high"' : ' loading="lazy"') + '>' + (soon ? '<span class="lineup__soon">2027</span>' : "") + '</span><span class="lineup__n">' + esc(nb(m.name)) + "</span></a>";
+  }).join("");
+
+  /* ---------- технологии: байк с точками ----------
+     Свои формулировки (не тексты магазина). Точки — в % от фото Falcon GT (cut/gt.webp). */
+  var HOT = [
+    { x: 43, y: 69, i: "motor", t: "Тяга с первого поворота ручки газа", d: "Электромотор выдаёт момент сразу — без сцепления и переключения передач." },
+    { x: 57, y: 66, i: "chip", t: "Умный контроллер 79BIKE FOC", d: "Плавно дозирует мощность и следит за режимами работы мотора и батареи." },
+    { x: 50, y: 45, i: "battery", t: "Батареи на ячейках Samsung и LG", d: "Ячейки известных производителей в герметичном корпусе рамы." },
+    { x: 73, y: 22, i: "headlight", t: "Светодиодная оптика и дальний свет", d: "Яркая LED-фара для поездок в сумерках и в лесу." },
+    { x: 61, y: 6, i: "controls", t: "Три режима езды: Eco, Drive, Sport", d: "Переключаются на руле: от экономичного до максимальной динамики. В режиме Eco мощность можно ограничить до 3,9 кВт." },
+    { x: 75, y: 48, i: "suspension", t: "Регулируемая подвеска Fastace", d: "Настройка под вес райдера и характер трассы." },
+    { x: 16, y: 70, i: "reverse", t: "Задний ход для манёвров", d: "Помогает выкатить байк задом без усилий." }
+  ];
+  /* 25.10: «Технологии» — истории с крупными планами */
+  var TPIC = ["tech/motor.webp?v=5", "tech/controller.webp?v=5", "tech/battery.webp?v=5", "tech/light.webp?v=5", "tech/dash.webp?v=5", "tech/fork.webp?v=5", "tech/reverse.webp?v=3"];
+  (function () {
+    var N = HOT.length, k = 0, tm, pic = $("tst-pic"), cap = $("tst-cap"), bars = $("tst-bars"), ph = $("tst"), list = $("hot-list");
+    var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    pic.innerHTML = HOT.map(function (h, j) { return '<img src="' + TPIC[j] + '" alt="' + esc(h.t) + '" loading="lazy" decoding="async" class="' + (j ? "" : "is-on") + '">'; }).join("");
+    list.innerHTML = HOT.map(function (h, j) { return '<li><button type="button" class="tst__it" data-hot="' + j + '"><span class="tst__ic" aria-hidden="true">' + icon(h.i) + "</span><span>" + esc(h.t) + "</span></button></li>"; }).join("");
+    function go(n, user) {
+      k = (n + N) % N; var h = HOT[k];
+      [].forEach.call(pic.children, function (im, j) { im.classList.toggle("is-on", j === k); });
+      bars.innerHTML = HOT.map(function (_, j) { return '<i class="' + (j < k ? "done" : j === k ? "cur" : "") + '"><b></b></i>'; }).join("");
+      cap.innerHTML = '<span class="tst__k">' + (k + 1) + " / " + N + '</span><b class="tst__t">' + esc(h.t) + '</b><span class="tst__d">' + esc(h.d) + "</span>";
+      [].forEach.call(list.querySelectorAll(".tst__it"), function (b, j) { b.setAttribute("aria-current", String(j === k)); });
+      clearTimeout(tm); if (!reduce) tm = setTimeout(function () { go(k + 1); }, 4500);
+    }
+    $("tst-prev").addEventListener("click", function () { go(k - 1, true); });
+    $("tst-next").addEventListener("click", function () { go(k + 1, true); });
+    list.addEventListener("click", function (e) { var b = e.target.closest("[data-hot]"); if (b) go(+b.getAttribute("data-hot"), true); });
+    var sx = null; ph.addEventListener("touchstart", function (e) { sx = e.touches[0].clientX; }, { passive: true });
+    ph.addEventListener("touchend", function (e) { if (sx === null) return; var dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 40) go(dx < 0 ? k + 1 : k - 1, true); sx = null; });
+    /* пауза, пока блок не на экране */
+    if ("IntersectionObserver" in window) new IntersectionObserver(function (es) { es.forEach(function (en) { if (en.isIntersecting) go(k); else clearTimeout(tm); }); }, { threshold: 0.4 }).observe(ph);
+    else go(0);
+  })();
+
+  /* ---------- карточки линейки: вырезанные байки в одном масштабе ---------- */
+  $("model-cards").innerHTML = ORDER.map(function (s) {
+    var m = UI.modelBySlug(s), soon = m.status === "soon", code = REP[s].code;
+    var btn = soon
+      ? '<a class="btn btn--ghost" href="' + shopUrl(s) + '">Узнать о старте продаж</a>'
+      : '<a class="btn btn--main" href="#select-' + s + '" data-select="' + s + '">Выбрать<span class="vh"> ' + esc(m.name) + "</span></a>";
+    return '<article class="model' + (soon ? " model--soon" : "") + '">' +
+      '<span class="model__pic"><span class="model__code" aria-hidden="true">' + code + "</span>" + (soon ? '<span class="model__soon">Скоро</span>' : "") +
+      '<img class="is-cut" src="' + cut(s) + '" alt="' + esc(m.name + ", вид сбоку") + '" loading="lazy" decoding="async" style="height:' + (CUT_H[s] * 0.7).toFixed(1) + '%"></span>' +
+      '<div class="model__body"><h3 class="model__name">' + esc(nb(m.name)) + UI.flagHtml(UI.flagsFor(m, "name")) + "</h3>" +
+      '<span class="model__for">' + esc(REP[s].for) + "</span>" +
+      '<span class="model__spec">' + esc(kv(m)) + "</span>" + btn + "</div></article>";
+  }).join("");
+
+  /* ---------- сравнение: все строки характеристик из models.js; «Купить» — страница модели на falcon-bike.ru ---------- */
+  /* 26.10.2026 (Михаил): в таблице нет служебных меток «сверить»; тормоза Surge V — тип по руководству Y-VOLT
+     (размер дисков не указан), цвета — как в таблице falcon-bike.ru («Белый графит», «Серый графит») */
+  var LABEL79 = { brakes: "Тормоза: диски, диаметр × толщина" };
+  function cell(m, key) {
+    var clean = Object.assign({}, m, { flags: [] });
+    if (key === "colors") {
+      var c = m.colors || {};
+      if ((c.names && c.names.length) || (c.accents && c.accents.length)) return UI.fmtSpec(clean, key, { unit: false });
+      return esc((c.frame || []).join(", ")) || "—";
+    }
+    var txt = UI.fmtSpecText(m, key, { unit: false });
+    if (!txt && key === "brakes" && m.specs && m.specs.brakeType) return '<span class="spec-colors">' + esc(m.specs.brakeType) + "</span>";
+    if (!txt) return "—";
+    if (key === "nfc" && txt.length > 4) return '<span class="spec-colors">' + esc(txt) + "</span>";
+    return UI.fmtSpec(clean, key, { unit: false });
+  }
+  (function renderCompare() {
+    var rows = (window.SPEC_ROWS || []).map(function (r) {
+      var unit = r.unit ? '<span style="font-weight:400">, ' + esc(r.unit) + "</span>" : "";
+      return '<tr><th scope="row">' + esc(LABEL79[r.key] || r.label) + unit + "</th>" + UI.models.map(function (m) { return "<td>" + cell(m, r.key) + "</td>"; }).join("") + "</tr>";
+    });
+    rows.push('<tr class="is-price"><th scope="row">Цена</th>' + UI.models.map(function (m) {
+      var p = m.price == null
+        ? '<span class="muted">' + (m.status === "soon" ? "Скоро в продаже" + (UI.launchText(m) ? "<br>" + esc(UI.launchText(m)) : "") : "Цена по запросу") + "</span>"
+        : UI.fmtPrice(m.price) + UI.flagHtml(UI.flagsFor(m, "price"));
+      return "<td>" + p + "</td>";
+    }).join("") + "</tr>");
+    rows.push('<tr class="is-buy"><td></td>' + UI.models.map(function (m) {
+      return "<td>" + (m.status === "soon"
+        ? '<a class="btn btn--ghost" href="' + shopUrl(m.slug) + '">Узнать о старте</a>'
+        : '<a class="btn btn--main" href="' + shopUrl(m.slug) + '">Купить<span class="vh"> ' + esc(m.name) + "</span></a>") + "</td>";
+    }).join("") + "</tr>");
+    $("compare-table").innerHTML = '<table><thead><tr><th scope="col">Характеристика</th>' + UI.models.map(function (m) {
+      return '<th scope="col"><a href="' + shopUrl(m.slug) + '">' + esc(nb(m.name)) + "</a>" + (m.status === "soon" ? '<span class="soon">Скоро</span>' : "") + "</th>";
+    }).join("") + "</tr></thead><tbody>" + rows.join("") + "</tbody></table>";
+  })();
+
+  /* ---------- селектор моделей ---------- */
+  $("picker").innerHTML = SELECTABLE.map(function (s) {
+    return '<button type="button" class="tab" data-pick="' + s + '" aria-pressed="false">' + esc(REP[s].short) + "</button>";
+  }).join("");
+
+  var ACC_LABEL = { "Фиолетовый": "Фиолетовые", "Красный": "Красные", "Жёлтый": "Жёлтые", "Золотой": "Золотые", "Серый": "Серые" };
+  var state = { slug: "gt", color: null, index: 0 };
+  function colorsOf(slug) { return UI.photos(slug); }
+  function findColor(slug, frame, accent) {
+    var list = colorsOf(slug);
+    for (var i = 0; i < list.length; i++) if (list[i].frame === frame && (list[i].accent || null) === accent) return list[i];
+    return null;
+  }
+  function currentColor() {
+    var list = colorsOf(state.slug);
+    for (var i = 0; i < list.length; i++) if (list[i].id === state.color) return list[i];
+    return list[0] || null;
+  }
+  function uniq(arr) { return arr.filter(function (v, i) { return arr.indexOf(v) === i; }); }
+  /* подпись цвета: утверждённое название расцветки «English Name (русский)» (Михаил, 26.10); ракурс не пишем */
+  function colorName(c) { if (!c) return ""; if (c.label) return c.label; var a = c.accent ? "-" + String(c.accent).toLowerCase() : ""; return c.frame + a; }
+  function colorShort(c) { return colorName(c).replace(/\s*\(.*\)$/, ""); }
+  function stageCaption() { return colorName(currentColor()); }
+  var HEX = { "чёрный": "#1D1D23", "черный": "#1D1D23", "белый": "#F5F5F7", "серебристый": "#B8BBC4", "серый": "#7B7E88", "фиолетовый": "#6527D9", "жёлтый": "#F4C300", "желтый": "#F4C300", "красный": "#C8262F", "золотой": "#C49A3A" };
+  function hex(n) { return HEX[String(n || "").toLowerCase()] || "#9A9AA8"; }
+  /* фото сбоку, где байк смотрит влево — зеркалим, чтобы все модели смотрели в одну сторону */
+  var SIDE_LEFT = { "assets/photos/light-black-2.webp": 1, "assets/photos/pro-black-1.webp": 1, "assets/photos/pro-black-grey-1.webp": 1, "assets/photos/pro-black-red-2.webp": 1, "assets/photos/pro-black-violet-1.webp": 1, "assets/photos/pro-silver-red-1.webp": 1, "assets/photos/pro-silver-red-2.webp": 1, "assets/photos/pro-silver-yellow-1.webp": 1, "assets/photos/pro-silver-yellow-2.webp": 1 };
+  function isLeft(src) { return !!SIDE_LEFT[String(src || "").replace(/^(\.\.\/)+/, "")]; }
+  /* обзоры: мелкие плашки (ролики — те же, что на falcon-bike.ru) */
+  var REVS = {"gt": [{"t": "Falcon GT: зимний тест-драйв", "a": "79BIKE", "d": "4:49", "u": "https://vkvideo.ru/video-230887691_456239256", "c": "vthumb/vk-456239256.webp"}, {"t": "НЕ ПОКУПАЙ пока не посмотришь!", "a": "Fastmotion", "d": "17:21", "u": "https://vkvideo.ru/video-219881478_456239122", "c": "vthumb/vk-219881478_456239122.webp"}, {"t": "E-Bikes Keep Getting Better… This Might Be the Best Yet", "a": "Zay Solis", "d": "20:24", "u": "https://www.youtube.com/watch?v=DeYs2Hzooq4", "c": "vthumb/yt-DeYs2Hzooq4.webp"}], "pro": [{"t": "Сравнение Falcon Pro и Falcon GT", "a": "79BIKE", "d": "1:31", "u": "https://vkvideo.ru/video-230887691_456239303", "c": "vthumb/vk-456239303.webp"}, {"t": "I Bought The All NEW 79 Bike Falcon Pro — Best E-Bike Yet?", "a": "Zay Solis", "d": "11:21", "u": "https://www.youtube.com/watch?v=MyHrqF9hfyw", "c": "vthumb/yt-MyHrqF9hfyw.webp"}, {"t": "Полный гайд по настройке приложения для Falcon Pro и Falcon GT", "a": "79BIKE", "d": "6:36", "u": "https://vkvideo.ru/video-230887691_456239317", "c": "vthumb/vk-456239317.webp"}], "lynx-trail": [{"t": "Я купил электромотоцикл! 79bike Lynx Trail — для чего он нужен?", "a": "EXPLOSIVE MIKE", "d": "47:48", "u": "https://www.youtube.com/watch?v=IFieb93HdpU", "c": "vthumb/yt-IFieb93HdpU.webp"}, {"t": "Falcon Lynx — обзор + замер максималки", "a": "Raptor TV", "d": "22:21", "u": "https://vkvideo.ru/video-211112299_456239274", "c": "vthumb/vk-211112299_456239274.webp"}, {"t": "Обзор на новый электробайк 2026 года — Lynx Trail от 79BIKE", "a": "79BIKE", "d": "6:32", "u": "https://vkvideo.ru/video-230887691_456239314", "c": "vthumb/vk-456239314.webp"}], "light": [{"t": "Обзор на новый электробайк 2026 года — Falcon Lite", "a": "79BIKE", "d": "5:27", "u": "https://vkvideo.ru/video-230887691_456239320", "c": "vthumb/vk-456239320.webp"}, {"t": "79BIKE Falcon Lite — обзор и замер максималки", "a": "Raptor TV", "d": "18:55", "u": "https://vkvideo.ru/video-211112299_456239355", "c": "vthumb/vk-211112299_456239355.webp"}, {"t": "The BEST E-Bike $2500 Can Buy? — 79Bike Falcon Lite Review", "a": "Dankwheelie", "d": "8:55", "u": "https://www.youtube.com/watch?v=jp1CPP2l5nw", "c": "vthumb/yt-jp1CPP2l5nw.webp"}], "lynx-x": [{"t": "Обзор на новый электробайк 2026 года — Lynx Trail от 79BIKE", "a": "79BIKE", "d": "6:32", "u": "https://vkvideo.ru/video-230887691_456239314", "c": "vthumb/vk-456239314.webp"}, {"t": "Какой электробайк выбрать?", "a": "79BIKE", "d": "1:21", "u": "https://vkvideo.ru/video-230887691_456239312", "c": "vthumb/vk-456239312.webp"}], "surge-v": [{"t": "Китайский убийца Stark Varg? Собрал Y-VOLT и сразу поехал на гонку!", "a": "Роман Курбатов", "d": "53:39", "u": "https://www.youtube.com/watch?v=73we1FlIKYQ", "c": "vthumb/yt-73we1FlIKYQ.webp"}, {"t": "Самый мощный электробайк, на котором я ездил? 35 000 W", "a": "Tim Ston", "d": "30:03", "u": "https://www.youtube.com/watch?v=5d6XZ6-bFMs", "c": "vthumb/yt-5d6XZ6-bFMs.webp"}, {"t": "Surge V Official Launch — The Wider, The Wilder", "a": "Y-VOLT Official", "d": "1:29", "u": "https://www.youtube.com/watch?v=FjOEczaiMxQ", "c": "vthumb/yt-FjOEczaiMxQ.webp"}]};
+  function revChips(slug) {
+    var r = REVS[slug] || [];
+    if (!r.length) return "";
+    return '<div class="revs revs--th" aria-label="Видеообзоры">' + r.map(function (v) {
+      return '<a class="rvt" href="' + esc(v.u) + '"' + ext + '><span class="rvt__pic"><img src="' + esc(v.c) + '" alt="" loading="lazy" width="160" height="90"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="#fff"><path d="M7 4v16l13-8z"/></svg></i><span class="rvt__d">' + esc(v.d) + '</span></span><span class="rvt__t">' + esc(v.t) + '</span><span class="rvt__a">' + esc(v.a) + "</span></a>";
+    }).join("") + "</div>";
+  }
+  /* 25.10 (Михаил): видеообзоры — отдельным рядом после карточки модели, перед «Сравнением» */
+  /* 26.10 (Михаил): «Ещё обзоры» — раскрывает остальные ролики про эту модель и другие модели линейки */
+  var ALLREVS = {"gt": [{"t": "Falcon GT: зимний тест-драйв", "a": "79BIKE", "d": "4:49", "u": "https://vkvideo.ru/video-230887691_456239256", "c": "vthumb/vk-456239256.webp"}, {"t": "НЕ ПОКУПАЙ пока не посмотришь!", "a": "Fastmotion", "d": "17:21", "u": "https://vkvideo.ru/video-219881478_456239122", "c": "vthumb/vk-219881478_456239122.webp"}, {"t": "E-Bikes Keep Getting Better… This Might Be the Best Yet", "a": "Zay Solis", "d": "20:24", "u": "https://www.youtube.com/watch?v=DeYs2Hzooq4", "c": "vthumb/yt-DeYs2Hzooq4.webp"}, {"t": "Интервью: Роман Курбатов", "a": "79BIKE", "d": "4:05", "u": "https://vkvideo.ru/video-230887691_456239289", "c": "vthumb/vk-456239289.webp"}, {"t": "САМЫЙ мощный электроэндуро! Жёсткий тест Falcon GT", "a": "ELECTRON motors", "d": "13:29", "u": "https://www.youtube.com/watch?v=Iah4dCkTy_w", "c": "vthumb/x-yt-Iah4dCkTy_w.webp"}, {"t": "79BIKE Falcon GT: обзор + замер максималки", "a": "Raptor TV", "d": "15:55", "u": "https://www.youtube.com/watch?v=57Ns8PcsBCg", "c": "vthumb/x-yt-57Ns8PcsBCg.webp"}, {"t": "Syccyba Atom vs Falcon GT", "a": "Raptor TV", "d": "8:51", "u": "https://www.youtube.com/watch?v=k71bH2hBJZU", "c": "vthumb/x-yt-k71bH2hBJZU.webp"}, {"t": "Жёсткий тест-драйв Falcon GT", "a": "Falcon-bike", "d": "5:50", "u": "https://rutube.ru/video/24924a04010a22ef9da24bc9ea070f2b/", "c": "vthumb/x-rt-24924a04.webp"}, {"t": "Сравнение и тест-драйв Falcon Pro и Falcon GT", "a": "Falcon-bike", "d": "7:27", "u": "https://rutube.ru/video/5926e3a33640d5a36930c4e89826461e/", "c": "vthumb/x-rt-5926e3a3.webp"}, {"t": "Is the Falcon GT Really the “King” of Electric Dirt Bikes?", "a": "Electric Cycle Rider", "d": "11:53", "u": "https://www.youtube.com/watch?v=dYmCfE584DE", "c": "vthumb/x-yt-dYmCfE584DE.webp"}], "pro": [{"t": "Сравнение Falcon Pro и Falcon GT", "a": "79BIKE", "d": "1:31", "u": "https://vkvideo.ru/video-230887691_456239303", "c": "vthumb/vk-456239303.webp"}, {"t": "I Bought The All NEW 79 Bike Falcon Pro — Best E-Bike Yet?", "a": "Zay Solis", "d": "11:21", "u": "https://www.youtube.com/watch?v=MyHrqF9hfyw", "c": "vthumb/yt-MyHrqF9hfyw.webp"}, {"t": "Полный гайд по настройке приложения для Falcon Pro и Falcon GT", "a": "79BIKE", "d": "6:36", "u": "https://vkvideo.ru/video-230887691_456239317", "c": "vthumb/vk-456239317.webp"}, {"t": "79BIKE Falcon Pro: обзор + замер максималки", "a": "Raptor TV", "d": "13:32", "u": "https://www.youtube.com/watch?v=YkQekaLp0J0", "c": "vthumb/x-yt-YkQekaLp0J0.webp"}, {"t": "Falcon Pro — премиальный байк на каждый день", "a": "Raptor TV", "d": "21:05", "u": "https://www.youtube.com/watch?v=4ekhID-tt4c", "c": "vthumb/x-yt-4ekhID-tt4c.webp"}, {"t": "Обзор на Falcon Pro", "a": "Falcon-bike", "d": "8:01", "u": "https://rutube.ru/video/2b83b62f6602766da4587d8991ba9a23/", "c": "vthumb/x-rt-2b83b62f.webp"}, {"t": "Falcon Pro и Lynx Trail: сравнение", "a": "Тимур Зимин", "d": "5:02", "u": "https://www.youtube.com/watch?v=3iKZzr7Krso", "c": "vthumb/x-yt-3iKZzr7Krso.webp"}, {"t": "$4000 Falcon Pro Review! Does It Beat My Surron?", "a": "Dankwheelie", "d": "11:02", "u": "https://www.youtube.com/watch?v=YKKeI70Wncs", "c": "vthumb/x-yt-YKKeI70Wncs.webp"}, {"t": "Surrons Biggest Competitor? 79 Falcon Pro", "a": "Tallon Pemberton", "d": "12:54", "u": "https://www.youtube.com/watch?v=akJhIWid5Rw", "c": "vthumb/x-yt-akJhIWid5Rw.webp"}], "lynx-trail": [{"t": "Я купил электромотоцикл! 79bike Lynx Trail — для чего он нужен?", "a": "EXPLOSIVE MIKE", "d": "47:48", "u": "https://www.youtube.com/watch?v=IFieb93HdpU", "c": "vthumb/yt-IFieb93HdpU.webp"}, {"t": "Falcon Lynx — обзор + замер максималки", "a": "Raptor TV", "d": "22:21", "u": "https://vkvideo.ru/video-211112299_456239274", "c": "vthumb/vk-211112299_456239274.webp"}, {"t": "Обзор на новый электробайк 2026 года — Lynx Trail от 79BIKE", "a": "79BIKE", "d": "6:32", "u": "https://vkvideo.ru/video-230887691_456239314", "c": "vthumb/vk-456239314.webp"}, {"t": "Обзор Lynx Trail — новый электробайк бренда 79BIKE", "a": "79BIKE", "d": "7:10", "u": "https://vkvideo.ru/video-230887691_456239310", "c": "vthumb/vk-456239310.webp"}, {"t": "I Didn't Expect this E-Bike to be THIS GOOD! 79Bike Lynx", "a": "MOPBOYZ", "d": "19:07", "u": "https://www.youtube.com/watch?v=q7g0aBaUtvw", "c": "vthumb/x-yt-q7g0aBaUtvw.webp"}, {"t": "$4000 LYNX Electric Dirtbike Review", "a": "Dankwheelie", "d": "8:45", "u": "https://www.youtube.com/watch?v=BjD8cdYToOA", "c": "vthumb/x-yt-BjD8cdYToOA.webp"}, {"t": "Первый видеообзор электробайка 79Bike Lynx", "a": "Тимур Зимин", "d": "6:10", "u": "https://www.youtube.com/watch?v=rqHM6d6Wxog", "c": "vthumb/x-yt-rqHM6d6Wxog.webp"}, {"t": "Электробайк Lynx: интервью с командой 79BIKE", "a": "Falcon-bike", "d": "3:56", "u": "https://rutube.ru/video/873faf2ab632c1828deff24870fba5fc/", "c": "vthumb/x-rt-873faf2a.webp"}], "light": [{"t": "Обзор на новый электробайк 2026 года — Falcon Lite", "a": "79BIKE", "d": "5:27", "u": "https://vkvideo.ru/video-230887691_456239320", "c": "vthumb/vk-456239320.webp"}, {"t": "79BIKE Falcon Lite — обзор и замер максималки", "a": "Raptor TV", "d": "18:55", "u": "https://vkvideo.ru/video-211112299_456239355", "c": "vthumb/vk-211112299_456239355.webp"}, {"t": "The BEST E-Bike $2500 Can Buy? — 79Bike Falcon Lite Review", "a": "Dankwheelie", "d": "8:55", "u": "https://www.youtube.com/watch?v=jp1CPP2l5nw", "c": "vthumb/yt-jp1CPP2l5nw.webp"}, {"t": "Вся линейка Falcon + замер максималки GT", "a": "Raptor TV", "d": "15:49", "u": "https://www.youtube.com/watch?v=nqi1w4hefW8", "c": "vthumb/x-yt-nqi1w4hefW8.webp"}, {"t": "79Bike Falcon Lite Electric Dirt Bike", "a": "Remote Trooper", "d": "12:57", "u": "https://www.youtube.com/watch?v=TepRhEGIOzY", "c": "vthumb/x-yt-TepRhEGIOzY.webp"}], "lynx-x": [{"t": "Обзор на новый электробайк 2026 года — Lynx Trail от 79BIKE", "a": "79BIKE", "d": "6:32", "u": "https://vkvideo.ru/video-230887691_456239314", "c": "vthumb/vk-456239314.webp"}, {"t": "Какой электробайк выбрать?", "a": "79BIKE", "d": "1:21", "u": "https://vkvideo.ru/video-230887691_456239312", "c": "vthumb/vk-456239312.webp"}], "surge-v": [{"t": "Китайский убийца Stark Varg? Собрал Y-VOLT и сразу поехал на гонку!", "a": "Роман Курбатов", "d": "53:39", "u": "https://www.youtube.com/watch?v=73we1FlIKYQ", "c": "vthumb/yt-73we1FlIKYQ.webp"}, {"t": "Самый мощный электробайк, на котором я ездил? 35 000 W", "a": "Tim Ston", "d": "30:03", "u": "https://www.youtube.com/watch?v=5d6XZ6-bFMs", "c": "vthumb/yt-5d6XZ6-bFMs.webp"}, {"t": "Surge V Official Launch — The Wider, The Wilder", "a": "Y-VOLT Official", "d": "1:29", "u": "https://www.youtube.com/watch?v=FjOEczaiMxQ", "c": "vthumb/yt-FjOEczaiMxQ.webp"}, {"t": "Y-Volt Surge V — тест и обзор", "a": "ELECTRON motors", "d": "14:54", "u": "https://www.youtube.com/watch?v=QSlvS4qKuYw", "c": "vthumb/x-yt-QSlvS4qKuYw.webp"}, {"t": "Y-Volt Surge V: распаковка, обзор и замер скорости", "a": "Raptor TV", "d": "32:55", "u": "https://www.youtube.com/watch?v=kaPkL99ZIdY", "c": "vthumb/x-yt-kaPkL99ZIdY.webp"}, {"t": "I Tested This Brand New Bike (Y-Volt Surge V Review)", "a": "Dylon", "d": "22:20", "u": "https://www.youtube.com/watch?v=JTCB9tCVSQY", "c": "vthumb/x-yt-JTCB9tCVSQY.webp"}]};
+  /* 27.10.2026 (Михаил): ещё обзоры (поиск агента, официальные дилеры и блогеры; серые продавцы и промокоды конкурентов исключены) — в раскрывающемся блоке «Ещё обзоры» */
+  var REV_ORDER = ["gt", "pro", "lynx-trail", "light", "lynx-x", "surge-v"];
+  function revCard(v) { return '<a class="rvt" href="' + esc(v.u) + '"' + ext + '><span class="rvt__pic">' + (v.c ? '<img src="' + esc(v.c) + '" alt="" loading="lazy" width="160" height="90">' : "") + '<i aria-hidden="true"><svg viewBox="0 0 24 24" fill="#fff"><path d="M7 4v16l13-8z"/></svg></i><span class="rvt__d">' + esc(v.d) + '</span></span><span class="rvt__t">' + esc(v.t) + '</span><span class="rvt__a">' + esc(v.a) + "</span></a>"; }
+  function moreRevs(slug) {
+    var shown = {}; (REVS[slug] || []).forEach(function (v) { shown[v.u] = 1; });
+    var order = [slug].concat(REV_ORDER.filter(function (s) { return s !== slug; })), seen = {}, out = "";
+    order.forEach(function (s) {
+      var L = (ALLREVS[s] || []).filter(function (v) { if (shown[v.u] || seen[v.u]) return false; seen[v.u] = 1; return true; });
+      if (!L.length) return; var m = UI.modelBySlug(s);
+      out += '<h4 class="sel-revs__g">' + (s === slug ? "Ещё про " : "") + esc(nb(m ? m.name : s)) + '</h4><div class="revs revs--th revs--grid">' + L.map(revCard).join("") + "</div>";
+    });
+    return out;
+  }
+  function renderRevs() {
+    var w = $("sel-revs"); if (!w) return; var h = revChips(state.slug), m = UI.modelBySlug(state.slug); w.hidden = !h;
+    var more = h ? moreRevs(state.slug) : "";
+    w.innerHTML = h ? '<h3 class="h3 sel-revs__t">Видеообзоры ' + esc(nb(m.name)) + "</h3>" + h + (more ? '<button type="button" class="btn btn--ghost sel-revs__more" aria-expanded="false" aria-controls="sel-revs-more">Ещё обзоры</button><div class="sel-revs__all" id="sel-revs-more" hidden>' + more + "</div>" : "") : "";
+    var b = w.querySelector(".sel-revs__more"); if (b) b.addEventListener("click", function () { var p = $("sel-revs-more"), o = p.hidden; p.hidden = !o; b.setAttribute("aria-expanded", String(o)); b.textContent = o ? "Скрыть" : "Ещё обзоры"; });
+  }
+  function studio(slug, src) { var cl = (slug === "surge-v" ? "is-studio" : "") + (isLeft(src) ? " is-flip" : ""); return cl.trim() ? ' class="' + cl.trim() + '"' : ""; }
+
+  function renderCfg() {
+    var m = UI.modelBySlug(state.slug);
+    var list = colorsOf(state.slug);
+    var box = $("cfg");
+    if (!list.length) {
+      box.innerHTML = '<div class="gal__main" id="cfg-stage"><span class="gal__code" aria-hidden="true">' + REP[state.slug].code + '</span><img class="is-cut" src="' + cut(state.slug) + '" alt="' + esc(m.name) + '" style="mix-blend-mode:normal"></div>' + renderPaint(); renderRevs();
+      return;
+    }
+    var c = currentColor();
+    var ph = UI.photoFor(state.slug, c.id, state.index);
+    var nav = (list.length > 1 || c.images.length > 1)
+      ? '<button type="button" class="gal__nav gal__nav--prev" data-cfg-step="-1" aria-label="Предыдущее фото">' + CHEV.replace('d="M9 6l6 6-6 6"', 'd="M15 6l-6 6 6 6"') + "</button>" +
+        '<button type="button" class="gal__nav gal__nav--next" data-cfg-step="1" aria-label="Следующее фото">' + CHEV + "</button>"
+      : "";
+    box.innerHTML = '<div class="gal__main" id="cfg-stage" tabindex="-1"><span class="gal__code" aria-hidden="true">' + REP[state.slug].code + "</span>" +
+      "<img" + studio(state.slug, ph.src) + ' id="cfg-img" src="' + esc(ph.src) + '" alt="' + esc(m.name + ", " + colorName(c)) + '" width="1600" height="1000" decoding="async">' + nav +
+      '<span class="gal__color" id="cfg-cap" aria-live="polite">' + esc(stageCaption()) + "</span></div>" +
+      renderPaint() +
+      '<div class="thumbs" role="group" aria-label="Ракурсы" id="cfg-views"></div>'; renderRevs();
+    renderViews();
+  }
+  function renderViews() {
+    var c = currentColor(), el = $("cfg-views");
+    if (!c || !el) return;
+    el.hidden = c.images.length < 2;
+    el.innerHTML = c.images.map(function (im, i) {
+      var ph = UI.photoFor(state.slug, c.id, i);
+      return '<button type="button" data-cfg-view="' + i + '" aria-pressed="' + (i === state.index) + '" aria-label="' + esc("Ракурс " + (i + 1) + ": " + ph.viewLabel) + '">' +
+        "<img" + studio(state.slug, ph.src) + ' src="' + esc(ph.src) + '" alt="" loading="lazy" decoding="async" width="160" height="100"></button>';
+    }).join("");
+  }
+  function showPhoto() {
+    var c = currentColor();
+    var ph = UI.photoFor(state.slug, c.id, state.index);
+    var img = $("cfg-img");
+    if (img && ph) {
+      img.alt = UI.modelBySlug(state.slug).name + ", " + colorName(c);
+      img.classList.toggle("is-flip", isLeft(ph.src));
+      img.classList.add("is-swapping");
+      var done = function () { img.classList.remove("is-swapping"); };
+      img.onload = done; img.onerror = done;
+      img.src = ph.src;
+      if (img.complete) setTimeout(done, 30);
+      setTimeout(done, 1200);
+    }
+    var cap = $("cfg-cap");
+    if (cap && ph) cap.textContent = stageCaption();
+    document.querySelectorAll("#cfg-views button").forEach(function (b, i) { b.setAttribute("aria-pressed", String(i === state.index)); });
+  }
+
+  /* цвет: компактные чипы с кружком цвета прямо под фото. Falcon — «Рама» и «Вставки»;
+     Surge V, Lynx и модели с одним цветом рамы — один ряд «Цвет» (решение Михаила 25.10) */
+  function sw(a, b) { return '<i class="sw" style="background:' + (b ? "linear-gradient(135deg," + hex(a) + " 0 52%," + hex(b) + " 52%)" : hex(a)) + '" aria-hidden="true"></i>'; }
+  function renderPaint() {
+    var m = UI.modelBySlug(state.slug);
+    var list = colorsOf(state.slug);
+    if (!list.length) {
+      var plain = (m.colors && m.colors.frame) || [];
+      if (!plain.length) return "";
+      return '<div class="cpick cpick--c"><div class="cpick__row" role="group" aria-label="Цвет"><span class="cpick__label">Цвет</span><div class="cpick__list">' +
+        plain.map(function (f) { return '<button type="button" class="chip chip--c" data-plain="' + esc(f) + '" aria-pressed="' + (f === (state.plain || plain[0])) + '">' + sw(f) + esc(f) + "</button>"; }).join("") + "</div></div></div>";
+    }
+    var c = currentColor();
+    var frames = uniq(list.map(function (x) { return x.frame; }));
+    var accents = uniq(list.map(function (x) { return x.accent || null; }));
+    var hasAccents = accents.some(function (a) { return a; });
+    if (frames.length < 2 || !hasAccents) {
+      if (list.length < 2) return "";
+      return '<div class="cpick cpick--c"><div class="cpick__row" role="group" aria-label="Цвет"><span class="cpick__label">Цвет</span><div class="cpick__list">' +
+        list.map(function (x) { return '<button type="button" class="chip chip--c" data-color="' + esc(x.id) + '" aria-pressed="' + (x.id === c.id) + '">' + sw(x.frame, x.accent) + esc(colorName(x)) + "</button>"; }).join("") + "</div></div></div>";
+    }
+    var frameHtml = frames.map(function (f) {
+      return '<button type="button" class="chip chip--c" data-frame="' + esc(f) + '" aria-pressed="' + (f === c.frame) + '">' + sw(f) + esc(f) + "</button>";
+    }).join("");
+    var accentHtml = accents.map(function (a) {
+      var exists = !!findColor(state.slug, c.frame, a);
+      var label = a ? (ACC_LABEL[a] || a) : (colorShort(list.filter(function (x) { return !x.accent && x.label !== x.frame; })[0]) || "Без вставок");
+      return '<button type="button" class="chip chip--c" data-accent="' + esc(a || "") + '" aria-pressed="' + ((c.accent || null) === a) + '"' + (exists ? "" : " disabled") + ">" + sw(a || c.frame) + esc(label) + (exists ? "" : (function () { var alt = list.filter(function (x) { return (x.accent || null) === a; })[0]; return alt ? ' <small class="chip__hint">(выберите цвет рамы ' + esc(String(alt.frame).toLowerCase()) + ")</small>" : ""; })()) + "</button>";
+    }).join("");
+    return '<div class="cpick cpick--c">' +
+      '<div class="cpick__row" role="group" aria-label="Рама"><span class="cpick__label">Рама</span><div class="cpick__list">' + frameHtml + "</div></div>" +
+      '<div class="cpick__row" role="group" aria-label="Вставки"><span class="cpick__label">Вставки</span><div class="cpick__list">' + accentHtml + "</div></div></div>";
+  }
+  function kpis(m) {
+    var K = [["powerKw", "Мощность"], ["speedKmh", "Скорость"], ["capacityAh", "Батарея"], ["rangeKm", "Запас хода"]];
+    return '<dl class="kpis">' + K.map(function (k) {
+      var v = UI.fmtSpecText(m, k[0], { unit: false }), row = UI.specRow(k[0]);
+      if (k[0] === "capacityAh" && batSV(m)) return "<div><dt>" + k[1] + "</dt><dd>" + m.specs.voltage + " <small>В</small>, " + m.specs.capacityAh + " <small>Ач</small>" + UI.flagHtml(UI.flagsFor(m, k[0])) + "</dd></div>";
+      var pm = /^(.*?)(\s*\(.*\))$/.exec(v || ""); /* «до 120 (при 25 км/ч)» → «до 120 км (при 25 км/ч)» */
+      return "<div><dt>" + k[1] + "</dt><dd>" + (v ? (pm ? esc(pm[1]) + (row.unit ? " <small>" + esc(row.unit) + esc(pm[2]) + "</small>" : esc(pm[2])) : esc(v) + (row.unit ? " <small>" + esc(row.unit) + "</small>" : "")) : "—") + UI.flagHtml(UI.flagsFor(m, k[0])) + "</dd></div>";
+    }).join("") + "</dl>";
+  }
+  function renderPanel() {
+    var m = UI.modelBySlug(state.slug);
+    var txt = (C.models && C.models[m.slug]) || {};
+    var paras = Array.isArray(txt.home) && txt.home.length ? txt.home : [txt.lead || m.tagline];
+    $("sel-panel").innerHTML =
+      '<div><h3 class="h3" style="font-size:clamp(24px,2.4vw,32px);font-weight:800">' + esc(nb(m.name)) + UI.flagHtml(UI.flagsFor(m, "name")) + '</h3><p class="buy__for">' + esc(REP[m.slug].for) + "</p></div>" +
+      kpis(m) +
+      '<div class="buy__text">' + paras.map(function (p) { return "<p>" + esc(p) + "</p>"; }).join("") + "</div>" +
+      '<div class="buy__actions">' +
+        (m.status === "soon" ? '<a class="btn btn--main" id="sel-buy" href="' + shopUrl(m.slug) + '">Узнать о старте продаж</a>' : '<a class="btn btn--main" id="sel-buy" href="' + shopUrl(m.slug) + '">Купить в фирменном магазине</a>') +
+        '<button type="button" class="btn btn--ghost" data-toggle aria-controls="sel-consult" aria-expanded="false">Получить консультацию</button>' +
+      "</div>" +
+      '<div class="consult" id="sel-consult" hidden>' +
+        "<p>Оставьте контакт — специалист 79BIKE свяжется удобным вам способом и ответит на вопросы о " + esc(nb(m.name)) + ".</p>" +
+        '<form class="form js-demo-form" aria-label="Консультация по ' + esc(m.name) + '" data-success="Заявка на консультацию принята — свяжемся с вами." novalidate>' +
+          '<fieldset class="fhow" data-how><legend>Как удобнее связаться</legend><label class="fhow__o"><input type="radio" name="how" value="call" checked><span>Позвонить</span></label><label class="fhow__o"><input type="radio" name="how" value="whatsapp"><span>WhatsApp</span></label><label class="fhow__o"><input type="radio" name="how" value="telegram"><span>Telegram</span></label><label class="fhow__o"><input type="radio" name="how" value="vk"><span>VK Мессенджер</span></label></fieldset>' +
+          '<input class="input--tel" type="tel" name="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" aria-label="Телефон" data-contact required>' +
+          '<label class="form__check"><input type="checkbox" name="pd" data-req-check="Чтобы отправить заявку, отметьте согласие на обработку персональных данных."><span>Даю <a href="https://claude.ai/artifact/AyD6SKmq1hL2juyCRy7Tk1" data-release-href="https://falcon-bike.ru/consent" target="_blank" rel="noopener">согласие на обработку персональных данных</a>. Подробнее — в <a href="https://claude.ai/artifact/AyD6SKmq1hL2juyCRy7Tk1" data-release-href="https://falcon-bike.ru/privacy" target="_blank" rel="noopener">Политике обработки персональных данных</a>.</span></label>' +
+          '<button class="btn btn--main" type="submit" data-how-btn>Жду звонка</button>' +
+          '<p class="form-msg" role="status" aria-live="polite"></p>' +
+        "</form></div>";
+  }
+  function selectModel(slug) {
+    if (SELECTABLE.indexOf(slug) < 0) return;
+    state.slug = slug;
+    var list = colorsOf(slug), mm = UI.modelBySlug(slug);
+    state.color = list.length ? list[0].id : null;
+    state.plain = list.length ? null : ((mm.colors && mm.colors.frame && mm.colors.frame[0]) || null);
+    state.index = 0;
+    document.querySelectorAll("[data-pick]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-pick") === slug)); });
+    /* выбранная вкладка всегда видна в прокручиваемой ленте (узкие экраны) */
+    var pk = $("picker"), on = pk && pk.querySelector('[data-pick="' + slug + '"]');
+    if (on && pk.scrollWidth > pk.clientWidth) pk.scrollTo({ left: Math.max(0, pk.scrollLeft + on.getBoundingClientRect().left - pk.getBoundingClientRect().left - (pk.clientWidth - on.offsetWidth) / 2), behavior: "smooth" });
+    renderCfg(); renderPanel();
+  }
+  function setColor(color, keepView) {
+    var prev = currentColor();
+    var view = prev && prev.images[state.index] ? prev.images[state.index].view : "side";
+    state.color = color.id;
+    state.index = 0;
+    if (keepView) for (var i = 0; i < color.images.length; i++) if (color.images[i].view === view) { state.index = i; break; }
+    renderViews(); showPhoto();
+    var pp = document.querySelector("#cfg .cpick");
+    if (pp) pp.outerHTML = renderPaint();
+  }
+
+  document.addEventListener("click", function (e) {
+    var t = e.target.closest && e.target.closest("[data-pick],[data-cfg-step],[data-cfg-view],[data-frame],[data-accent],[data-color],[data-plain],[data-select],a[href^='#select-']");
+    if (!t) return;
+    if (t.hasAttribute("data-plain")) {
+      state.plain = t.getAttribute("data-plain");
+      var pp = document.querySelector("#cfg .cpick");
+      if (pp) pp.outerHTML = renderPaint();
+      return;
+    }
+    if (t.hasAttribute("data-color")) {
+      var cid = t.getAttribute("data-color"), cc = colorsOf(state.slug).filter(function (x) { return x.id === cid; })[0];
+      if (cc) setColor(cc, true);
+      return;
+    }
+    if (t.hasAttribute("data-pick")) { selectModel(t.getAttribute("data-pick")); return; }
+    if (t.hasAttribute("data-cfg-view")) { state.index = parseInt(t.getAttribute("data-cfg-view"), 10) || 0; showPhoto(); return; }
+    if (t.hasAttribute("data-cfg-step")) {
+      /* 26.10.2026 (Михаил): стрелки листают ракурсы; после последнего ракурса — следующий цвет, по кругу */
+      var list = colorsOf(state.slug), c = currentColor(), d = parseInt(t.getAttribute("data-cfg-step"), 10), n = c.images.length;
+      if (d > 0 && state.index + 1 < n) { state.index++; showPhoto(); return; }
+      if (d < 0 && state.index > 0) { state.index--; showPhoto(); return; }
+      var i = list.indexOf(c) + d, nc = list[(i + list.length) % list.length];
+      setColor(nc, false);
+      if (d < 0 && nc.images.length > 1) { state.index = nc.images.length - 1; showPhoto(); }
+      return;
+    }
+    if (t.hasAttribute("data-frame")) {
+      var cur = currentColor(), f = t.getAttribute("data-frame");
+      var next = findColor(state.slug, f, cur.accent || null) || colorsOf(state.slug).filter(function (x) { return x.frame === f; })[0];
+      if (next) setColor(next, true);
+      return;
+    }
+    if (t.hasAttribute("data-accent")) {
+      var nx = findColor(state.slug, currentColor().frame, t.getAttribute("data-accent") || null);
+      if (nx) setColor(nx, true);
+      return;
+    }
+    /* «Выбрать» в карточке и пункты меню: открыть модель в селекторе */
+    var slug = t.getAttribute("data-select") || t.getAttribute("href").replace("#select-", "");
+    if (SELECTABLE.indexOf(slug) < 0) return;
+    e.preventDefault();
+    selectModel(slug);
+    if (history.replaceState) history.replaceState(null, "", "#select-" + slug);
+    $("select").scrollIntoView({ block: "start" });
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+    if (!e.target.closest || !e.target.closest("#cfg-stage, #cfg-views")) return;
+    var b = document.querySelector('[data-cfg-step="' + (e.key === "ArrowRight" ? 1 : -1) + '"]');
+    if (b) { e.preventDefault(); b.click(); }
+  });
+  function fromHash() {
+    var mm = (location.hash || "").replace("#", "").match(/^select-([a-z-]+)$/);
+    if (mm && SELECTABLE.indexOf(mm[1]) >= 0) { selectModel(mm[1]); $("select").scrollIntoView({ block: "start" }); return true; }
+    return false;
+  }
+  window.addEventListener("hashchange", fromHash);
+  if (!fromHash()) selectModel("gt");
+
+  /* ---------- дилеры: схема и список ----------
+     Список — из кабинета Михаила (19.10.2026, пятая порция); у дилеров, кроме Falcon-bike, адресов и телефонов нет —
+     показываем только название и город. Координаты — настоящие (lat, lon), карта рисуется по ним.
+     pos — где подпись: r (справа), a (над точкой), b (под точкой). */
+  var SHOPD = { name: "Фирменный магазин 79BIKE", role: "Доставка по всей России", address: "Москва, ул. Речников, д. 21, стр. 8",
+    note: "Визит по записи, тест-драйв", phone: "+7 (999) 900-55-88" };
+  /* сайты дилеров — по ссылкам Михаила (25.10.2026) */
+  var DSITE = { "Electron Motors": "https://electronmotors.ru/catalog/mototsikl/elektroenduro_falcon_pro/", "Raptor TV": "https://raptor-tv.ru/", "Futumag": "https://futumag.ru/", "Токомото": "https://tokomoto.ru/", "Citycoco": "https://citycoco-russia.com/", "Boys-motors": "https://www.avito.ru/user/8e852a687854d07d167c047830b7b8e5/profile" };
+  var CITIES = [
+    { id: "msk", city: "Москва", main: true, dealers: ["Citycoco", "Eco MOTO", "Electron Motors", "Raptor TV", "Futumag", "Boys-motors"], lat: 55.7558, lon: 37.6173, pos: "b" },
+    { id: "spb", city: "Санкт-Петербург", dealers: ["Boardshop", "Ecross"], lat: 59.9343, lon: 30.3351, pos: "r" },
+    { id: "nn", city: "Нижний Новгород", short: "Н. Новгород", dealers: ["VIP Bike"], lat: 56.3269, lon: 44.0059, pos: "a" },
+    { id: "kirov", city: "Киров", dealers: ["MT1"], lat: 58.6036, lon: 49.668, pos: "a" },
+    { id: "cheb", city: "Чебоксары", dealers: ["Eride"], lat: 56.1439, lon: 47.2489, pos: "b" },
+    { id: "krd", city: "Краснодар", dealers: ["Токомото"], lat: 45.0355, lon: 38.9753, pos: "l" },
+    { id: "aks", city: "Аксай", dealers: ["Gyroclub"], lat: 47.2667, lon: 39.8667, pos: "r" }, /* 26.10.2026: со старой 79bike.ru/dealer, решение Михаила */
+    { id: "kor", city: "Кореновск", dealers: ["Амулет"], lat: 45.4689, lon: 39.4517, pos: "r" },
+    { id: "brn", city: "Барнаул", dealers: ["Brp Centr"], lat: 53.3474, lon: 83.7784, pos: "a" }
+  ];
+  function plural(n, one, few, many) {
+    var m10 = n % 10, m100 = n % 100;
+    return n + " " + (m10 === 1 && m100 !== 11 ? one : m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? few : many);
+  }
+  function cityCount(c) {
+    return c.main ? "фирменный магазин + " + plural(c.dealers.length, "дилер", "дилера", "дилеров") : plural(c.dealers.length, "дилер", "дилера", "дилеров");
+  }
+  var mapSvg = $("map-svg");
+  var narrowMq = window.matchMedia("(max-width: 600px)");
+  /* 27.10.2026 (Михаил, 133): настоящая карта без сторонних сервисов. Подложка — map/dealers-d.svg (ПК) и dealers-m.svg (телефон),
+     точки ставятся по координатам из CITIES (lat, lon). Новый дилер: добавить город с координатами в CITIES — точка встанет сама.
+     Города восточнее 55° в.д. (Барнаул и др.) показываются во врезке «вся Россия». Проекция — коническая конформная, как при сборке подложки. */
+  var MAPP = {"d":{"W":1000,"H":620,"inset":{"rot":100,"par":[52,64],"k":186.83,"x0":853.05,"y0":344.02},"main":{"rot":42,"par":[47,59],"k":1854.448,"x0":536.37,"y0":2262.89}},
+              "m":{"W":600,"H":720,"inset":{"rot":100,"par":[52,64],"k":129.859,"x0":493.46,"y0":241.26},"main":{"rot":42,"par":[47,59],"k":1886.445,"x0":337,"y0":2345.11}}};
+  function proj(P, lat, lon) {
+    var rad = Math.PI / 180, ty = function (y) { return Math.tan((Math.PI / 2 + y) / 2); };
+    var y0 = P.par[0] * rad, y1 = P.par[1] * rad, cy0 = Math.cos(y0);
+    var n = Math.log(cy0 / Math.cos(y1)) / Math.log(ty(y1) / ty(y0)), f = cy0 * Math.pow(ty(y0), n) / n;
+    var x = (lon - P.rot) * rad, r = f / Math.pow(ty(lat * rad), n);
+    return [P.x0 + P.k * r * Math.sin(n * x), P.y0 - P.k * (f - r * Math.cos(n * x))];
+  }
+  function renderMap() {
+    var narrow = narrowMq.matches, M = MAPP[narrow ? "m" : "d"], W = M.W, H = M.H, fs = narrow ? 1.25 : 1;
+    mapSvg.setAttribute("viewBox", "0 0 " + W + " " + H);
+    var base = $("map-base"); base.setAttribute("href", "map/dealers-" + (narrow ? "m" : "d") + ".svg"); base.setAttribute("width", W); base.setAttribute("height", H);
+    $("map-pins").innerHTML = CITIES.map(function (c) {
+      var inset = c.lon > 55, xy = proj(inset ? M.inset : M.main, c.lat, c.lon), x = Math.round(xy[0]), y = Math.round(xy[1]);
+      var r = (c.main ? 20 : inset ? 8 : 11) * fs;
+      var name = (narrow || inset) && c.short ? c.short : c.city;
+      var sub = c.main ? (narrow ? "Магазин + " + c.dealers.length : "Фирменный магазин + " + plural(c.dealers.length, "дилер", "дилера", "дилеров")) : "";
+      var tx, ty, anchor, g = 8 * fs;
+      if (c.pos === "r") { tx = x + r + g; ty = y + 5 * fs; anchor = "start"; }
+      else if (c.pos === "l") { tx = x - r - g; ty = y + 5 * fs; anchor = "end"; }
+      else if (c.pos === "a") { tx = x; ty = y - r - g; anchor = "middle"; }
+      else { tx = x; ty = y + r + 18 * fs; anchor = "middle"; }
+      var st = narrow ? ' style="font-size:' + (inset ? 15 : 19) + 'px"' : (inset ? ' style="font-size:13px"' : "");
+      var label = '<text class="map__label" x="' + tx + '" y="' + ty + '" text-anchor="' + anchor + '"' + st + ">" + esc(name) + "</text>" +
+        (sub ? '<text class="map__sub" x="' + tx + '" y="' + (ty + 17 * fs) + '" text-anchor="' + anchor + '"' + (narrow ? ' style="font-size:15px"' : "") + ">" + esc(sub) + "</text>" : "");
+      return '<g class="map__pin ' + (c.main ? "map__pin--main" : "map__pin--city") + '" data-city="' + c.id + '" tabindex="0" role="button" aria-label="' + esc(c.city + " — показать дилеров в списке") + '">' +
+        "<title>" + esc(c.city + ": " + (c.main ? SHOPD.name + ", " : "") + c.dealers.join(", ")) + "</title>" +
+        '<circle class="map__ring" cx="' + x + '" cy="' + y + '" r="' + r + '"></circle>' +
+        '<circle class="map__core" cx="' + x + '" cy="' + y + '" r="' + ((c.main ? 7 : inset ? 3 : 4) * fs) + '"></circle>' + label + "</g>";
+    }).join("");
+  }
+  renderMap();
+  if (narrowMq.addEventListener) narrowMq.addEventListener("change", renderMap);
+  var GROUPS = CITIES.slice().sort(function (a, b) {
+    if (a.main !== b.main) return a.main ? -1 : 1;
+    return (b.dealers.length - a.dealers.length) || a.city.localeCompare(b.city, "ru");
+  });
+  $("dealer-list").innerHTML = GROUPS.map(function (c) {
+    var shop = c.main
+      ? '<div class="dshop"><p class="dshop__name">' + esc(SHOPD.name) + '<span class="dshop__badge">' + icon("shield") + esc(SHOPD.role) + "</span></p>" +
+          '<p class="dshop__meta">' + esc(SHOPD.address) + "</p>" +
+          '<p class="dshop__meta">' + esc(SHOPD.note) + "</p>" +
+          '<p class="dshop__links"><a href="tel:+79999005588">' + esc(SHOPD.phone) + '</a><a href="' + SHOP + '">Перейти в магазин</a></p></div>'
+      : '<p class="dgroup__shop"><a href="' + SHOP + '">Нет дилера рядом? Фирменный магазин 79BIKE — с доставкой по всей России</a></p>';
+    return '<section class="dgroup' + (c.main || c.dealers.length > 1 ? " dgroup--wide" : "") + '" role="listitem" data-city="' + c.id + '" tabindex="0" aria-labelledby="dg-' + c.id + '">' +
+      '<h3 class="dgroup__city" id="dg-' + c.id + '">' + esc(c.city) + '<span class="dgroup__count">' + esc(cityCount(c)) + "</span></h3>" +
+      (c.main ? shop : "") + '<ul class="dgroup__list">' + c.dealers.map(function (d) { return "<li>" + (DSITE[d] ? '<a href="' + DSITE[d] + '"' + ext + ">" + esc(d) + "</a>" : esc(d)) + "</li>"; }).join("") + "</ul>" + (c.main ? "" : shop) + "</section>";
+  }).join("");
+  /* 26.10.2026 (Михаил): точка на схеме кликабельна — прокручивает к городу в списке и подсвечивает его дилеров */
+  var picked = null;
+  function highlight(id) {
+    id = id || picked;
+    document.querySelectorAll("[data-city]").forEach(function (el) { el.classList.toggle("is-active", el.getAttribute("data-city") === id); });
+  }
+  function pickCity(id) {
+    picked = id; highlight(id);
+    document.querySelectorAll("#dealer-list [data-city]").forEach(function (el) { el.classList.toggle("is-picked", el.getAttribute("data-city") === id); });
+    var g = document.querySelector('#dealer-list [data-city="' + id + '"]');
+    if (g) { var r = matchMedia("(prefers-reduced-motion: reduce)").matches; g.scrollIntoView({ block: "center", behavior: r ? "auto" : "smooth" }); g.focus({ preventScroll: true }); }
+  }
+  ["mouseover", "focusin"].forEach(function (ev) {
+    document.addEventListener(ev, function (e) {
+      var el = e.target.closest && e.target.closest("#dealer-list [data-city], #map-pins [data-city]");
+      highlight(el ? el.getAttribute("data-city") : null);
+    });
+  });
+  $("map-pins").addEventListener("click", function (e) { var p = e.target.closest("[data-city]"); if (p) pickCity(p.getAttribute("data-city")); });
+  $("map-pins").addEventListener("keydown", function (e) { if (e.key !== "Enter" && e.key !== " ") return; var p = e.target.closest("[data-city]"); if (p) { e.preventDefault(); pickCity(p.getAttribute("data-city")); } });
+
+  /* ---------- стать дилером: требования к партнёру (текст Михаила, отредактирован) ---------- */
+  var REQS = [
+    ["pin", "Магазин или мотосалон", "Офлайн-точка, где покупатели могут посмотреть технику 79BIKE вживую."],
+    ["wrench", "Сервис", "Собственный или партнёрский сервисный центр для ТО, диагностики и гарантийного ремонта."],
+    ["box", "Демо-байк и ассортимент", "Минимум один демонстрационный мотоцикл и согласованный с нами ассортимент."],
+    ["user", "Консультанты", "Сотрудники, которые разбираются в технике и помогают с выбором."],
+    ["check", "Стандарты бренда", "Актуальные характеристики, официальные фото и видео, корректное позиционирование моделей."],
+    ["info", "Реклама в своём регионе", "Объявления — только в согласованных регионах. Без копий сайтов бренда и сайтов, которые вводят покупателей в заблуждение."],
+    ["card", "Дилерское соглашение", "Соблюдение порядка закупок, правил гарантийного взаимодействия и рекомендованных цен."]
+  ];
+  var PLUSES = [
+    "Опыт продаж мотоциклов, электротранспорта или внедорожной техники",
+    "Возможность проводить тест-драйвы",
+    "Свой сайт и работающие каналы продаж",
+    "Опыт гарантийного обслуживания",
+    "Готовность участвовать в продвижении 79BIKE в вашем городе"
+  ];
+  $("terms").innerHTML = REQS.map(function (t) {
+    return '<li><span class="mark" aria-hidden="true">' + icon(t[0]) + "</span><b>" + esc(t[1]) + "</b><span>" + esc(t[2]) + "</span></li>";
+  }).join("");
+  $("pluses").innerHTML = PLUSES.map(function (t) { return "<li><span>" + esc(t) + "</span></li>"; }).join("");
+
+  /* ---------- частые вопросы 79bike.ru: свои формулировки, без повторов FAQ магазина ---------- */
+  var FAQ = [
+    ["Кто представляет 79BIKE в России?", "Официальное представительство завода-производителя 79BIKE с эксклюзивным правом на реализацию продукции 79BIKE в России. Мы развиваем дилерскую сеть, организуем гарантийное обслуживание, поставки оригинальных запчастей и техподдержку официальных дилеров и клиентов фирменного магазина."],
+    ["Где купить оригинальный байк 79BIKE?", 'В фирменном магазине 79BIKE в Москве — с доставкой по всей России — или у официальных дилеров из <a href="#official">списка на этой странице</a>.'],
+    ["Как отличить официальный байк от «серого»?", "Официальные байки продаются только фирменным магазином и дилерами из списка. Технику, ввезённую из других стран, мы не обслуживаем по гарантии, а такие байки блокируются на территории России через некоторое время после активации. К «серым» байкам и байкам из других стран могут не подходить оригинальные запчасти и прошивки."],
+    ["Как устроена гарантия?", 'Гарантийный ремонт и диагностика проводятся в России, техподдержка отвечает на русском языке. Порядок обращения и условия описаны в <a href="warranty.html">гарантийной политике</a>.'],
+    ["Кто обеспечивает техническую поддержку?", 'Представительство осуществляет техническую поддержку официальных дилеров и клиентов фирменного магазина <a href="https://falcon-bike.ru/" target="_blank" rel="noopener">Falcon-bike</a>. Если вы покупатель и приобрели байк у официального дилера, техподдержку и гарантийные обязательства обеспечивает ваш продавец.'],
+    ["Где взять запчасти и расходники?", 'Оригинальные запчасти хранятся на складе в Москве. Каталог с ценами — в <a href="https://falcon-bike.ru/accessories">фирменном магазине</a>, в регионы отправляем транспортной компанией.'],
+    ["Какие модели входят в линейку?", '<a href="#select-light" data-select="light">Falcon Lite</a>, <a href="#select-pro" data-select="pro">Falcon Pro</a>, <a href="#select-gt" data-select="gt">Falcon GT</a>, <a href="#select-lynx-trail" data-select="lynx-trail">Lynx Trail</a>, <a href="#select-surge-v" data-select="surge-v">Y-Volt Surge V</a> и <a href="#select-lynx-x" data-select="lynx-x">Lynx X</a> — старт продаж Lynx X запланирован на 2027 год.'],
+    ["Можно ли перепродавать новые байки 79BIKE без договора с представительством?", "К сотрудничеству мы приглашаем только специализированных дилеров. Продажа байков, ввезённых в Россию в обход официального канала, использование товарного знака, логотипа и фото 79BIKE в объявлениях без разрешения и выдача себя за официального дилера нарушают исключительное право на товарный знак — суд может взыскать компенсацию до 5 000 000 ₽ за каждое нарушение (ст. 1515 ГК РФ). Гарантия и техподдержка — только на технику из фирменного магазина и от официальных дилеров."],
+    ["Как стать дилером?", 'Заполните <a href="#dealers">заявку на дилерство</a> или выберите быструю связь — менеджер представительства перезвонит и расскажет об условиях.']
+  ];
+  $("rep-faq").innerHTML = FAQ.map(function (f, k) {
+    return '<details class="rfaq__it"' + (k === 0 ? " open" : "") + "><summary>" + esc(f[0]) + "</summary><p>" + f[1] + "</p></details>";
+  }).join("");
+
+  /* ---------- заявка на дилерство: подробная / быстрая связь (только телефон) ---------- */
+  (function () {
+    var form = $("pform"); if (!form) return;
+    document.querySelectorAll("[data-pmode]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var quick = b.getAttribute("data-pmode") === "quick";
+        document.querySelectorAll("[data-pmode]").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+        form.querySelectorAll(".pf-full").forEach(function (l) { l.hidden = quick; var i = l.querySelector("input"); if (quick || l.classList.contains("pf-opt")) i.removeAttribute("required"); else i.setAttribute("required", ""); });
+        $("pform-lead").textContent = quick ? "Оставьте контакт — менеджер 79BIKE свяжется с вами в рабочее время удобным способом." : "Оставьте контакты — менеджер 79BIKE позвонит, расскажет об условиях и пришлёт коммерческое предложение.";
+        var sb = form.querySelector('button[type="submit"]');
+        if (quick) { sb.setAttribute("data-how-btn", ""); sb.textContent = "Жду звонка"; form.dispatchEvent(new Event("change", { bubbles: true })); } else { sb.removeAttribute("data-how-btn"); sb.textContent = "Отправить заявку"; }
+      });
+    });
+  })();
+
+  /* ---------- нижняя панель: прячется, пока виден первый экран и подвал ---------- */
+  var dock = $("dock"), hero = $("top"), foot = document.querySelector(".foot");
+  if (window.IntersectionObserver) {
+    var vis = { hero: true, foot: false };
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (en) { vis[en.target === hero ? "hero" : "foot"] = en.isIntersecting; });
+      dock.classList.toggle("is-off", vis.hero || vis.foot);
+    }, { threshold: 0 });
+    io.observe(hero); io.observe(foot);
+  } else dock.classList.remove("is-off");
+});
+</script>
+<script data-inaction>/* 26.10.2026: «79BIKE в деле» — вкладки серий (role=tablist, стрелки/Home/End), ленивая подстановка фото серии при первом показе,
+   стрелки ленты на ПК (скрываются у края), свайп — нативная прокрутка со scroll-snap. Клик по фото обрабатывает общий обработчик [data-select] (селектор моделей). */
+(function () {
+  var root = document.getElementById("inaction"); if (!root) return;
+  var tabs = [].slice.call(root.querySelectorAll('[role="tab"]'));
+  var prev = root.querySelector('[data-ina-step="-1"]'), next = root.querySelector('[data-ina-step="1"]');
+  function rail() { return root.querySelector(".ina__rail:not([hidden])"); }
+  function load(panel) {
+    panel.querySelectorAll("img[data-src]").forEach(function (im) {
+      im.setAttribute("srcset", im.getAttribute("data-srcset")); im.setAttribute("src", im.getAttribute("data-src"));
+      im.removeAttribute("data-srcset"); im.removeAttribute("data-src");
+    });
+  }
+  function edges() {
+    var r = rail(); if (!r) return;
+    var max = r.scrollWidth - r.clientWidth - 2;
+    prev.hidden = r.scrollLeft <= 2; next.hidden = r.scrollLeft >= max;
+  }
+  function show(tab, focus) {
+    tabs.forEach(function (t) {
+      var on = t === tab, p = document.getElementById(t.getAttribute("aria-controls"));
+      t.setAttribute("aria-selected", String(on)); t.tabIndex = on ? 0 : -1;
+      if (on) { load(p); p.hidden = false; p.scrollLeft = 0; } else p.hidden = true;
+    });
+    if (focus) tab.focus();
+    var tl = tab.parentNode;
+    if (tl.scrollWidth > tl.clientWidth) tl.scrollLeft = Math.max(0, tab.offsetLeft - (tl.clientWidth - tab.offsetWidth) / 2);
+    edges();
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener("click", function () { show(t, false); });
+    t.addEventListener("keydown", function (e) {
+      var k = e.key, j = k === "ArrowRight" ? i + 1 : k === "ArrowLeft" ? i - 1 : k === "Home" ? 0 : k === "End" ? tabs.length - 1 : null;
+      if (j === null) return; e.preventDefault(); show(tabs[(j + tabs.length) % tabs.length], true);
+    });
+  });
+  function step(d) {
+    var r = rail(), it = r && r.querySelector(".ina__it"); if (!it) return;
+    var w = it.getBoundingClientRect().width + (parseFloat(getComputedStyle(r).columnGap) || 0);
+    r.scrollBy({ left: d * w, behavior: "smooth" });
+  }
+  prev.addEventListener("click", function () { step(-1); });
+  next.addEventListener("click", function () { step(1); });
+  root.querySelectorAll(".ina__rail").forEach(function (r) { r.addEventListener("scroll", edges, { passive: true }); });
+  window.addEventListener("resize", edges);
+  edges();
+})();</script>
+<script data-forms79>/* 26.10.2026 (Михаил): формы 79bike.ru — живая маска телефона +7 (XXX) XXX-XX-XX, выбор «Как удобнее связаться»
+   (Позвонить / WhatsApp / Telegram / VK Мессенджер), обязательная галочка согласия на обработку ПД.
+   Звонок и WhatsApp — только телефон (маска). Telegram и VK Мессенджер — телефон ИЛИ имя пользователя (@username):
+   поле переключается на обычную клавиатуру, маска включается, только если вводят цифры.
+   Вставка и автозаполнение («+7 999 123-45-67», «8 (999) 1234567», «79991234567», «+7+7…») нормализуются без дублей +7,
+   курсор не прыгает при правке в середине номера. Проверка идёт до общего обработчика демо-форм (../assets/app.js). */
+(function () {
+  var USER_RX = /^@[A-Za-z0-9_.]{3,32}$/;
+  function phoneDigits(v) {
+    var t = String(v || "").replace(/[^\d+]/g, ""), d = t.replace(/\D/g, "");
+    if (t.indexOf("+7") === 0) d = d.slice(1);
+    else if (d.length === 11 && (d[0] === "8" || d[0] === "7")) d = d.slice(1);
+    if (d.length === 11 && (d[0] === "8" || d[0] === "7")) d = d.slice(1);
+    return d.slice(0, 10);
+  }
+  function fmtPhone(d) {
+    var out = "+7 ("; if (!d.length) return out;
+    out += d.slice(0, 3); if (d.length > 3) out += ") " + d.slice(3, 6); if (d.length > 6) out += "-" + d.slice(6, 8); if (d.length > 8) out += "-" + d.slice(8, 10);
+    return out;
+  }
+  function isTel(t) { return t && t.matches && t.matches("form.js-demo-form input[data-contact]"); }
+  function how(form) { var r = form && form.querySelector('input[name="how"]:checked'); return r ? r.value : "call"; }
+  function anyMode(t) { var h = how(t.form); return h === "telegram" || h === "vk"; }
+  /* в режиме Telegram/VK: буквы, @, _ или точка — значит, вводят имя пользователя, маску не применяем */
+  function looksUser(v) { return /[A-Za-z_@\u0400-\u04FF]/.test(String(v || "").replace(/^\+7 \(/, "")); }
+  function digitsAfter(v, pos) { return String(v).slice(pos).replace(/\D/g, "").length; }
+  function caretFor(v, after) {
+    if (!after) return v.length;
+    for (var i = v.length, n = 0; i > 4; i--) { if (/\d/.test(v[i - 1])) { n++; if (n === after) { var p = i - 1; while (p > 4 && !/\d/.test(v[p - 1])) p--; return p; } } }
+    return 4;
+  }
+  function setVal(t, v, caret) {
+    if (t.value !== v) t.value = v;
+    if (caret != null && document.activeElement === t) { try { t.setSelectionRange(caret, caret); } catch (e) {} }
+  }
+  function formatTel(t, ev) {
+    var v = t.value;
+    if (anyMode(t) && looksUser(v)) {
+      /* имя пользователя: без пробелов, одна @ в начале */
+      var u = v.replace(/^\+7 \(/, "").replace(/\s+/g, "").replace(/^@+/, "@").slice(0, 33);
+      var pos = t.selectionStart == null ? u.length : Math.max(0, t.selectionStart - (v.length - u.length));
+      setVal(t, u, u === v ? null : pos); t.setAttribute("data-prev", ""); return;
+    }
+    var caret = t.selectionStart == null ? v.length : t.selectionStart;
+    var after = digitsAfter(v, caret), prev = t.getAttribute("data-prev") || "", d = phoneDigits(v);
+    var it = ev && ev.inputType || "";
+    /* стёрли скобку, пробел или дефис — убираем соседнюю цифру, а не застреваем на разделителе */
+    if (d === prev && d.length && (it === "deleteContentBackward" || it === "deleteContentForward")) {
+      var idx = d.length - after - (it === "deleteContentBackward" ? 1 : 0);
+      if (idx >= 0 && idx < d.length) { d = d.slice(0, idx) + d.slice(idx + 1); if (it === "deleteContentForward") after = Math.max(0, after - 1); }
+    }
+    after = Math.min(after, d.length);
+    t.setAttribute("data-prev", d);
+    var out = d.length ? fmtPhone(d) : (/^delete/.test(it) ? "" : "+7 (");
+    setVal(t, out, caretFor(out, after));
+  }
+  function applyHow(form) {
+    if (!form) return;
+    var t = form.querySelector("input[data-contact]"); if (!t) return;
+    var any = (function (h) { return h === "telegram" || h === "vk"; })(how(form)), h = how(form);
+    var lab = form.querySelector("[data-tel-l]"), btn = form.querySelector("[data-how-btn]");
+    if (any) {
+      t.type = "text"; t.setAttribute("inputmode", "text");
+      t.setAttribute("autocapitalize", "off"); t.setAttribute("autocorrect", "off"); t.setAttribute("spellcheck", "false");
+      t.placeholder = "+7 (___) ___-__-__ или @username";
+      if (t.value === "+7 (") t.value = "";
+    } else {
+      t.type = "tel"; t.setAttribute("inputmode", "tel");
+      t.placeholder = "+7 (___) ___-__-__";
+      if (looksUser(t.value)) { t.value = ""; t.setAttribute("data-prev", ""); }
+    }
+    var name = any ? "Телефон или имя пользователя " + (h === "vk" ? "VK" : "Telegram") : "Телефон";
+    if (lab) lab.textContent = name; else t.setAttribute("aria-label", name);
+    if (btn) btn.textContent = h === "call" ? "Жду звонка" : "Жду сообщения";
+    t.removeAttribute("aria-invalid");
+  }
+  document.addEventListener("focusin", function (e) { var t = e.target; if (isTel(t) && !t.value && !anyMode(t)) { t.value = "+7 ("; try { t.setSelectionRange(4, 4); } catch (x) {} } });
+  document.addEventListener("input", function (e) { var t = e.target; if (!isTel(t)) return; formatTel(t, e); t.removeAttribute("aria-invalid"); });
+  document.addEventListener("focusout", function (e) {
+    var t = e.target; if (!isTel(t)) return;
+    if (!looksUser(t.value) && t.value.replace(/\D/g, "").length <= 1) { t.value = ""; t.setAttribute("data-prev", ""); }
+  });
+  document.addEventListener("change", function (e) {
+    var t = e.target;
+    if (t && t.matches && t.matches("form.js-demo-form input[data-req-check]") && t.checked) t.removeAttribute("aria-invalid");
+    if (t && t.matches && t.matches('form.js-demo-form input[name="how"]')) applyHow(t.form);
+    else if (t && t.matches && t.matches("form.js-demo-form")) applyHow(t);
+    /* автозаполнение без события input (часть браузеров шлёт только change) */
+    if (isTel(t)) formatTel(t, null);
+  });
+  function say(form, el, text) {
+    var m = form.querySelector(".form-msg");
+    form.querySelectorAll("[aria-invalid]").forEach(function (x) { x.removeAttribute("aria-invalid"); });
+    if (m) { m.className = "form-msg is-error"; m.textContent = text; }
+    el.setAttribute("aria-invalid", "true"); el.focus();
+  }
+  document.addEventListener("submit", function (e) {
+    var f = e.target;
+    if (!f.classList || !f.classList.contains("js-demo-form")) return;
+    var bad = null, msg = "";
+    f.querySelectorAll("input[required]").forEach(function (i) {
+      if (bad || i.hasAttribute("data-contact") || i.type === "tel" || i.type === "checkbox" || i.closest("[hidden]")) return;
+      if (!i.value.trim()) { bad = i; msg = "Заполните поле «" + String((i.labels && i.labels[0] && i.labels[0].firstChild && i.labels[0].firstChild.textContent) || i.getAttribute("aria-label") || "поле").trim() + "»."; }
+    });
+    var tel = f.querySelector("input[data-contact]") || f.querySelector('input[type="tel"]');
+    if (!bad && tel) {
+      var any = tel.hasAttribute("data-contact") && anyMode(tel), v = tel.value.trim();
+      if (any && looksUser(v)) {
+        var u = "@" + v.replace(/^@+/, "");
+        if (!USER_RX.test(u)) { bad = tel; msg = "Проверьте имя пользователя: латинские буквы, цифры и «_», например @ivan_petrov — или введите номер телефона."; }
+        else tel.value = u;
+      } else {
+        var d = phoneDigits(v);
+        if (!d.length) { bad = tel; msg = any ? "Введите номер телефона или имя пользователя (@username)." : "Введите номер телефона."; }
+        else if (d.length < 10) { bad = tel; msg = "Введите номер полностью: 10 цифр после +7."; }
+        else tel.value = fmtPhone(d);
+      }
+    }
+    if (!bad) f.querySelectorAll("input[data-req-check]").forEach(function (i) { if (!bad && !i.checked) { bad = i; msg = i.getAttribute("data-req-check"); } });
+    if (bad) { e.preventDefault(); e.stopImmediatePropagation(); say(f, bad, msg); }
+  }, true);
+  document.querySelectorAll("form.js-demo-form").forEach(applyHow);
+  /* форма консультации появляется при выборе модели — подстраиваем её при открытии */
+  document.addEventListener("click", function (e) { var b = e.target.closest && e.target.closest("[data-toggle]"); if (b) setTimeout(function () { document.querySelectorAll("form.js-demo-form").forEach(applyHow); }, 0); });
+})();
+</script>
+<script data-hv-snd>(function(){var v=document.getElementById("hv-video"),b=document.querySelector(".hv__snd");if(!v)return;
+v.muted=true;v.defaultMuted=true;v.playsInline=true;var tp=function(){var p=v.play();if(p&&p.catch)p.catch(function(){})};var pb=document.createElement("button");pb.type="button";pb.className="hv__play";pb.hidden=true;pb.setAttribute("aria-label","Смотреть ролик");pb.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg><span>Смотреть ролик</span>';v.parentNode.appendChild(pb);var ck=function(){pb.hidden=!v.paused};v.addEventListener("playing",function(){pb.hidden=true});v.addEventListener("pause",ck);pb.addEventListener("click",function(){v.muted=true;tp();setTimeout(ck,600)});["touchstart","pointerdown","scroll","keydown"].forEach(function(ev){document.addEventListener(ev,function o(){if(v.paused)tp();document.removeEventListener(ev,o)},{passive:true})});if("IntersectionObserver"in window)new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting&&v.paused)tp()})}).observe(v);/* запасной путь fetch→blob (26.10.2026): только iOS (режим энергосбережения, встроенный просмотр) или файл не больше 6 МБ — большой ПК-ролик целиком в память не тянем */var IOS=/iP(hone|ad|od)/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1),MAXB=6*1024*1024;var bt=false,vb=function(){if(bt||!window.fetch||!window.URL)return;bt=true;var src=v.currentSrc||v.src;if(!src)return;fetch(src).then(function(r){if(!r.ok)return null;var n=+(r.headers.get("content-length")||0);if(!IOS&&!(n&&n<=MAXB)){if(r.body&&r.body.cancel)r.body.cancel();return null}return r.blob()}).then(function(bl){if(!bl)return;v.src=URL.createObjectURL(bl);v.load();tp()}).catch(function(){})};v.addEventListener("error",vb,true);tp();setTimeout(function(){if(v.paused||v.readyState<2)vb();ck()},2500);
+if(b)b.addEventListener("click",function(){v.muted=!v.muted;if(!v.muted){v.volume=1;tp()}b.setAttribute("aria-pressed",String(!v.muted));b.setAttribute("aria-label",v.muted?"Включить звук":"Выключить звук")})})();</script>
+<script data-logo-home>document.querySelectorAll("a.rlogo").forEach(function(l){l.addEventListener("click",function(e){e.preventDefault();var m=document.getElementById("menu");if(m&&!m.hidden){var c=document.getElementById("menu-close");if(c)c.click();}window.scrollTo({top:0,behavior:"smooth"});});});</script>
+<script data-ext-fix>(function(){function f(){document.querySelectorAll('a[href^="http"]').forEach(function(a){if(a.host!==location.host&&!a.target){a.target="_blank";a.rel="noopener"}})}f();new MutationObserver(f).observe(document.body,{childList:true,subtree:true})})();</script>
+<script data-totop>(function(){var b=document.createElement("button");b.type="button";b.className="totop";b.setAttribute("aria-label","Наверх");b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>';document.body.appendChild(b);
+function pos(){var d=document.querySelector("#dock,.dock,.mbar,.rbar,.mob-cta");var h=(d&&getComputedStyle(d).position=="fixed"&&d.offsetHeight>0&&innerWidth<900)?d.offsetHeight+12:96;document.documentElement.style.setProperty("--totop-b",h+"px");}
+function on(){b.classList.toggle("is-on",scrollY>innerHeight*1.5);}
+var t;addEventListener("scroll",function(){if(!t)t=requestAnimationFrame(function(){t=0;on();});},{passive:true});addEventListener("resize",pos);pos();on();setTimeout(pos,1500);
+b.addEventListener("click",function(){var r=matchMedia("(prefers-reduced-motion: reduce)").matches;scrollTo({top:0,behavior:r?"auto":"smooth"});});})();</script>
+<script data-dockmsg>(function(){var b=document.getElementById("dock-msg"),p=document.getElementById("dock-msgs");if(!b||!p)return;function fill(){try{var L=(window.UI&&UI.links)||{};p.querySelectorAll("a[data-l]").forEach(function(a){a.href=L[a.getAttribute("data-l")]||"#contacts";});}catch(e){}}function set(o){if(o)fill();p.hidden=!o;b.setAttribute("aria-expanded",o?"true":"false");}b.addEventListener("click",function(e){e.stopPropagation();set(p.hidden);});document.addEventListener("click",function(e){if(!p.hidden&&!p.contains(e.target))set(false);});document.addEventListener("keydown",function(e){if(e.key==="Escape")set(false);});})();</script>
+<script data-tel>/* 26.10.2026: звонок в окне-предпросмотре прототипа. Внутри окна просмотра (iframe) браузер может блокировать tel:,
+   поэтому показываем лист с номером: «Позвонить» (target=_top), «Скопировать номер», мессенджеры. На настоящем сайте ссылка работает как обычно. */
+(function () {
+  if (window.top === window) return;
+  var sheet;
+  function close() { if (sheet) sheet.hidden = true; }
+  function open(href) {
+    var num = href.replace(/^tel:/, ""), pretty = "+7 (999) 900-55-88";
+    if (!sheet) {
+      sheet = document.createElement("div"); sheet.className = "telsheet"; sheet.setAttribute("role", "dialog"); sheet.setAttribute("aria-label", "Позвонить");
+      sheet.innerHTML = '<div class="telsheet__bg" data-x><\/div><div class="telsheet__in"><p class="telsheet__t">Позвонить нам<\/p><a class="telsheet__num" target="_top"><\/a>' +
+        '<a class="telsheet__btn telsheet__btn--main" target="_top" data-call>Позвонить<\/a><button type="button" class="telsheet__btn" data-copy>Скопировать номер<\/button>' +
+        '<div class="telsheet__row"><a href="https://wa.me/79999005588" target="_blank" rel="noopener">WhatsApp<\/a><a href="https://t.me/Meliso_group" target="_blank" rel="noopener">Telegram<\/a><a href="https://vk.me/79bike" target="_blank" rel="noopener">VK Мессенджер<\/a><\/div>' +
+        '<button type="button" class="telsheet__x" data-x aria-label="Закрыть">×<\/button><\/div>';
+      document.body.appendChild(sheet);
+      sheet.addEventListener("click", function (e) {
+        if (e.target.closest("[data-x]")) { close(); return; }
+        var c = e.target.closest("[data-copy]");
+        if (c) { var done = function () { c.textContent = "Номер скопирован"; }; try { navigator.clipboard.writeText(pretty).then(done, function () { fallback(); done(); }); } catch (x) { fallback(); done(); } }
+      });
+      document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+    }
+    function fallback() { var t = document.createElement("textarea"); t.value = pretty; document.body.appendChild(t); t.select(); try { document.execCommand("copy"); } catch (x) {} t.remove(); }
+    sheet.querySelector(".telsheet__num").href = href; sheet.querySelector(".telsheet__num").textContent = pretty;
+    sheet.querySelector("[data-call]").href = href; sheet.querySelector("[data-copy]").textContent = "Скопировать номер";
+    sheet.hidden = false;
+  }
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="tel:"]');
+    if (!a || a.closest(".telsheet")) return;
+    e.preventDefault(); open(a.getAttribute("href"));
+  }, true);
+  var css = document.createElement("style");
+  css.textContent = '.telsheet{position:fixed;inset:0;z-index:2147483000}.telsheet[hidden]{display:none}.telsheet__bg{position:absolute;inset:0;background:rgba(0,0,0,.6)}.telsheet__in{position:absolute;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));max-width:420px;margin:0 auto;padding:22px 18px 18px;border-radius:22px;background:#16161c;color:#fff;box-shadow:0 20px 50px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.08);display:flex;flex-direction:column;gap:10px;font-family:inherit}.telsheet__t{margin:0;font-size:14px;color:#a6a9b4}.telsheet__num{font-size:26px;font-weight:800;color:#fff;text-decoration:none;user-select:all;-webkit-user-select:all}.telsheet__btn{display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:999px;border:0;font:700 16px/1 inherit;font-family:inherit;cursor:pointer;text-decoration:none;background:#24242c;color:#fff}.telsheet__btn--main{background:#7658F5}.telsheet__row{display:flex;flex-wrap:wrap;gap:8px}.telsheet__row a{flex:1 1 40%;white-space:nowrap;padding:0 10px;text-align:center;font-size:15px;display:flex;align-items:center;justify-content:center;min-height:44px;border-radius:999px;color:#fff;text-decoration:none;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}.telsheet__x{position:absolute;top:10px;right:12px;width:36px;height:36px;border:0;border-radius:50%;background:transparent;color:#a6a9b4;font-size:26px;cursor:pointer}';
+  document.head.appendChild(css);
+})();
+</script>
+<script data-dlg>/* 26.10.2026 (Михаил): поп-апы — заявка блогера (условия — до отправки, решение Михаила 27.10) и техподдержка (кому помогаем → форма консультации) */
+(function(){
+  function open(id){var d=document.getElementById(id);if(!d)return;reset(d);if(d.showModal)d.showModal();else d.setAttribute("open","");document.documentElement.classList.add("dlg-open");}
+  function close(d){if(d.close)d.close();else d.removeAttribute("open");document.documentElement.classList.remove("dlg-open");}
+  function step(d,n){d.querySelectorAll(".dlg__body").forEach(function(b){b.hidden=b.getAttribute("data-step")!==n;});var f=d.querySelector('.dlg__body:not([hidden]) input:not([type=hidden]):not([type=radio]):not([type=checkbox]),.dlg__body:not([hidden]) .dlg__opt');if(f)setTimeout(function(){f.focus();},30);}
+  function reset(d){var first=d.querySelector(".dlg__body");step(d,first.getAttribute("data-step"));}
+  document.addEventListener("click",function(e){
+    var o=e.target.closest&&e.target.closest("[data-dlg],a[href='#support']");
+    if(o){e.preventDefault();open(o.getAttribute("data-dlg")||"dlg-support");return;}
+    var c=e.target.closest&&e.target.closest("[data-dlg-close]");
+    if(c){var d=c.closest("dialog");if(d)close(d);return;}
+    var s=e.target.closest&&e.target.closest("[data-sup]");
+    if(s){var dd=s.closest("dialog"),v=s.getAttribute("data-sup");
+      if(v==="ok"){var h=dd.querySelector('input[name="source"]');if(h)h.value=s.getAttribute("data-src")||"";step(dd,"form");}
+      else if(v==="no")step(dd,"no");else step(dd,"who");}
+  });
+  document.querySelectorAll("dialog.dlg").forEach(function(d){
+    d.addEventListener("close",function(){document.documentElement.classList.remove("dlg-open");});
+    d.addEventListener("click",function(e){if(e.target===d)close(d);});
+  });
+  var bd=document.getElementById("dlg-blog");
+  if(bd)bd.addEventListener("demo:submitted",function(e){var f=e.target;setTimeout(function(){step(bd,"done");if(f.reset)f.reset();var m=f.querySelector(".form-msg");if(m){m.textContent="";m.className="form-msg";}},250);});
+  if(location.hash==="#support")setTimeout(function(){open("dlg-support");},400);
+})();
+</script>
+<script src="range-q.js?v=1" defer></script>
+<script data-ina-more>(function(){var b=document.querySelector(".ina-more__btn"),box=document.getElementById("ina-more");if(!b||!box)return;
+b.addEventListener("click",function(){var o=box.hidden;box.hidden=!o;b.setAttribute("aria-expanded",String(o));b.textContent=o?"Скрыть фото":"Ещё фото (10)";
+if(o)box.querySelectorAll("img[data-src]").forEach(function(i){i.srcset=i.getAttribute("data-srcset");i.src=i.getAttribute("data-src");i.removeAttribute("data-src");});});})();</script>
+</body>
+</html>

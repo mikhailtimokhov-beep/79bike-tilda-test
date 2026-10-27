@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Блог 79BIKE в России</title>
+<meta name="description" content="Блог 79BIKE в России: технологии Falcon, Lynx и Y-Volt, гарантия, подлинность байков, работа с дилерами.">
+
+
+<link rel="stylesheet" href="fonts.css?v=1">
+<!-- Блог 79bike.ru: список статей (blog.html) и статья (blog.html?s=<slug>). Данные — blog.js (window.REP_BLOG), модели — ../assets/models.js.
+     На боевом сайте: /blog и /blog/<slug> (в Tilda — отдельные страницы или Tilda Feeds). Стили — rep.css (блок «Блог» в конце). -->
+<link rel="stylesheet" href="rep.css?v=20261027f">
+<style>
+  .skip{position:absolute;left:12px;top:-60px;z-index:80;padding:12px 16px;border-radius:12px;background:#fff;color:#000;font-weight:700;text-decoration:none}
+  .skip:focus{top:12px}
+  .rlogo{display:inline-flex;align-items:center;gap:12px;min-height:44px;text-decoration:none;flex:none}
+  .rlogo img{height:20px;width:114px}
+  .rlogo__plate{padding-left:12px;border-left:1px solid var(--line-3);font-size:12px;font-weight:600;line-height:1.25;color:var(--mute);max-width:15ch}
+  .top .btn{min-height:44px;padding:0 20px;font-size:15px}
+  .top .nav{flex:1;justify-content:center}
+  .nav>a{white-space:nowrap}
+  @media (max-width:1400px){.top .top__phone{display:none}}
+  @media (max-width:380px){.rlogo{gap:10px}.rlogo img{width:100px;height:auto}.rlogo__plate{padding-left:10px;font-size:11px}}
+  .menu nav a{display:flex;align-items:center;min-height:52px}
+  .foot__brand p{color:var(--mute);font-size:14px;max-width:36ch}
+  .foot .rlogo__plate{max-width:none}
+  .rlogo__plate{max-width:17ch;font-size:11px;line-height:1.2}
+  @media (max-width:380px){.rlogo__plate{font-size:10.5px}}
+  .shopbtn{flex-direction:column;gap:0;line-height:1.15;padding-top:8px;padding-bottom:8px}
+  .shopbtn small{font-size:12px;font-weight:600;opacity:.82}
+  [id]{scroll-margin-top:84px}
+
+/* 25.10 (Михаил): кнопка «Наверх» — появляется после прокрутки вниз, полупрозрачная */
+.totop{position:fixed;z-index:70;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(var(--totop-b,96px) + env(safe-area-inset-bottom,0px));width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.12);background:rgba(20,20,25,.38);color:rgba(255,255,255,.85);display:grid;place-items:center;cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transform:translateY(10px);pointer-events:none;transition:opacity .2s,transform .2s,background .2s,color .2s}
+.totop.is-on{opacity:.8;transform:none;pointer-events:auto}
+.totop:hover,.totop:focus-visible{opacity:1;background:#7658F5;border-color:#7658F5;color:#fff}
+.totop svg{width:20px;height:20px}
+@media (prefers-reduced-motion:reduce){.totop{transition:none}}
+
+</style>
+<script src="../assets/models.js?v=20261026k"></script>
+<script src="blog.js?v=20261026r"></script>
+<script data-top>/* 26.10 (Михаил): переход на другую страницу — всегда с самого верха (если в ссылке нет #раздела) */
+try{if("scrollRestoration" in history)history.scrollRestoration="manual"}catch(e){}
+(function(){var moved=false,t0=Date.now();["wheel","touchstart","keydown","mousedown"].forEach(function(ev){window.addEventListener(ev,function(){moved=true},{passive:true,once:true})});
+function top(){if(!location.hash&&!moved&&Date.now()-t0<4000)window.scrollTo(0,0)}
+top();document.addEventListener("DOMContentLoaded",top);window.addEventListener("load",function(){top();setTimeout(top,60)});window.addEventListener("pageshow",function(e){if(!e.persisted)top()})})();</script>
+<link rel="stylesheet" href="cookie-banner.css?v=3"><script>window.COOKIE_BANNER_CONFIG={policyUrl:"https://falcon-bike.ru/privacy",operator:"ИП Тимоховым М. С."};</script><script src="cookie-banner.js?v=2" defer></script>
+</head>
+<body data-page="rep-blog">
+<a class="skip" href="#main">К содержимому</a>
+<header class="top">
+  <div class="wrap">
+    <a class="rlogo" href="index.html" aria-label="79BIKE в России, на главную">
+      <img src="logo-white.svg" alt="" width="114" height="20">
+      <span class="rlogo__plate">Официальное представительство в России</span>
+    </a>
+    <nav class="nav" aria-label="Основное меню">
+      <a href="index.html#models">Модели</a>
+      <a href="index.html#official">Где купить</a>
+      <div class="nav__item">
+        <button class="nav__btn" type="button" aria-expanded="false" aria-controls="dd-service">Сервис<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="drop" id="dd-service" hidden><a href="warranty.html">Гарантия<span>Условия и порядок ремонта</span></a><a href="instructions.html">Инструкции<span>Сборка и эксплуатация</span></a><a href="https://falcon-bike.ru/accessories" target="_blank" rel="noopener">Запчасти<span>В фирменном магазине</span></a><a href="index.html#faq">Частые вопросы<span>Пробег, заряд, дождь</span></a></div>
+      </div>
+      <div class="nav__item">
+        <button class="nav__btn" type="button" aria-expanded="false" aria-controls="dd-partners">Партнёрам<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="drop" id="dd-partners" hidden><a href="index.html#dealers">Стать дилером<span>Условия и заявка</span></a><a href="index.html#bloggers">Блогерам<span>Тест-драйв для обзора</span></a></div>
+      </div>
+      <div class="nav__item">
+        <button class="nav__btn" type="button" aria-expanded="false" aria-controls="dd-brand">О бренде<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="drop" id="dd-brand" hidden><a href="index.html#about">О нас<span>Представительство 79BIKE</span></a><a href="index.html#events">События<span>Выставки и тест-драйвы</span></a><a href="blog.html" aria-current="page">Блог<span>Статьи и новости</span></a></div>
+      </div>
+      <a href="index.html#contacts">Контакты</a>
+    </nav>
+    <a class="top__phone" href="tel:+79999005588">+7 (999) 900-55-88</a>
+    <a class="btn btn--main" href="https://falcon-bike.ru/">Фирменный магазин</a>
+    <div style="display:flex;gap:2px">
+      <a class="icon-btn" href="tel:+79999005588" aria-label="Позвонить: +7 (999) 900-55-88"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></a>
+      <button class="icon-btn" type="button" id="menu-open" aria-label="Открыть меню" aria-expanded="false" aria-controls="menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+<div class="menu" id="menu" hidden role="dialog" aria-modal="true" aria-label="Меню">
+  <div class="menu__head">
+    <span class="rlogo"><img src="logo-white.svg" alt="79BIKE" width="114" height="20"><span class="rlogo__plate">Официальное представительство в России</span></span>
+    <button class="icon-btn" type="button" id="menu-close" aria-label="Закрыть меню" style="display:inline-flex"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <nav aria-label="Разделы" class="menu__nav">
+    <a href="index.html#models">Модели</a>
+    <span class="menu__h">Выбрать и купить</span>
+    <a href="index.html#official">Где купить — официальные дилеры</a>
+    <a href="index.html#compare">Сравнение моделей</a>
+    <span class="menu__h">Владельцам</span>
+    <a href="warranty.html">Гарантия</a>
+    <a href="instructions.html">Инструкции</a>
+    <a href="https://falcon-bike.ru/accessories" target="_blank" rel="noopener">Запчасти</a>
+    <a href="index.html#faq">Частые вопросы</a>
+    <span class="menu__h">Партнёрам</span>
+    <a href="index.html#dealers">Стать дилером</a>
+    <a href="index.html#bloggers">Блогерам</a>
+    <span class="menu__h">О бренде</span>
+    <a href="index.html#about">О нас</a>
+    <a href="factory.html">Производство</a>
+    <a href="index.html#events">События</a>
+    <a href="blog.html">Блог</a>
+    <a class="btn btn--ghost menu__cta" href="index.html#contacts">Контакты</a>
+  </nav>
+  <div class="room">
+    <a class="room__phone" href="tel:+79999005588" style="text-decoration:none">+7 (999) 900-55-88</a>
+    <a class="btn btn--main shopbtn" href="https://falcon-bike.ru/"><span>Фирменный магазин 79BIKE</span><small>Быстрая доставка по РФ</small></a>
+  </div>
+</div>
+
+<main id="main"></main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div class="foot__brand" style="display:flex;flex-direction:column;gap:14px">
+        <a class="rlogo" href="index.html" aria-label="79BIKE, на главную"><img src="logo-white.svg" alt="" width="114" height="20"><span class="rlogo__plate">Официальное представительство в России</span></a>
+        <p>Официальное представительство завода-производителя 79BIKE в России. Электромотоциклы Falcon, Lynx и <span class="nowrap">Y-Volt</span> Surge V с гарантией, запчастями в наличии и техподдержкой на русском языке для официальных дилеров и клиентов Falcon-Bike.</p>
+      </div>
+      <div><h3>79BIKE в России</h3>
+        <ul>
+          <li><a href="index.html#models">Линейка 79BIKE</a></li>
+          <li><a href="index.html#official">Дилеры 79BIKE</a></li>
+          <li><a href="index.html#dealers">Стать дилером</a></li>
+          <li><a href="blog.html">Блог</a></li>
+        </ul>
+      </div>
+      <div><h3>Клиентам</h3>
+        <ul>
+          <li><a href="https://falcon-bike.ru/">Фирменный магазин 79BIKE</a></li>
+          <li><a href="https://falcon-bike.ru/blog">Блог фирменного магазина 79BIKE</a></li>
+          <li><a href="index.html#faq">Частые вопросы</a></li>
+          <li><a href="warranty.html">Гарантийная политика</a></li>
+          <li><a href="https://falcon-bike.ru/accessories">Оригинальные запчасти</a></li>
+        </ul>
+      </div>
+      <div class="foot__room"><h3>Контакты</h3>
+        <div class="room">
+          <a class="room__phone" href="tel:+79999005588" style="text-decoration:none">+7 (999) 900-55-88</a>
+          <span class="room__row"><a href="mailto:Sales@79bike.ru" style="color:var(--accent-ink)">Sales@79bike.ru</a></span>
+          <span class="room__row">Москва</span>
+        </div>
+      </div>
+    </div>
+    <div class="legal">
+      <span>© Официальное представительство 79BIKE в России. Копирование материалов сайта без письменного разрешения правообладателя не допускается.</span>
+      <span>Фирменный магазин 79BIKE — <a href="https://falcon-bike.ru/">falcon-bike.ru</a></span>
+      <a href="https://claude.ai/artifact/AyD6SKmq1hL2juyCRy7Tk1" data-release-href="https://falcon-bike.ru/privacy" target="_blank" rel="noopener">Политика обработки персональных данных</a>
+      <a href="https://claude.ai/artifact/AyD6SKmq1hL2juyCRy7Tk1" data-release-href="https://falcon-bike.ru/consent" target="_blank" rel="noopener">Согласие на обработку ПД</a>
+    <a href="#cookie-settings" data-cookie-settings>Настройки cookie</a></div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  var B = window.REP_BLOG || { rubrics: [], posts: [] }, M = window.MODELS || [];
+  var SITE = "https://79bike.ru", SHOP = "https://falcon-bike.ru/";
+  var LIVE = { gt: "falcongt", pro: "falcon-pro", "lynx-trail": "lynx", light: "falcon_lite", "lynx-x": "lynx-x", "surge-v": "surge-v" };
+  var PLUS = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
+  function $(id) { return document.getElementById(id); }
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function money(n) { return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽"; }
+  function model(s) { for (var i = 0; i < M.length; i++) if (M[i].slug === s) return M[i]; return null; }
+  function rub(id) { for (var i = 0; i < B.rubrics.length; i++) if (B.rubrics[i].id === id) return B.rubrics[i]; return { name: "" }; }
+  function post(s) { for (var i = 0; i < B.posts.length; i++) if (B.posts[i].slug === s) return B.posts[i]; return null; }
+  function sorted() { return B.posts.map(function (p, i) { return [p, i]; }).sort(function (a, b) { return a[0].date < b[0].date ? 1 : a[0].date > b[0].date ? -1 : a[1] - b[1]; }).map(function (x) { return x[0]; }); }
+  function date(d) { var N = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"], p = d.split("-"); return +p[2] + " " + N[+p[1] - 1] + " " + p[0]; }
+  function card(p) {
+    return '<article class="bcard" data-rub="' + esc(p.rubric) + '"><a href="blog.html?s=' + encodeURIComponent(p.slug) + '"><span class="bcard__pic">' + (p.cover ? '<img src="' + esc(p.cover) + '" alt="' + esc(p.coverAlt || p.title) + '" loading="lazy" decoding="async">' : "") + '</span><span class="bcard__body"><span class="bcard__meta">' + esc(rub(p.rubric).name) + " · " + p.readMin + ' мин</span><span class="bcard__t">' + esc(p.title) + '</span><span class="bcard__lead">' + esc(p.lead) + "</span></span></a></article>";
+  }
+  function links() {
+    return '<div class="blog-foot">' + [B.shop, B.shopBlog].filter(Boolean).map(function (x) { return '<a class="card blog-rep" href="' + esc(x.href) + '"><span class="t-cap">falcon-bike.ru</span><b>' + esc(x.text) + "</b><span>" + esc(x.note) + "</span></a>"; }).join("") + "</div>";
+  }
+  function sec(id, title, inner, extra) { return '<section class="sec"' + (id ? ' id="' + id + '"' : "") + '><div class="wrap">' + (title ? '<div class="sec-head"><h2 class="h2">' + title + "</h2>" + (extra || "") + "</div>" : "") + inner + "</div></section>"; }
+  function head(crumb, h1, lead) { return '<section class="page-head"><div class="wrap"><nav class="crumbs" aria-label="Навигация"><a href="index.html">Главная</a><span aria-hidden="true">/</span>' + crumb + "</nav><h1>" + h1 + "</h1>" + (lead ? '<p class="t-lead">' + lead + "</p>" : "") + "</div></section>"; }
+  function seo(o) {
+    function meta(a, n, c) { var m = document.head.querySelector("meta[" + a + '="' + n + '"]'); if (!m) { m = document.createElement("meta"); m.setAttribute(a, n); document.head.appendChild(m); } m.setAttribute("content", c); }
+    document.title = o.title; meta("name", "description", o.description);
+    meta("property", "og:type", o.type); meta("property", "og:site_name", "79BIKE"); meta("property", "og:locale", "ru_RU");
+    meta("property", "og:title", o.title); meta("property", "og:description", o.description); meta("property", "og:url", o.canonical);
+    if (o.image) meta("property", "og:image", new URL(o.image, location.href).href);
+    var c = document.head.querySelector('link[rel="canonical"]') || document.head.appendChild(Object.assign(document.createElement("link"), { rel: "canonical" })); c.href = o.canonical;
+    (o.ld || []).forEach(function (x) { var t = document.createElement("script"); t.type = "application/ld+json"; t.text = JSON.stringify(x); document.head.appendChild(t); });
+  }
+  function crumbsLd(items) { return { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: items.map(function (x, i) { return { "@type": "ListItem", position: i + 1, name: x[0], item: x[1] }; }) }; }
+  var org = { "@type": "Organization", name: "79BIKE в России", url: SITE + "/" };
+
+  var s = new URLSearchParams(location.search).get("s"), p = s ? post(s) : null, html;
+  if (s && !p) {
+    document.title = "Статья не найдена | Блог 79BIKE";
+    html = head('<a href="blog.html">Блог</a>', "Статья не найдена", "Возможно, адрес изменился. Все статьи — в блоге.") + sec("", "", '<a class="btn btn--main" href="blog.html">Перейти в блог</a>');
+  } else if (p) {
+    var canon = SITE + "/blog/" + p.slug, toc = [], n = 0;
+    var body = p.html.replace(/<h2>([\s\S]*?)<\/h2>/g, function (m, t) { n++; toc.push(["b" + n, t.replace(/<[^>]+>/g, "")]); return '<h2 id="b' + n + '">' + t + "</h2>"; });
+    var rel = (p.related || []).map(post).filter(Boolean);
+    sorted().forEach(function (x) { if (rel.length < 3 && x !== p && rel.indexOf(x) < 0) rel.push(x); });
+    var ms = (p.models || []).map(model).filter(Boolean);
+    var ld = [{ "@context": "https://schema.org", "@type": "BlogPosting", headline: p.h1, description: p.seoDescription, image: p.cover ? new URL(p.cover, SITE + "/blog/").href : undefined, datePublished: p.date, dateModified: p.updated || p.date, inLanguage: "ru-RU", articleSection: rub(p.rubric).name, author: org, publisher: org, mainEntityOfPage: canon },
+      crumbsLd([["Главная", SITE + "/"], ["Блог", SITE + "/blog"], [p.h1, canon]])];
+    if (p.faq && p.faq.length) ld.push({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: p.faq.map(function (f) { return { "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } }; }) });
+    seo({ title: p.seoTitle || p.title, description: p.seoDescription || p.lead, canonical: canon, type: "article", image: p.cover, ld: ld });
+    var wide = window.matchMedia && matchMedia("(min-width: 901px)").matches;
+    html = head('<a href="blog.html">Блог</a><span aria-hidden="true">/</span><a href="blog.html?r=' + esc(p.rubric) + '">' + esc(rub(p.rubric).name) + "</a>", esc(p.h1), esc(p.lead)) +
+      '<div class="wrap"><p class="post-meta"><time datetime="' + p.date + '">' + date(p.date) + "</time><span>" + p.readMin + " мин чтения</span><span>Блог 79BIKE</span></p>" +
+      (p.cover ? '<figure class="post-cover"><img src="' + esc(p.cover) + '" alt="' + esc(p.coverAlt || p.h1) + '" decoding="async"></figure>' : "") + "</div>" +
+      '<section class="sec post-sec"><div class="wrap post">' + (toc.length > 2 ? '<nav class="post-toc" aria-label="Содержание"><details' + (wide ? " open" : "") + "><summary>Содержание</summary><ol>" + toc.map(function (t) { return '<li><a href="#' + t[0] + '">' + esc(t[1]) + "</a></li>"; }).join("") + "</ol></details></nav>" : "<div></div>") +
+      '<article class="prose blog-body">' + body + "</article></div></section>" +
+      (p.faq && p.faq.length ? sec("post-faq", "Вопрос-ответ", '<div class="qa">' + p.faq.map(function (f, i) { return "<details" + (i ? "" : " open") + "><summary>" + esc(f.q) + '<span aria-hidden="true">' + PLUS + "</span></summary><p>" + esc(f.a) + "</p></details>"; }).join("") + "</div>") : "") +
+      (ms.length ? sec("post-models", "Модели из статьи", '<div class="rbikes">' + ms.map(function (m) { return '<a class="rbike" href="' + SHOP + (LIVE[m.slug] || "") + '"><span class="rbike__pic"><img src="../assets/photos/cut/' + m.slug + '.webp" alt="' + esc(m.name) + ', вид сбоку" loading="lazy"></span><b>' + esc(m.name) + "</b><span>" + esc(m.tagline || "") + "</span><span>" + (m.price ? "Цена в магазине Falcon-Bike: " + money(m.price) : "Старт продаж — 2027") + '</span><span class="rbike__go">Купить на falcon-bike.ru →</span></a>'; }).join("") + "</div>") : "") +
+      (rel.length ? sec("post-rel", "Читайте также", '<div class="bgrid">' + rel.slice(0, 3).map(card).join("") + "</div>", '<a class="btn btn--ghost" href="blog.html">Все статьи</a>') : "") +
+      sec("", "", links());
+  } else {
+    var L = sorted(), R = B.rubrics.filter(function (r) { return L.some(function (x) { return x.rubric === r.id; }); });
+    seo({ title: "Блог 79BIKE в России", description: "Технологии Falcon, Lynx и Y-Volt, гарантия, подлинность байков и работа с дилерами — блог 79BIKE в России.", canonical: SITE + "/blog", type: "website", image: L[0] && L[0].cover,
+      ld: [{ "@context": "https://schema.org", "@type": "Blog", name: B.title, url: SITE + "/blog", inLanguage: "ru-RU", publisher: org, blogPost: L.map(function (x) { return { "@type": "BlogPosting", headline: x.h1, url: SITE + "/blog/" + x.slug, datePublished: x.date }; }) }, crumbsLd([["Главная", SITE + "/"], ["Блог", SITE + "/blog"]])] });
+    html = head("<span>Блог</span>", esc(B.title), esc(B.lead)) +
+      sec("", "", '<div class="blog-rubs" role="group" aria-label="Рубрики"><button type="button" class="chip" data-brub="" aria-pressed="true">Все статьи</button>' + R.map(function (r) { return '<button type="button" class="chip" data-brub="' + r.id + '" aria-pressed="false">' + esc(r.name) + "</button>"; }).join("") + '</div><div class="bgrid" id="blog-grid">' + L.map(card).join("") + "</div>") +
+      sec("", "", links());
+  }
+  $("main").innerHTML = html;
+
+  /* 26.10.2026 (Михаил, п.21): названия моделей в статье и в «Вопрос-ответ» — ссылки на выбор модели на главной 79bike.ru
+     (index.html#select-<slug>, как кнопки «Выбрать»). В тексте статьи — первое упоминание каждой модели, в ответе — первое в ответе.
+     Заголовки и существующие ссылки не трогаем. */
+  (function () {
+    var NAMES = [["Y-Volt Surge V", "surge-v"], ["Falcon Lynx Trail", "lynx-trail"], ["Falcon Lynx X", "lynx-x"], ["Lynx Trail", "lynx-trail"], ["Lynx X", "lynx-x"], ["Falcon GT", "gt"], ["Falcon Pro", "pro"], ["Falcon Lite", "light"]];
+    var RX = new RegExp("(" + NAMES.map(function (n) { return n[0].replace(/[-]/g, "[-\u2011]").replace(/ /g, "[ \u00a0]"); }).join("|") + ")(?![\\w\u0400-\u04ff])");
+    function slugOf(t) { t = t.replace(/[\u00a0]/g, " ").replace(/\u2011/g, "-"); for (var i = 0; i < NAMES.length; i++) if (NAMES[i][0] === t) return NAMES[i][1]; return ""; }
+    function link(root, seen) {
+      var w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: function (n) { return n.parentNode.closest("a,h1,h2,h3,h4,summary,th,figcaption,table") ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT; } }), list = [], n;
+      while ((n = w.nextNode())) list.push(n);
+      list.forEach(function (node) {
+        var m, rest = node;
+        while (rest && (m = RX.exec(rest.nodeValue))) {
+          var sl = slugOf(m[1]);
+          if (!sl || seen[sl]) { var after = rest.splitText(m.index + m[1].length); rest = after; continue; }
+          seen[sl] = 1;
+          var mid = rest.splitText(m.index), tail = mid.splitText(m[1].length), a = document.createElement("a");
+          a.href = "index.html#select-" + sl; a.textContent = mid.nodeValue; mid.parentNode.replaceChild(a, mid); rest = tail;
+        }
+      });
+    }
+    var body = document.querySelector(".blog-body"); if (body) link(body, {});
+    document.querySelectorAll("#post-faq .qa p").forEach(function (p) { link(p, {}); });
+  })();
+
+  function filter(r) {
+    document.querySelectorAll("[data-brub]").forEach(function (x) { x.setAttribute("aria-pressed", String(x.getAttribute("data-brub") === r)); });
+    document.querySelectorAll("#blog-grid .bcard").forEach(function (c) { c.hidden = !!r && c.getAttribute("data-rub") !== r; });
+  }
+  document.addEventListener("click", function (e) { var b = e.target.closest && e.target.closest("[data-brub]"); if (b) filter(b.getAttribute("data-brub")); });
+  var r0 = new URLSearchParams(location.search).get("r"); if (r0 && !p) filter(r0);
+
+  /* меню на телефоне */
+  var menu = $("menu"), ob = $("menu-open"), cb = $("menu-close");
+  function setMenu(o) { menu.hidden = !o; ob.setAttribute("aria-expanded", String(o)); document.documentElement.style.overflow = o ? "hidden" : ""; if (o) cb.focus(); }
+  ob.addEventListener("click", function () { setMenu(true); });
+  cb.addEventListener("click", function () { setMenu(false); });
+  menu.addEventListener("click", function (e) { if (e.target.closest("a")) setMenu(false); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !menu.hidden) setMenu(false); });
+})();
+</script>
+<script data-ext-fix>document.querySelectorAll('a[href^="http"]').forEach(function(a){if(a.host!==location.host){a.target="_blank";a.rel="noopener"}});</script>
+<script data-totop>(function(){var b=document.createElement("button");b.type="button";b.className="totop";b.setAttribute("aria-label","Наверх");b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>';document.body.appendChild(b);
+function pos(){var d=document.querySelector("#dock,.dock,.mbar,.rbar,.mob-cta");var h=(d&&getComputedStyle(d).position=="fixed"&&d.offsetHeight>0&&innerWidth<900)?d.offsetHeight+12:96;document.documentElement.style.setProperty("--totop-b",h+"px");}
+function on(){b.classList.toggle("is-on",scrollY>innerHeight*1.5);}
+var t;addEventListener("scroll",function(){if(!t)t=requestAnimationFrame(function(){t=0;on();});},{passive:true});addEventListener("resize",pos);pos();on();setTimeout(pos,1500);
+b.addEventListener("click",function(){var r=matchMedia("(prefers-reduced-motion: reduce)").matches;scrollTo({top:0,behavior:r?"auto":"smooth"});});})();</script>
+<script data-dd>
+(function(){var dd=document.querySelectorAll(".nav__btn[aria-controls]");function close(x){dd.forEach(function(b){if(b===x)return;b.setAttribute("aria-expanded","false");var d=document.getElementById(b.getAttribute("aria-controls"));if(d)d.hidden=true;});}
+dd.forEach(function(b){b.addEventListener("click",function(e){e.stopPropagation();var o=b.getAttribute("aria-expanded")!=="true";close(b);b.setAttribute("aria-expanded",String(o));document.getElementById(b.getAttribute("aria-controls")).hidden=!o;});});
+document.addEventListener("click",function(e){if(!e.target.closest(".nav__item")||e.target.closest(".drop a"))close();});document.addEventListener("keydown",function(e){if(e.key==="Escape")close();});})();
+</script>
+<script data-tel>/* 26.10.2026: звонок в окне-предпросмотре прототипа. Внутри окна просмотра (iframe) браузер может блокировать tel:,
+   поэтому показываем лист с номером: «Позвонить» (target=_top), «Скопировать номер», мессенджеры. На настоящем сайте ссылка работает как обычно. */
+(function () {
+  if (window.top === window) return;
+  var sheet;
+  function close() { if (sheet) sheet.hidden = true; }
+  function open(href) {
+    var num = href.replace(/^tel:/, ""), pretty = "+7 (999) 900-55-88";
+    if (!sheet) {
+      sheet = document.createElement("div"); sheet.className = "telsheet"; sheet.setAttribute("role", "dialog"); sheet.setAttribute("aria-label", "Позвонить");
+      sheet.innerHTML = '<div class="telsheet__bg" data-x><\/div><div class="telsheet__in"><p class="telsheet__t">Позвонить нам<\/p><a class="telsheet__num" target="_top"><\/a>' +
+        '<a class="telsheet__btn telsheet__btn--main" target="_top" data-call>Позвонить<\/a><button type="button" class="telsheet__btn" data-copy>Скопировать номер<\/button>' +
+        '<div class="telsheet__row"><a href="https://wa.me/79999005588" target="_blank" rel="noopener">WhatsApp<\/a><a href="https://t.me/Meliso_group" target="_blank" rel="noopener">Telegram<\/a><a href="https://vk.me/79bike" target="_blank" rel="noopener">VK Мессенджер<\/a><\/div>' +
+        '<button type="button" class="telsheet__x" data-x aria-label="Закрыть">×<\/button><\/div>';
+      document.body.appendChild(sheet);
+      sheet.addEventListener("click", function (e) {
+        if (e.target.closest("[data-x]")) { close(); return; }
+        var c = e.target.closest("[data-copy]");
+        if (c) { var done = function () { c.textContent = "Номер скопирован"; }; try { navigator.clipboard.writeText(pretty).then(done, function () { fallback(); done(); }); } catch (x) { fallback(); done(); } }
+      });
+      document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+    }
+    function fallback() { var t = document.createElement("textarea"); t.value = pretty; document.body.appendChild(t); t.select(); try { document.execCommand("copy"); } catch (x) {} t.remove(); }
+    sheet.querySelector(".telsheet__num").href = href; sheet.querySelector(".telsheet__num").textContent = pretty;
+    sheet.querySelector("[data-call]").href = href; sheet.querySelector("[data-copy]").textContent = "Скопировать номер";
+    sheet.hidden = false;
+  }
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="tel:"]');
+    if (!a || a.closest(".telsheet")) return;
+    e.preventDefault(); open(a.getAttribute("href"));
+  }, true);
+  var css = document.createElement("style");
+  css.textContent = '.telsheet{position:fixed;inset:0;z-index:2147483000}.telsheet[hidden]{display:none}.telsheet__bg{position:absolute;inset:0;background:rgba(0,0,0,.6)}.telsheet__in{position:absolute;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));max-width:420px;margin:0 auto;padding:22px 18px 18px;border-radius:22px;background:#16161c;color:#fff;box-shadow:0 20px 50px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.08);display:flex;flex-direction:column;gap:10px;font-family:inherit}.telsheet__t{margin:0;font-size:14px;color:#a6a9b4}.telsheet__num{font-size:26px;font-weight:800;color:#fff;text-decoration:none;user-select:all;-webkit-user-select:all}.telsheet__btn{display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:999px;border:0;font:700 16px/1 inherit;font-family:inherit;cursor:pointer;text-decoration:none;background:#24242c;color:#fff}.telsheet__btn--main{background:#7658F5}.telsheet__row{display:flex;flex-wrap:wrap;gap:8px}.telsheet__row a{flex:1 1 40%;white-space:nowrap;padding:0 10px;text-align:center;font-size:15px;display:flex;align-items:center;justify-content:center;min-height:44px;border-radius:999px;color:#fff;text-decoration:none;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}.telsheet__x{position:absolute;top:10px;right:12px;width:36px;height:36px;border:0;border-radius:50%;background:transparent;color:#a6a9b4;font-size:26px;cursor:pointer}';
+  document.head.appendChild(css);
+})();
+</script>
+<script src="range-q.js?v=1" defer></script>
+</body>
+</html>
