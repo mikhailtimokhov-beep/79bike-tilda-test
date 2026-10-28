@@ -67,7 +67,7 @@ for (const slug of PAGES) for (const vw of [[390, 844, true], [1440, 900, false]
     });
     const sub = f.locator("button[type=submit], button:not([type])").last();
     await sub.click({ timeout: 2000 }).catch(() => {});
-    await page.waitForTimeout(300);
+    await page.waitForFunction((el) => /принят|спасибо|отправ|Не удалось/i.test((el.closest("section,dialog,div") || el).innerText), await f.elementHandle(), { timeout: 8000 }).catch(() => {});
     const okMsg = await f.evaluate((form) => /принят|спасибо|отправ/i.test((form.closest("section,dialog,div") || form).innerText));
     if (okMsg) formsOk++;
   }

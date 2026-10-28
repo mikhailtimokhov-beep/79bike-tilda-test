@@ -50,6 +50,7 @@ for (const [w, h, mob] of [[390, 844, true], [1440, 900, false]]) for (const F o
   const box = await form.boundingBox();
   note(tag, box && box.x >= -1 && box.x + box.width <= w + 1, "форма помещается по ширине экрана", box ? `${Math.round(box.x)}…${Math.round(box.x + box.width)} из ${w}` : "");
   const submit = form.locator('button[type=submit], button:not([type])').last();
+  const settle = async () => { await page.waitForFunction((sel) => { const f = document.querySelector(sel); if (!f) return true; const m = f.querySelector(".form-msg"); const d = document.querySelector('#dlg-blog [data-step="done"]'); return (d && !d.hidden) || (m && m.textContent.trim() && !/Отправляем/.test(m.textContent)); }, F.sel, { timeout: 8000 }).catch(() => {}); };
   const msg = async () => form.evaluate((f) => { const m = f.querySelector(".form-msg"); const inv = f.querySelector('[aria-invalid="true"]'); return { text: m ? m.textContent.trim() : "", cls: m ? m.className : "", invalid: inv ? (inv.name || inv.type) : "" }; });
   const fillText = async () => form.evaluate((f) => {
     f.querySelectorAll('input:not([type=checkbox]):not([type=radio]):not([type=hidden]):not([type=tel]):not([data-contact]), textarea').forEach((x) => { x.value = x.type === "url" ? "https://example.com/test" : "Тест Тестов"; x.dispatchEvent(new Event("input", { bubbles: true })); });
@@ -66,15 +67,15 @@ for (const [w, h, mob] of [[390, 844, true], [1440, 900, false]]) for (const F o
   note(tag, /error/.test(m.cls) && !!m.text && !!m.invalid, "пустая форма: подсказка и подсвеченное поле", `«${m.text}» (${m.invalid})`);
   // 2. короткий телефон
   await fillText(); await setTel("+7 999 12"); await setChecks(true);
-  await submit.click(); await page.waitForTimeout(150); m = await msg();
+  await submit.click(); await settle(); m = await msg();
   note(tag, /error/.test(m.cls) && /цифр|номер/i.test(m.text), "неполный телефон: подсказка", `«${m.text}»`);
   // 3. без согласия на обработку данных
   await setTel("+7 999 900-55-88"); await setChecks(false);
-  await submit.click(); await page.waitForTimeout(150); m = await msg();
+  await submit.click(); await settle(); m = await msg();
   note(tag, /error/.test(m.cls) && !!m.text, "без согласия: отправка не проходит", `«${m.text}»`);
   // 4. Telegram: имя пользователя вместо телефона
   if (await how("telegram")) {
-    await setTel("@и"); await setChecks(true); await submit.click(); await page.waitForTimeout(150); m = await msg();
+    await setTel("@и"); await setChecks(true); await submit.click(); await settle(); m = await msg();
     note(tag, /error/.test(m.cls), "Telegram: неверное имя пользователя отклоняется", `«${m.text}»`);
     await setTel("ivan_petrov");
   } else await setChecks(true);
@@ -82,12 +83,13 @@ for (const [w, h, mob] of [[390, 844, true], [1440, 900, false]]) for (const F o
   await setChecks(true);
   // 5а. сбой отправки: «принята» не показывается, есть телефон
   await page.evaluate(() => { window.__fail = true; });
-  await submit.click(); await page.waitForTimeout(400); m = await msg();
+  await submit.click(); await settle(); m = await msg();
   note(tag, /error/.test(m.cls) && /900-55-88/.test(m.text), "сбой отправки: «не удалось отправить» и телефон, без «принята»", `«${m.text.slice(0, 80)}»`);
   await page.evaluate(() => { window.__fail = false; window.__leads = []; });
   // 5б. успешная отправка
-  await submit.click(); await page.waitForTimeout(600); m = await msg();
+  await submit.click(); await settle(); m = await msg();
   // у заявки блогера после успеха открывается экран «Заявка отправлена» (шаг done в диалоге)
+  if (F.key === "blogger") await page.waitForFunction(() => { const d = document.querySelector('#dlg-blog [data-step="done"]'); return d && !d.hidden; }, null, { timeout: 8000 }).catch(() => {});
   const doneStep = await page.evaluate(() => { const d = document.querySelector('#dlg-blog [data-step="done"]'); return d && !d.hidden ? d.innerText.replace(/\s+/g, " ").trim().slice(0, 90) : ""; });
   const okText = F.key === "blogger" ? doneStep : m.text;
   note(tag, (F.key === "blogger" ? !!doneStep : /is-ok/.test(m.cls)) && !/прототип|никуда/i.test(okText), "верное заполнение: «заявка принята» после ответа приёмника, без пометки прототипа", `«${okText.slice(0, 90)}»`);
