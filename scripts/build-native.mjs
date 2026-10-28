@@ -35,6 +35,8 @@ function asset(ref, fromFile) {
   if (!ref || /^(https?:|data:|mailto:|tel:|#|javascript:|\/\/)/i.test(ref)) return null;
   const k = key(ref, fromFile);
   if (!/\.(webp|jpe?g|png|svg|gif|avif)$/i.test(k)) return null;
+  // спрайты иконок встроены в страницу: <use href="…icons.svg#x"> → "#x" (<use> с чужого сервера не работает)
+  if (/(^|\/)(icons|bike)\.svg$/.test(k) && ref.includes("#")) return "#" + ref.split("#")[1];
   if (AMAP[k]) return AMAP[k] + (ref.includes("#") ? "#" + ref.split("#")[1] : "");
   missing.add(k);
   return null;
