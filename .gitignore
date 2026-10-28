@@ -1,5 +1,6 @@
-node_modules/
-dist/
-check-report/
 .sim/
 __pycache__/
+check-report/
+dist-native/
+dist/
+node_modules/
