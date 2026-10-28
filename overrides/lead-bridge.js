@@ -44,6 +44,7 @@
       if (el.type === "radio" && n === "how") label = "Как связаться";
       if (v !== "") rows.push([label, v]);
     });
+    if (form.querySelector('input[name="pd"]')) rows.push(["Версия согласия", window.B79_CONSENT_VERSION || "2026-10-28"]);
     rows.push(["Страница", (window.B79_PAGE_URL || location.href).split("#")[0]]);
     return { title: titleOf(form), name: name, rows: rows };
   };
