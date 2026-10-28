@@ -141,6 +141,21 @@ for (const page of PAGES) {
 
   // тело: разметка + скрипты по месту; defer — в самый конец
   // разметку обрабатываем отдельно от скриптов: строки внутри кода не трогаем (их чинит переводчик путей на лету)
+  // первый экран: на Тильде ролик нельзя положить на её сервер — показываем его через Kinescope (фоновый режим:
+  // без кнопок, без звука, по кругу). На телефоне — вертикальная версия, на планшете и ПК — горизонтальная.
+  const KIN = existsSync(join(ROOT, "overrides", "hero-kinescope.json")) ? JSON.parse(readFileSync(join(ROOT, "overrides", "hero-kinescope.json"), "utf8")) : null;
+  if (page === "index" && KIN && KIN.desktop) {
+    const vre = /<video class="hv__video" id="hv-video"[^>]*><\/video><script>[\s\S]*?<\/script>/;
+    if (!vre.test(body)) throw new Error("первый экран: не найден <video id=hv-video>");
+    const cfg = JSON.stringify({ d: KIN.desktop, p: KIN.phone || KIN.desktop, da: KIN.desktopAspect || 16 / 9, pa: KIN.phone ? (KIN.phoneAspect || 9 / 16) : (KIN.desktopAspect || 16 / 9) });
+    body = body.replace(vre, `<div class="hv__video hv__kin" id="hv-kin" aria-hidden="true" style="overflow:hidden;background-image:url('hero/poster.jpg')"></div>` +
+      `<script>(function(){var c=${cfg},w=document.getElementById("hv-kin");if(!w)return;var p=window.matchMedia&&matchMedia("(max-width: 600px)").matches,a=p?c.pa:c.da,f=document.createElement("iframe");` +
+      `f.src="https://kinescope.io/embed/"+(p?c.p:c.d)+"?background=1";f.title="Видео";f.setAttribute("allow","autoplay; fullscreen; picture-in-picture; encrypted-media");f.setAttribute("tabindex","-1");f.setAttribute("frameborder","0");` +
+      `f.style.cssText="position:absolute;left:50%;top:50%;border:0;pointer-events:none;transform:translate(-50%,-50%)";w.appendChild(f);` +
+      `function fit(){var W=w.clientWidth,H=w.clientHeight;if(!W||!H)return;if(W/H>a){f.style.width=W+"px";f.style.height=Math.ceil(W/a)+"px"}else{f.style.height=H+"px";f.style.width=Math.ceil(H*a)+"px"}}fit();addEventListener("resize",fit);if(window.ResizeObserver)new ResizeObserver(fit).observe(w)})();</script>`);
+    // кнопка звука не нужна: фоновый режим Kinescope всегда без звука
+    body = body.replace(/<button type="button" class="hv__snd"[\s\S]*?<\/button>/, "");
+  }
   body = body.split(/(<script[^>]*>[\s\S]*?<\/script>)/g).map((seg) => {
     const sm = /^<script([^>]*)>([\s\S]*?)<\/script>$/.exec(seg);
     return sm ? script(sm[1], sm[2], file) : markup(seg, file);
@@ -208,6 +223,9 @@ for (const name of Object.keys(settings)) {
   const parts = await toParts(readFileSync(join(OUT, `${name}.html`), "utf8"));
   const dir = join(OUT, name); rmSync(dir, { recursive: true, force: true }); mkdirSync(dir, { recursive: true });
   parts.forEach((p, i) => writeFileSync(join(dir, `${String(i + 1).padStart(2, "0")}.html`), p));
+  // предпросмотр: блоки в тех же обёртках, что делает Тильда, — для проверки в браузере до вставки
+  writeFileSync(join(dir, "preview.html"), `<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><title>Предпросмотр · ${name}</title><style>body{margin:0}</style></head><body class="t-body"><div id="allrecords" class="t-records">` +
+    parts.map((p, i) => `<div id="rec${i + 1}" class="r t-rec" data-record-type="131"><div class="t123"><div class="t-container_100 "><div class="t-width t-width_100 ">${p}</div></div></div></div>`).join("\n") + `</div></body></html>`);
   settings[name].parts = parts.length; settings[name].partSizes = parts.map((p) => p.length);
   if (parts.some((p) => p.length > LIMIT + 200)) { console.error("Блок больше предела: " + name); process.exit(1); }
 }
