@@ -44,6 +44,24 @@
     if (BASE.indexOf(e.origin) !== 0 || !e.data || e.data.type !== "b79-title") return;
     document.title = String(e.data.title || "").slice(0, 200);
   });
+  // заявки из форм: встроенная страница присылает данные, отправляем их через скрытую форму Тильды (tilda/lead-sink.js)
+  var sinkJs = document.createElement("script");
+  sinkJs.src = BASE + "tilda/lead-sink.js?t=" + Date.now();
+  document.head.appendChild(sinkJs);
+  window.addEventListener("message", function (e) {
+    if (BASE.indexOf(e.origin) !== 0 || e.source !== f.contentWindow || !e.data || e.data.type !== "b79-lead") return;
+    var id = String(e.data.id || "").slice(0, 40), p = e.data.payload || {};
+    var clean = { title: String(p.title || "Заявка с сайта").slice(0, 120), name: String(p.name || "").slice(0, 80),
+      rows: (Array.isArray(p.rows) ? p.rows : []).slice(0, 30).map(function (r) { return [String(r[0]).slice(0, 80), String(r[1]).slice(0, 900)]; })
+        .filter(function (r) { return r[0] !== "Страница"; }).concat([["Страница", location.href.split("#")[0]]]) };
+    function reply(ok, err) { f.contentWindow.postMessage({ type: "b79-lead-result", id: id, ok: !!ok, error: String(err || "") }, e.origin); }
+    var tries = 0;
+    (function send() {
+      if (window.B79_TILDA_SEND) return window.B79_TILDA_SEND(clean, reply);
+      if (++tries > 40) return reply(false, "no-sink");
+      setTimeout(send, 250);
+    })();
+  });
   // переход по якорю на странице Тильды прокручивает встроенную страницу
   window.addEventListener("hashchange", function () {
     var u = f.src.split("#")[0]; f.src = u + location.hash;

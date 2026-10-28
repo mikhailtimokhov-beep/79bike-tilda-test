@@ -25,6 +25,7 @@ for (const slug of PAGES) for (const vw of [[390, 844, true], [1440, 900, false]
   page.on("popup", (p) => p.close().catch(() => {}));
   // внешние переходы не выполняем, только запоминаем
   await page.route(/^https?:\/\/(?!127\.0\.0\.1)/, (rt) => rt.abort());
+  await page.addInitScript(() => { window.B79_TILDA_SEND = (p, cb) => setTimeout(() => cb(true), 50); }); // заглушка приёмника заявок Тильды
   const tag = `${slug} ${vw[0]}px`;
   await page.goto(B + slug + ".html", { waitUntil: "load" });
   await page.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += innerHeight * 0.7) { scrollTo(0, y); await new Promise((r) => setTimeout(r, 80)); } scrollTo(0, 0); });

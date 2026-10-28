@@ -37,6 +37,8 @@ for (const [w, h, mob] of [[390, 844, true], [1440, 900, false]]) for (const F o
   page.on("pageerror", (e) => errs.push(e.message));
   page.on("request", (r) => { if (["POST", "PUT"].includes(r.method())) outgoing.push(r.method() + " " + r.url()); });
   await page.route(/^https?:\/\/(?!127\.0\.0\.1)/, (rt) => rt.abort());
+  // вместо Тильды — заглушка приёмника: запоминает заявку; window.__fail = true — имитация сбоя отправки
+  await page.addInitScript(() => { window.__leads = []; window.B79_TILDA_SEND = (p, cb) => { window.__leads.push(p); setTimeout(() => cb(!window.__fail, window.__fail ? "test" : ""), 80); }; });
   await page.goto(URL0, { waitUntil: "load" });
   await page.locator("button:has-text('Отказаться')").first().click({ timeout: 2000 }).catch(() => {});
   const tag = `${F.name}, ${w}px`;
@@ -78,12 +80,26 @@ for (const [w, h, mob] of [[390, 844, true], [1440, 900, false]]) for (const F o
   } else await setChecks(true);
   // 5. верное заполнение
   await setChecks(true);
-  const data = await form.evaluate((f) => { const o = {}; new FormData(f).forEach((v, k) => { o[k] = o[k] ? o[k] + ", " + v : v; }); const t = f.querySelector("input[data-contact], input[type=tel]"); o["_контакт"] = t ? t.value : ""; return o; });
-  await submit.click(); await page.waitForTimeout(200); m = await msg();
-  const okNow = /is-ok/.test(m.cls) || /принят/i.test(await form.evaluate((f) => (f.closest("dialog,section,div") || f).innerText));
-  note(tag, okNow, "верное заполнение: сообщение «заявка принята»", `«${m.text.slice(0, 90)}»`);
-  payloads[F.key] = data;
-  note(tag, outgoing.length === 0, "заявка НЕ уходит никуда (так устроен прототип — на живом сайте нужно подключение)", outgoing.join(", ") || "запросов на отправку нет");
+  // 5а. сбой отправки: «принята» не показывается, есть телефон
+  await page.evaluate(() => { window.__fail = true; });
+  await submit.click(); await page.waitForTimeout(400); m = await msg();
+  note(tag, /error/.test(m.cls) && /900-55-88/.test(m.text), "сбой отправки: «не удалось отправить» и телефон, без «принята»", `«${m.text.slice(0, 80)}»`);
+  await page.evaluate(() => { window.__fail = false; window.__leads = []; });
+  // 5б. успешная отправка
+  await submit.click(); await page.waitForTimeout(600); m = await msg();
+  // у заявки блогера после успеха открывается экран «Заявка отправлена» (шаг done в диалоге)
+  const doneStep = await page.evaluate(() => { const d = document.querySelector('#dlg-blog [data-step="done"]'); return d && !d.hidden ? d.innerText.replace(/\s+/g, " ").trim().slice(0, 90) : ""; });
+  const okText = F.key === "blogger" ? doneStep : m.text;
+  note(tag, (F.key === "blogger" ? !!doneStep : /is-ok/.test(m.cls)) && !/прототип|никуда/i.test(okText), "верное заполнение: «заявка принята» после ответа приёмника, без пометки прототипа", `«${okText.slice(0, 90)}»`);
+  const leads = await page.evaluate(() => window.__leads);
+  const L = leads[0] || { rows: [] }, rowsT = L.rows.map((r) => r.join(": ")).join(" | ");
+  payloads[F.key] = L;
+  note(tag, leads.length === 1, "в приёмник ушла ровно одна заявка", `${leads.length}`);
+  note(tag, /Контакт: @?ivan_petrov/.test(rowsT) && /Как связаться: Telegram/.test(rowsT) && /Согласие на обработку персональных данных: да/.test(rowsT), "в заявке есть контакт, способ связи и согласие", rowsT.slice(0, 160));
+  if (F.key === "model") note(tag, /Консультация по .+/.test(L.title), "консультация по модели: модель указана в заявке", L.title);
+  if (F.key === "blogger") note(tag, /Площадки: YouTube/.test(rowsT), "заявка блогера: площадки под своей подписью", rowsT.slice(0, 120));
+  if (F.key === "support") note(tag, /Где куплен байк: .+/.test(rowsT) && /Модель: .+/.test(rowsT), "техподдержка: где куплен байк и модель в заявке", rowsT.slice(0, 120));
+  note(tag, outgoing.length === 0, "форма сама никуда не отправляет — только через приёмник Тильды", outgoing.join(", ") || "прямых запросов нет");
   note(tag, errs.length === 0, "нет ошибок JavaScript", errs.slice(0, 3).join(" | "));
   await ctx.close();
 }

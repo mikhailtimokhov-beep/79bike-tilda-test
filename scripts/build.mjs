@@ -98,14 +98,49 @@ for (const f of ["rep/index.html", "rep/blog.html"]) {
 }
 console.log(`Ссылки Falcon: заглушек заменено ${falconStats.placeholders}, прямых адресов ${falconStats.direct}`);
 
+// Заявки: формы отправляют данные через приёмник Тильды (overrides/lead-bridge.js + lead-sink.js).
+// «Заявка принята» — только после подтверждения Тильды; при сбое — сообщение с телефоном. Пометка прототипа убирается.
+mkdirSync(join(DIST, "tilda"), { recursive: true });
+cpSync(join(ROOT, "overrides", "lead-sink.js"), join(DIST, "tilda", "lead-sink.js"));
+cpSync(join(ROOT, "overrides", "lead-bridge.js"), join(DIST, "site", "rep", "lead-bridge.js"));
+{
+  const p = join(DIST, "site", "assets", "app.js");
+  let s = readFileSync(p, "utf8");
+  const OLD = `    msg.classList.add("is-ok");
+    msg.innerHTML = icon("check") + "<span>" + esc(ok) + " " + esc(PROTO_NOTE) + "</span>";
+    form.dispatchEvent(new CustomEvent("demo:submitted", { bubbles: true }));`;
+  const NEW = `    var sb = form.querySelector('button[type="submit"], button:not([type])');
+    var fin = function (sent) {
+      if (sb) { sb.disabled = false; sb.removeAttribute("aria-busy"); }
+      msg.className = "form-msg";
+      if (sent) {
+        msg.classList.add("is-ok");
+        msg.innerHTML = icon("check") + "<span>" + esc(ok) + "</span>";
+        form.dispatchEvent(new CustomEvent("demo:submitted", { bubbles: true }));
+      } else {
+        msg.classList.add("is-error");
+        msg.innerHTML = "Не удалось отправить заявку. Позвоните нам: <a href=\\"tel:+79999005588\\">+7 999 900-55-88</a> или напишите в <a href=\\"https://wa.me/79999005588\\" target=\\"_blank\\" rel=\\"noopener\\">WhatsApp</a> или <a href=\\"https://vk.me/79bike\\" target=\\"_blank\\" rel=\\"noopener\\">VK</a>.";
+      }
+    };
+    if (!window.B79_LEAD) { fin(false); return; }
+    if (sb) { sb.disabled = true; sb.setAttribute("aria-busy", "true"); }
+    msg.textContent = "Отправляем заявку…";
+    window.B79_LEAD(form, function (sent) { fin(sent); });`;
+  if (!s.includes(OLD)) { console.error("app.js: не найден блок успешной отправки формы"); process.exit(1); }
+  s = s.replace(OLD, NEW).replace('var PROTO_NOTE = "В прототипе заявка никуда не отправляется.";', 'var PROTO_NOTE = "";');
+  writeFileSync(p, s);
+}
+const LEAD = `<script src="lead-bridge.js?v=${VERSION}"></script>`;
+
 let htmlCount = 0;
 for (const file of walk(join(DIST, "site"))) {
   if (extname(file) !== ".html") continue;
   let s = readFileSync(file, "utf8");
   if (file.includes(`${join("site", "rep")}`)) {
-    s = s.replace(/<\/body>/i, KINESCOPE + "\n</body>");
+    s = s.replace(/<\/body>/i, KINESCOPE + "\n" + LEAD + "\n</body>");
     if (s.includes(HERO_OLD)) s = s.replace(HERO_OLD, HERO_NEW);
     else if (file.endsWith(join("rep", "index.html"))) { console.error("Не найден выбор ролика первого экрана в index.html"); process.exit(1); }
+    s = s.replace(/\s*<p class="dlg__fine">В прототипе заявка никуда не отправляется\.<\/p>/g, "");
     s = s.replace("Видео открываются на YouTube.", "Ролики 79BIKE и Y-VOLT открываются прямо на сайте, остальные — на YouTube.");
   }
   // 1) тестовая версия не индексируется
