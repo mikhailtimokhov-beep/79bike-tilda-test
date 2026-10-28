@@ -51,12 +51,61 @@ delete KMAP._comment;
 cpSync(join(ROOT, "overrides", "kinescope-player.js"), join(DIST, "site", "rep", "kinescope-player.js"));
 const KINESCOPE = `<script>window.B79_KINESCOPE=${JSON.stringify(KMAP)};</script>\n<script src="kinescope-player.js?v=${VERSION}"></script>`;
 
+// Видео первого экрана для телефонов (≤600 px): кадр 1280×1080 по центру — то, что реально видно на телефоне.
+// HEVC 3,6 МБ, если телефон его поддерживает; иначе H.264 6,0 МБ. Планшеты (601–900) — прежний hero-m.mp4, ПК — hero.mp4.
+cpSync(join(ROOT, "overrides", "hero"), join(DIST, "site", "rep", "hero"), { recursive: true });
+const HERO_OLD = `v.src=m?"hero/hero-m.mp4?v=6":"hero/hero.mp4?v=6";`;
+const HERO_NEW = `var p=window.matchMedia&&matchMedia("(max-width: 600px)").matches,h=p&&v.canPlayType&&/probably|maybe/.test(v.canPlayType('video/mp4; codecs="hvc1"'));v.src=p?(h?"hero/hero-p-hevc.mp4?v=7":"hero/hero-p.mp4?v=7"):m?"hero/hero-m.mp4?v=6":"hero/hero.mp4?v=6";`;
+
+// Ссылки на falcon-bike.ru: пока сайт Falcon не обновлён — ведём на существующие страницы старых сайтов (overrides/falcon-links.json).
+// Будущий адрес остаётся в data-release-href. Заглушки на прототип Claude заменяются всегда — на живом сайте их быть не должно.
+const FL = JSON.parse(readFileSync(join(ROOT, "overrides", "falcon-links.json"), "utf8")); delete FL._comment;
+const reEsc = (x) => x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const NOW = (u) => FL[u] || u;
+const FALCON_TEXT = [ // подписи, которые меняются вместе с адресом (блога на старом Falcon нет — ведём в «Вопросы и ответы»)
+  ["https://falcon-bike.ru/blog", "Блог фирменного магазина 79BIKE", "Вопросы и ответы фирменного магазина 79BIKE"],
+  ["https://falcon-bike.ru/blog", "блоге фирменного магазина 79BIKE", "разделе «Вопросы и ответы» фирменного магазина 79BIKE"],
+  ["https://falcon-bike.ru/events", "Шоурум и тест-драйвы в Москве — falcon-bike.ru/events", "Шоурум и тест-драйвы в Москве — falcon-bike.ru/contacts"],
+];
+const falconStats = { placeholders: 0, direct: 0 };
+function falconLinks(s) {
+  // 1) заглушки: href на прототип Claude + data-release-href → href = рабочий адрес сейчас
+  s = s.replace(/href="https:\/\/claude\.ai\/artifact\/[^"]*"(\s+data-release-href="([^"]*)")/g, (_, rel, fut) => { falconStats.placeholders++; return `href="${NOW(fut)}"${rel}`; });
+  // 2) прямые адреса (вне data-release-href)
+  for (const [fut, now] of Object.entries(FL)) {
+    const re = new RegExp(`(?<!data-release-href=")${reEsc(fut)}(?![\\w-])`, "g");
+    s = s.replace(re, () => { falconStats.direct++; return now; });
+  }
+  // 2б) адреса, которые скрипты собирают как SHOP + 'путь': сравнение в подвале главной — свой блок #compare, остальное — по таблице
+  s = s.replace(/'<li><a href="' \+ SHOP \+ 'compare">/g, () => { falconStats.direct++; return `'<li><a href="#compare">`; });
+  s = s.replace(/' \+ SHOP \+ '([\w-]+)/g, (m, p) => { const u = "https://falcon-bike.ru/" + p; if (!FL[u]) return m; falconStats.direct++; return FL[u]; });
+  // 3) адреса моделей, которые собираются скриптом: SHOP + LIVE[slug]
+  s = s.replace(/("lynx-x":\s*)"lynx-x"/g, `$1"${NOW("https://falcon-bike.ru/lynx-x").replace("https://falcon-bike.ru/", "")}"`);
+  s = s.replace(/("surge-v":\s*)"surge-v"/g, `$1"${NOW("https://falcon-bike.ru/surge-v")}"`);
+  s = s.replace(/SHOP \+ \(LIVE\[([\w.]+)\] \|\| ""\)/g, (_, k) => `(/^https?:/.test(LIVE[${k}] || "") ? LIVE[${k}] : SHOP + (LIVE[${k}] || ""))`);
+  for (const [fut, a, b] of FALCON_TEXT) if (FL[fut]) s = s.split(a).join(b);
+  if (/claude\.ai\/artifact/.test(s)) throw new Error("остались ссылки на прототип Claude");
+  return s;
+}
+for (const file of walk(join(DIST, "site", "rep")).concat(walk(join(DIST, "site", "assets")))) {
+  if (![".html", ".js"].includes(extname(file))) continue;
+  const s0 = readFileSync(file, "utf8"), s = falconLinks(s0);
+  if (s !== s0) writeFileSync(file, s);
+}
+for (const f of ["rep/index.html", "rep/blog.html"]) {
+  const s = readFileSync(join(DIST, "site", f), "utf8");
+  if (/(?<!: )SHOP \+ \(LIVE\[/.test(s) || /"surge-v":\s*"surge-v"/.test(s)) { console.error("Не заменены адреса моделей в " + f); process.exit(1); }
+}
+console.log(`Ссылки Falcon: заглушек заменено ${falconStats.placeholders}, прямых адресов ${falconStats.direct}`);
+
 let htmlCount = 0;
 for (const file of walk(join(DIST, "site"))) {
   if (extname(file) !== ".html") continue;
   let s = readFileSync(file, "utf8");
   if (file.includes(`${join("site", "rep")}`)) {
     s = s.replace(/<\/body>/i, KINESCOPE + "\n</body>");
+    if (s.includes(HERO_OLD)) s = s.replace(HERO_OLD, HERO_NEW);
+    else if (file.endsWith(join("rep", "index.html"))) { console.error("Не найден выбор ролика первого экрана в index.html"); process.exit(1); }
     s = s.replace("Видео открываются на YouTube.", "Ролики 79BIKE и Y-VOLT открываются прямо на сайте, остальные — на YouTube.");
   }
   // 1) тестовая версия не индексируется

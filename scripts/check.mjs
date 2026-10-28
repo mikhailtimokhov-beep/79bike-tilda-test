@@ -86,6 +86,13 @@ for (const [slug, label] of PAGES) for (const [w, h] of WIDTHS) {
   rec(`${tag} якорные ссылки ведут на блоки`, m.anchors.length === 0, m.anchors.join(", "));
   rec(`${tag} нет пустых ссылок`, m.emptyLinks === 0, `${m.emptyLinks}`);
   rec(`${tag} у картинок есть alt`, m.noAlt === 0, `без alt: ${m.noAlt}`);
+  if (slug === "index") {
+    // ролик первого экрана: телефон — кадр для телефона, планшет — hero-m, ПК — hero; файл реально отдаётся
+    const vs = await page.evaluate(() => { const v = document.getElementById("hv-video"); return v ? v.getAttribute("src") || "" : ""; });
+    const want = w <= 600 ? /hero\/hero-p(-hevc)?\.mp4/ : w <= 900 ? /hero\/hero-m\.mp4/ : /hero\/hero\.mp4/;
+    const vr = vs ? await page.request.get(new URL(vs, page.url()).href, { headers: { Range: "bytes=0-1023" } }) : null;
+    rec(`${tag} ролик первого экрана под размер экрана`, want.test(vs) && !!vr && vr.status() < 400, `${vs.split("?")[0]} → HTTP ${vr ? vr.status() : "-"}`);
+  }
   // меню
   try {
     if (w < 1181) {

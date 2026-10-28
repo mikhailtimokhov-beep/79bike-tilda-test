@@ -44,6 +44,8 @@ jobs:
         run: node scripts/build.mjs
       - name: Проверки (5 ширин экрана, JS, картинки, ссылки, прокрутка, встраивание в Tilda)
         run: node scripts/check.mjs
+      - name: Тестировщик (кнопки, ссылки) и все формы
+        run: node scripts/tester.mjs && node scripts/forms.mjs
       - name: Отчёт проверок в сводку
         if: always()
         run: test -f check-report/report.md && cat check-report/report.md >> "$GITHUB_STEP_SUMMARY" || true

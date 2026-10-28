@@ -83,6 +83,11 @@ for (const u of internal) { const p = new URL(u).pathname; const f = join(DIST, 
 note("ссылки", r404.length === 0, `внутренних адресов: ${internal.size}, не найдено: ${r404.length}`, r404.join(", "));
 writeFileSync(join(OUT, "external-links.json"), JSON.stringify([...external].sort(), null, 2));
 note("ссылки", true, `внешних адресов: ${external.size} (список в check-report/external-links.json)`);
+// Ссылки на наши сайты ведут только на страницы, которые реально существуют сейчас (проверено в браузере, overrides/live-pages.json)
+const LIVE_OK = new Set(JSON.parse(readFileSync(join(ROOT, "overrides", "live-pages.json"), "utf8")).pages);
+const ours = [...external].map((u) => u.split("#")[0].split("?")[0]).filter((u) => /\/\/(www\.)?(falcon-bike\.ru|y-volt\.ru|79bike\.ru)\//.test(u));
+const unknown = [...new Set(ours.filter((u) => !LIVE_OK.has(u)))];
+note("ссылки", unknown.length === 0, `ссылки на falcon-bike.ru / y-volt.ru / 79bike.ru ведут на существующие страницы (${new Set(ours).size})`, unknown.join(", "));
 await browser.close(); srv.close();
 writeFileSync(join(OUT, "tester.json"), JSON.stringify(report, null, 2));
 console.log(`\nИтог: ${report.length - bad}/${report.length}`);
