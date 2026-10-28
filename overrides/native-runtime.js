@@ -40,6 +40,10 @@
       var v = el.getAttribute(a);
       if (v && /\.(webp|jpe?g|png|svg)/.test(v) && !/tildacdn/.test(v)) { var n = fixSet(v); if (n !== v) el.setAttribute(a, n); }
     });
+    if (el.tagName.toLowerCase() === "image") {                   // <image href> внутри SVG (карта дилеров)
+      var ih = el.getAttribute("href");
+      if (ih && !SKIP.test(ih)) { var ni = window.B79_ASSET(ih); if (ni !== ih) el.setAttribute("href", ni); }
+    }
     if (el.tagName === "A") {
       var h = el.getAttribute("href");
       if (h && !SKIP.test(h) && /\.html([?#]|$)/.test(h)) { var n2 = window.B79_ASSET(h); if (n2 !== h) el.setAttribute("href", n2); }
@@ -47,7 +51,7 @@
   }
   function walk(n) {
     fix(n);
-    if (n.querySelectorAll) Array.prototype.forEach.call(n.querySelectorAll("img,source,video,a,[data-src],[data-srcset]"), fix);
+    if (n.querySelectorAll) Array.prototype.forEach.call(n.querySelectorAll("img,source,video,a,image,[data-src],[data-srcset]"), fix);
   }
   new MutationObserver(function (ms) {
     ms.forEach(function (m) { if (m.type === "attributes") fix(m.target); else Array.prototype.forEach.call(m.addedNodes, walk); });
