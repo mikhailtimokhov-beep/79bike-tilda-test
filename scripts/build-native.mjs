@@ -59,7 +59,11 @@ function css(text, fromFile) {
   return text.replace(/url\(\s*(['"]?)([^'")]+)\1\s*\)/g, (all, q, ref) => {
     if (/^(data:|https?:|#)/.test(ref)) return all;
     const k = key(ref, fromFile);
-    if (/\.woff2$/.test(k)) return /cyrillic-ext/.test(k) ? "url(data:font/woff2;base64,)" : `url(data:font/woff2;base64,${readFileSync(join(SITE, k)).toString("base64")})`;
+    if (/\.woff2$/.test(k)) {
+      // шрифт урезан до символов сайта (overrides/fonts, pyftsubset) — в разы меньше, встраивается в страницу
+      const sub = join(ROOT, "overrides", "fonts", k.split("/").pop().replace("-wght-normal.woff2", "-sub.woff2"));
+      return `url(data:font/woff2;base64,${readFileSync(existsSync(sub) ? sub : join(SITE, k)).toString("base64")})`;
+    }
     const a = asset(ref, fromFile);
     return a ? `url("${a}")` : all;
   });
@@ -145,7 +149,7 @@ for (const page of PAGES) {
   const sprites = ["assets/icons.svg", "assets/bike.svg"].filter((s) => page === "index" || body.includes(s.split("/")[1]))
     .map((s) => read(s).replace(/<\?xml[^>]*>/, "").replace(/<svg/, '<svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"')).join("");
   const out = `<!-- 79BIKE · ${page} · нативная сборка для T123 (${TARGET}). Не редактировать вручную: правки — в репозитории 79bike-tilda-test. -->\n` +
-    runtime({ dataPage: attr("data-page") }) + "\n" + parts.join("\n") + "\n" + sprites + "\n<div class=\"b79-page\">" + body + "</div>\n" + deferred.join("\n");
+    runtime({ dataPage: attr("data-page") }) + "\n" + parts.join("\n") + "\n" + sprites + "\n" + body + "\n" + deferred.join("\n");
   writeFileSync(join(OUT, `${page}.html`), out);
   settings[page].bytes = Buffer.byteLength(out);
 }
@@ -197,6 +201,16 @@ if (process.env.PRERENDER !== "0") {
   }
   await browser.close(); srv.close();
 }
+// нарезка на блоки T123
+const { toParts, LIMIT } = await import("./split-native.mjs");
+const { rmSync } = await import("node:fs");
+for (const name of Object.keys(settings)) {
+  const parts = await toParts(readFileSync(join(OUT, `${name}.html`), "utf8"));
+  const dir = join(OUT, name); rmSync(dir, { recursive: true, force: true }); mkdirSync(dir, { recursive: true });
+  parts.forEach((p, i) => writeFileSync(join(dir, `${String(i + 1).padStart(2, "0")}.html`), p));
+  settings[name].parts = parts.length; settings[name].partSizes = parts.map((p) => p.length);
+  if (parts.some((p) => p.length > LIMIT + 200)) { console.error("Блок больше предела: " + name); process.exit(1); }
+}
 writeFileSync(join(OUT, "settings.json"), JSON.stringify(settings, null, 2));
-for (const [p, s] of Object.entries(settings)) console.log(`${p.padEnd(13)} ${(s.bytes / 1024).toFixed(0).padStart(5)} КБ  ${s.path}  «${s.title}»`);
+for (const [p, s] of Object.entries(settings)) console.log(`${p.padEnd(13)} ${(s.bytes / 1024).toFixed(0).padStart(5)} КБ → блоков T123: ${s.parts} (${s.partSizes.map((x) => Math.round(x / 1024)).join("+")} КБ)  ${s.path}`);
 if (missing.size) { console.log(`\nНет на сервере Тильды (${missing.size}): ` + [...missing].slice(0, 12).join(", ") + (missing.size > 12 ? " …" : "")); if (process.env.STRICT) process.exit(1); }

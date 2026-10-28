@@ -8,13 +8,17 @@ import { chromium } from "playwright";
 const ROOT = new URL("..", import.meta.url).pathname, DIST = join(ROOT, "dist"), NAT = join(ROOT, "dist-native", process.env.TARGET || "test");
 const T = { ".html": "text/html; charset=utf-8", ".js": "text/javascript", ".css": "text/css", ".svg": "image/svg+xml", ".webp": "image/webp", ".jpg": "image/jpeg", ".png": "image/png", ".mp4": "video/mp4", ".woff2": "font/woff2" };
 const PAGES = { "/": "index", "/blog": "blog", "/warranty": "warranty", "/garant": "warranty", "/factory": "factory", "/instructions": "instructions" };
-const shell = (frag) => `<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>shell</title>
+import { readdirSync } from "node:fs";
+// как на Тильде: каждый блок T123 в своей обёртке
+const partsOf = (page) => readdirSync(join(NAT, page)).filter((f) => /^\d+\.html$/.test(f)).sort().map((f, i) => `<div id="rec${i + 1}" class="r t-rec" data-record-type="131"><div class="t123"><div class="t-container_100 "><div class="t-width t-width_100 ">${readFileSync(join(NAT, page, f), "utf8")}</div></div></div></div>`).join("\n");
+const shellParts = (page) => shell("", partsOf(page));
+const shell = (frag, recs) => `<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>shell</title>
 <style>/* как у Тильды */body{margin:0;-webkit-font-smoothing:antialiased}.t-records{position:relative}.t-rec{position:relative}.t123 *{box-sizing:border-box}</style></head>
-<body class="t-body"><div id="allrecords" class="t-records"><div id="rec1" class="r t-rec"><div class="t123"><div class="t-container_100"><div class="t-width t-width_100">${frag}</div></div></div></div></div></body></html>`;
+<body class="t-body"><div id="allrecords" class="t-records">${recs || `<div id="rec1" class="r t-rec"><div class="t123"><div class="t-container_100"><div class="t-width t-width_100">${frag}</div></div></div></div>`}</div></body></html>`;
 const srv = createServer((q, r) => {
   const u = decodeURIComponent(q.url.split("?")[0]);
   const page = PAGES[u] || (u.startsWith("/blog/") ? "blog--" + u.split("/")[2] : null);
-  if (page) { r.writeHead(200, { "Content-Type": T[".html"] }); return r.end(shell(readFileSync(join(NAT, page + ".html"), "utf8"))); }
+  if (page) { r.writeHead(200, { "Content-Type": T[".html"] }); return r.end(shellParts(page)); }
   const f = join(DIST, u); if (!existsSync(f) || statSync(f).isDirectory()) { r.writeHead(404); return r.end(); }
   r.writeHead(200, { "Content-Type": T[extname(f)] || "application/octet-stream" }); r.end(readFileSync(f));
 }).listen(8800);
