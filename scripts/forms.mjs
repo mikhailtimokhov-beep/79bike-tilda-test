@@ -103,6 +103,29 @@ for (const [w, h, mob] of [[390, 844, true], [1440, 900, false]]) for (const F o
   note(tag, errs.length === 0, "нет ошибок JavaScript", errs.slice(0, 3).join(" | "));
   await ctx.close();
 }
+// Приёмник на странице Тильды (tilda/lead-sink.js) на макете формы Тильды: какие поля уйдут и как обрабатывается ошибка
+{
+  const page = await browser.newPage();
+  await page.route(/^https?:\/\/(?!127\.0\.0\.1)/, (rt) => rt.abort());
+  await page.goto("http://127.0.0.1:8796/version.json");
+  const r = await page.evaluate(async (code) => {
+    document.body.innerHTML = '<div class="r" id="rec1"><form class="t-form js-form-proccess"><input name="Name"><textarea name="Comments"></textarea><input name="form-spec-comments"><div class="js-errorbox-all"></div><button type="submit" class="t-submit"></button></form></div>';
+    const f = document.querySelector("form"); let mode = "ok", sent = null;
+    f.querySelector(".t-submit").addEventListener("click", (e) => { e.preventDefault(); sent = Object.fromEntries(new FormData(f)); setTimeout(() => { if (mode === "ok") f.dispatchEvent(new Event("tildaform:aftersuccess")); else { f.querySelector(".js-errorbox-all").textContent = "Ошибка Тильды"; f.dispatchEvent(new Event("tildaform:aftererror")); } }, 20); });
+    eval(code);
+    const P = { title: "Консультация по Falcon GT", name: "Иван — тест 2", rows: [["Как связаться", "Позвонить"], ["Контакт", "+7 (999) 000-00-00"], ["Согласие на обработку персональных данных", "да"]] };
+    const send = (p) => new Promise((res) => window.B79_TILDA_SEND(p, (ok, err) => res({ ok, err, sent })));
+    const a = await send(P);
+    mode = "err"; const b = await send({ title: "Стать дилером 79BIKE", name: "Пётр", rows: [["Контакт", "@petr_k"]] });
+    return { a, b, hidden: document.getElementById("rec1").classList.contains("b79-sink") };
+  }, readFileSync(join(ROOT, "overrides", "lead-sink.js"), "utf8"));
+  const A = r.a.sent || {}, B = r.b.sent || {};
+  note("приёмник Тильды", r.hidden, "скрытая форма Тильды убрана с экрана");
+  note("приёмник Тильды", r.a.ok && A.Name === "Иван тест" && A.Phone === "+79990000000" && A.Form === "Консультация по Falcon GT" && A.Model === "Falcon GT", "стандартные поля: Name, Phone (+7…), Form, Model", JSON.stringify({ Name: A.Name, Phone: A.Phone, Form: A.Form, Model: A.Model }));
+  note("приёмник Тильды", /Контакт: \+7 \(999\)/.test(A.Comments || "") && !/Форма:/.test(A.Comments || "") && !Object.keys(A).some((k) => /_/.test(k) && k !== "form-spec-comments"), "текст заявки одним полем Comments, без дублей и полей с «_»", Object.keys(A).join(", "));
+  note("приёмник Тильды", !r.b.ok && /Ошибка Тильды/.test(r.b.err) && B.Messenger === "@petr_k" && !B.Phone, "ошибка Тильды передаётся форме; контакт @username — полем Messenger", JSON.stringify({ ok: r.b.ok, err: r.b.err, Messenger: B.Messenger }));
+  await page.close();
+}
 await browser.close(); srv.close();
 writeFileSync(join(OUT, "forms.json"), JSON.stringify({ rows, payloads }, null, 2));
 console.log(`\nИтог: ${rows.length - bad}/${rows.length}`);

@@ -27,13 +27,21 @@
     busy = true;
     // имя: правило Тильды пропускает только буквы, пробел, дефис, апостроф и точку
     var name = String(p.name || "").replace(/[^A-Za-zА-Яа-яЁё\s'.-]/g, " ").replace(/\s+/g, " ").trim().slice(0, 60) || "Клиент";
-    var text = [p.title].concat((p.rows || []).map(function (r) { return r[0] + ": " + r[1]; })).join("\n");
+    var text = (p.rows || []).map(function (r) { return r[0] + ": " + r[1]; }).join("\n");
     f.querySelector('[name="Name"]').value = name;
     f.querySelector('[name="Comments"]').value = text.slice(0, 3900);
     Array.prototype.forEach.call(f.querySelectorAll("input.b79-x"), function (x) { x.remove(); });
     function add(n, v) { var i = document.createElement("input"); i.type = "hidden"; i.className = "b79-x"; i.name = n; i.value = String(v).slice(0, 900); f.appendChild(i); }
-    add("Форма", p.title || "");
-    (p.rows || []).forEach(function (r) { if (r[0] && r[1] !== "") add(String(r[0]).replace(/[\[\]]/g, "").slice(0, 60), r[1]); });
+    // стандартные поля, как у прежних форм 79bike.ru (Name, Phone) — их ждут подключённые CRM и уведомления;
+    // всё остальное — читаемым текстом в Comments, без дублей
+    var get = function (label) { var r = (p.rows || []).filter(function (x) { return x[0] === label; })[0]; return r ? String(r[1]) : ""; };
+    var contact = get("Контакт"), digits = contact.replace(/\D/g, "");
+    if (digits.length === 11 && /^[78]/.test(digits)) add("Phone", "+7" + digits.slice(1));
+    else if (digits.length === 10 && !/^@/.test(contact)) add("Phone", "+7" + digits);
+    else if (contact) add("Messenger", contact);
+    add("Form", p.title || "");
+    if (get("Модель")) add("Model", get("Модель"));
+    else { var m = /Консультация по (.+)$/.exec(p.title || ""); if (m) add("Model", m[1]); }
     var done = false, t;
     function fin(ok, err) {
       if (done) return; done = true; busy = false; clearTimeout(t);
