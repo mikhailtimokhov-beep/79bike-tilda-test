@@ -62,7 +62,7 @@
     if (window.top !== window && T) {                                          // тестовая версия во фрейме
       var id = "l" + (++seq) + Date.now();
       wait[id] = cb;
-      setTimeout(function () { if (wait[id]) { delete wait[id]; cb(false, "timeout"); } }, 30000);
+      setTimeout(function () { if (wait[id]) { delete wait[id]; cb(false, "timeout"); } }, 190000);
       parent.postMessage({ type: "b79-lead", id: id, payload: p }, T);
       return;
     }

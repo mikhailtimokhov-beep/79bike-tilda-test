@@ -52,7 +52,8 @@
     function errH() { var b = f.querySelector(".js-errorbox-all"); fin(false, b ? b.textContent.replace(/\s+/g, " ").trim() : "error"); }
     f.addEventListener("tildaform:aftersuccess", okH);
     f.addEventListener("tildaform:aftererror", errH);
-    t = setTimeout(function () { fin(false, "timeout"); }, 25000);
+    // у Тильды может появиться проверка «Я не робот» (Яндекс SmartCaptcha) — человеку нужно время, ждём до 3 минут
+    t = setTimeout(function () { fin(false, "timeout"); }, 180000);
     var btn = f.querySelector(".t-submit");
     if (btn) btn.click(); else fin(false, "no-submit");
   };

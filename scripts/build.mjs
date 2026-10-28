@@ -125,7 +125,8 @@ cpSync(join(ROOT, "overrides", "lead-bridge.js"), join(DIST, "site", "rep", "lea
     if (!window.B79_LEAD) { fin(false); return; }
     if (sb) { sb.disabled = true; sb.setAttribute("aria-busy", "true"); }
     msg.textContent = "Отправляем заявку…";
-    window.B79_LEAD(form, function (sent) { fin(sent); });`;
+    var hint = setTimeout(function () { if (/Отправляем/.test(msg.textContent)) msg.textContent = "Отправляем заявку… Если появилось окно «Я не робот» — подтвердите его, и заявка уйдёт."; }, 8000);
+    window.B79_LEAD(form, function (sent) { clearTimeout(hint); fin(sent); });`;
   if (!s.includes(OLD)) { console.error("app.js: не найден блок успешной отправки формы"); process.exit(1); }
   s = s.replace(OLD, NEW).replace('var PROTO_NOTE = "В прототипе заявка никуда не отправляется.";', 'var PROTO_NOTE = "";');
   writeFileSync(p, s);
