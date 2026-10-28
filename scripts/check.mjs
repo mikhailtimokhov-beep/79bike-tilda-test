@@ -9,7 +9,7 @@ import { chromium } from "playwright";
 const ROOT = new URL("..", import.meta.url).pathname;
 const DIST = join(ROOT, "dist");
 const OUT = join(ROOT, "check-report");
-const PAGE = "site/rep/index.html";
+const PAGES = [["index", "Главная"], ["blog", "Блог"], ["warranty", "Гарантия"], ["factory", "Завод"], ["instructions", "Инструкции"]];
 const WIDTHS = [[375, 812], [390, 844], [768, 1024], [1440, 900], [1920, 1080]];
 const args = process.argv.slice(2);
 const remote = args.includes("--url") ? args[args.indexOf("--url") + 1].replace(/\/?$/, "/") : null;
@@ -44,14 +44,15 @@ if (!remote) { servers.push(await serve(DIST, 8790)); BASE = "http://127.0.0.1:8
 const browser = await chromium.launch();
 const origin = new URL(BASE).origin;
 
-for (const [w, h] of WIDTHS) {
+for (const [slug, label] of PAGES) for (const [w, h] of WIDTHS) {
+  const PAGE = `site/rep/${slug}.html`;
   const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 1, isMobile: w < 800, hasTouch: w < 800 });
   const page = await ctx.newPage();
   const errors = [], bad = [];
   page.on("pageerror", (e) => errors.push(e.message));
   page.on("response", (r) => { if (r.url().startsWith(origin) && r.status() >= 400) bad.push(r.status() + " " + r.url().replace(origin, "")); });
   page.on("requestfailed", (r) => { if (r.url().startsWith(origin) && !/\.mp4/.test(r.url())) bad.push("failed " + r.url().replace(origin, "")); });
-  const tag = `[${w}px]`;
+  const tag = `[${label} ${w}px]`;
   const resp = await page.goto(BASE + PAGE, { waitUntil: "load", timeout: 60000 });
   rec(`${tag} страница открывается`, resp && resp.ok(), resp ? "HTTP " + resp.status() : "нет ответа");
   // прокручиваем до конца, чтобы подгрузились отложенные картинки
@@ -100,30 +101,57 @@ for (const [w, h] of WIDTHS) {
       await page.keyboard.press("Escape");
     }
   } catch (e) { rec(`${tag} меню`, false, e.message.split("\n")[0]); }
-  await page.screenshot({ path: join(OUT, `page-${w}.png`), fullPage: false });
-  await page.screenshot({ path: join(OUT, `page-${w}-full.png`), fullPage: true });
+  await page.screenshot({ path: join(OUT, `page-${slug}-${w}.png`), fullPage: false });
+  await page.screenshot({ path: join(OUT, `page-${slug}-${w}-full.png`), fullPage: true });
   await ctx.close();
 }
 
 // Встраивание: имитация опубликованной страницы Tilda с кодом T123
 const t123 = readFileSync(join(ROOT, "tilda", "t123.html"), "utf8").replace("__PUBLIC_BASE__", BASE);
 const sim = `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Tilda sim</title></head><body><div id="allrecords" class="t-records"><div id="rec1" class="r t-rec"><div class="t123"><div class="t-container_100"><div class="t-width t-width_100">${t123}</div></div></div></div></div></body></html>`;
-mkdirSync(join(ROOT, ".sim"), { recursive: true }); writeFileSync(join(ROOT, ".sim", "index.html"), sim);
+for (const [slug] of PAGES) { const d = join(ROOT, ".sim", slug === "index" ? "" : slug); mkdirSync(d, { recursive: true }); writeFileSync(join(d, "index.html"), sim); }
 servers.push(await serve(join(ROOT, ".sim"), 8791));
+const SIM = "http://127.0.0.1:8791";
 for (const [w, h] of [[390, 844], [1440, 900]]) {
   const ctx = await browser.newContext({ viewport: { width: w, height: h }, isMobile: w < 800, hasTouch: w < 800 });
   const page = await ctx.newPage(); const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
-  await page.goto("http://127.0.0.1:8791/index.html", { waitUntil: "load" });
-  const frame = page.frameLocator("#b79-frame");
-  let ok = false; try { await frame.locator("h1").waitFor({ timeout: 30000 }); ok = true; } catch {}
-  const box = await page.locator("#b79-frame").boundingBox();
-  const src = await page.locator("#b79-frame").getAttribute("src");
-  rec(`[Tilda ${w}px] главная загружается в блоке T123`, ok, src || "");
-  rec(`[Tilda ${w}px] фрейм на весь экран`, !!box && Math.round(box.width) === w && Math.round(box.height) === h, box ? `${Math.round(box.width)}×${Math.round(box.height)}` : "");
+  for (const [slug, label] of PAGES) {
+    await page.goto(SIM + "/" + (slug === "index" ? "" : slug), { waitUntil: "load" });
+    const frame = page.frameLocator("#b79-frame");
+    let ok = false; try { await frame.locator("h1").waitFor({ timeout: 30000 }); ok = true; } catch {}
+    const src = (await page.locator("#b79-frame").getAttribute("src")) || "";
+    rec(`[Tilda ${w}px] ${label}: открывается нужная страница`, ok && src.includes(`/site/rep/${slug}.html`), src.replace(BASE, ""));
+    await page.waitForTimeout(600);
+    const t = await page.title();
+    rec(`[Tilda ${w}px] ${label}: заголовок вкладки со страницы`, t !== "Tilda sim" && t.length > 5, t);
+    if (slug === "index") {
+      const box = await page.locator("#b79-frame").boundingBox();
+      rec(`[Tilda ${w}px] фрейм на весь экран`, !!box && Math.round(box.width) === w && Math.round(box.height) === h, box ? `${Math.round(box.width)}×${Math.round(box.height)}` : "");
+      await page.screenshot({ path: join(OUT, `tilda-${w}.png`) });
+    }
+  }
+  // переход между страницами меняет адрес на Тильде: с главной на «Гарантию», затем «Назад»
+  await page.goto(SIM + "/", { waitUntil: "load" });
+  const fr = page.frameLocator("#b79-frame");
+  await fr.locator("h1").waitFor({ timeout: 30000 });
+  const link = fr.locator('a[href="warranty.html"]').first();
+  let navOk = false, backOk = false;
+  try {
+    await link.evaluate((a) => a.scrollIntoView());
+    await Promise.all([page.waitForURL(SIM + "/warranty", { timeout: 20000 }), link.evaluate((a) => a.click())]);
+    await fr.locator("h1").waitFor({ timeout: 30000 });
+    navOk = ((await page.locator("#b79-frame").getAttribute("src")) || "").includes("/site/rep/warranty.html");
+    await page.goBack({ waitUntil: "load" });
+    backOk = page.url() === SIM + "/";
+  } catch (e) { errors.push("переход: " + e.message.split("\n")[0]); }
+  rec(`[Tilda ${w}px] ссылка «Гарантия» открывает /warranty на Тильде`, navOk, page.url());
+  rec(`[Tilda ${w}px] кнопка «Назад» возвращает на главную`, backOk);
+  // параметры блога доходят до страницы
+  await page.goto(SIM + "/blog?r=test", { waitUntil: "load" });
+  const bsrc = (await page.locator("#b79-frame").getAttribute("src")) || "";
+  rec(`[Tilda ${w}px] параметры адреса блога передаются`, /[?&]r=test/.test(bsrc), bsrc.replace(BASE, ""));
   rec(`[Tilda ${w}px] загрузчик без ошибок`, errors.length === 0, errors.join(" | "));
-  await page.waitForTimeout(1500);
-  await page.screenshot({ path: join(OUT, `tilda-${w}.png`) });
   await ctx.close();
 }
 

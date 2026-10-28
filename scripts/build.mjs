@@ -19,12 +19,26 @@ rmSync(DIST, { recursive: true, force: true });
 mkdirSync(join(DIST, "site"), { recursive: true });
 cpSync(SRC, join(DIST, "site"), { recursive: true });
 
-// Небольшой скрипт совместимости для работы внутри iframe на странице Tilda:
-// внешние ссылки без target открываются во всём окне (как на обычном сайте), а не внутри фрейма.
+// Скрипт совместимости для работы внутри iframe на странице Tilda:
+//  - внешние ссылки без target открываются во всём окне, а не внутри фрейма;
+//  - ссылки на другие страницы сайта ведут на соответствующие адреса Тильды (/blog, /warranty …),
+//    чтобы в адресной строке был правильный адрес и работали «Назад» и «Поделиться»;
+//  - заголовок страницы передаётся Тильде для вкладки браузера.
+// Адрес Тильды приходит от загрузчика в параметре ?top= (только http/https-источник, иначе игнорируется).
+const PAGES = ["index", "blog", "warranty", "factory", "instructions"];
 const FRAME_COMPAT = `<script data-tilda-embed>(function(){if(window.top===window)return;
+var P=${JSON.stringify(PAGES)},T=null;
+try{var q=new URLSearchParams(location.search).get("top");if(q&&/^https?:\\/\\/[a-z0-9.-]+(:\\d+)?$/i.test(q))T=q;}catch(_){}
+function title(){try{if(T)parent.postMessage({type:"b79-title",title:document.title},T);}catch(_){}}
+title();addEventListener("load",title);
 document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a[href]");if(!a||a.target)return;
 var h=a.getAttribute("href")||"";if(/^(mailto:|tel:|#|javascript:)/i.test(h))return;
-try{var u=new URL(a.href,location.href);if(u.origin!==location.origin)a.target="_top";}catch(_){}} ,true);})();</script>`;
+var u;try{u=new URL(a.href,location.href);}catch(_){return;}
+if(u.origin!==location.origin){a.target="_top";return;}
+var m=u.pathname.match(/\\/site\\/rep\\/([a-z-]+)\\.html$/);if(!m||P.indexOf(m[1])<0||!T)return;
+if(u.pathname===location.pathname&&u.hash)return; /* якорь на этой же странице — прокрутка внутри */
+var s=new URLSearchParams(u.search);s.delete("v");s.delete("top");var qs=s.toString();
+a.href=T+"/"+(m[1]==="index"?"":m[1])+(qs?"?"+qs:"")+u.hash;a.target="_top";},true);})();</script>`;
 
 function walk(dir, out = []) {
   for (const n of readdirSync(dir)) { const p = join(dir, n); statSync(p).isDirectory() ? walk(p, out) : out.push(p); }

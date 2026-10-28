@@ -1,7 +1,8 @@
-<!-- 79BIKE · тестовая главная. Вставляется ОДИН раз в блок T123 тестового проекта Tilda.
-     Код страницы здесь не хранится: блок подгружает последнюю проверенную сборку с GitHub Pages,
-     поэтому правки исходника появляются на Тильде без переиздания страницы.
-     Отключить: удалить этот блок или выключить его (глаз в редакторе) и опубликовать. -->
+<!-- 79BIKE · тестовая версия сайта. Один и тот же код вставляется в блок T123 на КАЖДОЙ странице тестового проекта Tilda.
+     Какую страницу показать, загрузчик определяет по адресу: / → главная, /blog → блог, /warranty, /factory, /instructions.
+     Код страниц здесь не хранится: блок подгружает последнюю проверенную сборку с GitHub Pages,
+     поэтому правки появляются на Тильде без переиздания страниц.
+     Отключить: удалить блок или выключить его (глаз в редакторе) и опубликовать. -->
 <style>
   html, body { margin: 0; height: 100%; overflow: hidden; background: #000; }
   #b79-frame { position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh; border: 0; display: block; z-index: 2147483000; background: #000; }
@@ -11,9 +12,12 @@
 <div id="b79-note">Тестовая версия не загрузилась. <a id="b79-direct" target="_blank" rel="noopener">Открыть напрямую</a></div>
 <script>
 (function () {
-  var BASE = "__PUBLIC_BASE__";            // адрес сборки на GitHub Pages
-  var PAGE = "site/rep/index.html";         // главная страница
+  var BASE = "__PUBLIC_BASE__";             // адрес сборки на GitHub Pages
+  // адрес на Тильде → файл страницы в сборке
+  var MAP = { "": "index", "blog": "blog", "warranty": "warranty", "factory": "factory", "instructions": "instructions" };
   if (document.getElementById("b79-frame")) return;
+  var slug = location.pathname.replace(/^\/+|\/+$/g, "").toLowerCase();
+  var page = "site/rep/" + (MAP[slug] || "index") + ".html";
   var f = document.createElement("iframe");
   f.id = "b79-frame";
   f.title = "79BIKE — электромотоциклы Falcon, Lynx и Y-Volt";
@@ -22,7 +26,9 @@
   var loaded = false, note = document.getElementById("b79-note");
   f.addEventListener("load", function () { loaded = true; note.style.display = "none"; });
   function go(v) {
-    var src = BASE + PAGE + "?v=" + encodeURIComponent(v) + (location.hash || "");
+    // свои параметры (?s=, ?r= у блога) и якорь передаём странице как есть
+    var extra = location.search ? "&" + location.search.slice(1) : "";
+    var src = BASE + page + "?v=" + encodeURIComponent(v) + "&top=" + encodeURIComponent(location.origin) + extra + (location.hash || "");
     document.getElementById("b79-direct").href = src;
     f.src = src;
   }
@@ -33,7 +39,12 @@
     .then(function (j) { go(j.version); })
     .catch(function () { go(String(Date.now())); });
   setTimeout(function () { if (!loaded) note.style.display = "block"; }, 15000);
-  // переход по якорю на странице Тильды (#models и т. п.) прокручивает встроенную главную
+  // заголовок вкладки берём у показанной страницы
+  window.addEventListener("message", function (e) {
+    if (BASE.indexOf(e.origin) !== 0 || !e.data || e.data.type !== "b79-title") return;
+    document.title = String(e.data.title || "").slice(0, 200);
+  });
+  // переход по якорю на странице Тильды прокручивает встроенную страницу
   window.addEventListener("hashchange", function () {
     var u = f.src.split("#")[0]; f.src = u + location.hash;
   });
