@@ -21,7 +21,7 @@
   var NNBSP = " ";
   var PHONE = "+7 (999) 900-55-88";
   var PHONE_HREF = "tel:+79999005588";
-  var EMAIL = "Sales@79bike.ru";
+  var EMAIL = "info@79bike.ru";
   var RUTUBE = "https://rutube.ru/channel/65461061/";
   /* Сообщение после отправки: data-success формы (или «Заявка принята.») + PROTO_NOTE */
   var PROTO_NOTE = "В прототипе заявка никуда не отправляется.";

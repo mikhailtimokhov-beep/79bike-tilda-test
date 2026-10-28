@@ -26,7 +26,7 @@ window.CONTENT = {
     version: "2026-10-19",
     brandName: "FALCON-BIKE",
     phone: "+7 (999) 900-55-88",
-    email: "Sales@79bike.ru",
+    email: "info@79bike.ru",
     city: "Москва",
     rutube: "https://rutube.ru/channel/65461061/"
   },
