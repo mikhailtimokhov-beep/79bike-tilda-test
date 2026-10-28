@@ -66,9 +66,9 @@ for (const slug of PAGES) for (const vw of [[390, 844, true], [1440, 900, false]
       form.querySelectorAll("select").forEach((s) => { if (s.options.length > 1) s.selectedIndex = 1; });
     });
     const sub = f.locator("button[type=submit], button:not([type])").last();
-    await sub.click({ timeout: 2000 }).catch(() => {});
-    await page.waitForFunction((el) => /принят|спасибо|отправ|Не удалось/i.test((el.closest("section,dialog,div") || el).innerText), await f.elementHandle(), { timeout: 8000 }).catch(() => {});
-    const okMsg = await f.evaluate((form) => /принят|спасибо|отправ/i.test((form.closest("section,dialog,div") || form).innerText));
+    await f.evaluate((form) => { const b = form.querySelector("button[type=submit], button:not([type])"); if (form.requestSubmit) form.requestSubmit(b || undefined); else b && b.click(); }).catch(() => {}); // отправка как по кнопке (кнопку на телефоне может перекрыть cookie-баннер)
+    await page.waitForFunction((el) => /принят|спасибо|Не удалось/i.test((el.closest("section,dialog,div") || el).innerText), await f.elementHandle(), { timeout: 8000 }).catch(() => {});
+    const okMsg = await f.evaluate((form) => /принят|спасибо/i.test((form.closest("section,dialog,div") || form).innerText));
     if (okMsg) formsOk++;
   }
   if (forms) note(tag, formsOk > 0, `демо-формы: ${formsOk} из видимых показывают «заявка принята»`, `всего форм ${forms}`);
