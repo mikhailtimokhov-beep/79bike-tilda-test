@@ -155,6 +155,34 @@ for (const [w, h] of [[390, 844], [1440, 900]]) {
   await ctx.close();
 }
 
+// Плеер Kinescope: карточка нашего ролика открывает плеер на сайте, чужой ролик по-прежнему уходит на YouTube
+{
+  const KMAP = JSON.parse(readFileSync(join(ROOT, "overrides", "kinescope.json"), "utf8"));
+  for (const [w, h] of [[390, 844], [1440, 900]]) {
+    const ctx = await browser.newContext({ viewport: { width: w, height: h }, isMobile: w < 800, hasTouch: w < 800 });
+    const page = await ctx.newPage(); const errors = [];
+    page.on("pageerror", (e) => errors.push(e.message));
+    await page.route(/kinescope\.io|youtube\.com/, (r) => r.fulfill({ status: 200, contentType: "text/html", body: "<html><body>stub</body></html>" }));
+    await page.goto(BASE + "site/rep/factory.html", { waitUntil: "load" });
+    await page.locator("button:has-text('Отказаться')").first().click({ timeout: 2000 }).catch(() => {});
+    const own = page.locator('a[href*="EVj42tyAZZk"]').first();
+    await own.scrollIntoViewIfNeeded(); await own.click();
+    await page.waitForTimeout(400);
+    const st = await page.evaluate(() => { const d = document.querySelector(".kdlg"); const f = d && d.querySelector("iframe"); const b = d && d.querySelector(".kdlg__box").getBoundingClientRect(); return { open: !!d && d.classList.contains("is-open"), src: f ? f.src : "", w: b ? Math.round(b.width) : 0, sw: document.documentElement.scrollWidth - innerWidth }; });
+    rec(`[Kinescope ${w}px] свой ролик открывает плеер на сайте`, st.open && st.src.includes(KMAP.EVj42tyAZZk.k), st.src.replace(/\?.*/, ""));
+    rec(`[Kinescope ${w}px] окно плеера помещается в экран`, st.w > 0 && st.w <= w && st.sw <= 1, `ширина ${st.w}`);
+    await page.keyboard.press("Escape"); await page.waitForTimeout(200);
+    const closed = await page.evaluate(() => !document.querySelector(".kdlg.is-open") && !document.querySelector(".kdlg iframe"));
+    rec(`[Kinescope ${w}px] Esc закрывает плеер и останавливает видео`, closed);
+    const [popup] = await Promise.all([page.waitForEvent("popup", { timeout: 5000 }).catch(() => null), page.locator('a[href*="sINYMFZpdR8"]').first().click()]);
+    const still = await page.evaluate(() => !!document.querySelector(".kdlg.is-open"));
+    rec(`[Kinescope ${w}px] чужой ролик по-прежнему открывается на YouTube`, !!popup && !still);
+    if (popup) await popup.close();
+    rec(`[Kinescope ${w}px] без ошибок JavaScript`, errors.length === 0, errors.join(" | "));
+    await ctx.close();
+  }
+}
+
 await browser.close();
 servers.forEach((s) => s.close());
 const md = `# Проверка сборки\n\n${new Date().toISOString()} · ${remote ? "опубликованная: " + remote : "локальная dist/"}\n\n| Проверка | Итог | Детали |\n|---|---|---|\n` +

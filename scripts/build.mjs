@@ -45,10 +45,20 @@ function walk(dir, out = []) {
   return out;
 }
 
+// Наши ролики в Kinescope: карточки этих YouTube-роликов открывают плеер прямо на сайте (overrides/)
+const KMAP = JSON.parse(readFileSync(join(ROOT, "overrides", "kinescope.json"), "utf8"));
+delete KMAP._comment;
+cpSync(join(ROOT, "overrides", "kinescope-player.js"), join(DIST, "site", "rep", "kinescope-player.js"));
+const KINESCOPE = `<script>window.B79_KINESCOPE=${JSON.stringify(KMAP)};</script>\n<script src="kinescope-player.js?v=${VERSION}"></script>`;
+
 let htmlCount = 0;
 for (const file of walk(join(DIST, "site"))) {
   if (extname(file) !== ".html") continue;
   let s = readFileSync(file, "utf8");
+  if (file.includes(`${join("site", "rep")}`)) {
+    s = s.replace(/<\/body>/i, KINESCOPE + "\n</body>");
+    s = s.replace("Видео открываются на YouTube.", "Ролики 79BIKE и Y-VOLT открываются прямо на сайте, остальные — на YouTube.");
+  }
   // 1) тестовая версия не индексируется
   s = s.replace(/<meta name="robots"[^>]*>\s*/gi, "");
   s = s.replace(/<head>/i, `<head>\n<meta name="robots" content="noindex, nofollow">\n<meta name="x-build" content="${VERSION}">`);
