@@ -52,6 +52,7 @@ jobs:
           node scripts/check-native.mjs
           TARGET=test STRICT=1 node scripts/build-native.mjs
           TARGET=live STRICT=1 node scripts/build-native.mjs
+          node scripts/build-tilda-head.mjs
           mkdir -p dist/native && cp -r dist-native/test dist-native/live dist/native/
       - name: Отчёт проверок в сводку
         if: always()
