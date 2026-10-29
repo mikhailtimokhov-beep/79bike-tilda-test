@@ -114,9 +114,12 @@ async function scopeCss(text) {
   return t.generate(ast);
 }
 
+// Михаил 29.10: в заголовках вкладок falcon-bike.ru окончание «| Falcon Bike» вместо «| 79BIKE» (меняется только окончание title)
+const FIX_TITLE = (t) => t.replace(/ \| 79BIKE(?=["'<`]|$)/gm, " | Falcon Bike");
 // данные SEO: на странице нужен только её ключ (data/seo.js ~105 КБ на все страницы)
 function seoFor(key) {
   const w = {}; vm.runInNewContext(readFileSync(join(SRC, "data/seo.js"), "utf8"), { window: w });
+  for (const v of Object.values(w.SEO || {})) if (v && typeof v.title === "string") v.title = FIX_TITLE(v.title);
   const pick = (o) => (o && o[key] !== undefined ? { [key]: o[key] } : {});
   return `window.SEO=${JSON.stringify(pick(w.SEO))};window.SEO_LD=${JSON.stringify(pick(w.SEO_LD))};window.SEO_DEFAULTS=${JSON.stringify(w.SEO_DEFAULTS || {})};window.SEO_ALT=${JSON.stringify(w.SEO_ALT || {})};`;
 }
@@ -167,7 +170,9 @@ const TYPES = { ".html": "text/html; charset=utf-8", ".js": "text/javascript", "
 const srv = createServer((q, r) => {
   const u = decodeURIComponent(q.url.split("?")[0]); const f = join(SRC, u === "/" ? "index.html" : u);
   if (!existsSync(f)) { r.writeHead(404); return r.end(); }
-  r.writeHead(200, { "Content-Type": TYPES[extname(f)] || "application/octet-stream" }); r.end(readFileSync(f));
+  r.writeHead(200, { "Content-Type": TYPES[extname(f)] || "application/octet-stream" });
+  if (/\.(html|js)$/.test(f) && !/assets[/\\]app\.js$/.test(f)) return r.end(FIX_TITLE(readFileSync(f, "utf8")).replace(/<title>([^<]*)<\/title>/, (a, t) => "<title>" + FIX_TITLE(t) + "</title>"));
+  r.end(readFileSync(f));
 }).listen(8805);
 const browser = await chromium.launch();
 const errors = {};
