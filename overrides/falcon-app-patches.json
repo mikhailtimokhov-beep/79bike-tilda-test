@@ -5,6 +5,26 @@
    "function bank(name, rows, note) { return '<div class=\"card cr-bank\"><h3 class=\"h3\">' + name + '</h3><p class=\"t-cap\">' + note + '</p><table class=\"cr-t\"><thead><tr><th>Срок</th><th>В месяц</th><th>Итого</th><th>Переплата</th></tr></thead><tbody>' + rows.map(function (r) { return \"<tr><td>\" + r[0] + \" мес.</td><td><b>\" + money(r[2]) + \"</b></td><td>\" + money(r[1]) + \"</td><td>\" + r[3] + \"%</td></tr>\"; }).join(\"\") + \"</tbody></table></div>\"; }",
    "function bank(name, rows, note) { var L = name === \"Т-Банк\" && (window.B79_TBANK || {})[s]; return '<div class=\"card cr-bank\"><h3 class=\"h3\">' + name + '</h3><p class=\"t-cap\">' + note + '</p><table class=\"cr-t\"><thead><tr><th>Срок</th><th>В месяц</th><th>Итого</th><th>Переплата</th></tr></thead><tbody>' + rows.map(function (r) { return \"<tr><td>\" + r[0] + \" мес.</td><td><b>\" + money(r[2]) + \"</b></td><td>\" + money(r[1]) + \"</td><td>\" + r[3] + \"%</td></tr>\"; }).join(\"\") + \"</tbody></table>\" + (L ? '<p class=\"t-cap\" style=\"margin:14px 0 0;display:flex;flex-wrap:wrap;gap:8px;align-items:center\"><span>Заявка онлайн:</span>' + rows.filter(function (r) { return L[r[0]]; }).map(function (r) { return '<a class=\"chip\" style=\"text-decoration:none\" href=\"' + L[r[0]] + '\" target=\"_blank\" rel=\"noopener\">' + r[0] + \" мес.</a>\"; }).join(\"\") + \"</p>\" : \"\") + \"</div>\"; }",
    "29.10: ссылки на онлайн-заявку в Т-Банк по срокам на /rassrochka, как на старой странице"
+  ],
+  [
+   "<video class=\"fh__video\" muted loop playsinline autoplay preload=\"metadata\" poster=\"assets/hero/poster.jpg?v=2\" aria-hidden=\"true\"><source src=\"assets/hero/hero-m.mp4?v=4\" type=\"video/mp4\" media=\"(max-width: 900px)\"><source src=\"assets/hero/hero.mp4?v=4\" type=\"video/mp4\"></video><button type=\"button\" class=\"fh__snd\" aria-pressed=\"false\" aria-label=\"Включить звук\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M4 9v6h4l5 4V5L8 9z\"/><path class=\"fh__snd-off\" d=\"M16 9l5 6M21 9l-5 6\"/><path class=\"fh__snd-on\" d=\"M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12\"/></svg></button>",
+   "<div class=\"fh__video\" id=\"fh-kin\" aria-hidden=\"true\" style=\"overflow:hidden;background:#000 url(assets/hero/poster.jpg?v=2) center/cover no-repeat\"></div>",
+   "29.10: первый экран — ролик через Kinescope (разметка)"
+  ],
+  [
+   "    var v = document.querySelector(\".fh__video\"), b = document.querySelector(\".fh__snd\");\n    if (!v) return;",
+   "    var v = document.querySelector(\".fh__video\"), b = document.querySelector(\".fh__snd\");\n    /* на Тильде ролик нельзя положить на её сервер: показываем его через Kinescope в фоновом режиме (без кнопок и звука, по кругу), как на 79bike.ru */\n    if (v && v.id === \"fh-kin\" && !v.querySelector(\"iframe\")) (function (w) { var a = 16 / 9, f = document.createElement(\"iframe\"); f.src = \"https://kinescope.io/embed/{{hero}}?background=1\"; f.title = \"Видео\"; f.setAttribute(\"allow\", \"autoplay; fullscreen; picture-in-picture; encrypted-media\"); f.setAttribute(\"tabindex\", \"-1\"); f.setAttribute(\"frameborder\", \"0\"); f.style.cssText = \"position:absolute;left:50%;top:50%;border:0;pointer-events:none;transform:translate(-50%,-50%)\"; if (getComputedStyle(w).position === \"static\") w.style.position = \"relative\"; w.appendChild(f); function fit() { var W = w.clientWidth, H = w.clientHeight; if (!W || !H) return; if (W / H > a) { f.style.width = W + \"px\"; f.style.height = Math.ceil(W / a) + \"px\"; } else { f.style.height = H + \"px\"; f.style.width = Math.ceil(H * a) + \"px\"; } } fit(); addEventListener(\"resize\", fit); if (window.ResizeObserver) new ResizeObserver(fit).observe(w); })(v);\n    if (!v || v.tagName !== \"VIDEO\") return;",
+   "29.10: первый экран — ролик через Kinescope (запуск)"
+  ],
+  [
+   "<video src=\"assets/route/route-720.mp4\" poster=\"assets/route/route-poster.webp\" controls playsinline preload=\"none\" aria-label=\"Видео: как пройти от въезда на ул. Речников, 21 до шоурума 79BIKE\"></video>",
+   "<iframe src=\"https://kinescope.io/embed/{{route}}\" loading=\"lazy\" title=\"Видео: как пройти от въезда на ул. Речников, 21 до шоурума 79BIKE\" allow=\"autoplay; fullscreen; picture-in-picture; encrypted-media\" allowfullscreen frameborder=\"0\" style=\"display:block;width:100%;aspect-ratio:9/16;height:auto;border:0;border-radius:inherit;background:#000\"></iframe>",
+   "29.10: маршрут до шоурума на /contacts — Kinescope"
+  ],
+  [
+   "<span class=\"route-vid\"><video src=\"assets/route/route-720.mp4\" poster=\"assets/route/route-poster.webp\" controls playsinline preload=\"none\"></video></span>",
+   "<span class=\"route-vid\"><iframe src=\"https://kinescope.io/embed/{{route}}\" loading=\"lazy\" title=\"Видео: как пройти от въезда на ул. Речников, 21 до шоурума 79BIKE\" allow=\"autoplay; fullscreen; picture-in-picture; encrypted-media\" allowfullscreen frameborder=\"0\" style=\"display:block;width:100%;aspect-ratio:9/16;height:auto;border:0;border-radius:inherit;background:#000\"></iframe></span>",
+   "29.10: маршрут в сообщении после записи на тест-драйв — Kinescope"
   ]
  ]
 }

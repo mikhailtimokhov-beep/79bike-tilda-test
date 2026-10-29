@@ -30,6 +30,7 @@ const ROUTES = {
 // общие скрипты — один раз в подвале проекта Тильды (страница Footer), а не на каждой странице: так страница занимает
 // ~7 блоков вместо ~21. Подвал отдаёт сама Тильда, внешних источников нет. SHARED=0 — всё встраивать в страницу.
 const SHARED = process.env.SHARED === "0" ? [] : ["data/models.js", "data/photos.js", "data/gallery.js", "data/content.js", "data/videos.js", "data/sidebox.js", "assets/app.js", "assets/range-q.js"];
+const KIN = JSON.parse(readFileSync(join(ROOT, "overrides", "falcon-kinescope.json"), "utf8")); // ролики Falcon в Kinescope
 function patchApp(js) {
   const ins = 'document.body.insertAdjacentHTML("afterbegin", header()';
   if (!js.includes(ins)) throw new Error("app.js: не нашёл вставку разметки");
@@ -44,7 +45,7 @@ function patchApp(js) {
   // точечные правки прототипа (overrides/falcon-app-patches.json)
   for (const [from, to, why] of JSON.parse(readFileSync(join(ROOT, "overrides", "falcon-app-patches.json"), "utf8")).patches) {
     if (!js.includes(from)) throw new Error("app.js: не найдено место правки — " + why);
-    js = js.replace(from, to);
+    js = js.replace(from, to.replace(/\{\{(\w+)\}\}/g, (a, k) => { if (!KIN[k]) throw new Error("нет ролика Kinescope: " + k); return KIN[k]; }));
   }
   // страница успеха: разметку даёт overrides/thanks.js
   const pFaq = "  P.faq = function () {";
@@ -187,6 +188,7 @@ const srv = createServer((q, r) => {
   const u = decodeURIComponent(q.url.split("?")[0]); const f = join(SRC, u === "/" ? "index.html" : u);
   if (!existsSync(f)) { r.writeHead(404); return r.end(); }
   r.writeHead(200, { "Content-Type": TYPES[extname(f)] || "application/octet-stream" });
+  if (/assets[/\\]app\.js$/.test(f)) return r.end(patchApp(readFileSync(f, "utf8"))); // пререндер — с теми же правками, что на сайте (ролики Kinescope и т. д.)
   if (/\.(html|js)$/.test(f) && !/assets[/\\]app\.js$/.test(f)) return r.end(FIX_TITLE(readFileSync(f, "utf8")).replace(/<title>([^<]*)<\/title>/, (a, t) => "<title>" + FIX_TITLE(t) + "</title>"));
   r.end(readFileSync(f));
 }).listen(8805);
