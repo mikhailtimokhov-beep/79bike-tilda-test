@@ -6,7 +6,10 @@
 (function () {
   if (!window.B79_NATIVE) return;
   var css = document.createElement("style");
-  css.textContent = 'body.fb-native[data-page="model"] .t-rec[data-record-type="744"],body.fb-native[data-page="model"] .t-rec[data-record-type="786"]{position:absolute!important;left:-10000px!important;top:0!important;width:1200px!important;height:1px!important;overflow:hidden!important}';
+  // корзина и карточки Тильды — светлые, как на старом сайте (тёмная схема нового дизайна красила поля формы в тёмно-серый);
+  // плавающий значок корзины Тильды скрыт — корзину открывает значок в шапке нового дизайна
+  css.textContent = '.t706,.t706__cartwin,.t-popup,.t-store{color-scheme:light}body.fb-native .t706__carticon{display:none!important}' +
+    'body.fb-native[data-page="model"] .t-rec[data-record-type="744"],body.fb-native[data-page="model"] .t-rec[data-record-type="786"]{position:absolute!important;left:-10000px!important;top:0!important;width:1200px!important;height:1px!important;overflow:hidden!important}';
   (document.head || document.documentElement).appendChild(css);
   function prodFor(slug, ci) {
     var m = (window.B79_STORE_MAP || {})[slug]; if (!m) return null;
