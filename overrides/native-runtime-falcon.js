@@ -36,7 +36,7 @@
   }).observe(document.documentElement, { subtree: true, childList: true, attributes: true, attributeFilter: ["src", "srcset", "poster", "data-src", "data-srcset", "href", "style"] });
   document.addEventListener("DOMContentLoaded", function () { walk(document.body); });
   for (var a in P) document.body.setAttribute(a, P[a]);
-  document.body.classList.add("b79-native", "fb-native");
+  document.body.classList.add("b79-native", "fb-native"); document.documentElement.classList.add("fb-native");
   // разметку прототип вставляет в начало <body>; на Тильде — в наш контейнер, заменяя готовый (пререндер) HTML
   window.B79_INSERT = function (html) {
     var r = document.getElementById("b79-root");

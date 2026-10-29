@@ -36,6 +36,7 @@ function patchApp(js) {
 // на новых страницах Falcon шапка и подвал Тильды включены: в шапке корзина (t706) и скрипты корзины, доставки и оплаты.
 // Видимые части старой шапки и подвала (меню, виджеты, старый подвал) прячем только на новых страницах.
 const HIDE_OLD = '<style data-b79="hide-old">body.fb-native #t-header .t-rec[data-record-type="327"],body.fb-native #t-header .t-rec[data-record-type="456"],body.fb-native #t-header .t-rec[data-record-type="890"],body.fb-native #t-header .t-rec[data-record-type="898"],body.fb-native #t-footer .t-rec[data-record-type="396"],body.fb-native #t-footer .t-rec[data-record-type="945"]{display:none!important}</style>';
+const HEADCODE = '<script>document.documentElement.classList.add("fb-native")</script><style>html.fb-native #t-header .t-rec[data-record-type="327"],html.fb-native #t-header .t-rec[data-record-type="456"],html.fb-native #t-header .t-rec[data-record-type="890"],html.fb-native #t-header .t-rec[data-record-type="898"],html.fb-native #t-footer .t-rec[data-record-type="396"],html.fb-native #t-footer .t-rec[data-record-type="945"]{display:none!important}</style>';
 const ONLY = process.env.PAGES ? process.env.PAGES.split(",") : null;
 
 const MAPF = join(ROOT, "overrides", "falcon-asset-map.json");
@@ -100,7 +101,7 @@ async function scopeCss(text) {
     t.walk(rule.prelude, { visit: "Selector", enter(sel) {
       const L = sel.children, f = L.first;
       if (!f) return;
-      if (f.type === "TypeSelector" && /^(html|body)$/i.test(f.name)) { L.insertData({ type: "ClassSelector", name: "fb-native" }, L.head.next); return; }
+      if (f.type === "TypeSelector" && /^html$/i.test(f.name)) { L.insertData({ type: "ClassSelector", name: "fb-native" }, L.head.next); return; }
       if (f.type === "PseudoClassSelector" && f.name === "root") { L.shift(); L.prependData({ type: "ClassSelector", name: "fb-native" }); L.prependData({ type: "TypeSelector", name: "html" }); return; }
       L.prependData({ type: "Combinator", name: " " }); L.prependData({ type: "ClassSelector", name: "fb-native" });
     } });
@@ -200,7 +201,7 @@ for (const j of jobs) {
   const pre = await prerender(j.url, j.name);
   const frag = assemble(j.file, pre.html, seoKey);
   const path = j.path || ROUTES[j.file];
-  settings[j.name] = { path, title: pre.title, description: pre.description, canonical: ORIGIN + (path === "/" ? "/" : path), h1: pre.h1.trim().slice(0, 120), bytes: Buffer.byteLength(frag) };
+  settings[j.name] = { path, headCode: HEADCODE, title: pre.title, description: pre.description, canonical: ORIGIN + (path === "/" ? "/" : path), h1: pre.h1.trim().slice(0, 120), bytes: Buffer.byteLength(frag) };
   const parts = await toParts(frag);
   const dir = join(OUT, j.name); rmSync(dir, { recursive: true, force: true }); mkdirSync(dir, { recursive: true });
   writeFileSync(join(OUT, j.name + ".html"), frag);
@@ -216,10 +217,10 @@ if (SHARED.length && (!ONLY || ONLY.includes("_shared"))) {
     const code = /^data\//.test(k) ? js : `if (window.B79_NATIVE) {\n${js}\n}`;
     return `<script data-src="${k}">${code.replace(/<\/script/gi, "<\\/script")}</script>`; }).join("\n");
   const NEWP = Object.values(ROUTES).concat((BLOG.posts || []).map((p) => "/blog/" + p.slug));
-  const mark = `<script data-b79="fb-native">(function(){var P=${JSON.stringify([...new Set(NEWP)])},p=location.pathname.replace(/\\/$/,"")||"/";if(P.indexOf(p)>=0||P.indexOf(p.replace(/-new$/,""))>=0){document.documentElement.classList.add("fb-native");document.body&&document.body.classList.add("fb-native")}})();</script>`;
+  // класс .fb-native включает код HEAD самой страницы (настройки страницы → «HTML-код для вставки внутрь HEAD») — см. settings.json, headCode
   const fontsCss = css(readFileSync(join(SRC, "assets/fonts.css"), "utf8"));
   const siteCss = await scopeCss(css(readFileSync(join(SRC, "assets/site.css"), "utf8")));
-  const headFrag = `<!-- Falcon Bike · стили нового дизайна (шапка проекта, страница Header). Действуют только на новых страницах (.fb-native). Не редактировать вручную. -->\n` + mark + "\n" + HIDE_OLD + `\n<style data-src="assets/fonts.css">${fontsCss}</style>\n<style data-src="assets/site.css">${siteCss}</style>`;
+  const headFrag = `<!-- Falcon Bike · стили нового дизайна (шапка проекта, страница Header). Действуют только на новых страницах (.fb-native). Не редактировать вручную. -->\n` + HIDE_OLD + `\n<style data-src="assets/fonts.css">${fontsCss}</style>\n<style data-src="assets/site.css">${siteCss}</style>`;
   const hparts = await toParts(headFrag); const hdir = join(OUT, "_head"); rmSync(hdir, { recursive: true, force: true }); mkdirSync(hdir, { recursive: true });
   writeFileSync(join(OUT, "_head.html"), headFrag); hparts.forEach((p, i) => writeFileSync(join(hdir, `${String(i + 1).padStart(2, "0")}.html`), p));
   settings._head = { path: "(Header)", parts: hparts.length, partSizes: hparts.map((p) => p.length), bytes: Buffer.byteLength(headFrag) };

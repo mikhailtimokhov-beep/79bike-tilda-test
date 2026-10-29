@@ -60,6 +60,21 @@ const GLUE = '<style data-b79-glue>.t-rec:has(>.t123 .b79-part),.t-rec:has(>.t12
 
 function hasFn(v) { if (typeof v === "function") return true; if (v && typeof v === "object") return Object.values(v).some(hasFn); return false; }
 
+// рекурсивная нарезка элемента разметки: каждый кусок — целый элемент или «прозрачное» продолжение (display: contents)
+function pieces(u, limit) {
+  const max = limit - 300;
+  if (u.length <= max) return [u];
+  const el = /^<([a-zA-Z][\w-]*)([^>]*)>([\s\S]*)<\/\1>\s*$/.exec(u);
+  if (!el || /^(script|style|textarea)$/i.test(el[1])) return null;
+  const units = [];
+  for (const k of topLevel(el[3])) { const p = pieces(k.trim() || k, limit); if (!p) return null; units.push(...p); }
+  const out = []; let cur = "", first = true;
+  const flush = () => { out.push(first ? `<${el[1]}${el[2]}>${cur}</${el[1]}>` : `<div class="b79-cont" data-cont="${el[1]}" style="display:contents">${cur}</div>`); first = false; cur = ""; };
+  for (const k of units) { if (cur && cur.length + k.length > max - 200) flush(); cur += k; }
+  if (cur || first) flush();
+  return out;
+}
+
 let jsSeq = 0;
 export async function toParts(fragment, limit = LIMIT) {
   let units = topLevel(fragment);
@@ -127,6 +142,9 @@ export async function toParts(fragment, limit = LIMIT) {
         if (cur) flush();
         continue;
       }
+      // вложенный большой элемент (раньше — ошибка): делим рекурсивно; на 79bike.ru такого не было, его сборка не меняется
+      const deep = pieces(u.trim(), limit);
+      if (deep) { flat.push(...deep); continue; }
     }
     throw new Error(`часть больше ${limit} символов и не делится: ${u.slice(0, 80)}… (${u.length})`);
   }
