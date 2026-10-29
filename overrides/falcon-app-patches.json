@@ -40,6 +40,11 @@
    "  P.faq = function () {",
    "  P.tstore = function () {\n    var T = window.B79_TSTORE || { cats: [] }, k = document.body.getAttribute(\"data-sk\") || \"\", cur = T.cats.filter(function (c) { return c[0] === k; })[0];\n    var crumb = cur ? '<a href=\"/accessories\">Запчасти</a><span aria-hidden=\"true\">/</span><span>' + esc(cur[1]) + \"</span>\" : \"<span>Запчасти и аксессуары</span>\";\n    var nav = '<nav class=\"faq-nav\" aria-label=\"Разделы каталога\"><a class=\"chip\" href=\"/accessories\"' + (cur ? \"\" : ' aria-current=\"page\"') + \">Все запчасти</a>\" + T.cats.map(function (c) { return '<a class=\"chip\" href=\"/' + c[0] + '\"' + (cur && cur[0] === c[0] ? ' aria-current=\"page\"' : \"\") + \">\" + esc(c[1]) + \"</a>\"; }).join(\"\") + \"</nav>\";\n    return head(crumb, cur ? esc(cur[2] || (\"Запчасти: \" + cur[1].toLowerCase())) : \"Запчасти для электромотоциклов Falcon, Lynx и Y-Volt\", \"Оригинальные запчасти 79BIKE для Falcon и Lynx. Наличие и цена — в карточке товара, оплата и доставка — в корзине. Запчасти отправляем СДЭК по России, в Москве — самовывоз из шоурума «Речников 21».\") +\n      sec(\"catalog\", \"\", nav + '<div id=\"b79-tilda-slot\" class=\"tstore\"></div>') +\n      sec(\"\", \"\", '<div class=\"callout\">' + ICON.phone + '<p>Не нашли деталь? Позвоните <a href=\"' + PHONE_HREF + '\">' + PHONE + \"</a> или пришлите фото детали в мессенджер — менеджер подберёт запчасть под вашу модель и год выпуска.</p></div>\");\n  };\n  P.faq = function () {",
    "29.10: оболочка нового дизайна для каталогов магазина Тильды (P.tstore)"
+  ],
+  [
+   "    ((window.SEO_LD || {})[key] || []).forEach(function (o) {",
+   "    if (!document.querySelector(\"script[data-b79-ld]\")) ((window.SEO_LD || {})[key] || []).forEach(function (o) {",
+   "30.10: JSON-LD уже в коде страницы (staticLd в build-falcon) — не дублировать"
   ]
  ]
 }

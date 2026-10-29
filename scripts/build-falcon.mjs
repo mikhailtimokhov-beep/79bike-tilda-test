@@ -143,6 +143,21 @@ function seoFor(key) {
   return `window.SEO=${JSON.stringify(pick(w.SEO))};window.SEO_LD=${JSON.stringify(pick(w.SEO_LD))};window.SEO_DEFAULTS=${JSON.stringify(w.SEO_DEFAULTS || {})};window.SEO_ALT=${JSON.stringify(w.SEO_ALT || {})};`;
 }
 
+
+// Статичная микроразметка JSON-LD в коде страницы (SEO-план 29.10, Т7): поисковик видит её без выполнения JS.
+// Адреса картинок и логотипа falcon-bike.ru/assets/... → CDN Тильды (overrides/falcon-asset-map.json); без соответствия — поле убирается (иначе 404).
+function staticLd(key) {
+  const w = {}; vm.runInNewContext(readFileSync(join(SRC, "data/seo.js"), "utf8"), { window: w });
+  const list = ((w.SEO_LD || {})[key]) || [];
+  const fix = (v) => {
+    if (typeof v === "string") { const m = /^https:\/\/falcon-bike\.ru\/(assets\/[^?#]+)/.exec(v); if (m) return AMAP[m[1]] || null; return v; }
+    if (Array.isArray(v)) return v.map(fix).filter((x) => x !== null);
+    if (v && typeof v === "object") { const o = {}; for (const [k, x] of Object.entries(v)) { const y = fix(x); if (y !== null && !(Array.isArray(y) && !y.length && (k === "image" || k === "logo"))) o[k] = y; } return o; }
+    return v;
+  };
+  return list.map((o) => `<script type="application/ld+json" data-b79-ld>${JSON.stringify(fix(o)).replace(/</g, "\\u003c")}</script>`).join("\n");
+}
+
 function parse(file) {
   let html = readFileSync(join(SRC, file), "utf8");
   const last = html.lastIndexOf("<!doctype html>"); if (last > 0) html = html.slice(last); // у index.html обёртка артефакта
@@ -184,7 +199,7 @@ function assemble(file, pre, seoKey) {
   if (file === "credit.html") scripts.unshift(`<script data-src="tbank-links">window.B79_TBANK=${JSON.stringify(Object.fromEntries(Object.entries(JSON.parse(readFileSync(join(ROOT, "overrides", "falcon-tbank-links.json"), "utf8"))).filter(([k]) => k[0] !== "_")))};</script>`);
   return `<!-- Falcon Bike · ${file} · нативная сборка для T123. Не редактировать вручную: правки — в репозитории 79bike-tilda-test. -->\n` +
     `<script data-src="native-runtime">${rt}</script>\n` + HIDE_OLD + "\n" + leadSink + styles.join("\n") + "\n" +
-    `<div id="b79-root" hidden></div>\n` + markPre(markup(pre)) + "\n" + scripts.join("\n");
+    (seoKey ? staticLd(seoKey) + "\n" : "") + `<div id="b79-root" hidden></div>\n` + markPre(markup(pre)) + "\n" + scripts.join("\n");
 }
 
 // --- пререндер прототипа ---
