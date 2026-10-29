@@ -25,6 +25,16 @@
    "<span class=\"route-vid\"><video src=\"assets/route/route-720.mp4\" poster=\"assets/route/route-poster.webp\" controls playsinline preload=\"none\"></video></span>",
    "<span class=\"route-vid\"><iframe src=\"https://kinescope.io/embed/{{route}}\" loading=\"lazy\" title=\"Видео: как пройти от въезда на ул. Речников, 21 до шоурума 79BIKE\" allow=\"autoplay; fullscreen; picture-in-picture; encrypted-media\" allowfullscreen frameborder=\"0\" style=\"display:block;width:100%;aspect-ratio:9/16;height:auto;border:0;border-radius:inherit;background:#000\"></iframe></span>",
    "29.10: маршрут в сообщении после записи на тест-драйв — Kinescope"
+  ],
+  [
+   "if (has) { location.href = \"parts.html#cart\"; return; } CART.add(id, 1); bikeBtn(); });",
+   "if (window.B79_BUY_BIKE && window.B79_BUY_BIKE(slug, +this.dataset.ci)) return; if (has) { location.href = \"parts.html#cart\"; return; } CART.add(id, 1); bikeBtn(); });",
+   "29.10: «В корзину» на странице модели — корзина Тильды (overrides/store-bridge-falcon.js)"
+  ],
+  [
+   "function hdrCart() { var n = 0; try { n = CART.raw(); } catch (e) {}",
+   "window.B79_HDR_CART = function () { hdrCart(); }; function hdrCart() { var n = 0; try { n = window.B79_CART_N ? window.B79_CART_N() : CART.raw(); } catch (e) {}",
+   "29.10: значок корзины в шапке — число товаров в корзине Тильды"
   ]
  ]
 }

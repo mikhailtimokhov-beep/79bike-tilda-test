@@ -174,6 +174,8 @@ function assemble(file, pre, seoKey) {
     .replace("/*M*/{}", "{}").replace("/*R*/{}", JSON.stringify(ROUTES)).replace("/*P*/{}", JSON.stringify(attrs));
   const leadSink = ""; // приёмник заявок — в общем подвале
   // /rassrochka: ссылки Т-Банка по срокам (данные страницы; читает правка bank() в app.js)
+  // страница модели: какой товар магазина Тильды соответствует цвету (overrides/falcon-store-map.json)
+  if (attrs["data-page"] === "model") { const SM = JSON.parse(readFileSync(join(ROOT, "overrides", "falcon-store-map.json"), "utf8")); if (SM[attrs["data-slug"]]) scripts.unshift(`<script data-src="store-map">window.B79_STORE_MAP=${JSON.stringify({ [attrs["data-slug"]]: SM[attrs["data-slug"]] })};</script>`); }
   if (file === "credit.html") scripts.unshift(`<script data-src="tbank-links">window.B79_TBANK=${JSON.stringify(Object.fromEntries(Object.entries(JSON.parse(readFileSync(join(ROOT, "overrides", "falcon-tbank-links.json"), "utf8"))).filter(([k]) => k[0] !== "_")))};</script>`);
   return `<!-- Falcon Bike · ${file} · нативная сборка для T123. Не редактировать вручную: правки — в репозитории 79bike-tilda-test. -->\n` +
     `<script data-src="native-runtime">${rt}</script>\n` + HIDE_OLD + "\n" + leadSink + styles.join("\n") + "\n" +
@@ -245,7 +247,7 @@ if (SHARED.length && (!ONLY || ONLY.includes("_shared"))) {
   const body = mapJs + SHARED.map((k) => { let js = readFileSync(join(SRC, k), "utf8"); if (k === "assets/app.js") js = patchApp(js);
     const code = /^data\//.test(k) ? js : `if (window.B79_NATIVE) {\n${js}\n}`;
     return `<script data-src="${k}">${code.replace(/<\/script/gi, "<\\/script")}</script>`; }).join("\n") +
-    ["lead-sink.js", "lead-bridge.js", "thanks.js"].map((f) => `\n<script data-src="${f}">${readFileSync(join(ROOT, "overrides", f), "utf8")}</script>`).join("");
+    ["lead-sink.js", "lead-bridge.js", "thanks.js", "store-bridge-falcon.js"].map((f) => `\n<script data-src="${f}">${readFileSync(join(ROOT, "overrides", f), "utf8")}</script>`).join("");
   const NEWP = Object.values(ROUTES).concat((BLOG.posts || []).map((p) => "/blog/" + p.slug));
   // класс .fb-native включает код HEAD самой страницы (настройки страницы → «HTML-код для вставки внутрь HEAD») — см. settings.json, headCode
   const fontsCss = css(readFileSync(join(SRC, "assets/fonts.css"), "utf8"));
