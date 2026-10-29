@@ -71,6 +71,8 @@ const falconStats = { placeholders: 0, direct: 0 };
 function falconLinks(s) {
   // 1) заглушки: href на прототип Claude + data-release-href → href = рабочий адрес сейчас
   s = s.replace(/href="https:\/\/claude\.ai\/artifact\/[^"]*"(\s+data-release-href="([^"]*)")/g, (_, rel, fut) => { falconStats.placeholders++; return `href="${NOW(fut)}"${rel}`; });
+  // 1б) старый рабочий адрес, вписанный прямо в исходник, + data-release-href → href = NOW(будущий) (после переноса Falcon — новый адрес)
+  s = s.replace(/href="(https:\/\/(?:falcon-bike|y-volt)\.ru\/[^"]*)"(\s+data-release-href="(https:\/\/falcon-bike\.ru\/[^"]*)")/g, (m, cur, rel, fut) => { const n = NOW(fut); if (n === cur) return m; falconStats.placeholders++; return `href="${n}"${rel}`; });
   // 2) прямые адреса (вне data-release-href)
   for (const [fut, now] of Object.entries(FL)) {
     const re = new RegExp(`(?<!data-release-href=")${reEsc(fut)}(?![\\w-])`, "g");
