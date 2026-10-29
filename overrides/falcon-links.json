@@ -1,15 +1,5 @@
 {
-  "_comment": "Пока falcon-bike.ru не обновлён: адрес нового Falcon (ключ) → рабочий адрес на старых сайтах сейчас (значение). Проверено 28.10.2026 в Chrome. Будущий адрес сохраняется в data-release-href. После переноса Falcon: удалить строки из этого файла (или весь файл) — ссылки вернутся на новые адреса.",
+  "_comment": "Falcon перенесён 29.10.2026: новые адреса работают, подмены убраны. Остались только политика и согласие — до утверждения юристом (LEGAL-01) ведут на 79bike.ru/policy.",
   "https://falcon-bike.ru/privacy": "https://79bike.ru/policy",
-  "https://falcon-bike.ru/consent": "https://79bike.ru/policy",
-  "https://falcon-bike.ru/compare": "https://falcon-bike.ru/",
-  "https://falcon-bike.ru/blog": "https://falcon-bike.ru/faq",
-  "https://falcon-bike.ru/events": "https://falcon-bike.ru/contacts",
-  "https://falcon-bike.ru/manual-gt": "https://falcon-bike.ru/instrukciya_falcon_gt",
-  "https://falcon-bike.ru/manual-pro": "https://falcon-bike.ru/assembling",
-  "https://falcon-bike.ru/manual-light": "https://falcon-bike.ru/instrukciya_falcon_lite",
-  "https://falcon-bike.ru/manual-lynx-trail": "https://falcon-bike.ru/instrukciya_falcon_lynx",
-  "https://falcon-bike.ru/manual-surge-v": "https://y-volt.ru/support",
-  "https://falcon-bike.ru/lynx-x": "https://falcon-bike.ru/lynx",
-  "https://falcon-bike.ru/surge-v": "https://y-volt.ru/surgev"
+  "https://falcon-bike.ru/consent": "https://79bike.ru/policy"
 }
