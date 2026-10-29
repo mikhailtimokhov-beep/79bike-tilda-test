@@ -6,6 +6,7 @@
    Прямой заход на /spasibo без заявки — общий текст. Страница закрыта от индексации (noindex в настройках Тильды). */
 (function () {
   var KEY = "b79_thanks";
+  var HOWN = { call: "Позвонить", phone: "Позвонить", whatsapp: "WhatsApp", telegram: "Telegram", vk: "VK Мессенджер" };
   function txt(el) { return el ? String(el.textContent || "").replace(/\s+/g, " ").trim() : ""; }
   function val(f, sel) { var el = f.querySelector(sel); return el && el.value ? String(el.value).trim() : ""; }
   function kindOf(f, site) {
@@ -34,7 +35,7 @@
       if (!model && m) model = m[1];
       if (/^(ещё не выбрал|не выбрал|не знаю)/i.test(model)) model = "";
       if (site === "falcon" && !model && document.body.getAttribute("data-page") === "model") { var h = document.querySelector("h1"); if (h) model = txt(h).replace(/^Купить\s+/, ""); }
-      var d = { k: kindOf(f, site), m: model.slice(0, 60), d: val(f, "[data-visit-date]"), t: val(f, "[data-visit-time]"), h: how ? String(how.value).slice(0, 30) : "", p: location.pathname, at: Date.now() };
+      var d = { k: kindOf(f, site), m: model.slice(0, 60), d: val(f, "[data-visit-date]"), t: val(f, "[data-visit-time]"), h: how ? (HOWN[String(how.value).toLowerCase()] || String(how.value)).slice(0, 30) : "", p: location.pathname, at: Date.now() };
       sessionStorage.setItem(KEY, JSON.stringify(d));
       try { window.CookieConsent && window.CookieConsent.goal && window.CookieConsent.goal("lead_ok", { kind: d.k, page: d.p }); } catch (e) {}
       return "/spasibo?k=" + d.k;
