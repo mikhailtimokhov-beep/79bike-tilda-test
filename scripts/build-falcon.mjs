@@ -31,7 +31,12 @@ function patchApp(js) {
   const ins = 'document.body.insertAdjacentHTML("afterbegin", header()';
   if (!js.includes(ins)) throw new Error("app.js: не нашёл вставку разметки");
   js = js.replace(ins, '(window.B79_INSERT || function (h) { document.body.insertAdjacentHTML("afterbegin", h); })(header()');
-  return js.split('new URLSearchParams(location.search), s = qs.get("s")').join('new URLSearchParams(location.search), s = window.B79_BLOG_SLUG || qs.get("s")');
+  js = js.split('new URLSearchParams(location.search), s = qs.get("s")').join('new URLSearchParams(location.search), s = window.B79_BLOG_SLUG || qs.get("s")');
+  // формы прототипа только показывают «Спасибо» — на сайте заявка уходит через скрытую форму Тильды (lead-bridge → lead-sink)
+  const okLine = 'if (bad) { out.className = "form__ok is-err"; out.textContent = msg; bad.focus(); return; }';
+  if (!js.includes(okLine)) throw new Error("app.js: не нашёл проверку формы");
+  js = js.replace(okLine, okLine + ' if (window.B79_LEAD) setTimeout(function () { window.B79_LEAD(f, function (ok) { if (ok) return; out.className = "form__ok is-err"; out.innerHTML = "Заявка не отправилась. Позвоните нам: <a href=\\"tel:+79999005588\\">+7 (999) 900-55-88</a> или напишите в <a href=\\"https://wa.me/79999005588\\" target=\\"_blank\\" rel=\\"noopener\\">WhatsApp</a>."; var sb = f.querySelector(\'button[type="submit"]\'); if (sb) sb.disabled = false; }); }, 0);');
+  return js;
 }
 // на новых страницах Falcon шапка и подвал Тильды включены: в шапке корзина (t706) и скрипты корзины, доставки и оплаты.
 // Видимые части старой шапки и подвала (меню, виджеты, старый подвал) прячем только на новых страницах.
@@ -149,7 +154,7 @@ function assemble(file, pre, seoKey) {
   }
   const rt = readFileSync(join(ROOT, "overrides", "native-runtime-falcon.js"), "utf8")
     .replace("/*M*/{}", JSON.stringify(LOCAL ? {} : AMAP)).replace("/*R*/{}", JSON.stringify(ROUTES)).replace("/*P*/{}", JSON.stringify(attrs));
-  const leadSink = existsSync(join(ROOT, "overrides", "lead-sink.js")) ? `<script data-src="lead-sink">${readFileSync(join(ROOT, "overrides", "lead-sink.js"), "utf8")}</script>\n` : "";
+  const leadSink = ""; // приёмник заявок — в общем подвале
   return `<!-- Falcon Bike · ${file} · нативная сборка для T123. Не редактировать вручную: правки — в репозитории 79bike-tilda-test. -->\n` +
     `<script data-src="native-runtime">${rt}</script>\n` + HIDE_OLD + "\n" + leadSink + styles.join("\n") + "\n" +
     `<div id="b79-root" hidden></div>\n` + markPre(markup(pre)) + "\n" + scripts.join("\n");
@@ -215,7 +220,8 @@ for (const j of jobs) {
 if (SHARED.length && (!ONLY || ONLY.includes("_shared"))) {
   const body = SHARED.map((k) => { let js = readFileSync(join(SRC, k), "utf8"); if (k === "assets/app.js") js = patchApp(js);
     const code = /^data\//.test(k) ? js : `if (window.B79_NATIVE) {\n${js}\n}`;
-    return `<script data-src="${k}">${code.replace(/<\/script/gi, "<\\/script")}</script>`; }).join("\n");
+    return `<script data-src="${k}">${code.replace(/<\/script/gi, "<\\/script")}</script>`; }).join("\n") +
+    ["lead-sink.js", "lead-bridge.js"].map((f) => `\n<script data-src="${f}">${readFileSync(join(ROOT, "overrides", f), "utf8")}</script>`).join("");
   const NEWP = Object.values(ROUTES).concat((BLOG.posts || []).map((p) => "/blog/" + p.slug));
   // класс .fb-native включает код HEAD самой страницы (настройки страницы → «HTML-код для вставки внутрь HEAD») — см. settings.json, headCode
   const fontsCss = css(readFileSync(join(SRC, "assets/fonts.css"), "utf8"));
