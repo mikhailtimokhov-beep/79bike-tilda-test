@@ -556,6 +556,8 @@
   .ina-more__it .ina__cap{position:absolute;left:10px;bottom:8px;font-size:13px}
   @media (min-width:900px){.ina-more__grid{grid-template-columns:repeat(4,1fr)}}
 </style>
+<script data-go>/* 29.10: редиректы 301 со старых страниц (/dealer, /info, /falconpro…) ведут на /?go=раздел или /?model=модель — Тильда не принимает # в адресе редиректа. Превращаем параметр в #раздел и прокручиваем к нему. */
+(function(){try{var q=new URLSearchParams(location.search),g=q.get("go"),m=q.get("model");if(!g&&!m)return;var id=m?"select-"+m:g;if(!/^[a-z0-9-]+$/.test(id))return;q.delete("go");q.delete("model");var rest=q.toString();history.replaceState(null,"",location.pathname+(rest?"?"+rest:"")+"#"+id);if(m)return;function go(){var el=document.getElementById(id);if(el)el.scrollIntoView({block:"start"})}document.addEventListener("DOMContentLoaded",go);window.addEventListener("load",function(){go();setTimeout(go,300)})}catch(e){}})();</script>
 <script data-top>/* 26.10 (Михаил): переход на другую страницу — всегда с самого верха (если в ссылке нет #раздела) */
 try{if("scrollRestoration" in history)history.scrollRestoration="manual"}catch(e){}
 (function(){var moved=false,t0=Date.now();["wheel","touchstart","keydown","mousedown"].forEach(function(ev){window.addEventListener(ev,function(){moved=true},{passive:true,once:true})});
