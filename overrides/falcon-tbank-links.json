@@ -1,0 +1,7 @@
+{
+ "_comment": "Ссылки на онлайн-заявку в Т-Банк по срокам (мес.) — сняты 29.10.2026 со старой страницы falcon-bike.ru/rassrochka (pageid 142775076). У GT на 6 и 12 мес. на старом сайте одна и та же ссылка — уточнить у Михаила/банка.",
+ "pro": { "6": "https://link.tinkoff.ru/1HvRV0VLZ7B", "12": "https://link.tinkoff.ru/2WqbLlZsiuN", "24": "https://link.tinkoff.ru/A1754FE5PqL" },
+ "gt": { "6": "https://link.tbank.ru/52Y81AqlB2c", "12": "https://link.tbank.ru/52Y81AqlB2c", "24": "https://link.tbank.ru/2BMyALTzrr9" },
+ "lynx-trail": { "6": "https://link.tinkoff.ru/1HvRV0VLZ7B", "12": "https://link.tinkoff.ru/2WqbLlZsiuN", "24": "https://link.tinkoff.ru/A1754FE5PqL" },
+ "light": { "6": "https://link.tinkoff.ru/1HvRV0VLZ7B", "12": "https://link.tinkoff.ru/2WqbLlZsiuN", "24": "https://link.tinkoff.ru/A1754FE5PqL" }
+}

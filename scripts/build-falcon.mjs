@@ -41,6 +41,11 @@ function patchApp(js) {
   // «Спасибо» прототипа показывается сразу; на сайте — «Отправляем…», и только после подтверждения Тильды — страница успеха /spasibo
   // (overrides/thanks.js). При сбое — сообщение с телефоном. Подсказка про «Я не робот» — через 8 с.
   js = js.replace(okLine, okLine + ' if (window.B79_LEAD) setTimeout(function () { var sb = f.querySelector(\'button[type="submit"]\'), okHtml = out.innerHTML; if (sb) { sb.disabled = true; sb.setAttribute("aria-busy", "true"); } out.className = "form__ok is-wait"; out.textContent = "Отправляем заявку…"; var hint = setTimeout(function () { if (/Отправляем/.test(out.textContent)) out.textContent = "Отправляем заявку… Если появилось окно «Я не робот» — подтвердите его, и заявка уйдёт."; }, 8000); window.B79_LEAD(f, function (ok) { clearTimeout(hint); if (sb) sb.removeAttribute("aria-busy"); if (ok) { var u = window.B79_THANKS && window.B79_THANKS(f, "falcon"); if (u) { location.href = u; return; } out.className = "form__ok"; out.innerHTML = okHtml; return; } out.className = "form__ok is-err"; out.innerHTML = "Заявка не отправилась. Позвоните нам: <a href=\\"tel:+79999005588\\">+7 (999) 900-55-88</a> или напишите в <a href=\\"https://wa.me/79999005588\\" target=\\"_blank\\" rel=\\"noopener\\">WhatsApp</a>."; if (sb) sb.disabled = false; }); }, 0);');
+  // точечные правки прототипа (overrides/falcon-app-patches.json)
+  for (const [from, to, why] of JSON.parse(readFileSync(join(ROOT, "overrides", "falcon-app-patches.json"), "utf8")).patches) {
+    if (!js.includes(from)) throw new Error("app.js: не найдено место правки — " + why);
+    js = js.replace(from, to);
+  }
   // страница успеха: разметку даёт overrides/thanks.js
   const pFaq = "  P.faq = function () {";
   if (!js.includes(pFaq)) throw new Error("app.js: не нашёл P.faq");
@@ -167,6 +172,8 @@ function assemble(file, pre, seoKey) {
   const rt = readFileSync(join(ROOT, "overrides", "native-runtime-falcon.js"), "utf8")
     .replace("/*M*/{}", "{}").replace("/*R*/{}", JSON.stringify(ROUTES)).replace("/*P*/{}", JSON.stringify(attrs));
   const leadSink = ""; // приёмник заявок — в общем подвале
+  // /rassrochka: ссылки Т-Банка по срокам (данные страницы; читает правка bank() в app.js)
+  if (file === "credit.html") scripts.unshift(`<script data-src="tbank-links">window.B79_TBANK=${JSON.stringify(Object.fromEntries(Object.entries(JSON.parse(readFileSync(join(ROOT, "overrides", "falcon-tbank-links.json"), "utf8"))).filter(([k]) => k[0] !== "_")))};</script>`);
   return `<!-- Falcon Bike · ${file} · нативная сборка для T123. Не редактировать вручную: правки — в репозитории 79bike-tilda-test. -->\n` +
     `<script data-src="native-runtime">${rt}</script>\n` + HIDE_OLD + "\n" + leadSink + styles.join("\n") + "\n" +
     `<div id="b79-root" hidden></div>\n` + markPre(markup(pre)) + "\n" + scripts.join("\n");

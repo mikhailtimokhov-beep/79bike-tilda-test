@@ -1,0 +1,10 @@
+{
+ "_comment": "Правки app.js прототипа Falcon при сборке (scripts/build-falcon.mjs, patchApp): [было, стало, зачем]. Если «было» не найдено — сборка падает.",
+ "patches": [
+  [
+   "function bank(name, rows, note) { return '<div class=\"card cr-bank\"><h3 class=\"h3\">' + name + '</h3><p class=\"t-cap\">' + note + '</p><table class=\"cr-t\"><thead><tr><th>Срок</th><th>В месяц</th><th>Итого</th><th>Переплата</th></tr></thead><tbody>' + rows.map(function (r) { return \"<tr><td>\" + r[0] + \" мес.</td><td><b>\" + money(r[2]) + \"</b></td><td>\" + money(r[1]) + \"</td><td>\" + r[3] + \"%</td></tr>\"; }).join(\"\") + \"</tbody></table></div>\"; }",
+   "function bank(name, rows, note) { var L = name === \"Т-Банк\" && (window.B79_TBANK || {})[s]; return '<div class=\"card cr-bank\"><h3 class=\"h3\">' + name + '</h3><p class=\"t-cap\">' + note + '</p><table class=\"cr-t\"><thead><tr><th>Срок</th><th>В месяц</th><th>Итого</th><th>Переплата</th></tr></thead><tbody>' + rows.map(function (r) { return \"<tr><td>\" + r[0] + \" мес.</td><td><b>\" + money(r[2]) + \"</b></td><td>\" + money(r[1]) + \"</td><td>\" + r[3] + \"%</td></tr>\"; }).join(\"\") + \"</tbody></table>\" + (L ? '<p class=\"t-cap\" style=\"margin:14px 0 0;display:flex;flex-wrap:wrap;gap:8px;align-items:center\"><span>Заявка онлайн:</span>' + rows.filter(function (r) { return L[r[0]]; }).map(function (r) { return '<a class=\"chip\" style=\"text-decoration:none\" href=\"' + L[r[0]] + '\" target=\"_blank\" rel=\"noopener\">' + r[0] + \" мес.</a>\"; }).join(\"\") + \"</p>\" : \"\") + \"</div>\"; }",
+   "29.10: ссылки на онлайн-заявку в Т-Банк по срокам на /rassrochka, как на старой странице"
+  ]
+ ]
+}
