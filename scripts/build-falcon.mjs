@@ -15,6 +15,10 @@ const ORIGIN = "https://falcon-bike.ru";
 // страница успеха /spasibo и её скрипт — не из прототипа (добавлены при переносе 29.10): кладём в исходники перед сборкой
 copyFileSync(join(ROOT, "overrides", "falcon-spasibo.html"), join(SRC, "spasibo.html"));
 copyFileSync(join(ROOT, "overrides", "thanks.js"), join(SRC, "assets", "b79-thanks.js"));
+// каталоги магазина Тильды (/accessories и разделы) — оболочка нового дизайна (overrides/falcon-tstore.*)
+const TSTORE = JSON.parse(readFileSync(join(ROOT, "overrides", "falcon-tstore.json"), "utf8"));
+{ const tpl = readFileSync(join(ROOT, "overrides", "falcon-tstore.html"), "utf8");
+  for (const p of TSTORE.pages) { const nm = p.key ? (TSTORE.cats.find((c) => c[0] === p.key) || [])[1] : ""; writeFileSync(join(SRC, "tstore-" + (p.key || "accessories") + ".html"), tpl.replace("{{KEY}}", p.key).replace("{{TITLE}}", nm ? "Запчасти: " + nm.toLowerCase() + " — Falcon, Lynx | Falcon Bike" : "Запчасти и аксессуары для Falcon и Lynx | Falcon Bike")); } }
 mkdirSync(OUT, { recursive: true });
 
 // файл прототипа → адрес на сайте (адреса живого сайта сохраняются; новые — по data/seo.js)
@@ -25,7 +29,7 @@ const ROUTES = {
   "testdrive.html": "/test-drive", "contacts.html": "/contacts", "events.html": "/events", "blog.html": "/blog", "post.html": "/blog",
   "bloggers.html": "/bloggers", "instructions.html": "/instructions", "manual-gt.html": "/manual-gt", "manual-pro.html": "/manual-pro",
   "manual-light.html": "/manual-light", "manual-lynx-trail.html": "/manual-lynx-trail", "manual-surge-v.html": "/manual-surge-v",
-  "privacy.html": "/privacy", "consent.html": "/consent", "spasibo.html": "/spasibo",
+  "privacy.html": "/privacy", "consent.html": "/consent", "spasibo.html": "/spasibo", ...Object.fromEntries(JSON.parse(readFileSync(new URL("../overrides/falcon-tstore.json", import.meta.url), "utf8")).pages.map((p) => ["tstore-" + (p.key || "accessories") + ".html", p.path])),
 };
 // общие скрипты — один раз в подвале проекта Тильды (страница Footer), а не на каждой странице: так страница занимает
 // ~7 блоков вместо ~21. Подвал отдаёт сама Тильда, внешних источников нет. SHARED=0 — всё встраивать в страницу.
@@ -174,6 +178,7 @@ function assemble(file, pre, seoKey) {
     .replace("/*M*/{}", "{}").replace("/*R*/{}", JSON.stringify(ROUTES)).replace("/*P*/{}", JSON.stringify(attrs));
   const leadSink = ""; // приёмник заявок — в общем подвале
   // /rassrochka: ссылки Т-Банка по срокам (данные страницы; читает правка bank() в app.js)
+  if (attrs["data-page"] === "tstore") scripts.unshift(`<script data-src="tstore">window.B79_TSTORE=${JSON.stringify({ cats: TSTORE.cats })};</script>`);
   // страница модели: какой товар магазина Тильды соответствует цвету (overrides/falcon-store-map.json)
   if (attrs["data-page"] === "model") { const SM = JSON.parse(readFileSync(join(ROOT, "overrides", "falcon-store-map.json"), "utf8")); if (SM[attrs["data-slug"]]) scripts.unshift(`<script data-src="store-map">window.B79_STORE_MAP=${JSON.stringify({ [attrs["data-slug"]]: SM[attrs["data-slug"]] })};</script>`); }
   if (file === "credit.html") scripts.unshift(`<script data-src="tbank-links">window.B79_TBANK=${JSON.stringify(Object.fromEntries(Object.entries(JSON.parse(readFileSync(join(ROOT, "overrides", "falcon-tbank-links.json"), "utf8"))).filter(([k]) => k[0] !== "_")))};</script>`);

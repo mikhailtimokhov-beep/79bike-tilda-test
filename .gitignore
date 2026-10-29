@@ -10,3 +10,5 @@ src/falcon/spasibo.html
 src/falcon/assets/b79-thanks.js
 # локальные проверки
 scripts/tmp/
+
+src/falcon/tstore-*.html

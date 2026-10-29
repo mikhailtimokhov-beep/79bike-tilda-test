@@ -1,0 +1,102 @@
+{
+ "_comment": "Каталоги магазина Тильды на falcon-bike.ru (папка «Запчасти»): адреса сохраняются, каталог t786 и поиск t838 Тильды переносятся в оболочку нового дизайна (решение Михаила 29.10 и план переноса). pageid — старые страницы.",
+ "cats": [
+  [
+   "kusov",
+   "Кузов"
+  ],
+  [
+   "hodovaya_chast",
+   "Ходовая часть"
+  ],
+  [
+   "dvigatel_i_pitanie",
+   "Двигатель и питание"
+  ],
+  [
+   "electronika",
+   "Электроника"
+  ],
+  [
+   "sidenya_i_podnozki",
+   "Сиденья и подножки"
+  ],
+  [
+   "krilya",
+   "Крылья"
+  ],
+  [
+   "tormosa",
+   "Тормоза"
+  ],
+  [
+   "amortisaciya",
+   "Амортизация"
+  ],
+  [
+   "kolesa",
+   "Колеса"
+  ],
+  [
+   "aksessuari",
+   "Аксессуары"
+  ]
+ ],
+ "pages": [
+  {
+   "key": "",
+   "path": "/accessories",
+   "pageid": "66874979"
+  },
+  {
+   "key": "kusov",
+   "path": "/kusov",
+   "pageid": "118715796"
+  },
+  {
+   "key": "hodovaya_chast",
+   "path": "/hodovaya_chast",
+   "pageid": "118716236"
+  },
+  {
+   "key": "dvigatel_i_pitanie",
+   "path": "/dvigatel_i_pitanie",
+   "pageid": "118716546"
+  },
+  {
+   "key": "electronika",
+   "path": "/electronika",
+   "pageid": "118716756"
+  },
+  {
+   "key": "sidenya_i_podnozki",
+   "path": "/sidenya_i_podnozki",
+   "pageid": "118716926"
+  },
+  {
+   "key": "krilya",
+   "path": "/krilya",
+   "pageid": "118717146"
+  },
+  {
+   "key": "tormosa",
+   "path": "/tormosa",
+   "pageid": "118717276"
+  },
+  {
+   "key": "amortisaciya",
+   "path": "/amortisaciya",
+   "pageid": "118717586"
+  },
+  {
+   "key": "kolesa",
+   "path": "/kolesa",
+   "pageid": "118717716"
+  },
+  {
+   "key": "aksessuari",
+   "path": "/aksessuari",
+   "pageid": "149503336"
+  }
+ ]
+}
