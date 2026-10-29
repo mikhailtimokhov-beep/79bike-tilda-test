@@ -38,7 +38,7 @@ for (const [w, h, mob] of [[390, 844, true], [1440, 900, false]]) for (const F o
   page.on("request", (r) => { if (["POST", "PUT"].includes(r.method())) outgoing.push(r.method() + " " + r.url()); });
   await page.route(/^https?:\/\/(?!127\.0\.0\.1)/, (rt) => rt.abort());
   // вместо Тильды — заглушка приёмника: запоминает заявку; window.__fail = true — имитация сбоя отправки
-  await page.addInitScript(() => { window.__leads = []; window.B79_TILDA_SEND = (p, cb) => { window.__leads.push(p); setTimeout(() => cb(!window.__fail, window.__fail ? "test" : ""), 80); }; });
+  await page.addInitScript(() => { window.__leads = []; window.B79_TILDA_SEND = (p, cb) => { window.__leads.push(p); if (!window.__fail) try { sessionStorage.setItem("__leads", JSON.stringify(window.__leads)); } catch (e) {} setTimeout(() => cb(!window.__fail, window.__fail ? "test" : ""), 80); }; });
   await page.goto(URL0, { waitUntil: "load" });
   await page.locator("button:has-text('Отказаться')").first().click({ timeout: 2000 }).catch(() => {});
   const tag = `${F.name}, ${w}px`;
@@ -86,14 +86,15 @@ for (const [w, h, mob] of [[390, 844, true], [1440, 900, false]]) for (const F o
   await submit.click(); await settle(); m = await msg();
   note(tag, /error/.test(m.cls) && /900-55-88/.test(m.text), "сбой отправки: «не удалось отправить» и телефон, без «принята»", `«${m.text.slice(0, 80)}»`);
   await page.evaluate(() => { window.__fail = false; window.__leads = []; });
-  // 5б. успешная отправка
-  await submit.click(); await settle(); m = await msg();
-  // у заявки блогера после успеха открывается экран «Заявка отправлена» (шаг done в диалоге)
-  if (F.key === "blogger") await page.waitForFunction(() => { const d = document.querySelector('#dlg-blog [data-step="done"]'); return d && !d.hidden; }, null, { timeout: 8000 }).catch(() => {});
-  const doneStep = await page.evaluate(() => { const d = document.querySelector('#dlg-blog [data-step="done"]'); return d && !d.hidden ? d.innerText.replace(/\s+/g, " ").trim().slice(0, 90) : ""; });
-  const okText = F.key === "blogger" ? doneStep : m.text;
-  note(tag, (F.key === "blogger" ? !!doneStep : /is-ok/.test(m.cls)) && !/прототип|никуда/i.test(okText), "верное заполнение: «заявка принята» после ответа приёмника, без пометки прототипа", `«${okText.slice(0, 90)}»`);
-  const leads = await page.evaluate(() => window.__leads);
+  // 5б. успешная отправка: после подтверждения приёмника — переход на страницу успеха /spasibo?k=<тип заявки> (overrides/thanks.js)
+  const KIND = { dealer: "dealer", blogger: "bloggers", support: "service", model: "consult" }[F.key];
+  await submit.click();
+  await page.waitForURL(/\/spasibo\?k=/, { timeout: 8000 }).catch(() => {});
+  const url = page.url();
+  note(tag, new RegExp("/spasibo\\?k=" + KIND + "$").test(url), "верное заполнение: после ответа приёмника — страница успеха /spasibo с типом заявки", url.replace(/^https?:\/\/[^/]+/, ""));
+  const st = await page.evaluate(() => { try { return { leads: JSON.parse(sessionStorage.getItem("__leads") || "[]"), ty: JSON.parse(sessionStorage.getItem("b79_thanks") || "{}") }; } catch (e) { return { leads: [], ty: {} }; } });
+  note(tag, st.ty.k === KIND && !/900|55-88|ivan|Тест/i.test(JSON.stringify(st.ty)), "сводка для страницы успеха без телефона и имени", JSON.stringify(st.ty).slice(0, 120));
+  const leads = st.leads;
   const L = leads[0] || { rows: [] }, rowsT = L.rows.map((r) => r.join(": ")).join(" | ");
   payloads[F.key] = L;
   note(tag, leads.length === 1, "в приёмник ушла ровно одна заявка", `${leads.length}`);

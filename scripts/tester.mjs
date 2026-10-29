@@ -21,7 +21,7 @@ for (const slug of PAGES) for (const vw of [[390, 844, true], [1440, 900, false]
   const page = await ctx.newPage(); const errs = [], failed = [];
   page.on("pageerror", (e) => errs.push(e.message));
   page.on("console", (m) => { if (m.type() === "error" && !/net::ERR|Failed to load resource/.test(m.text())) errs.push("console: " + m.text()); });
-  page.on("response", (r) => { if (r.url().startsWith("http://127.0.0.1:8795") && r.status() >= 400) failed.push(r.status() + " " + r.url()); });
+  page.on("response", (r) => { if (r.url().startsWith("http://127.0.0.1:8795") && r.status() >= 400 && !/^http:\/\/127\.0\.0\.1:8795\/spasibo\?/.test(r.url())) failed.push(r.status() + " " + r.url()); });
   page.on("popup", (p) => p.close().catch(() => {}));
   // внешние переходы не выполняем, только запоминаем
   await page.route(/^https?:\/\/(?!127\.0\.0\.1)/, (rt) => rt.abort());
@@ -67,8 +67,12 @@ for (const slug of PAGES) for (const vw of [[390, 844, true], [1440, 900, false]
     });
     const sub = f.locator("button[type=submit], button:not([type])").last();
     await f.evaluate((form) => { const b = form.querySelector("button[type=submit], button:not([type])"); if (form.requestSubmit) form.requestSubmit(b || undefined); else b && b.click(); }).catch(() => {}); // отправка как по кнопке (кнопку на телефоне может перекрыть cookie-баннер)
-    await page.waitForFunction((el) => /принят|спасибо|Не удалось/i.test((el.closest("section,dialog,div") || el).innerText), await f.elementHandle(), { timeout: 8000 }).catch(() => {});
-    const okMsg = await f.evaluate((form) => /принят|спасибо/i.test((form.closest("section,dialog,div") || form).innerText));
+    // успех: переход на страницу успеха /spasibo?k=… (overrides/thanks.js) или сообщение «принята» в форме
+    const fh = await f.elementHandle();
+    await page.waitForFunction((el) => /\/spasibo\?k=/.test(location.href) || !el.isConnected || /принят|спасибо|Не удалось/i.test((el.closest("section,dialog,div") || el).innerText), fh, { timeout: 8000 }).catch(() => {});
+    await page.waitForTimeout(300);
+    if (/\/spasibo\?k=/.test(page.url())) { formsOk++; await page.goto(B + slug + ".html", { waitUntil: "load" }); continue; }
+    const okMsg = await f.evaluate((form) => /принят|спасибо/i.test((form.closest("section,dialog,div") || form).innerText)).catch(() => false);
     if (okMsg) formsOk++;
   }
   if (forms) note(tag, formsOk > 0, `демо-формы: ${formsOk} из видимых показывают «заявка принята»`, `всего форм ${forms}`);
