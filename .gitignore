@@ -4,3 +4,9 @@ check-report/
 dist-native/
 dist/
 node_modules/
+
+# создаются сборкой build-falcon.mjs из overrides/ (страница успеха)
+src/falcon/spasibo.html
+src/falcon/assets/b79-thanks.js
+# локальные проверки
+scripts/tmp/
