@@ -18,7 +18,7 @@ copyFileSync(join(ROOT, "overrides", "thanks.js"), join(SRC, "assets", "b79-than
 // каталоги магазина Тильды (/accessories и разделы) — оболочка нового дизайна (overrides/falcon-tstore.*)
 const TSTORE = JSON.parse(readFileSync(join(ROOT, "overrides", "falcon-tstore.json"), "utf8"));
 { const tpl = readFileSync(join(ROOT, "overrides", "falcon-tstore.html"), "utf8");
-  for (const p of TSTORE.pages) { const nm = p.key ? (TSTORE.cats.find((c) => c[0] === p.key) || [])[1] : ""; writeFileSync(join(SRC, "tstore-" + (p.key || "accessories") + ".html"), tpl.replace("{{KEY}}", p.key).replace("{{TITLE}}", nm ? "Запчасти: " + nm.toLowerCase() + " — Falcon, Lynx | Falcon Bike" : "Запчасти и аксессуары для Falcon и Lynx | Falcon Bike")); } }
+  for (const p of TSTORE.pages) { const nm = p.key ? (TSTORE.cats.find((c) => c[0] === p.key) || [])[1] : ""; writeFileSync(join(SRC, "tstore-" + (p.key || "accessories") + ".html"), tpl.replace("{{KEY}}", p.key).replace("</head>", `<script>window.B79_TSTORE=${JSON.stringify({ cats: TSTORE.cats })};</script>\n</head>`).replace("{{TITLE}}", nm ? "Запчасти: " + nm.toLowerCase() + " — Falcon, Lynx | Falcon Bike" : "Запчасти и аксессуары для Falcon и Lynx | Falcon Bike")); } }
 mkdirSync(OUT, { recursive: true });
 
 // файл прототипа → адрес на сайте (адреса живого сайта сохраняются; новые — по data/seo.js)
