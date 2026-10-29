@@ -24,6 +24,18 @@ const ROUTES = {
   "manual-light.html": "/manual-light", "manual-lynx-trail.html": "/manual-lynx-trail", "manual-surge-v.html": "/manual-surge-v",
   "privacy.html": "/privacy", "consent.html": "/consent",
 };
+// общие скрипты — один раз в подвале проекта Тильды (страница Footer), а не на каждой странице: так страница занимает
+// ~7 блоков вместо ~21. Подвал отдаёт сама Тильда, внешних источников нет. SHARED=0 — всё встраивать в страницу.
+const SHARED = process.env.SHARED === "0" ? [] : ["data/models.js", "data/photos.js", "data/gallery.js", "data/content.js", "data/videos.js", "data/sidebox.js", "assets/app.js", "assets/range-q.js"];
+function patchApp(js) {
+  const ins = 'document.body.insertAdjacentHTML("afterbegin", header()';
+  if (!js.includes(ins)) throw new Error("app.js: не нашёл вставку разметки");
+  js = js.replace(ins, '(window.B79_INSERT || function (h) { document.body.insertAdjacentHTML("afterbegin", h); })(header()');
+  return js.split('new URLSearchParams(location.search), s = qs.get("s")').join('new URLSearchParams(location.search), s = window.B79_BLOG_SLUG || qs.get("s")');
+}
+// на новых страницах Falcon шапка и подвал Тильды включены: в шапке корзина (t706) и скрипты корзины, доставки и оплаты.
+// Видимые части старой шапки и подвала (меню, виджеты, старый подвал) прячем только на новых страницах.
+const HIDE_OLD = '<style data-b79="hide-old">body.fb-native #t-header .t-rec[data-record-type="327"],body.fb-native #t-header .t-rec[data-record-type="456"],body.fb-native #t-header .t-rec[data-record-type="890"],body.fb-native #t-header .t-rec[data-record-type="898"],body.fb-native #t-footer .t-rec[data-record-type="396"],body.fb-native #t-footer .t-rec[data-record-type="945"]{display:none!important}</style>';
 const ONLY = process.env.PAGES ? process.env.PAGES.split(",") : null;
 
 const MAPF = join(ROOT, "overrides", "falcon-asset-map.json");
@@ -78,6 +90,24 @@ function markPre(html) {
   return topLevel(html).map((u) => /^<[a-zA-Z]/.test(u) ? u.replace(/^<([a-zA-Z][\w-]*)/, '<$1 data-b79-pre') : (u.trim() ? `<span data-b79-pre>${u}</span>` : "")).join("\n");
 }
 
+// стили прототипа — в шапке проекта (страница Header), только для новых страниц: каждое правило ограничено .fb-native
+// (html.fb-native / body.fb-native ставит скрипт по адресу страницы до отрисовки) — старые страницы не затрагиваются.
+async function scopeCss(text) {
+  const { syntax: t } = (await import("csso")).default || (await import("csso"));
+  const ast = t.parse(text);
+  t.walk(ast, { visit: "Rule", enter(rule) {
+    if (this.atrule && /keyframes/i.test(this.atrule.name)) return;
+    t.walk(rule.prelude, { visit: "Selector", enter(sel) {
+      const L = sel.children, f = L.first;
+      if (!f) return;
+      if (f.type === "TypeSelector" && /^(html|body)$/i.test(f.name)) { L.insertData({ type: "ClassSelector", name: "fb-native" }, L.head.next); return; }
+      if (f.type === "PseudoClassSelector" && f.name === "root") { L.shift(); L.prependData({ type: "ClassSelector", name: "fb-native" }); L.prependData({ type: "TypeSelector", name: "html" }); return; }
+      L.prependData({ type: "Combinator", name: " " }); L.prependData({ type: "ClassSelector", name: "fb-native" });
+    } });
+  } });
+  return t.generate(ast);
+}
+
 // данные SEO: на странице нужен только её ключ (data/seo.js ~105 КБ на все страницы)
 function seoFor(key) {
   const w = {}; vm.runInNewContext(readFileSync(join(SRC, "data/seo.js"), "utf8"), { window: w });
@@ -100,7 +130,7 @@ function assemble(file, pre, seoKey) {
   const styles = [];
   const re = /<link[^>]+rel="stylesheet"[^>]+href="([^"]+)"[^>]*>|<style[^>]*>([\s\S]*?)<\/style>/g; let m;
   while ((m = re.exec(head))) {
-    if (m[1]) { const k = m[1].split("?")[0]; if (/cookie-banner/.test(k) || /^https?:/.test(k)) continue; styles.push(`<style data-src="${k}">${css(readFileSync(join(SRC, k), "utf8"))}</style>`); }
+    if (m[1]) { const k = m[1].split("?")[0]; if (/cookie-banner/.test(k) || /^https?:/.test(k)) continue; if (SHARED.length && /^assets\/(site|fonts)\.css$/.test(k)) continue; styles.push(`<style data-src="${k}">${css(readFileSync(join(SRC, k), "utf8"))}</style>`); }
     else styles.push(`<style>${css(m[2])}</style>`);
   }
   const scripts = [];
@@ -110,21 +140,17 @@ function assemble(file, pre, seoKey) {
     if (!src) { scripts.push(`<script>${m[2]}</script>`); continue; }
     const k = src.split("?")[0];
     if (/cookie-banner/.test(k)) continue; // баннер cookie и Метрика — в HEAD проекта (как на 79bike.ru)
+    if (SHARED.includes(k)) continue; // в подвале проекта
     let js = readFileSync(join(SRC, k), "utf8");
     if (k === "data/seo.js") js = seoFor(seoKey);
-    if (k === "assets/app.js") {
-      const ins = 'document.body.insertAdjacentHTML("afterbegin", header()';
-      if (!js.includes(ins)) throw new Error("app.js: не нашёл вставку разметки");
-      js = js.replace(ins, '(window.B79_INSERT || function (h) { document.body.insertAdjacentHTML("afterbegin", h); })(header()');
-      js = js.split('new URLSearchParams(location.search), s = qs.get("s")').join('new URLSearchParams(location.search), s = window.B79_BLOG_SLUG || qs.get("s")');
-    }
+    if (k === "assets/app.js") js = patchApp(js);
     scripts.push(`<script data-src="${k}">${js.replace(/<\/script/gi, "<\\/script")}</script>`);
   }
   const rt = readFileSync(join(ROOT, "overrides", "native-runtime-falcon.js"), "utf8")
     .replace("/*M*/{}", JSON.stringify(LOCAL ? {} : AMAP)).replace("/*R*/{}", JSON.stringify(ROUTES)).replace("/*P*/{}", JSON.stringify(attrs));
   const leadSink = existsSync(join(ROOT, "overrides", "lead-sink.js")) ? `<script data-src="lead-sink">${readFileSync(join(ROOT, "overrides", "lead-sink.js"), "utf8")}</script>\n` : "";
   return `<!-- Falcon Bike · ${file} · нативная сборка для T123. Не редактировать вручную: правки — в репозитории 79bike-tilda-test. -->\n` +
-    `<script data-src="native-runtime">${rt}</script>\n` + leadSink + styles.join("\n") + "\n" +
+    `<script data-src="native-runtime">${rt}</script>\n` + HIDE_OLD + "\n" + leadSink + styles.join("\n") + "\n" +
     `<div id="b79-root" hidden></div>\n` + markPre(markup(pre)) + "\n" + scripts.join("\n");
 }
 
@@ -184,6 +210,25 @@ for (const j of jobs) {
   settings[j.name].parts = parts.length; settings[j.name].partSizes = parts.map((p) => p.length);
   if (parts.some((p) => p.length > LIMIT + 200)) { console.error("Блок больше предела: " + j.name); process.exit(1); }
   console.log(`${j.name.padEnd(36)} ${(settings[j.name].bytes / 1024).toFixed(0).padStart(5)} КБ → блоков: ${parts.length}  ${path}${errors[j.name] ? "  ОШИБКИ JS: " + errors[j.name].length : ""}`);
+}
+if (SHARED.length && (!ONLY || ONLY.includes("_shared"))) {
+  const body = SHARED.map((k) => { let js = readFileSync(join(SRC, k), "utf8"); if (k === "assets/app.js") js = patchApp(js);
+    const code = /^data\//.test(k) ? js : `if (window.B79_NATIVE) {\n${js}\n}`;
+    return `<script data-src="${k}">${code.replace(/<\/script/gi, "<\\/script")}</script>`; }).join("\n");
+  const NEWP = Object.values(ROUTES).concat((BLOG.posts || []).map((p) => "/blog/" + p.slug));
+  const mark = `<script data-b79="fb-native">(function(){var P=${JSON.stringify([...new Set(NEWP)])},p=location.pathname.replace(/\\/$/,"")||"/";if(P.indexOf(p)>=0||P.indexOf(p.replace(/-new$/,""))>=0){document.documentElement.classList.add("fb-native");document.body&&document.body.classList.add("fb-native")}})();</script>`;
+  const fontsCss = css(readFileSync(join(SRC, "assets/fonts.css"), "utf8"));
+  const siteCss = await scopeCss(css(readFileSync(join(SRC, "assets/site.css"), "utf8")));
+  const headFrag = `<!-- Falcon Bike · стили нового дизайна (шапка проекта, страница Header). Действуют только на новых страницах (.fb-native). Не редактировать вручную. -->\n` + mark + "\n" + HIDE_OLD + `\n<style data-src="assets/fonts.css">${fontsCss}</style>\n<style data-src="assets/site.css">${siteCss}</style>`;
+  const hparts = await toParts(headFrag); const hdir = join(OUT, "_head"); rmSync(hdir, { recursive: true, force: true }); mkdirSync(hdir, { recursive: true });
+  writeFileSync(join(OUT, "_head.html"), headFrag); hparts.forEach((p, i) => writeFileSync(join(hdir, `${String(i + 1).padStart(2, "0")}.html`), p));
+  settings._head = { path: "(Header)", parts: hparts.length, partSizes: hparts.map((p) => p.length), bytes: Buffer.byteLength(headFrag) };
+  console.log(`_head (шапка проекта: стили)            ${(settings._head.bytes / 1024).toFixed(0).padStart(5)} КБ → блоков: ${hparts.length}`);
+  const frag = `<!-- Falcon Bike · общие скрипты прототипа (подвал проекта, страница Footer). Работают только на новых страницах (window.B79_NATIVE). Не редактировать вручную. -->\n` + body;
+  const parts = await toParts(frag); const dir = join(OUT, "_shared"); rmSync(dir, { recursive: true, force: true }); mkdirSync(dir, { recursive: true });
+  writeFileSync(join(OUT, "_shared.html"), frag); parts.forEach((p, i) => writeFileSync(join(dir, `${String(i + 1).padStart(2, "0")}.html`), p));
+  settings._shared = { path: "(Footer)", parts: parts.length, partSizes: parts.map((p) => p.length), bytes: Buffer.byteLength(frag) };
+  console.log(`_shared (подвал проекта)                ${(settings._shared.bytes / 1024).toFixed(0).padStart(5)} КБ → блоков: ${parts.length}`);
 }
 await browser.close(); srv.close();
 writeFileSync(join(OUT, "settings.json"), JSON.stringify(settings, null, 2));
