@@ -153,7 +153,7 @@ function assemble(file, pre, seoKey) {
     scripts.push(`<script data-src="${k}">${js.replace(/<\/script/gi, "<\\/script")}</script>`);
   }
   const rt = readFileSync(join(ROOT, "overrides", "native-runtime-falcon.js"), "utf8")
-    .replace("/*M*/{}", JSON.stringify(LOCAL ? {} : AMAP)).replace("/*R*/{}", JSON.stringify(ROUTES)).replace("/*P*/{}", JSON.stringify(attrs));
+    .replace("/*M*/{}", "{}").replace("/*R*/{}", JSON.stringify(ROUTES)).replace("/*P*/{}", JSON.stringify(attrs));
   const leadSink = ""; // приёмник заявок — в общем подвале
   return `<!-- Falcon Bike · ${file} · нативная сборка для T123. Не редактировать вручную: правки — в репозитории 79bike-tilda-test. -->\n` +
     `<script data-src="native-runtime">${rt}</script>\n` + HIDE_OLD + "\n" + leadSink + styles.join("\n") + "\n" +
@@ -218,7 +218,8 @@ for (const j of jobs) {
   console.log(`${j.name.padEnd(36)} ${(settings[j.name].bytes / 1024).toFixed(0).padStart(5)} КБ → блоков: ${parts.length}  ${path}${errors[j.name] ? "  ОШИБКИ JS: " + errors[j.name].length : ""}`);
 }
 if (SHARED.length && (!ONLY || ONLY.includes("_shared"))) {
-  const body = SHARED.map((k) => { let js = readFileSync(join(SRC, k), "utf8"); if (k === "assets/app.js") js = patchApp(js);
+  const mapJs = `<script data-src="falcon-asset-map">window.B79_FB_MAP=${JSON.stringify(LOCAL ? Object.fromEntries(Object.keys(JSON.parse(readFileSync(join(ROOT, "overrides", "falcon-asset-names.json"), "utf8")).names).map((k) => [k, "/src/falcon/" + k])) : AMAP)};</script>\n`;
+  const body = mapJs + SHARED.map((k) => { let js = readFileSync(join(SRC, k), "utf8"); if (k === "assets/app.js") js = patchApp(js);
     const code = /^data\//.test(k) ? js : `if (window.B79_NATIVE) {\n${js}\n}`;
     return `<script data-src="${k}">${code.replace(/<\/script/gi, "<\\/script")}</script>`; }).join("\n") +
     ["lead-sink.js", "lead-bridge.js"].map((f) => `\n<script data-src="${f}">${readFileSync(join(ROOT, "overrides", f), "utf8")}</script>`).join("");

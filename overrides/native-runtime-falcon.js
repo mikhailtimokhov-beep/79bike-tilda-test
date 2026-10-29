@@ -11,7 +11,8 @@
     var h = "", i = p.indexOf("#");
     if (i >= 0) { h = p.slice(i); p = p.slice(0, i); }
     var j = p.indexOf("?"), search = j >= 0 ? p.slice(j) : "", k = (j >= 0 ? p.slice(0, j) : p).replace(/^(\.[/])+/, "");
-    if (M[k]) return M[k] + h;
+    var MM = window.B79_FB_MAP || M;                              // карта картинок — в общем подвале
+    if (MM[k]) return MM[k] + h;
     var m = /^([a-z0-9-]+\.html)$/.exec(k);
     if (m && R[m[1]] !== undefined) {
       var q = new URLSearchParams(search.replace(/^[?]/, "")), s = q.get("s"); q.delete("s"); q.delete("v");
