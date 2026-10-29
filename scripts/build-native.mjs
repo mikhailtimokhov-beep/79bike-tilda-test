@@ -166,7 +166,7 @@ for (const page of PAGES) {
   const sprites = ["assets/icons.svg", "assets/bike.svg"].filter((s) => page === "index" || body.includes(s.split("/")[1]))
     .map((s) => read(s).replace(/<\?xml[^>]*>/, "").replace(/<svg/, '<svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"')).join("");
   const out = `<!-- 79BIKE · ${page} · нативная сборка для T123 (${TARGET}). Не редактировать вручную: правки — в репозитории 79bike-tilda-test. -->\n` +
-    runtime({ dataPage: attr("data-page") }) + "\n" + parts.join("\n") + "\n" + sprites + "\n" + body + "\n" + deferred.join("\n");
+    runtime({ dataPage: attr("data-page") }) + "\n" + `<script data-src="lead-sink">${readFileSync(join(ROOT, "overrides", "lead-sink.js"), "utf8")}</script>` + "\n" + parts.join("\n") + "\n" + sprites + "\n" + body + "\n" + deferred.join("\n");
   writeFileSync(join(OUT, `${page}.html`), out);
   settings[page].bytes = Buffer.byteLength(out);
 }
