@@ -4,7 +4,7 @@
 // При загрузке app.js перерисовывает тот же контейнер #b79-root (B79_INSERT в overrides/native-runtime-falcon.js) — дублей нет.
 // Запуск: node scripts/build-falcon.mjs   (ASSETS=local — картинки из src/falcon для локальной проверки)
 // Результат: dist-native/falcon/<страница>/NN.html, preview.html, settings.json.
-import { readFileSync, writeFileSync, mkdirSync, existsSync, rmSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, existsSync, rmSync, copyFileSync } from "node:fs";
 import { join, normalize, extname } from "node:path";
 import vm from "node:vm";
 
@@ -12,6 +12,9 @@ const ROOT = new URL("..", import.meta.url).pathname;
 const SRC = join(ROOT, "src", "falcon");
 const OUT = join(ROOT, "dist-native", "falcon");
 const ORIGIN = "https://falcon-bike.ru";
+// страница успеха /spasibo и её скрипт — не из прототипа (добавлены при переносе 29.10): кладём в исходники перед сборкой
+copyFileSync(join(ROOT, "overrides", "falcon-spasibo.html"), join(SRC, "spasibo.html"));
+copyFileSync(join(ROOT, "overrides", "thanks.js"), join(SRC, "assets", "b79-thanks.js"));
 mkdirSync(OUT, { recursive: true });
 
 // файл прототипа → адрес на сайте (адреса живого сайта сохраняются; новые — по data/seo.js)
@@ -22,7 +25,7 @@ const ROUTES = {
   "testdrive.html": "/test-drive", "contacts.html": "/contacts", "events.html": "/events", "blog.html": "/blog", "post.html": "/blog",
   "bloggers.html": "/bloggers", "instructions.html": "/instructions", "manual-gt.html": "/manual-gt", "manual-pro.html": "/manual-pro",
   "manual-light.html": "/manual-light", "manual-lynx-trail.html": "/manual-lynx-trail", "manual-surge-v.html": "/manual-surge-v",
-  "privacy.html": "/privacy", "consent.html": "/consent",
+  "privacy.html": "/privacy", "consent.html": "/consent", "spasibo.html": "/spasibo",
 };
 // общие скрипты — один раз в подвале проекта Тильды (страница Footer), а не на каждой странице: так страница занимает
 // ~7 блоков вместо ~21. Подвал отдаёт сама Тильда, внешних источников нет. SHARED=0 — всё встраивать в страницу.
@@ -35,7 +38,13 @@ function patchApp(js) {
   // формы прототипа только показывают «Спасибо» — на сайте заявка уходит через скрытую форму Тильды (lead-bridge → lead-sink)
   const okLine = 'if (bad) { out.className = "form__ok is-err"; out.textContent = msg; bad.focus(); return; }';
   if (!js.includes(okLine)) throw new Error("app.js: не нашёл проверку формы");
-  js = js.replace(okLine, okLine + ' if (window.B79_LEAD) setTimeout(function () { window.B79_LEAD(f, function (ok) { if (ok) return; out.className = "form__ok is-err"; out.innerHTML = "Заявка не отправилась. Позвоните нам: <a href=\\"tel:+79999005588\\">+7 (999) 900-55-88</a> или напишите в <a href=\\"https://wa.me/79999005588\\" target=\\"_blank\\" rel=\\"noopener\\">WhatsApp</a>."; var sb = f.querySelector(\'button[type="submit"]\'); if (sb) sb.disabled = false; }); }, 0);');
+  // «Спасибо» прототипа показывается сразу; на сайте — «Отправляем…», и только после подтверждения Тильды — страница успеха /spasibo
+  // (overrides/thanks.js). При сбое — сообщение с телефоном. Подсказка про «Я не робот» — через 8 с.
+  js = js.replace(okLine, okLine + ' if (window.B79_LEAD) setTimeout(function () { var sb = f.querySelector(\'button[type="submit"]\'), okHtml = out.innerHTML; if (sb) { sb.disabled = true; sb.setAttribute("aria-busy", "true"); } out.className = "form__ok is-wait"; out.textContent = "Отправляем заявку…"; var hint = setTimeout(function () { if (/Отправляем/.test(out.textContent)) out.textContent = "Отправляем заявку… Если появилось окно «Я не робот» — подтвердите его, и заявка уйдёт."; }, 8000); window.B79_LEAD(f, function (ok) { clearTimeout(hint); if (sb) sb.removeAttribute("aria-busy"); if (ok) { var u = window.B79_THANKS && window.B79_THANKS(f, "falcon"); if (u) { location.href = u; return; } out.className = "form__ok"; out.innerHTML = okHtml; return; } out.className = "form__ok is-err"; out.innerHTML = "Заявка не отправилась. Позвоните нам: <a href=\\"tel:+79999005588\\">+7 (999) 900-55-88</a> или напишите в <a href=\\"https://wa.me/79999005588\\" target=\\"_blank\\" rel=\\"noopener\\">WhatsApp</a>."; if (sb) sb.disabled = false; }); }, 0);');
+  // страница успеха: разметку даёт overrides/thanks.js
+  const pFaq = "  P.faq = function () {";
+  if (!js.includes(pFaq)) throw new Error("app.js: не нашёл P.faq");
+  js = js.replace(pFaq, '  P.thanks = function () { return window.B79_THANKS_RENDER ? window.B79_THANKS_RENDER("falcon") : ""; };\n' + pFaq);
   return js;
 }
 // на новых страницах Falcon шапка и подвал Тильды включены: в шапке корзина (t706) и скрипты корзины, доставки и оплаты.
@@ -227,7 +236,7 @@ if (SHARED.length && (!ONLY || ONLY.includes("_shared"))) {
   const body = mapJs + SHARED.map((k) => { let js = readFileSync(join(SRC, k), "utf8"); if (k === "assets/app.js") js = patchApp(js);
     const code = /^data\//.test(k) ? js : `if (window.B79_NATIVE) {\n${js}\n}`;
     return `<script data-src="${k}">${code.replace(/<\/script/gi, "<\\/script")}</script>`; }).join("\n") +
-    ["lead-sink.js", "lead-bridge.js"].map((f) => `\n<script data-src="${f}">${readFileSync(join(ROOT, "overrides", f), "utf8")}</script>`).join("");
+    ["lead-sink.js", "lead-bridge.js", "thanks.js"].map((f) => `\n<script data-src="${f}">${readFileSync(join(ROOT, "overrides", f), "utf8")}</script>`).join("");
   const NEWP = Object.values(ROUTES).concat((BLOG.posts || []).map((p) => "/blog/" + p.slug));
   // класс .fb-native включает код HEAD самой страницы (настройки страницы → «HTML-код для вставки внутрь HEAD») — см. settings.json, headCode
   const fontsCss = css(readFileSync(join(SRC, "assets/fonts.css"), "utf8"));

@@ -14,8 +14,8 @@ mkdirSync(OUT, { recursive: true });
 
 // адреса страниц на Тильде: на живом 79bike.ru гарантия остаётся по старому адресу /garant
 const ROUTES = {
-  test: { index: "/", blog: "/blog", warranty: "/warranty", factory: "/factory", instructions: "/instructions" },
-  live: { index: "/", blog: "/blog", warranty: "/garant", factory: "/factory", instructions: "/instructions" },
+  test: { index: "/", blog: "/blog", warranty: "/warranty", factory: "/factory", instructions: "/instructions", spasibo: "/spasibo" },
+  live: { index: "/", blog: "/blog", warranty: "/garant", factory: "/factory", instructions: "/instructions", spasibo: "/spasibo" },
 }[TARGET];
 const ORIGIN = { test: "https://b79-redesign-test.tilda.ws", live: "https://79bike.ru" }[TARGET];
 
@@ -94,7 +94,7 @@ function runtime(page) {
   return `<script data-src="native-runtime">${code}</script>`;
 }
 
-const PAGES = ["factory", "instructions", "warranty", "blog", "index"];
+const PAGES = ["factory", "instructions", "warranty", "blog", "index", "spasibo"];
 const settings = {};
 for (const page of PAGES) {
   const file = `rep/${page}.html`;

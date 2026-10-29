@@ -103,6 +103,20 @@ console.log(`Ссылки Falcon: заглушек заменено ${falconStat
 mkdirSync(join(DIST, "tilda"), { recursive: true });
 cpSync(join(ROOT, "overrides", "lead-sink.js"), join(DIST, "tilda", "lead-sink.js"));
 cpSync(join(ROOT, "overrides", "lead-bridge.js"), join(DIST, "site", "rep", "lead-bridge.js"));
+// Страница успеха /spasibo (решение Михаила 29.10): после подтверждения Тильды форма переходит сюда (overrides/thanks.js).
+// Шапка и подвал — как у страницы «Производство»; содержимое рисует thanks.js по сводке заявки (без персональных данных).
+cpSync(join(ROOT, "overrides", "thanks.js"), join(DIST, "site", "rep", "thanks.js"));
+{
+  let t = readFileSync(join(DIST, "site", "rep", "factory.html"), "utf8");
+  const a = t.indexOf('<main id="main">'), b = t.indexOf("</main>");
+  if (a < 0 || b < 0) { console.error("factory.html: не найден <main> для страницы успеха"); process.exit(1); }
+  t = t.slice(0, a) + '<main id="main"><div id="ty-root"></div></main>\n<script data-ty>document.addEventListener("DOMContentLoaded",function(){var r=document.getElementById("ty-root");if(r&&window.B79_THANKS_RENDER)r.outerHTML=window.B79_THANKS_RENDER("79bike");});</script>' + t.slice(b + 7);
+  t = t.replace(/<title>[^<]*<\/title>/, "<title>Заявка принята — 79BIKE</title>")
+    .replace(/<meta name="description"[^>]*>/, '<meta name="description" content="Заявка принята. Специалист 79BIKE свяжется с вами.">')
+    .replace(/<link rel="canonical"[^>]*>/, '<meta name="robots" content="noindex, nofollow">')
+    .replace('data-page="rep-warranty"', 'data-page="rep-thanks"');
+  writeFileSync(join(DIST, "site", "rep", "spasibo.html"), t);
+}
 {
   const p = join(DIST, "site", "assets", "app.js");
   let s = readFileSync(p, "utf8");
@@ -114,6 +128,8 @@ cpSync(join(ROOT, "overrides", "lead-bridge.js"), join(DIST, "site", "rep", "lea
       if (sb) { sb.disabled = false; sb.removeAttribute("aria-busy"); }
       msg.className = "form-msg";
       if (sent) {
+        var ty = window.B79_THANKS && window.B79_THANKS(form, "79bike");
+        if (ty) { location.href = ty; return; }
         msg.classList.add("is-ok");
         msg.innerHTML = icon("check") + "<span>" + esc(ok) + "</span>";
         form.dispatchEvent(new CustomEvent("demo:submitted", { bubbles: true }));
@@ -132,13 +148,14 @@ cpSync(join(ROOT, "overrides", "lead-bridge.js"), join(DIST, "site", "rep", "lea
   writeFileSync(p, s);
 }
 const LEAD = `<script src="lead-bridge.js?v=${VERSION}"></script>`;
+const THANKS = `<script src="thanks.js?v=${VERSION}"></script>`; // только там, где есть формы (главная) и на самой странице успеха
 
 let htmlCount = 0;
 for (const file of walk(join(DIST, "site"))) {
   if (extname(file) !== ".html") continue;
   let s = readFileSync(file, "utf8");
   if (file.includes(`${join("site", "rep")}`)) {
-    s = s.replace(/<\/body>/i, KINESCOPE + "\n" + LEAD + "\n</body>");
+    s = s.replace(/<\/body>/i, KINESCOPE + "\n" + LEAD + (/(index|spasibo)\.html$/.test(file) ? "\n" + THANKS : "") + "\n</body>");
     if (s.includes(HERO_OLD)) s = s.replace(HERO_OLD, HERO_NEW);
     else if (file.endsWith(join("rep", "index.html"))) { console.error("Не найден выбор ролика первого экрана в index.html"); process.exit(1); }
     s = s.replace(/\s*<p class="dlg__fine">В прототипе заявка никуда не отправляется\.<\/p>/g, "");
