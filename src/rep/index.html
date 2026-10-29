@@ -534,7 +534,18 @@
   .dock .dock__shop{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;justify-content:center;line-height:1.15;padding:6px 16px}
   .dock .dock__shop span{font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
   .dock .dock__shop small{font-size:12px;font-weight:500;opacity:.88}
-  .dock .dock__msgs{right:12px;left:auto}
+  .dock .dock__msgs{right:12px;left:auto;max-width:calc(100vw - 24px)}
+  .dock.is-msgs{z-index:66}
+  .dock__head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .dock__head b{padding:4px 8px}
+  .dock__x{flex:none;width:36px;height:36px;border:0;border-radius:50%;background:rgba(255,255,255,.06);color:#fff;display:grid;place-items:center;cursor:pointer}
+  .dock__x:hover,.dock__x:focus-visible{background:rgba(255,255,255,.14)}
+  .dock__list{display:flex;flex-direction:column;gap:2px}
+  .dock__list[hidden],.dock__ok[hidden]{display:none}
+  .dock__ok{display:flex;flex-direction:column;gap:8px;padding:2px 8px 6px;max-width:280px}
+  .dock__ok p{margin:0 0 4px;font-size:14px;line-height:1.4;color:#fff}
+  .dock .dock__msgs a.dock__go{display:flex;justify-content:center;text-align:center;padding:12px 14px;border-radius:999px;font-size:15px}
+  .dock__back{border:0;background:none;color:var(--mute,#aaa);font:inherit;font-size:14px;padding:8px;cursor:pointer}
   .ina-more{margin-top:14px}
   .ina-more__btn{width:100%;max-width:360px}
   .ina-more__box{margin-top:16px;display:flex;flex-direction:column;gap:18px}
@@ -1025,7 +1036,7 @@ top();document.addEventListener("DOMContentLoaded",top);window.addEventListener(
 
 <!-- нижняя панель на телефоне и планшете: появляется после первого экрана -->
 <div class="dock dock--page is-off" id="dock">
-  <div class="dock__msgs" id="dock-msgs" hidden><b>Написать нам</b><small style="display:block;max-width:240px;padding:0 8px 6px;font-size:12px;line-height:1.35;color:var(--mute,#aaa)">Помощь владельцам — покупателям Falcon-Bike и официальным дилерам. Купили у другого продавца — обратитесь к нему.</small><a data-l="telegram" target="_blank" rel="noopener">Telegram</a><a data-l="whatsapp" target="_blank" rel="noopener">WhatsApp</a><a href="https://vk.me/79bike" target="_blank" rel="noopener">VK Мессенджер</a><a href="tel:+79999005588">Позвонить: +7 (999) 900-55-88</a></div>
+  <div class="dock__msgs" id="dock-msgs" role="dialog" aria-label="Написать нам" hidden><div class="dock__head"><b>Написать нам</b><button type="button" class="dock__x" id="dock-x" aria-label="Закрыть"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></div><div class="dock__list" id="dock-list"><a data-l="telegram" data-go="Перейти в Telegram" target="_blank" rel="noopener">Telegram</a><a data-l="whatsapp" data-go="Перейти в WhatsApp" target="_blank" rel="noopener">WhatsApp</a><a href="https://vk.me/79bike" data-go="Перейти в VK Мессенджер" target="_blank" rel="noopener">VK Мессенджер</a><a href="tel:+79999005588" data-go="Позвонить: +7 (999) 900-55-88" data-kind="call">Позвонить: +7 (999) 900-55-88</a></div><div class="dock__ok" id="dock-ok" hidden><p id="dock-ok-t">Это чат для действующих и потенциальных дилеров, а также для клиентов фирменного магазина Falcon-Bike.</p><a class="btn btn--main dock__go" id="dock-go" target="_blank" rel="noopener">Перейти</a><button type="button" class="dock__back" id="dock-back">Назад</button></div></div>
   <a class="btn btn--main dock__shop" href="https://falcon-bike.ru/"><span>Фирменный магазин 79BIKE</span><small>Доставка по всей России</small></a>
   <button type="button" class="dock__msg" id="dock-msg" aria-label="Написать в мессенджер" aria-expanded="false" aria-controls="dock-msgs"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.8-.8L3 20.5l1.4-4.6A8 8 0 0 1 3 11.5 8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5Z"/></svg></button>
 </div>
@@ -1843,7 +1854,7 @@ function pos(){var d=document.querySelector("#dock,.dock,.mbar,.rbar,.mob-cta");
 function on(){b.classList.toggle("is-on",scrollY>innerHeight*1.5);}
 var t;addEventListener("scroll",function(){if(!t)t=requestAnimationFrame(function(){t=0;on();});},{passive:true});addEventListener("resize",pos);pos();on();setTimeout(pos,1500);
 b.addEventListener("click",function(){var r=matchMedia("(prefers-reduced-motion: reduce)").matches;scrollTo({top:0,behavior:r?"auto":"smooth"});});})();</script>
-<script data-dockmsg>(function(){var b=document.getElementById("dock-msg"),p=document.getElementById("dock-msgs");if(!b||!p)return;function fill(){try{var L=(window.UI&&UI.links)||{};p.querySelectorAll("a[data-l]").forEach(function(a){a.href=L[a.getAttribute("data-l")]||"#contacts";});}catch(e){}}function set(o){if(o)fill();p.hidden=!o;b.setAttribute("aria-expanded",o?"true":"false");}b.addEventListener("click",function(e){e.stopPropagation();set(p.hidden);});document.addEventListener("click",function(e){if(!p.hidden&&!p.contains(e.target))set(false);});document.addEventListener("keydown",function(e){if(e.key==="Escape")set(false);});})();</script>
+<script data-dockmsg>(function(){var $=function(i){return document.getElementById(i)},b=$("dock-msg"),p=$("dock-msgs"),list=$("dock-list"),ok=$("dock-ok"),go=$("dock-go"),okT=$("dock-ok-t");if(!b||!p)return;var CHAT="Это чат для действующих и потенциальных дилеров, а также для клиентов фирменного магазина Falcon-Bike.",CALL="Эта линия — для действующих и потенциальных дилеров, а также для клиентов фирменного магазина Falcon-Bike.";function fill(){try{var L=(window.UI&&UI.links)||{};p.querySelectorAll("a[data-l]").forEach(function(a){a.href=L[a.getAttribute("data-l")]||"#contacts";});}catch(e){}}function step(a){var call=a&&a.getAttribute("data-kind")==="call";if(list)list.hidden=!!a;if(ok)ok.hidden=!a;if(a&&go){go.href=a.href;go.textContent=a.getAttribute("data-go")||a.textContent;if(call){go.removeAttribute("target");go.removeAttribute("rel");}else{go.target="_blank";go.rel="noopener";}if(okT)okT.textContent=call?CALL:CHAT;go.focus();}}function set(o){if(o)fill();step(null);p.hidden=!o;b.setAttribute("aria-expanded",o?"true":"false");var d=document.getElementById("dock");if(d)d.classList.toggle("is-msgs",!!o);}b.addEventListener("click",function(e){e.stopPropagation();set(p.hidden);});if(list)list.addEventListener("click",function(e){var a=e.target.closest("a");if(!a)return;e.preventDefault();step(a);});if(go)go.addEventListener("click",function(){setTimeout(function(){set(false);},0);});var x=$("dock-x");if(x)x.addEventListener("click",function(e){e.stopPropagation();set(false);});var bk=$("dock-back");if(bk)bk.addEventListener("click",function(e){e.stopPropagation();step(null);});document.addEventListener("click",function(e){if(!p.hidden&&!p.contains(e.target))set(false);});document.addEventListener("keydown",function(e){if(e.key==="Escape")set(false);});})();</script>
 <script data-tel>/* 26.10.2026: звонок в окне-предпросмотре прототипа. Внутри окна просмотра (iframe) браузер может блокировать tel:,
    поэтому показываем лист с номером: «Позвонить» (target=_top), «Скопировать номер», мессенджеры. На настоящем сайте ссылка работает как обычно. */
 (function () {
