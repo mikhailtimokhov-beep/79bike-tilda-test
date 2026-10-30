@@ -172,11 +172,15 @@ for (const [w, h] of [[390, 844], [1440, 900]]) {
     await page.route(/kinescope\.io|youtube\.com/, (r) => r.fulfill({ status: 200, contentType: "text/html", body: "<html><body>stub</body></html>" }));
     await page.goto(BASE + "site/rep/factory.html", { waitUntil: "load" });
     await page.locator("button:has-text('Отказаться')").first().click({ timeout: 2000 }).catch(() => {});
-    const own = page.locator('a[href*="EVj42tyAZZk"]').first();
+    /* 30.10 («Сайты»): на «Производстве» свои ролики теперь адаптированные (vid/*.mp4, ждут загрузки в Kinescope «Переносом»);
+       проверяем первый ролик из kinescope.json, который есть на странице, — без него проверку плеера пропускаем с пометкой */
+    const ownId = await page.evaluate((ids) => ids.find((id) => document.querySelector('a[href*="' + id + '"]')) || "", Object.keys(KMAP).filter((k) => k !== "_comment"));
+    if (!ownId) { rec(`[Kinescope ${w}px] на «Производстве» нет роликов из kinescope.json — проверка плеера пропущена (ждёт загрузки новых роликов)`, true, "нет совпадений"); await ctx.close(); continue; }
+    const own = page.locator('a[href*="' + ownId + '"]').first();
     await own.scrollIntoViewIfNeeded(); await own.click();
     await page.waitForTimeout(400);
     const st = await page.evaluate(() => { const d = document.querySelector(".kdlg"); const f = d && d.querySelector("iframe"); const b = d && d.querySelector(".kdlg__box").getBoundingClientRect(); return { open: !!d && d.classList.contains("is-open"), src: f ? f.src : "", w: b ? Math.round(b.width) : 0, sw: document.documentElement.scrollWidth - innerWidth }; });
-    rec(`[Kinescope ${w}px] свой ролик открывает плеер на сайте`, st.open && st.src.includes(KMAP.EVj42tyAZZk.k), st.src.replace(/\?.*/, ""));
+    rec(`[Kinescope ${w}px] свой ролик открывает плеер на сайте`, st.open && st.src.includes(KMAP[ownId].k), st.src.replace(/\?.*/, ""));
     rec(`[Kinescope ${w}px] окно плеера помещается в экран`, st.w > 0 && st.w <= w && st.sw <= 1, `ширина ${st.w}`);
     await page.keyboard.press("Escape"); await page.waitForTimeout(200);
     const closed = await page.evaluate(() => !document.querySelector(".kdlg.is-open") && !document.querySelector(".kdlg iframe"));
