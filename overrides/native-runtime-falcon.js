@@ -26,15 +26,18 @@
     if (el.nodeType !== 1) return;
     ["src", "poster", "data-src"].forEach(function (a) { var v = el.getAttribute(a); if (v && !SKIP.test(v)) { var n = window.B79_ASSET(v); if (n !== v) el.setAttribute(a, n); } });
     ["srcset", "data-srcset"].forEach(function (a) { var v = el.getAttribute(a); if (v && /\.(webp|jpe?g|png|svg)/.test(v) && !/tildacdn/.test(v)) { var n = fixSet(v); if (n !== v) el.setAttribute(a, n); } });
+    if (el.tagName === "image" || el.tagName === "IMAGE") { // картинки внутри SVG (примерка по росту, габариты): href / xlink:href
+      ["href", "xlink:href"].forEach(function (a) { var v = el.getAttribute(a); if (v && !SKIP.test(v)) { var n = window.B79_ASSET(v); if (n !== v) { if (a === "href") el.setAttribute("href", n); else el.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", n); } } });
+    }
     if (el.tagName === "A") { var h = el.getAttribute("href"); if (h && !SKIP.test(h) && /\.html([?#]|$)/.test(h)) { var n2 = window.B79_ASSET(h); if (n2 !== h) el.setAttribute("href", n2); } }
     if (el.style && el.style.backgroundImage && /url\(["']?(?!https?:|data:)/.test(el.style.backgroundImage)) {
       el.style.backgroundImage = el.style.backgroundImage.replace(/url\((["']?)([^"')]+)\1\)/g, function (a, q, u) { return 'url("' + window.B79_ASSET(u) + '")'; });
     }
   }
-  function walk(n) { fix(n); if (n.querySelectorAll) Array.prototype.forEach.call(n.querySelectorAll("img,source,video,a,[data-src],[data-srcset],[style*=url]"), fix); }
+  function walk(n) { fix(n); if (n.querySelectorAll) Array.prototype.forEach.call(n.querySelectorAll("img,source,video,a,image,[data-src],[data-srcset],[style*=url]"), fix); }
   new MutationObserver(function (ms) {
     ms.forEach(function (m) { if (m.type === "attributes") fix(m.target); else Array.prototype.forEach.call(m.addedNodes, walk); });
-  }).observe(document.documentElement, { subtree: true, childList: true, attributes: true, attributeFilter: ["src", "srcset", "poster", "data-src", "data-srcset", "href", "style"] });
+  }).observe(document.documentElement, { subtree: true, childList: true, attributes: true, attributeFilter: ["src", "srcset", "poster", "data-src", "data-srcset", "href", "xlink:href", "style"] });
   document.addEventListener("DOMContentLoaded", function () { walk(document.body); });
   for (var a in P) document.body.setAttribute(a, P[a]);
   document.body.classList.add("b79-native", "fb-native"); document.documentElement.classList.add("fb-native");
