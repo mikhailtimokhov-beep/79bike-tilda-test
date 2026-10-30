@@ -285,7 +285,7 @@ window.REP_BLOG = {
     <tr><td>Falcon Lynx Trail</td><td>10 кВт</td><td>405 Н·м</td><td>90 км/ч</td></tr>
     <tr><td>Falcon GT</td><td>17 кВт</td><td>610 Н·м</td><td>95 км/ч</td></tr>
     <tr><td>Falcon Lynx X (2027)</td><td>26 кВт</td><td>550 Н·м</td><td>100 км/ч</td></tr>
-    <tr><td>Y-Volt Surge V</td><td>35 кВт</td><td>948 Н·м (на колесе)</td><td>110 км/ч</td></tr>
+    <tr><td>Y-Volt Surge V</td><td>35 кВт</td><td>948 Н·м (на колесе)</td><td>115 км/ч</td></tr>
   </tbody>
 </table>
 <p>У Lynx Trail мотор с редуктором — это ключевая особенность модели. У GT, Pro и Lynx Trail двигатель с подсветкой, у Lynx X — контурная подсветка Star Ring. У Lynx X производитель указывает тип мотора — PMSM, синхронный двигатель с постоянными магнитами.</p>

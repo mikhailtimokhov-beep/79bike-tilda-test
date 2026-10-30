@@ -263,7 +263,7 @@ window.MODELS = [
     specs: {
       powerKw: 35,              // пиковая, 47,6 л. с.
       ratedKw: 15,              // номинальная
-      speedKmh: 110,
+      speedKmh: 115, // решение Михаила 28.10
       torqueNm: 948,            // крутящий момент на колесе (руководство: Torque (wheel))
       cells: "Samsung 50S",      // тройной литий (NMC)
       voltage: 97,

@@ -7,9 +7,15 @@
 window.PHOTOS = {
   "gt": [
     { id: "black", frame: "Чёрный", accent: null, label: "Exclusive Black (эксклюзивный чёрный)", paint: ["black"], images: [
-      { src: "assets/photos/gt-black-1.webp", view: "side" } ] },
+      { src: "assets/photos/gt-black-s1.webp", view: "side" },
+      { src: "assets/photos/gt-black-s2.webp", view: "front34" },
+      { src: "assets/photos/gt-black-s3.webp", view: "rear34" },
+      { src: "assets/photos/gt-black-s4.webp", view: "front" } ] },
     { id: "white", frame: "Белый", accent: null, label: "Exclusive White (эксклюзивный белый)", paint: ["white"], images: [
-      { src: "assets/photos/gt-white-1.webp", view: "side" } ] }
+      { src: "assets/photos/gt-white-s1.webp", view: "side" },
+      { src: "assets/photos/gt-white-s2.webp", view: "front34" },
+      { src: "assets/photos/gt-white-s3.webp", view: "rear34" },
+      { src: "assets/photos/gt-white-s4.webp", view: "front" } ] }
   ],
   "pro": [
     { id: "black-violet", frame: "Чёрный", accent: "Фиолетовый", label: "Black Purple (чёрный с фиолетовым)", paint: ["black", "violet"], images: [
