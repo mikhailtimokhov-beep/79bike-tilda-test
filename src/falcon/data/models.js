@@ -54,7 +54,7 @@ window.MODELS = [
     },
     colors: { frame: ["Чёрный", "Белый"], accents: [], names: ["Exclusive Black (эксклюзивный чёрный)", "Exclusive White (эксклюзивный белый)"] },
     price: 372000,
-    oldPrice: 420000,
+    oldPrice: 420000, // 30.10: зачёркнутая = прежняя цена продажи на falcon-bike.ru до 29.10 (решение Михаила «логично для каждой модели»)
     flags: []
   },
   {
@@ -99,7 +99,7 @@ window.MODELS = [
     // к чёрной раме — ещё полностью чёрный «Black Edition (чёрная серия)», бывш. «Эксклюзив Black» (25.10: серые вставки = тот же цвет, объединены)
     colors: { frame: ["Чёрный", "Серебристый"], accents: ["Фиолетовый", "Жёлтый", "Красный"], extra: ["Black Edition (чёрная серия)"], names: ["Black Purple (чёрный с фиолетовым)", "Black Red (чёрный с красным)", "Black Yellow (чёрный с жёлтым)", "Black Edition (чёрная серия)", "Silver Purple (серебристый с фиолетовым)", "Silver Red (серебристый с красным)", "Silver Yellow (серебристый с жёлтым)"] },
     price: 310000,
-    oldPrice: 400000,
+    oldPrice: 348000, // 30.10: прежняя цена продажи Pro на falcon-bike.ru (страницы цветов) до 29.10
     flags: []
   },
   {
@@ -144,7 +144,7 @@ window.MODELS = [
     // 79bikeofficial.com: Black/Gold, Black/Purple, Black/Yellow
     colors: { frame: ["Чёрный"], accents: ["Фиолетовый", "Золотой", "Жёлтый"], names: ["Black Purple (чёрный с фиолетовым)", "Black Gold (чёрный с золотым)", "Black Yellow (чёрный с жёлтым)"] },
     price: 355000,
-    oldPrice: 390000,
+    oldPrice: 360000, // 30.10: прежняя цена продажи Lynx Trail на falcon-bike.ru до 29.10
     flags: []
   },
   {
@@ -188,7 +188,7 @@ window.MODELS = [
     },
     colors: { frame: ["Чёрный"], accents: [], names: ["Black Edition (чёрная серия)"] },
     price: 280000,
-    oldPrice: 330000,
+    oldPrice: null, // 30.10: цена Lite не менялась (280 000 до и после 29.10) — зачёркнутой нет
     flags: [
       "Тормоза: в таблице два значения — принято перед 220, зад 203"
     ]

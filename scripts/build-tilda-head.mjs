@@ -26,6 +26,22 @@ const loader = `(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[
     ${stub}`;
 js = js.replace(stub, loader);
 
+// 30.10.2026 (Михаил): «Метрика сразу должна включаться без согласия» — для обоих сайтов.
+// Метрика грузится при открытии страницы; баннер — уведомление с одной кнопкой «Понятно», текст без обещания «только с согласия».
+const ALWAYS = process.env.METRIKA_AFTER_CONSENT !== "1";
+if (ALWAYS) {
+  const rep = (a, b) => { if (!js.includes(a)) throw new Error("cookie-banner.js изменился: " + a.slice(0, 50)); js = js.replace(a, b); };
+  rep('if (rec && rec.a) loadMetrika();      // согласие уже дано — Метрика грузится сразу, баннер не показываем\n    else if (!rec) show();', 'loadMetrika(); if (!rec) show();');
+  rep(`'Аналитические (Яндекс Метрика) помогают понять, какие страницы полезны, — включим их только с вашего согласия. ' +
+      'Нажимая «Принять», вы соглашаетесь на обработку ' + esc(CFG.operator) + ' данных cookie для статистики посещений. ' +
+      'Отказ не влияет на работу сайта. Подробнее`, `'Аналитические (Яндекс Метрика) помогают понять, какие страницы полезны. ' +
+      'Продолжая пользоваться сайтом, вы соглашаетесь на обработку ' + esc(CFG.operator) + ' данных cookie для статистики посещений. Подробнее`);
+  rep(`'<p class="cb__text cb__text--short">Используем cookie. Яндекс Метрику включим только с вашего согласия — ' +
+      'отказ не влияет на работу сайта. <a href="' + p + '">Подробнее</a></p>'`, `'<p class="cb__text cb__text--short">Используем cookie и Яндекс Метрику для статистики посещений. <a href="' + p + '">Подробнее</a></p>'`);
+  rep(`'<button type="button" class="cb__btn cb__btn--no" data-cb="no">Отказаться</button>' +
+      '<button type="button" class="cb__btn cb__btn--yes" data-cb="yes">Принять</button>'`, `'<button type="button" class="cb__btn cb__btn--yes" data-cb="yes">Понятно</button>'`);
+}
+
 // Цель «Заявка с сайта»: успешная отправка любой формы Тильды (в т. ч. скрытой формы, через которую уходят заявки новых страниц).
 const goals = `(function(){function ok(e){var f=e&&e.target,id=f&&(f.id||(f.closest&&f.closest(".t-rec")||{}).id)||"";try{window.CookieConsent&&window.CookieConsent.goal("form_submit",{form:id})}catch(x){}}
 document.addEventListener("tildaform:aftersuccess",ok,true);
@@ -36,7 +52,7 @@ const cfg = `window.COOKIE_BANNER_CONFIG={policyUrl:"${POLICY}",operator:"ИП �
 const jsMin = (await terser(cfg + "\n" + js + "\n" + goals, { compress: { passes: 1 }, mangle: true, format: { comments: false } })).code;
 const cssMin = csso(readFileSync(join(ROOT, "src/rep/cookie-banner.css"), "utf8"), { restructure: false }).css;
 
-const out = `<!-- ${FALCON ? "FALCON-BIKE" : "79BIKE"}: баннер cookie и Яндекс Метрика (счётчик ${METRIKA_ID}) только после согласия. Собрано scripts/build-tilda-head.mjs, ${new Date().toISOString().slice(0, 10)}. Не править вручную — правки в репозитории 79bike-tilda-test. Прежний код (счётчик 101107975 без согласия) — overrides/tilda-head-old-2910.html -->
+const out = `<!-- ${FALCON ? "FALCON-BIKE" : "79BIKE"}: баннер cookie и Яндекс Метрика (счётчик ${METRIKA_ID}) ${ALWAYS ? "сразу при открытии страницы, баннер — уведомление" : "только после согласия"}. Собрано scripts/build-tilda-head.mjs, ${new Date().toISOString().slice(0, 10)}. Не править вручную — правки в репозитории 79bike-tilda-test. Прежний код (счётчик 101107975 без согласия) — overrides/tilda-head-old-2910.html -->
 <style data-b79="cookie-banner">${cssMin}</style>
 <script data-b79="cookie-banner">${jsMin.replace(/<\/script/gi, "<\\/script")}</script>
 `;
