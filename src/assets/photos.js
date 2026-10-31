@@ -68,8 +68,10 @@ window.PHOTOS = {
   ],
   "lynx-x": [
     { id: "black-gold", frame: "Чёрный", accent: "Золотой", label: "Black Gold (чёрный с золотым)", paint: ["black", "gold"],
-      flag: "Фото из спецификации производителя: предсерийный образец, серийный цвет — золотой", images: [
-      { src: "assets/photos/lynx-x-black-1.webp", view: "side" } ] }
+      images: [ /* 30.10: студийные фото нового Lynx X от Михаила */
+      { src: "assets/photos/lynx-x-black-1.webp", view: "side" },
+      { src: "assets/photos/lynx-x-black-2.webp", view: "side" },
+      { src: "assets/photos/lynx-x-black-3.webp", view: "front34" } ] }
   ],
   "surge-v": [
     { id: "white", frame: "Белый графит", accent: null, label: "Белый графит", paint: ["white"], images: [

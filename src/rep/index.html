@@ -14,7 +14,7 @@
      Данные (модели, фото, тексты) и демо-формы — из общих ../assets/*.js, как раньше. -->
 <link rel="stylesheet" href="rep.css?v=20261029a">
 <script src="../assets/models.js?v=20261029b"></script>
-<script src="../assets/photos.js?v=20261029c"></script>
+<script src="../assets/photos.js?v=20261030a"></script>
 <script src="../assets/content.js?v=20261029b"></script>
 <script src="../assets/videos.js?v=20261023"></script>
 <script src="blog.js?v=20261029b"></script>
@@ -1073,8 +1073,8 @@ document.addEventListener("DOMContentLoaded", function () {
   function shopUrl(slug) { return SHOP + (LIVE[slug] || ""); }
   /* вырезанные байки без фона (те же файлы, что на falcon-bike.ru), все развёрнуты вправо;
      высота — в % от самой высокой модели: масштаб по реальной длине и высоте (как CUT_H в pub3/assets/app.js) */
-  var CUT_H = { "gt": 93.6, "pro": 90.5, "lynx-trail": 92.0, "light": 91.0, "lynx-x": 100.0, "surge-v": 96.4 };
-  function cut(slug) { return "../assets/photos/cut/" + slug + ".webp" + "?v=4"; }
+  var CUT_H = { "gt": 93.6, "pro": 90.5, "lynx-trail": 92.0, "light": 91.0, "lynx-x": 92.0, "surge-v": 96.4 };
+  function cut(slug) { return "../assets/photos/cut/" + slug + ".webp" + (slug === "lynx-x" ? "?v=5" : "?v=4"); }
   var SELECTABLE = ["gt", "pro", "lynx-trail", "light", "surge-v", "lynx-x"];
   var ORDER = UI.models.map(function (m) { return m.slug; });
   function nb(t) { return String(t).replace(/Y-Volt/g, "Y‑Volt"); }
