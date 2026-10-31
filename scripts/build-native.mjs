@@ -153,7 +153,10 @@ for (const page of PAGES) {
     body = body.replace(vre, `<div class="hv__video hv__kin" id="hv-kin" aria-hidden="true" style="overflow:hidden;background-image:url('hero/poster.jpg')"></div>` +
       `<script>(function(){var c=${cfg},w=document.getElementById("hv-kin");if(!w)return;var p=window.matchMedia&&matchMedia("(max-width: 600px)").matches,a=p?c.pa:c.da,f=document.createElement("iframe");` +
       `f.src="https://kinescope.io/embed/"+(p?c.p:c.d)+"?background=1";f.title="Видео";f.setAttribute("allow","autoplay; fullscreen; picture-in-picture; encrypted-media");f.setAttribute("tabindex","-1");f.setAttribute("frameborder","0");` +
-      `f.style.cssText="position:absolute;left:50%;top:50%;border:0;pointer-events:none;transform:translate(-50%,-50%)";w.appendChild(f);` +
+      `f.style.cssText="position:absolute;left:50%;top:50%;border:0;pointer-events:none;transform:translate(-50%,-50%)";` +
+      // 01.11: «тормозит главная» — плеер подключаем после загрузки страницы и выключаем, когда первый экран ушёл из вида
+      `var on=false;function show(v){if(v===on)return;on=v;if(v)w.appendChild(f);else if(f.parentNode)f.parentNode.removeChild(f)}function start(){show(true);if(window.IntersectionObserver)new IntersectionObserver(function(e){show(e[0].isIntersecting)},{rootMargin:"100px"}).observe(w)}` +
+      `function later(){setTimeout(function(){window.requestIdleCallback?requestIdleCallback(start,{timeout:2500}):start()},600)}if(document.readyState==="complete")later();else addEventListener("load",later);` +
       `function fit(){var W=w.clientWidth,H=w.clientHeight;if(!W||!H)return;if(W/H>a){f.style.width=W+"px";f.style.height=Math.ceil(W/a)+"px"}else{f.style.height=H+"px";f.style.width=Math.ceil(H*a)+"px"}}fit();addEventListener("resize",fit);if(window.ResizeObserver)new ResizeObserver(fit).observe(w)})();</script>`);
     // кнопка звука не нужна: фоновый режим Kinescope всегда без звука
     body = body.replace(/<button type="button" class="hv__snd"[\s\S]*?<\/button>/, "");
