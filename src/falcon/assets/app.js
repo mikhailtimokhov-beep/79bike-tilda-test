@@ -229,7 +229,7 @@
     if (!list || !list.length) return "";
     return '<div class="qa-vids">' + list.map(function (v) {
       var emb = vEmbed(v.url || ""), pl = vPlat(v);
-      return '<a class="vcard qa-vid" href="' + esc(v.url) + '" data-embed="' + esc(emb) + '" data-vt="' + esc(v.title) + '" data-vp="' + pl + '" aria-label="' + esc(v.title + (VSRC[pl] ? " — " + VSRC[pl] : "") + ", " + v.duration + " (смотреть здесь)") + '"><span class="qa-vid__pic" style="background-image:url(' + esc(v.sprite) + ');background-position:' + esc(v.pos) + '"><span class="vcard__play" aria-hidden="true">' + ICON.play + '</span><span class="vcard__dur" aria-hidden="true">' + esc(v.duration) + '</span></span><span class="qa-vid__t">' + esc(v.title) + "</span></a>";
+      return '<a class="vcard qa-vid" href="' + esc(v.url) + '" data-embed="' + esc(emb) + '" data-vt="' + esc(v.title) + '" data-vp="' + pl + '"' + (v.vertical ? ' data-vr="1"' : "") + ' aria-label="' + esc(v.title + (VSRC[pl] ? " — " + VSRC[pl] : "") + ", " + v.duration + " (смотреть здесь)") + '"><span class="qa-vid__pic" style="background-image:url(' + esc(v.sprite) + ');background-position:' + esc(v.pos) + '"><span class="vcard__play" aria-hidden="true">' + ICON.play + '</span><span class="vcard__dur" aria-hidden="true">' + esc(v.duration) + '</span></span><span class="qa-vid__t">' + esc(v.title) + "</span></a>";
     }).join("") + "</div>";
   }
   function faqHtml(list, openFirst) {
@@ -2108,7 +2108,7 @@ b.addEventListener("click",function(){var r=matchMedia("(prefers-reduced-motion:
     function open(a) {
       if (!dlg) build();
       lastFocus = a; ttl.textContent = a.dataset.vt || "Видеообзор"; dlg.dataset.src = a.dataset.embed; dlg.dataset.p = a.dataset.vp;
-      dlg.hidden = false; document.body.style.overflow = "hidden";
+      dlg.classList.toggle("vmodal--v", a.dataset.vr === "1"); /* 01.11: вертикальный ролик */ dlg.hidden = false; document.body.style.overflow = "hidden";
       play(a.dataset.embed, a.dataset.vp);
       dlg.querySelector(".vmodal__x").focus();
     }

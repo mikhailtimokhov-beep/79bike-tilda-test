@@ -846,6 +846,7 @@ img.is-studio{filter:brightness(1.17) contrast(1.04)}
 .vmodal__x:hover{background:#7658F5}
 .vmodal__frame{position:relative;aspect-ratio:16/9;background:#000}
 .vmodal__frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vmodal--v .vmodal__box{width:min(100%,calc((100dvh - 96px)*9/16),484px)}.vmodal--v .vmodal__frame{aspect-ratio:9/16}
 .vmodal__end{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:20px;background:radial-gradient(circle at 50% 120%,rgba(118,88,245,.45),#000 70%)}
 .vmodal__end[hidden]{display:none}
 .vmodal__end p{margin:0;font-size:24px;font-weight:800}
