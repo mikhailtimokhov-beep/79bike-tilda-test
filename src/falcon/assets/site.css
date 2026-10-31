@@ -1802,3 +1802,6 @@ a[href^="mailto:"],a[href^="http"]{overflow-wrap:anywhere}
 @media (max-width:420px){.qa-vids{grid-template-columns:1fr}}
 .qa>details{scroll-margin-top:96px}
 .doc-img img{display:block;max-width:100%;height:auto;border-radius:16px;background:#fff}.doc-btns{display:flex;flex-wrap:wrap;gap:10px}
+
+/* 01.11: ссылка на обзоры модели для клиента */
+.vshare{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:0 0 18px;font-size:14px;color:var(--muted,#9b9bab)}.vshare a{color:#a996ff;word-break:break-all}#vtabs{scroll-margin-top:96px}.vshare__b{min-height:40px;padding:8px 16px;font-size:14px}

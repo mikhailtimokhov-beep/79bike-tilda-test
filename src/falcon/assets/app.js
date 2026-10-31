@@ -2035,8 +2035,27 @@ b.addEventListener("click",function(){var r=matchMedia("(prefers-reduced-motion:
       document.querySelectorAll("#vtabs button").forEach(function (b) { b.setAttribute("aria-selected", b.dataset.k === k); });
       $("vlist").innerHTML = videoCards(vItems(pin[k] || [bySlug(k).name + ": обзор"], k)) + '<p class="note">Ролики открываются в новой вкладке на VK Видео или YouTube. Новые видео — на нашем канале в RUTUBE.</p>';
     };
-    $("vtabs").addEventListener("click", function (e) { var b = e.target.closest("button"); if (b) vshow(b.dataset.k); });
-    vshow(ORDER[0]);
+    /* 01.11 (Михаил): у каждой модели своя ссылка для клиента — /video#lynx-x и т. п. */
+    var VAL = { lite: "light", "falcon-lite": "light", "falcon-pro": "pro", falcongt: "gt", "falcon-gt": "gt", lynx: "lynx-trail", trail: "lynx-trail", lynxx: "lynx-x", surge: "surge-v", surgev: "surge-v" };
+    var vkey = function () { var h = decodeURIComponent((location.hash || "").slice(1)).toLowerCase(); h = VAL[h] || h; return ORDER.indexOf(h) >= 0 ? h : ""; };
+    var vshow0 = vshow;
+    vshow = function (k, push) {
+      vshow0(k);
+      var url = location.href.split("#")[0] + "#" + k, nice = location.host ? location.host + location.pathname.replace(/\.html$/, "") + "#" + k : url;
+      $("vlist").insertAdjacentHTML("afterbegin", '<p class="vshare">Ссылка на обзоры ' + esc(SHORT[k]) + ' для клиента: <a href="#' + k + '">' + esc(nice) + '</a> <button type="button" class="btn btn--ghost btn--sm vshare__b" data-url="' + esc(url) + '">Скопировать ссылку</button></p>');
+      if (push && history.replaceState) history.replaceState(null, "", "#" + k);
+    };
+    $("vtabs").addEventListener("click", function (e) { var b = e.target.closest("button"); if (b) vshow(b.dataset.k, true); });
+    $("vlist").addEventListener("click", function (e) {
+      var b = e.target.closest(".vshare__b"); if (!b) return;
+      var done = function () { b.textContent = "Ссылка скопирована"; setTimeout(function () { b.textContent = "Скопировать ссылку"; }, 2000); };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(b.dataset.url).then(done, function () { prompt("Скопируйте ссылку:", b.dataset.url); });
+      else prompt("Скопируйте ссылку:", b.dataset.url);
+    });
+    window.addEventListener("hashchange", function () { var k = vkey(); if (k) vshow(k); });
+    var k0 = vkey();
+    vshow(k0 || ORDER[0]);
+    if (k0) setTimeout(function () { var t = $("vtabs"); if (t) t.scrollIntoView({ block: "start" }); var b = t && t.querySelector('[data-k="' + k0 + '"]'); if (b && b.scrollIntoView) b.scrollIntoView({ block: "nearest", inline: "center" }); }, 300);
   }
 
 
