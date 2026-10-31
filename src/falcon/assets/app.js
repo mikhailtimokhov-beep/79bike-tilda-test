@@ -238,7 +238,7 @@
       var link = f.link ? ' <a href="' + esc(f.link.href) + '" target="_blank" rel="noopener">' + esc(f.link.text) + "</a>" : "";
       var body = f.blocks ? '<div class="qa__blocks">' + f.blocks.map(function (b) { return '<div class="qa__blk"><p class="qa__bh">' + esc(b.h) + "</p><p>" + linkModels(esc(b.t), cur) + (b.link ? ' <a href="' + esc(b.link.href) + '">' + esc(b.link.text) + "</a>" : "") + "</p></div>"; }).join("") + "</div>" + (link ? "<p>" + link.trim() + "</p>" : "")
         : "<p>" + linkModels(esc(f.a), cur) + link + "</p>";
-      return "<details" + (openFirst && i === 0 ? " open" : "") + "><summary>" + esc(f.q) + '<span aria-hidden="true">' + ICON.plus + '</span></summary><div class="qa__a">' + body + faqVids(f.videos) + faqCmp(f.q) + faqRange(f.q) + "</div></details>";
+      return "<details" + (f.id ? ' id="' + esc(f.id) + '"' : "") + (openFirst && i === 0 ? " open" : "") + "><summary>" + esc(f.q) + '<span aria-hidden="true">' + ICON.plus + '</span></summary><div class="qa__a">' + body + faqVids(f.videos) + faqCmp(f.q) + faqRange(f.q) + "</div></details>";
     }).join("") + "</div>";
   }
   function radios(name, legend, opts) {
@@ -282,6 +282,7 @@
   function vEmbed(u) {
     var m;
     if (/\.mp4(\?|$)/.test(u)) return u;
+    if ((m = u.match(/kinescope\.io\/(?:embed\/)?([\w-]{10,})/))) return "https://kinescope.io/embed/" + m[1] + "?autoplay=1"; /* 31.10: свои ролики в Kinescope */
     if ((m = u.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([\w-]{11})/))) return "https://www.youtube-nocookie.com/embed/" + m[1] + "?autoplay=1&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&fs=1&enablejsapi=1";
     if ((m = u.match(/video(-?\d+)_(\d+)/))) return "https://vkvideo.ru/video_ext.php?oid=" + m[1] + "&id=" + m[2] + "&hd=2&autoplay=1&js_api=1";
     if ((m = u.match(/rutube\.ru\/video\/(\w+)/))) return "https://rutube.ru/play/embed/" + m[1] + "?autoplay=1";
@@ -2292,4 +2293,16 @@ b.addEventListener("click",function(){var r=matchMedia("(prefers-reduced-motion:
   });
   document.addEventListener("play", function (e) { if (e.target.matches && e.target.matches("video[data-hls]")) attach(e.target); }, true);
   document.addEventListener("click", function (e) { var v = e.target.closest && e.target.closest(".asm__v"); if (v) attach(v.querySelector("video")); }, true);
+})();
+
+/* 31.10.2026: прямая ссылка на вопрос (faq.html#lynx-oil, страница модели#lynx-oil) — вопрос раскрывается и прокручивается к нему */
+(function () {
+  function go() {
+    var h = ""; try { h = decodeURIComponent((location.hash || "").slice(1)); } catch (e) { return; }
+    if (!h || !/^[\w-]+$/.test(h)) return;
+    var d = document.getElementById(h); if (!d || d.tagName !== "DETAILS") return;
+    d.open = true; setTimeout(function () { d.scrollIntoView({ block: "start" }); }, 80);
+  }
+  window.addEventListener("hashchange", go);
+  if (document.readyState === "complete") setTimeout(go, 300); else window.addEventListener("load", function () { setTimeout(go, 300); });
 })();
