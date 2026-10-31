@@ -339,7 +339,7 @@
   .rep-blog__fine{margin-top:14px;font-size:13px;color:var(--mute);line-height:1.5}
   /* частые вопросы */
   .rfaq{display:flex;flex-direction:column;gap:8px;max-width:900px}
-  .rfaq__it{border-radius:var(--r-md);background:var(--panel)}
+  .rfaq__it{border-radius:var(--r-md);background:var(--panel);scroll-margin-top:96px}
   .rfaq__it summary{display:flex;justify-content:space-between;gap:16px;align-items:center;min-height:56px;padding:12px 18px;cursor:pointer;font-weight:700;list-style:none}
   .rfaq__it summary::-webkit-details-marker{display:none}
   .rfaq__it summary::after{content:"+";font-size:22px;color:var(--accent-ink);flex:none}
@@ -1673,10 +1673,11 @@ document.addEventListener("DOMContentLoaded", function () {
     ["Какие модели входят в линейку?", '<a href="#select-light" data-select="light">Falcon Lite</a>, <a href="#select-pro" data-select="pro">Falcon Pro</a>, <a href="#select-gt" data-select="gt">Falcon GT</a>, <a href="#select-lynx-trail" data-select="lynx-trail">Lynx Trail</a>, <a href="#select-surge-v" data-select="surge-v">Y-Volt Surge V</a> и <a href="#select-lynx-x" data-select="lynx-x">Lynx X</a> — старт продаж Lynx X запланирован на 2027 год.'],
     ["Можно ли перепродавать новые байки 79BIKE без договора с представительством?", "К сотрудничеству мы приглашаем только специализированных дилеров. Продажа байков, ввезённых в Россию в обход официального канала, использование товарного знака, логотипа и фото 79BIKE в объявлениях без разрешения и выдача себя за официального дилера нарушают исключительное право на товарный знак — суд может взыскать компенсацию до 5 000 000 ₽ за каждое нарушение (ст. 1515 ГК РФ). Гарантия и техподдержка — только на технику из фирменного магазина и от официальных дилеров."],
     ["Выдерживает ли байк воду?", "Да. Корпус и электрика защищены по классу IP67: дождь, лужи и мокрая трасса — штатные условия. Мойку под сильным напором и глубокий брод лучше не устраивать: вода внутри узлов — не гарантийный случай. Ниже — заводские испытания 79BIKE на пределе возможностей; в обычной езде повторять их не нужно.", [{"t": "Испытание водозащиты 79BIKE", "a": "79BIKE · русская версия", "d": "1:54", "u": "vid/water-1.mp4", "c": "vthumb/yt-leuOT4Df6Dg.webp?v=2"}, {"t": "Тест на воду: заезд в реку", "a": "79BIKE · русская версия", "d": "0:46", "u": "vid/water-2.mp4", "c": "vthumb/yt-a3MjPB4hE3o.webp?v=2"}]],
+    ["Как часто менять масло в редукторе Lynx Trail?", "Каждые 3000–5000 км. В редуктор Lynx Trail заливают трансмиссионное масло 85W140 — 35 мл на одну замену. Старое масло сливают через нижнюю пробку редуктора, новое заливают через верхнее отверстие, дают стечь излишку и закручивают обе пробки. Весь порядок — в ролике ниже. Консультацию по обслуживанию представительство даёт официальным дилерам и клиентам фирменного магазина Falcon-Bike.", [{"t": "Замена масла в редукторе Lynx Trail", "a": "79BIKE · сервис", "d": "4:12", "u": "vid/lynx-oil.mp4", "c": "vthumb/lynx-oil.webp?v=1"}], "lynx-oil"],
     ["Как стать дилером?", 'Заполните <a href="#dealers">заявку на дилерство</a> или выберите быструю связь — менеджер представительства перезвонит и расскажет об условиях.']
   ];
   $("rep-faq").innerHTML = FAQ.map(function (f, k) {
-    return '<details class="rfaq__it"' + (k === 0 ? " open" : "") + "><summary>" + esc(f[0]) + "</summary><p>" + f[1] + "</p>" + (f[2] ? '<div class="rfaq__v">' + f[2].map(revCard).join("") + "</div>" : "") + "</details>";
+    return '<details class="rfaq__it"' + (f[3] ? ' id="' + f[3] + '"' : "") + (k === 0 ? " open" : "") + "><summary>" + esc(f[0]) + "</summary><p>" + f[1] + "</p>" + (f[2] ? '<div class="rfaq__v">' + f[2].map(revCard).join("") + "</div>" : "") + "</details>";
   }).join("");
 
   /* ---------- заявка на дилерство: подробная / быстрая связь (только телефон) ---------- */
@@ -1955,6 +1956,14 @@ b.addEventListener("click",function(){var r=matchMedia("(prefers-reduced-motion:
 </script>
 <script src="range-q.js?v=1" defer></script>
 <script src="vplay.js?v=1" defer></script>
+<script>/* 31.10.2026: прямая ссылка на вопрос (79bike.ru/#lynx-oil) — вопрос раскрывается и прокручивается к нему */
+(function () {
+  function go() { var h = ""; try { h = decodeURIComponent((location.hash || "").slice(1)); } catch (e) { return; } if (!h || !/^[\w-]+$/.test(h)) return;
+    var d = document.getElementById(h); if (!d || d.tagName !== "DETAILS") return; d.open = true; setTimeout(function () { d.scrollIntoView({ block: "start" }); }, 80); }
+  addEventListener("hashchange", go);
+  if (document.readyState === "complete") setTimeout(go, 400); else addEventListener("load", function () { setTimeout(go, 400); });
+})();
+</script>
 <script data-ina-more>(function(){var b=document.querySelector(".ina-more__btn"),box=document.getElementById("ina-more");if(!b||!box)return;
 b.addEventListener("click",function(){var o=box.hidden;box.hidden=!o;b.setAttribute("aria-expanded",String(o));b.textContent=o?"Скрыть фото":"Ещё фото (10)";
 if(o)box.querySelectorAll("img[data-src]").forEach(function(i){i.srcset=i.getAttribute("data-srcset");i.src=i.getAttribute("data-src");i.removeAttribute("data-src");});});})();</script>
