@@ -1,7 +1,7 @@
 <!-- Falcon Bike · карточки товаров магазина Тильды (/…/tproduct/…) в новом дизайне. 01.11.2026 (Михаил: «Обнови»).
      Тильда отдаёт карточку без шапки, подвала и общих скриптов проекта — поэтому оформление здесь, в HEAD проекта, и действует только на адресах /tproduct/. -->
 <style data-b79="tproduct">
-html.fb-tp,html.fb-tp body{background:#0b0b10!important;color:#fff;color-scheme:dark}
+html.fb-tp,html.fb-tp body,html.fb-tp #allrecords,html.fb-tp .t-records,html.fb-tp .t-rec,html.fb-tp .t-store__prod-snippet__container{background:#0b0b10!important;background-color:#0b0b10!important;color:#fff;color-scheme:dark}
 html.fb-tp body{font-family:'TildaSans',Arial,sans-serif;-webkit-font-smoothing:antialiased}
 .fbtp-h{position:sticky;top:0;z-index:999;background:rgba(11,11,16,.94);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.08)}
 .fbtp-w{max-width:1240px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-left,0px))}
@@ -55,8 +55,9 @@ html.fb-tp .t706__cartwin,html.fb-tp .t706__cartwin *{color-scheme:light}
       '<nav class="fbtp-nav" aria-label="Меню"><a href="/#models">Модели</a><a href="/accessories">Запчасти</a><a href="/delivery">Доставка и оплата</a><a href="/warranty">Гарантия</a><a href="/contacts">Контакты</a></nav>' +
       '<a class="fbtp-tel" href="' + TELH + '">' + TEL + '</a><a class="fbtp-ic" href="' + TELH + '" aria-label="Позвонить"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></a>' +
       '<a class="fbtp-ic" href="/accessories" aria-label="Все запчасти"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></a></div>' +
-      '<div class="fbtp-w fbtp-crumb">' + crumb + "</div>";
-    document.body.insertBefore(h, document.body.firstChild);
+      "";
+    var cr = document.createElement("nav"); cr.className = "fbtp-w fbtp-crumb"; cr.setAttribute("aria-label", "Навигация"); cr.innerHTML = crumb;
+    document.body.insertBefore(cr, document.body.firstChild); document.body.insertBefore(h, cr);
     var f = document.createElement("footer"); f.className = "fbtp-f";
     f.innerHTML = '<div class="fbtp-w"><div><b>Falcon Bike</b>Фирменный магазин 79BIKE с быстрой доставкой по РФ<br><a href="' + TELH + '">' + TEL + '</a>Шоурум «Речников 21», Москва</div>' +
       '<div><b>Покупателям</b><a href="/delivery">Доставка и оплата</a><a href="/rassrochka">Рассрочка</a><a href="/warranty">Гарантия и сервис</a><a href="/faq">Вопрос-ответ</a></div>' +
