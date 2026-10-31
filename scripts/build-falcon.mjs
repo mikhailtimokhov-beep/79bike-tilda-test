@@ -110,10 +110,11 @@ function markup(html) {
   return html;
 }
 
+// 01.11: служебные теги из обёртки артефакта (meta/link/title) в пререндер не берём — давали 404 на assets/*.css на главной
 // готовые (пререндер) элементы верхнего уровня помечаем data-b79-pre: при загрузке app.js их убирает и вставляет свежие
 const { topLevel } = await import("./split-native.mjs");
 function markPre(html) {
-  return topLevel(html).map((u) => /^<[a-zA-Z]/.test(u) ? u.replace(/^<([a-zA-Z][\w-]*)/, '<$1 data-b79-pre') : (u.trim() ? `<span data-b79-pre>${u}</span>` : "")).join("\n");
+  return topLevel(html).filter((u) => !/^<(meta|link|title|base)\b/i.test(u.trim())).map((u) => /^<[a-zA-Z]/.test(u) ? u.replace(/^<([a-zA-Z][\w-]*)/, '<$1 data-b79-pre') : (u.trim() ? `<span data-b79-pre>${u}</span>` : "")).join("\n");
 }
 
 // стили прототипа — в шапке проекта (страница Header), только для новых страниц: каждое правило ограничено .fb-native
