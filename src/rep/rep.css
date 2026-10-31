@@ -932,3 +932,5 @@ html body .kpis small{font-size:.68em}
 .fv__d{position:absolute;right:10px;bottom:10px;background:rgba(0,0,0,.7);font-size:12px;padding:2px 8px;border-radius:6px}
 .fv__t{font-weight:700;font-size:16px;padding:14px 16px 4px}.fv__m{font-size:13px;color:var(--mute,#9a9ba7);padding:0 16px 16px}
 .fnote{color:var(--mute,#9a9ba7);font-size:13px;margin-top:16px}
+
+.dealers-note{max-width:72ch;margin:0 0 clamp(16px,2.5vw,24px);color:var(--mute);line-height:1.5}
