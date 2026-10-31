@@ -188,7 +188,7 @@
 "assets/og/gt.jpg": "https://static.tildacdn.com/tila6363-3239-4737-b339-333232646365/fb0186.jpg",
 "assets/og/light.jpg": "https://static.tildacdn.com/tila3434-3463-4232-b438-383633663666/fb0187.jpg",
 "assets/og/lynx-trail.jpg": "https://static.tildacdn.com/tila6536-3066-4235-a534-613335653237/fb0188.jpg",
-"assets/og/lynx-x.jpg": "https://static.tildacdn.com/tila3837-3062-4764-a532-663162663162/fb0189.jpg",
+"assets/og/lynx-x.jpg": "https://static.tildacdn.com/tila3234-6231-4639-b732-373838663561/fb0440.jpg",
 "assets/og/pro.jpg": "https://static.tildacdn.com/tila3130-6337-4130-b232-323630353335/fb0190.jpg",
 "assets/og/surge-v.jpg": "https://static.tildacdn.com/tila3434-3035-4738-b262-663365313038/fb0191.jpg",
 "assets/parts-big/b00.webp": "https://static.tildacdn.com/tila3066-3835-4432-b137-623239613561/fb0192.webp",
@@ -239,7 +239,7 @@
 "assets/photos/cut/gt.webp": "https://static.tildacdn.com/tila3932-6235-4539-a337-663866366339/fb0237.webp",
 "assets/photos/cut/light.webp": "https://static.tildacdn.com/tila6264-6136-4165-a138-386639393461/fb0238.webp",
 "assets/photos/cut/lynx-trail.webp": "https://static.tildacdn.com/tila6330-3930-4239-b062-643630336439/fb0239.webp",
-"assets/photos/cut/lynx-x.webp": "https://static.tildacdn.com/tila3364-3466-4164-b834-373531393532/fb0240.webp",
+"assets/photos/cut/lynx-x.webp": "https://static.tildacdn.com/tila3931-3162-4131-b136-663565323436/fb0439.webp",
 "assets/photos/cut/pro.webp": "https://static.tildacdn.com/tila6334-6263-4739-b738-386564333562/fb0241.webp",
 "assets/photos/cut/surge-v.webp": "https://static.tildacdn.com/tila6538-3538-4130-b862-316636633636/fb0242.webp",
 "assets/photos/feat/battery.webp": "https://static.tildacdn.com/tila3863-3365-4632-b834-343465643333/fb0243.webp",
@@ -311,7 +311,7 @@
 "assets/photos/lynx-black-yellow-3.webp": "https://static.tildacdn.com/tila3465-3433-4437-a236-386261393364/fb0309.webp",
 "assets/photos/lynx-x-black-1-m.webp": "https://static.tildacdn.com/tila3962-3730-4037-b062-386533393362/fb0310.webp",
 "assets/photos/lynx-x-black-1-s.webp": "https://static.tildacdn.com/tila6439-6233-4638-a131-316664363330/fb0311.webp",
-"assets/photos/lynx-x-black-1.webp": "https://static.tildacdn.com/tila3138-6239-4936-b361-643365356439/fb0312.webp",
+"assets/photos/lynx-x-black-1.webp": "https://static.tildacdn.com/tila6166-3034-4361-b766-643833316138/fb0436.webp",
 "assets/photos/pro-black-1-m.webp": "https://static.tildacdn.com/tila3963-6639-4265-b563-386339353563/fb0313.webp",
 "assets/photos/pro-black-1-s.webp": "https://static.tildacdn.com/tila3531-3765-4266-b336-306339646330/fb0314.webp",
 "assets/photos/pro-black-1.webp": "https://static.tildacdn.com/tila6266-3234-4765-b232-323764343430/fb0315.webp",
@@ -436,6 +436,10 @@
 "assets/video/yt-MyHrqF9hfyw.webp": "https://static.tildacdn.com/tila3239-3739-4238-b930-326432663366/fb0434.webp",
 "assets/video/yt-jp1CPP2l5nw.webp": "https://static.tildacdn.com/tila3430-3164-4334-a262-366362383030/fb0435.webp",
 "assets/gallery/gt/11.webp": "https://static.tildacdn.com/tila3063-6438-4136-b464-303337366231/fb0029.webp",
-"assets/gallery/gt/11-s.webp": "https://static.tildacdn.com/tila3132-3232-4761-b263-646166313534/fb0030.webp"
+"assets/gallery/gt/11-s.webp": "https://static.tildacdn.com/tila3132-3232-4761-b263-646166313534/fb0030.webp",
+"assets/photos/lynx-x-black-2.webp": "https://static.tildacdn.com/tila6361-3435-4934-b131-633834303264/fb0437.webp",
+"assets/photos/lynx-x-black-3.webp": "https://static.tildacdn.com/tila3737-6466-4539-b462-666331326563/fb0438.webp",
+"assets/photos/feat/feat.webp": "https://static.tildacdn.com/tila3938-3438-4830-b563-616432663931/fb0441.webp",
+"assets/video/lynx-oil.webp": "https://static.tildacdn.com/tila3761-6133-4431-b238-636565663434/fb0442.webp"
 }
 }
