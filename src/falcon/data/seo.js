@@ -2332,6 +2332,8 @@ window.SEO_ALT = {
   "assets/photos/light-black-5.webp": "Falcon Lite, чёрный, вид 3/4 сзади",
   "assets/photos/light-black-7.webp": "Falcon Lite, чёрный, вид спереди",
   "assets/photos/lynx-x-black-1.webp": "Falcon Lynx X, чёрный с золотыми вставками, вид сбоку",
+  "assets/photos/lynx-x-black-2.webp": "Falcon Lynx X, чёрный, вид сбоку слева",
+  "assets/photos/lynx-x-black-3.webp": "Falcon Lynx X, чёрный, вид спереди три четверти",
   "assets/photos/surge-v-white-1.webp": "Y-Volt Surge V, Белый графит, вид сбоку",
   "assets/photos/surge-v-white-4.webp": "Y-Volt Surge V, Белый графит, вид сбоку",
   "assets/photos/surge-v-white-2.webp": "Y-Volt Surge V, Белый графит, вид 3/4 спереди",

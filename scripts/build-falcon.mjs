@@ -267,7 +267,7 @@ if (SHARED.length && (!ONLY || ONLY.includes("_shared"))) {
   const body = mapJs + SHARED.map((k) => { let js = readFileSync(join(SRC, k), "utf8"); if (k === "assets/app.js") js = patchApp(js);
     const code = /^data\//.test(k) ? js : `if (window.B79_NATIVE) {\n${js}\n}`;
     return `<script data-src="${k}">${code.replace(/<\/script/gi, "<\\/script")}</script>`; }).join("\n") +
-    ["lead-sink.js", "lead-bridge.js", "thanks.js", "store-bridge-falcon.js"].map((f) => `\n<script data-src="${f}">${readFileSync(join(ROOT, "overrides", f), "utf8")}</script>`).join("");
+    ["lead-sink.js", "lead-bridge.js", "thanks.js", "store-bridge-falcon.js", "falcon-fixes.js"].map((f) => `\n<script data-src="${f}">${readFileSync(join(ROOT, "overrides", f), "utf8")}</script>`).join("");
   const NEWP = Object.values(ROUTES).concat((BLOG.posts || []).map((p) => "/blog/" + p.slug));
   // класс .fb-native включает код HEAD самой страницы (настройки страницы → «HTML-код для вставки внутрь HEAD») — см. settings.json, headCode
   const fontsCss = css(readFileSync(join(SRC, "assets/fonts.css"), "utf8"));

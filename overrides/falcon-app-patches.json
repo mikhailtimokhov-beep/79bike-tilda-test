@@ -47,8 +47,8 @@
    "30.10: JSON-LD уже в коде страницы (staticLd в build-falcon) — не дублировать"
   ],
   [
-   "function cutSrc(s) { return \"assets/photos/cut/\" + s + \".webp\" + \"?v=4\"; }",
-   "function cutSrc(s) { var u = \"assets/photos/cut/\" + s + \".webp\" + \"?v=4\"; return window.B79_ASSET ? window.B79_ASSET(u) : u; }",
+   "function cutSrc(s) { return \"assets/photos/cut/\" + s + \".webp\" + (s === \"lynx-x\" ? \"?v=5\" : \"?v=4\"); }",
+   "function cutSrc(s) { var u = \"assets/photos/cut/\" + s + \".webp\" + (s === \"lynx-x\" ? \"?v=5\" : \"?v=4\"); return window.B79_ASSET ? window.B79_ASSET(u) : u; }",
    "30.10: картинки в SVG виджетов (примерка по росту, габариты, рядом с байком) — через карту CDN Тильды; на сайте были «?»"
   ],
   [
@@ -60,6 +60,16 @@
    "'<image href=\"assets/photos/rider-seat.webp?v=2\"",
    "'<image href=\"' + (window.B79_ASSET || String)(\"assets/photos/rider-seat.webp?v=2\") + '\"",
    "30.10: картинки в SVG виджетов (примерка по росту, габариты, рядом с байком) — через карту CDN Тильды; на сайте были «?»"
+  ],
+  [
+   "'<div class=\"asm__p\" data-asm-p=\"v\"><h3 class=\"h3 asm__h\">Видеоинструкция: сборка ' + esc(A.model) + '</h3><div class=\"asm__v\"><video controls playsinline preload=\"none\" poster=\"' + esc(A.poster) + '\" data-hls=\"' + esc(A.hls) + '\"></video></div>",
+   "'<div class=\"asm__p\" data-asm-p=\"v\"><h3 class=\"h3 asm__h\">Видеоинструкция: сборка ' + esc(A.model) + '</h3><div class=\"asm__v\">' + (function (k) { return k ? '<iframe src=\"https://kinescope.io/embed/' + k + '\" loading=\"lazy\" title=\"Видеоинструкция: сборка ' + esc(A.model) + '\" allow=\"autoplay; fullscreen; picture-in-picture; encrypted-media\" allowfullscreen frameborder=\"0\" style=\"display:block;width:100%;aspect-ratio:16/9;height:auto;border:0;border-radius:inherit;background:#000\"></iframe>' : '<video controls playsinline preload=\"none\" poster=\"' + esc(A.poster) + '\" data-hls=\"' + esc(A.hls) + '\"></video>'; })({ \"assets/manuals/asm/pro/v2/index.txt\": \"{{asmPro}}\", \"assets/manuals/asm/lynx-trail/v2/index.txt\": \"{{asmLynx}}\" }[A.hls]) + '</div>",
+   "31.10: видеоинструкции сборки (Pro, Lynx Trail) — Kinescope; на Тильде файлов ролика нет (index.txt 404, ролик не играл)"
+  ],
+  [
+   "if (p === \"local\") { /* 29.10: свой ролик — встроенный плеер браузера */",
+   "var KM = { \"sv-detali\": \"{{svDetali}}\", \"sv-sborka\": \"{{svSborka}}\", \"water-1\": \"{{water1}}\", \"water-2\": \"{{water2}}\" }, kf = /([\\w-]+)\\.mp4/.exec(src || \"\"); if (p === \"local\" && kf && KM[kf[1]]) { src = \"https://kinescope.io/embed/\" + KM[kf[1]] + \"?autoplay=1\"; p = \"kinescope\"; } /* 31.10: на Тильде своих mp4 нет — ролики из Kinescope */\n      if (p === \"local\") { /* 29.10: свой ролик — встроенный плеер браузера */",
+   "31.10: свои ролики (Surge V, тест на воду) — Kinescope; на Тильде mp4 нет"
   ]
  ]
 }

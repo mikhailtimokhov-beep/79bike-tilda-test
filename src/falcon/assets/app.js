@@ -38,13 +38,13 @@
   function num(n) { return String(n).replace(".", ","); }
   function photos(s) { return PH[s] || []; }
   /* вырезанные байки без фона, все развёрнуты вправо; ширина — пропорционально реальной длине (24.10.2026) */
-  function cutSrc(s) { return "assets/photos/cut/" + s + ".webp" + "?v=4"; }
+  function cutSrc(s) { return "assets/photos/cut/" + s + ".webp" + (s === "lynx-x" ? "?v=5" : "?v=4"); }
   var CUT_H = {"gt": 93.6, "pro": 90.5, "lynx-trail": 92.0, "light": 91.0, "lynx-x": 92.0 /* Михаил 26.10: как Lynx Trail */, "surge-v": 96.4}; // высота картинки в % от самой высокой: масштаб по длине и высоте из спецификаций (среднее геометрическое)
   function cutH(s) { return CUT_H[s] || 90; }
   function firstImg(s) { var p = photos(s)[0]; return p ? p.images[0].src : "assets/bike.svg"; }
   /* лёгкие версии фото (QA 25.10.2026): -s.webp 320 px — миниатюры, меню, нижняя панель; -m.webp 800 px — главное фото на узких экранах */
-  function photoV(src, suf) { if (suf === "-m" && /lynx-x-black-1\.webp$/.test(src || "")) return src; /* исходник 800 px */ return /^assets\/photos\/[\w-]+\.webp$/.test(src || "") && !/-(s|m)\.webp$/.test(src) && !/rider\.webp$/.test(src) ? src.replace(/\.webp$/, suf + ".webp") : src; }
-  function photoSet(src) { var m = photoV(src, "-m"), w = /surge-v-white-/.test(src) ? 1080 : /lynx-x-black-1\.webp$/.test(src) ? 800 : 1600; return m === src || w <= 800 ? "" : m + " 800w, " + src + " " + w + "w"; }
+  function photoV(src, suf) { if (/lynx-x-black-\d\.webp$/.test(src || "")) return src; /* 30.10: новые студийные фото Lynx X без вариантов -m/-s (лимит файлов артефакта) */ return /^assets\/photos\/[\w-]+\.webp$/.test(src || "") && !/-(s|m)\.webp$/.test(src) && !/rider\.webp$/.test(src) ? src.replace(/\.webp$/, suf + ".webp") : src; }
+  function photoSet(src) { var m = photoV(src, "-m"), w = /surge-v-white-/.test(src) ? 1080 : 1600; return m === src || w <= 800 ? "" : m + " 800w, " + src + " " + w + "w"; }
   function imgTag(s, src, alt, extra) { return '<img src="' + esc(photoV(src, "-s")) + '" alt="' + esc(alt || "") + '"' + (COVER[s] ? ' class="is-cover"' : s === "surge-v" ? ' class="is-studio"' : "") + (extra || "") + ">"; }
   function spec(m, k) { return m.specs[k]; }
   function kv(m) { var s = m.specs; return [num(s.powerKw) + " кВт", s.speedKmh + " км/ч", s.weightKg + " кг"]; }
@@ -228,8 +228,8 @@
   function faqVids(list) {
     if (!list || !list.length) return "";
     return '<div class="qa-vids">' + list.map(function (v) {
-      var emb = vEmbed(v.url || "");
-      return '<a class="vcard qa-vid" href="' + esc(v.url) + '" data-embed="' + esc(emb) + '" data-vt="' + esc(v.title) + '" data-vp="youtube" aria-label="' + esc(v.title + " — YouTube, " + v.duration + " (смотреть здесь)") + '"><span class="qa-vid__pic" style="background-image:url(' + esc(v.sprite) + ');background-position:' + esc(v.pos) + '"><span class="vcard__play" aria-hidden="true">' + ICON.play + '</span><span class="vcard__dur" aria-hidden="true">' + esc(v.duration) + '</span></span><span class="qa-vid__t">' + esc(v.title) + "</span></a>";
+      var emb = vEmbed(v.url || ""), pl = vPlat(v);
+      return '<a class="vcard qa-vid" href="' + esc(v.url) + '" data-embed="' + esc(emb) + '" data-vt="' + esc(v.title) + '" data-vp="' + pl + '" aria-label="' + esc(v.title + (VSRC[pl] ? " — " + VSRC[pl] : "") + ", " + v.duration + " (смотреть здесь)") + '"><span class="qa-vid__pic" style="background-image:url(' + esc(v.sprite) + ');background-position:' + esc(v.pos) + '"><span class="vcard__play" aria-hidden="true">' + ICON.play + '</span><span class="vcard__dur" aria-hidden="true">' + esc(v.duration) + '</span></span><span class="qa-vid__t">' + esc(v.title) + "</span></a>";
     }).join("") + "</div>";
   }
   function faqHtml(list, openFirst) {
@@ -275,12 +275,13 @@
       '<label class="form__check"><input type="checkbox" name="pd" data-req-check="Чтобы отправить заявку, отметьте согласие на обработку персональных данных."><span>Даю <a href="consent.html" target="_blank" rel="noopener">согласие на обработку персональных данных</a></span></label>' + ((o || {}).ads ? '<label class="form__check"><input type="checkbox" name="ads"><span>Согласен(на) получать от ИП Тимохова М. С. сообщения о новинках и акциях 79BIKE по телефону, SMS и в мессенджерах. Отказаться можно в любой момент. <small style="display:block;color:var(--mute)">Необязательно: о старте продаж Lynx X сообщим и без этой отметки.</small></span></label>' : "") + '<button class="btn" type="submit">' + btn + '</button><p class="form__legal">' + (o.legal ? esc(o.legal) + " " : "") + 'Подробнее — в <a href="privacy.html" target="_blank" rel="noopener">Политике обработки персональных данных</a>.</p><p class="form__ok" aria-live="polite" data-ok="' + esc(ok) + '"></p></form></div>';
   }
   /* ---------- видеообзоры: карточки с обложкой ---------- */
-  var VSRC = { vk: "VK Видео", youtube: "YouTube", rutube: "RUTUBE" };
-  function vPlat(v) { return v.platform || (/youtu/.test(v.url || "") ? "youtube" : /rutube/.test(v.url || "") ? "rutube" : "vk"); }
+  var VSRC = { vk: "VK Видео", youtube: "YouTube", rutube: "RUTUBE" }; /* local — свой ролик (mp4 на сайте), без значка площадки */
+  function vPlat(v) { return v.platform || (/\.mp4(\?|$)/.test(v.url || "") ? "local" : /youtu/.test(v.url || "") ? "youtube" : /rutube/.test(v.url || "") ? "rutube" : "vk"); }
   function vItems(list, slug) { return (list || []).map(function (t) { return typeof t === "string" ? { slug: slug, title: t } : Object.assign({ slug: slug }, t); }); }
   /* ролик открывается во всплывающем окне сайта: встраиваемый плеер без ухода на площадку */
   function vEmbed(u) {
     var m;
+    if (/\.mp4(\?|$)/.test(u)) return u;
     if ((m = u.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([\w-]{11})/))) return "https://www.youtube-nocookie.com/embed/" + m[1] + "?autoplay=1&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&fs=1&enablejsapi=1";
     if ((m = u.match(/video(-?\d+)_(\d+)/))) return "https://vkvideo.ru/video_ext.php?oid=" + m[1] + "&id=" + m[2] + "&hd=2&autoplay=1&js_api=1";
     if ((m = u.match(/rutube\.ru\/video\/(\w+)/))) return "https://rutube.ru/play/embed/" + m[1] + "?autoplay=1";
@@ -624,9 +625,12 @@
       var gK = Math.max(0.84, Math.min(1.3, Math.sqrt((w / Math.pow(h / 100, 2)) / 23)));
       CP.head = "40,0 360,0 360,70 300,215 262,262 200,262 160,235 120,205 60,175 40,150"; CP.arms = "300,255 524,255 524,585 320,585 300,588"; CP.torso = "0,132 40,142 60,167 120,197 160,227 200,254 262,254 300,247 330,247 330,585 320,585 245,598 205,640 195,820 0,820"; /* 26.10 (Михаил): шлем вырезан по контуру, плечи и спина — в корпусе: при большом весе нет «ступеньки» у шеи */
       var GT = { torso: "translate(200 0) scale(" + gK.toFixed(3) + " 1) translate(-200 0)", thigh: "translate(0 690) scale(1 " + gK.toFixed(3) + ") translate(0 -690)", shin: "translate(425 0) scale(" + (1 + (gK - 1) * 0.8).toFixed(3) + " 1) translate(-425 0)", arms: "", head: "" };
-      var man = '<g class="viz__man">' + ["shin", "thigh", "arms", "torso", "head"].map(function (pt) {
+      /* 31.10 (КК, жалоба Михаила): на iPhone (Safari) комплекция по весу не отображалась. Причины: вложенные <g transform> с clipPath внутри
+         и CSS drop-shadow на группе (Safari обрезает фигуру по старому контуру). Теперь: одна группа на часть тела с общим transform,
+         clipPath вне трансформированных групп, тень — SVG-фильтром с большой областью. В Chrome вид не изменился (проверено 31.10). */
+      var man = '<g class="viz__man" style="filter:url(#' + id + '-sh)"><filter id="' + id + '-sh" filterUnits="userSpaceOnUse" x="-5000" y="-5000" width="12000" height="12000"><feDropShadow dx="0" dy="30" stdDeviation="15" flood-color="#000" flood-opacity=".18"/></filter>' + ["shin", "thigh", "arms", "torso", "head"].map(function (pt) {
         var t = pt === "torso" || pt === "arms" || pt === "head" ? torsoT : pt === "thigh" ? tf(hj, at - a0t, RG.hip, rs * legK) : tf(kn, as - a0s, RG.knee, rs * legK);
-        return '<g transform="' + t + '"><g' + (GT[pt] ? ' transform="' + GT[pt] + '"' : "") + '><clipPath id="' + id + "-cp-" + pt + '"><polygon points="' + CP[pt] + '"/></clipPath><g clip-path="url(#' + id + "-cp-" + pt + ')">' + IMG + "</g></g></g>";
+        return '<clipPath id="' + id + "-cp-" + pt + '"><polygon points="' + CP[pt] + '"/></clipPath><g clip-path="url(#' + id + "-cp-" + pt + ')" transform="' + t + (GT[pt] ? " " + GT[pt] : "") + '">' + IMG + "</g>";
       }).join("") + "</g>";
       var top0 = rot([(RG.top_x - RG.cx) * rs, (0 - RG.cy) * rs], ta);
       var hipX = seatPt[0], hipY = -seatPt[1], rx = 0, rw = 0;
@@ -715,7 +719,7 @@
         '<li><a href="parts.html"><span class="fh__ic">' + ICON.box + '</span><b>Запчасти</b><small>В наличии, быстрая доставка</small></a></li></ul>' +
         '<div class="fh__cta"><a class="btn btn--main" href="podbor.html">Подобрать байк</a><a class="btn btn--ghost" href="compare.html">Сравнить модели</a></div></div>' +
       '<div class="fh__models">' + FH.map(function (s) { var m = bySlug(s); return '<a class="fh__m" href="' + FILE[s] + '">' + (m.status === "soon" ? '<i class="fh__new">2027</i>' : "") + '<img src="' + cutSrc(s) + '" alt="" width="1300" height="760" decoding="async"><b>' + esc(SHORT[s]) + '</b><span>' + (m.price ? money(m.price) : "Скоро") + "</span></a>"; }).join("") + '</div></div></div></section>' +
-      sec("", "Технологии Falcon", '<div class="tech">' + T.map(function (t) { var pic = t[3] ? '<figure class="tcard__pic"><img src="assets/photos/feat/' + t[3] + '.webp" alt="' + esc(t[1]) + '" width="960" height="540" loading="lazy" decoding="async"></figure>' : '<figure class="tcard__pic tcard__pic--rev">' + '<img src="' + cutSrc("pro") + '" alt="" loading="lazy">' + '<span class="tcard__r" aria-hidden="true"><b>R</b>' + ICON.chev + '</span></figure>'; return '<article class="card tcard">' + pic + '<div class="tcard__body"><span class="mark" aria-hidden="true">' + t[0] + '</span><h3 class="h3">' + t[1] + "</h3><p>" + t[2] + "</p></div></article>"; }).join("") + '<a class="card card--cta" href="podbor.html"><b>Не знаете, какой выбрать?</b><span class="btn btn--light" style="align-self:flex-start;min-height:44px">Подобрать за минуту</span></a></div>') +
+      sec("", "Технологии Falcon", '<div class="tech">' + T.map(function (t) { var FI = ["motor", "controller", "battery", "light", "dash", "fork", "reverse"].indexOf(t[3]); /* 29.10: 7 фото технологий — один спрайт (лимит файлов артефакта) */ var pic = t[3] ? '<figure class="tcard__pic"><i class="tcard__sp" role="img" aria-label="' + esc(t[1]) + '" style="background-position:0 ' + (FI * 100 / 6).toFixed(3) + '%"></i></figure>' : '<figure class="tcard__pic tcard__pic--rev">' + '<img src="' + cutSrc("pro") + '" alt="" loading="lazy">' + '<span class="tcard__r" aria-hidden="true"><b>R</b>' + ICON.chev + '</span></figure>'; return '<article class="card tcard">' + pic + '<div class="tcard__body"><span class="mark" aria-hidden="true">' + t[0] + '</span><h3 class="h3">' + t[1] + "</h3><p>" + t[2] + "</p></div></article>"; }).join("") + '<a class="card card--cta" href="podbor.html"><b>Не знаете, какой выбрать?</b><span class="btn btn--light" style="align-self:flex-start;min-height:44px">Подобрать за минуту</span></a></div>') +
       sec("pick", "", pickerHtml()) +
       sec("models", "Выберите свой байк", modelCards(SALE) + '<ul class="strip"><li>' + ICON.truck + '<a href="delivery.html">Доставка байков по всей России</a></li><li>' + ICON.shield + '<a href="credit.html">Рассрочка Т-Банк или POSCREDIT</a></li><li>' + ICON.box + '<a href="delivery.html"><span data-reg="msk">Оплата наличными при получении — Москва и МО</span><span data-reg="rf">Удобный формат оплаты</span></a></li></ul><p class="note">Falcon Lynx X, 26 кВт: старт продаж в 2027 году. <a href="lynx-x.html">Узнать первым</a></p>', '<p>Все модели стоят в шоуруме. Цены указаны со скидкой.</p>') +
       sec("compare", "Сравнение моделей", cmpTable(SALE, false), '<a class="btn btn--ghost" href="compare.html">Полное сравнение</a>') +
@@ -2079,6 +2083,11 @@ b.addEventListener("click",function(){var r=matchMedia("(prefers-reduced-motion:
     function ended() { if (frame) { frame.remove(); frame = null; } endBox.hidden = false; }
     function play(src, p) {
       endBox.hidden = true; if (frame) frame.remove();
+      if (p === "local") { /* 29.10: свой ролик — встроенный плеер браузера */
+        frame = document.createElement("video"); frame.src = src; frame.controls = true; frame.autoplay = true; frame.playsInline = true; frame.preload = "auto";
+        frame.setAttribute("style", "position:absolute;inset:0;width:100%;height:100%;background:#000");
+        frame.addEventListener("ended", ended); dlg.querySelector(".vmodal__frame").appendChild(frame); return;
+      }
       frame = document.createElement("iframe");
       frame.src = src; frame.title = ttl.textContent; frame.allow = "autoplay; encrypted-media; fullscreen; picture-in-picture"; frame.referrerPolicy = "strict-origin-when-cross-origin";
       dlg.querySelector(".vmodal__frame").appendChild(frame);

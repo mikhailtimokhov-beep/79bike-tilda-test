@@ -42,12 +42,13 @@
     if (lastFocus && lastFocus.focus) lastFocus.focus();
   }
   document.addEventListener("click", function (e) {
-    var a = e.target.closest && e.target.closest('a[href*="youtube.com/watch"],a[href*="youtu.be/"]');
+    var a = e.target.closest && e.target.closest('a[href*="youtube.com/watch"],a[href*="youtu.be/"],a[href*=".mp4"]');
     if (!a || e.ctrlKey || e.metaKey || e.shiftKey) return;
-    var m = a.href.match(/(?:v=|youtu\.be\/)([\w-]{11})/), hit = m && MAP[m[1]];
+    /* 31.10: свои ролики (vid/<имя>.mp4) — по имени файла; на Тильде самих mp4 нет */
+    var f = a.href.match(/\/([\w-]+)\.mp4(?:[?#]|$)/), m = a.href.match(/(?:v=|youtu\.be\/)([\w-]{11})/), hit = (f && MAP[f[1]]) || (m && MAP[m[1]]);
     if (!hit) return;
     e.preventDefault(); e.stopPropagation();
-    open(hit.k, hit.t);
+    open(hit.k, a.getAttribute("data-vt") || hit.t);
   }, true);
   window.B79_KINESCOPE_OPEN = open;
 })();

@@ -1,5 +1,12 @@
 {
- "_comment": "Ролики Falcon в Kinescope (проект «79bike.ru — сайт»), загружены 29.10.2026 из прототипа: первый экран (falcon-hero.mp4, 0:18) и маршрут до шоурума (falcon-route.mp4, 0:40). Подставляются в правки app.js ({{hero}}, {{route}}).",
+ "_comment": "Ролики Falcon в Kinescope (проект «79bike.ru — сайт»), загружены 29.10.2026 из прототипа: первый экран (falcon-hero.mp4, 0:18) и маршрут до шоурума (falcon-route.mp4, 0:40). Подставляются в правки app.js ({{hero}}, {{route}}). 31.10: ролики сборки (asmPro, asmLynx, asmGt) и свои ролики Surge V / тест на воду (svDetali, svSborka, water1, water2) — загружены «Сайтами» по ссылке с GitHub Pages.",
  "hero": "wDxutmuHYgpsLxrSVtVBxT",
- "route": "q9M64MSqSkQtPJgAjdXd72"
+ "route": "q9M64MSqSkQtPJgAjdXd72",
+ "asmPro": "0aWktAcqzbXmA9bJHQWu9D",
+ "asmLynx": "6w477pgdm22qoF5vvnYryj",
+ "asmGt": "qM3kYegfTybHvVC2zg3cAt",
+ "svDetali": "ezfFzJDQf2uzoenF3PsPrv",
+ "svSborka": "o5o4CXRpzQ6LJq5M8qvZed",
+ "water1": "mRnCEWxS56k1yfuqSnTcKS",
+ "water2": "42xopqjkr8tkY9cPv3Xe8q"
 }

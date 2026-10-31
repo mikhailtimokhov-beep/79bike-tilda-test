@@ -189,7 +189,7 @@
 "assets/og/gt.jpg": "fb0186.jpg",
 "assets/og/light.jpg": "fb0187.jpg",
 "assets/og/lynx-trail.jpg": "fb0188.jpg",
-"assets/og/lynx-x.jpg": "fb0189.jpg",
+"assets/og/lynx-x.jpg": "fb0440.jpg",
 "assets/og/pro.jpg": "fb0190.jpg",
 "assets/og/surge-v.jpg": "fb0191.jpg",
 "assets/parts-big/b00.webp": "fb0192.webp",
@@ -240,7 +240,7 @@
 "assets/photos/cut/gt.webp": "fb0237.webp",
 "assets/photos/cut/light.webp": "fb0238.webp",
 "assets/photos/cut/lynx-trail.webp": "fb0239.webp",
-"assets/photos/cut/lynx-x.webp": "fb0240.webp",
+"assets/photos/cut/lynx-x.webp": "fb0439.webp",
 "assets/photos/cut/pro.webp": "fb0241.webp",
 "assets/photos/cut/surge-v.webp": "fb0242.webp",
 "assets/photos/feat/battery.webp": "fb0243.webp",
@@ -312,7 +312,7 @@
 "assets/photos/lynx-black-yellow-3.webp": "fb0309.webp",
 "assets/photos/lynx-x-black-1-m.webp": "fb0310.webp",
 "assets/photos/lynx-x-black-1-s.webp": "fb0311.webp",
-"assets/photos/lynx-x-black-1.webp": "fb0312.webp",
+"assets/photos/lynx-x-black-1.webp": "fb0436.webp",
 "assets/photos/pro-black-1-m.webp": "fb0313.webp",
 "assets/photos/pro-black-1-s.webp": "fb0314.webp",
 "assets/photos/pro-black-1.webp": "fb0315.webp",
@@ -435,6 +435,9 @@
 "assets/video/yt-FjOEczaiMxQ.webp": "fb0432.webp",
 "assets/video/yt-IFieb93HdpU.webp": "fb0433.webp",
 "assets/video/yt-MyHrqF9hfyw.webp": "fb0434.webp",
-"assets/video/yt-jp1CPP2l5nw.webp": "fb0435.webp"
+"assets/video/yt-jp1CPP2l5nw.webp": "fb0435.webp",
+"assets/photos/lynx-x-black-2.webp": "fb0437.webp",
+"assets/photos/lynx-x-black-3.webp": "fb0438.webp",
+"assets/photos/feat/feat.webp": "fb0441.webp"
 }
 }

@@ -1,9 +1,71 @@
 {
   "_comment": "YouTube ID ролика на сайте → ID ролика в Kinescope (проект «79bike.ru — сайт», бесплатный тариф). Карточки с этими роликами открывают плеер Kinescope прямо на сайте.",
-  "EVj42tyAZZk": { "k": "2FxYoHbgtB9ubQNjVNzDUM", "t": "Экскурсия по заводу 79BIKE" },
-  "a3MjPB4hE3o": { "k": "w1omvgxVN8ChjPkVeEinMf", "t": "Тест на воду: байк в воде" },
-  "0KXWISZglIE": { "k": "wj6EgsbptwSyQUSG1fYj2j", "t": "Y-Volt: предсерийный байк на тестах" },
-  "B2Fz94pA6CY": { "k": "e1kEM3813bJkBjYqFWjfBw", "t": "Surge V: качество в деталях" },
-  "FjOEczaiMxQ": { "k": "482ELCA15H2qHHER1vthi5", "t": "Surge V Official Launch" },
-  "leuOT4Df6Dg": { "k": "cqe3vVZr3SKvThFUcWPrgf", "t": "Тест на воду: час под водой — и заводится" }
+  "EVj42tyAZZk": {
+    "k": "2FxYoHbgtB9ubQNjVNzDUM",
+    "t": "Экскурсия по заводу 79BIKE"
+  },
+  "a3MjPB4hE3o": {
+    "k": "w1omvgxVN8ChjPkVeEinMf",
+    "t": "Тест на воду: байк в воде"
+  },
+  "0KXWISZglIE": {
+    "k": "wj6EgsbptwSyQUSG1fYj2j",
+    "t": "Y-Volt: предсерийный байк на тестах"
+  },
+  "B2Fz94pA6CY": {
+    "k": "e1kEM3813bJkBjYqFWjfBw",
+    "t": "Surge V: качество в деталях"
+  },
+  "FjOEczaiMxQ": {
+    "k": "482ELCA15H2qHHER1vthi5",
+    "t": "Surge V Official Launch"
+  },
+  "leuOT4Df6Dg": {
+    "k": "cqe3vVZr3SKvThFUcWPrgf",
+    "t": "Тест на воду: час под водой — и заводится"
+  },
+  "zavod-rama": {
+    "k": "ouSaQpNyqNTpx1Zgk3XmG8",
+    "t": "Рама: сварка и покраска"
+  },
+  "zavod-sborka": {
+    "k": "omyVzEAb51aCRLEPVLmVKT",
+    "t": "Сборка"
+  },
+  "zavod-stend": {
+    "k": "woRfTLfZD5ZzJoZrL5n4wD",
+    "t": "Испытания на стенде"
+  },
+  "zavod-kontrol": {
+    "k": "sNiYnRVzpgtgfnoiQMKCUY",
+    "t": "Контроль качества"
+  },
+  "zavod-sklad": {
+    "k": "mFYrvTJWsM3MLE4ArvQc58",
+    "t": "Склад"
+  },
+  "zavod-partiya": {
+    "k": "xuJDfmqrQfKHnpfDLTRQ8Q",
+    "t": "Партия к отгрузке"
+  },
+  "zavod-upakovka": {
+    "k": "cFKJeMS9mAfmkQJGmWmqDt",
+    "t": "Упаковка"
+  },
+  "sv-detali": {
+    "k": "ezfFzJDQf2uzoenF3PsPrv",
+    "t": "Surge V: качество в деталях"
+  },
+  "sv-sborka": {
+    "k": "o5o4CXRpzQ6LJq5M8qvZed",
+    "t": "Предсерийный Surge V: распаковка и сборка"
+  },
+  "water-1": {
+    "k": "mRnCEWxS56k1yfuqSnTcKS",
+    "t": "Испытание водозащиты 79BIKE"
+  },
+  "water-2": {
+    "k": "42xopqjkr8tkY9cPv3Xe8q",
+    "t": "Тест на воду"
+  }
 }
