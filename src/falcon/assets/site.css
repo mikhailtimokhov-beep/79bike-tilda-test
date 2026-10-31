@@ -1800,3 +1800,4 @@ a[href^="mailto:"],a[href^="http"]{overflow-wrap:anywhere}
 .qa-vid__t{display:block;padding:8px 10px 10px;font-size:13px;font-weight:600;line-height:1.3}
 @media (max-width:420px){.qa-vids{grid-template-columns:1fr}}
 .qa>details{scroll-margin-top:96px}
+.doc-img img{display:block;max-width:100%;height:auto;border-radius:16px;background:#fff}.doc-btns{display:flex;flex-wrap:wrap;gap:10px}

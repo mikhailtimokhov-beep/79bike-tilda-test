@@ -29,7 +29,7 @@ const ROUTES = {
   "testdrive.html": "/test-drive", "contacts.html": "/contacts", "events.html": "/events", "blog.html": "/blog", "post.html": "/blog",
   "bloggers.html": "/bloggers", "instructions.html": "/instructions", "manual-gt.html": "/manual-gt", "manual-pro.html": "/manual-pro",
   "manual-light.html": "/manual-light", "manual-lynx-trail.html": "/manual-lynx-trail", "manual-surge-v.html": "/manual-surge-v",
-  "privacy.html": "/privacy", "consent.html": "/consent", "spasibo.html": "/spasibo", ...Object.fromEntries(JSON.parse(readFileSync(new URL("../overrides/falcon-tstore.json", import.meta.url), "utf8")).pages.map((p) => ["tstore-" + (p.key || "accessories") + ".html", p.path])),
+  "privacy.html": "/privacy", "consent.html": "/consent", "doc.html": "/error", "spasibo.html": "/spasibo", ...Object.fromEntries(JSON.parse(readFileSync(new URL("../overrides/falcon-tstore.json", import.meta.url), "utf8")).pages.map((p) => ["tstore-" + (p.key || "accessories") + ".html", p.path])),
 };
 // общие скрипты — один раз в подвале проекта Тильды (страница Footer), а не на каждой странице: так страница занимает
 // ~7 блоков вместо ~21. Подвал отдаёт сама Тильда, внешних источников нет. SHARED=0 — всё встраивать в страницу.
@@ -79,7 +79,8 @@ function pageLink(ref) {
   const m = /^(?:\.\/)?([a-z0-9-]+\.html)(\?[^#]*)?(#.*)?$/.exec(ref);
   if (!m || ROUTES[m[1]] === undefined) return null;
   const q = new URLSearchParams((m[2] || "").slice(1)); const s = q.get("s"); q.delete("s"); q.delete("v");
-  const path = m[1] === "post.html" && s ? "/blog/" + s : ROUTES[m[1]]; const rest = q.toString();
+  const dk = q.get("d"); if (m[1] === "doc.html") q.delete("d");
+  const path = m[1] === "post.html" && s ? "/blog/" + s : m[1] === "doc.html" && dk ? "/" + dk : ROUTES[m[1]]; const rest = q.toString();
   return path + (rest ? "?" + rest : "") + (m[3] || "");
 }
 function css(text) {
@@ -238,10 +239,13 @@ const BLOG = (() => { const w = {}; vm.runInNewContext(readFileSync(join(SRC, "d
 const settings = {};
 const jobs = [];
 for (const file of Object.keys(ROUTES)) {
-  if (file === "post.html") continue;
+  if (file === "post.html" || file === "doc.html") continue;
   jobs.push({ name: file.replace(/\.html$/, ""), file, url: file });
 }
 for (const p of (BLOG && BLOG.posts) || []) jobs.push({ name: "blog--" + p.slug, file: "post.html", url: "post.html?s=" + p.slug, path: "/blog/" + p.slug });
+// 01.11: служебные страницы в новом дизайне (политика, возврат, декларация, дилерам, 404) — doc.html?d=<ключ> → /<ключ>
+const DOCS = (() => { const w = {}; vm.runInNewContext(readFileSync(join(SRC, "data/legal.js"), "utf8"), { window: w }); return w.DOCS || {}; })();
+for (const k of Object.keys(DOCS)) jobs.push({ name: "doc--" + k, file: "doc.html", url: "doc.html?d=" + k, path: "/" + k, doc: k });
 
 const { toParts, LIMIT } = await import("./split-native.mjs");
 for (const j of jobs) {
@@ -249,7 +253,8 @@ for (const j of jobs) {
   const { attrs } = parse(j.file);
   const seoKey = attrs["data-page"] === "model" ? "model:" + attrs["data-slug"] : j.file === "index.html" ? "home" : (attrs["data-page"] || "home");
   const pre = await prerender(j.url, j.name);
-  const frag = assemble(j.file, pre.html, seoKey);
+  let frag = assemble(j.file, pre.html, seoKey);
+  if (j.doc) frag = frag.replace('<script data-src="native-runtime">', '<script data-src="doc-key">window.B79_DOC_SLUG=' + JSON.stringify(j.doc) + ';</script>\n<script data-src="native-runtime">');
   const path = j.path || ROUTES[j.file];
   settings[j.name] = { path, headCode: HEADCODE, title: pre.title, description: pre.description, canonical: ORIGIN + (path === "/" ? "/" : path), h1: pre.h1.trim().slice(0, 120), bytes: Buffer.byteLength(frag) };
   const parts = await toParts(frag);

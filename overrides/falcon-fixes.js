@@ -7,6 +7,8 @@
   window.addEventListener("click", function (e) {
     var a = e.target && e.target.closest ? e.target.closest('a[href="#order"]') : null, t = document.getElementById("order");
     if (!a || !t || e.button || e.ctrlKey || e.metaKey) return;
+    /* кнопки магазина Тильды («В корзину» в блоках Store, корзина) не трогаем — им #order и нужен */
+    if (a.closest('.js-product, .t-store, .t706, .t-rec[data-record-type="744"], .t-rec[data-record-type="786"], .t-rec[data-record-type="706"]')) return;
     e.preventDefault();
     a.setAttribute("href", "#b79-order"); setTimeout(function () { a.setAttribute("href", "#order"); }, 0);
     t.scrollIntoView({ behavior: "smooth", block: "start" });

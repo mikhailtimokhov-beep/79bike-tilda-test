@@ -1022,6 +1022,13 @@
     return sec("", "", nav) + out.map(function (g) { return sec("faq-" + g[0], g[1], faqHtml(g[2], true)); }).join("") +
       sec("", "", '<div class="callout">' + ICON.phone + '<p>Не нашли ответ? Позвоните <a href="' + PHONE_HREF + '">' + PHONE + '</a> или напишите в мессенджер — менеджер подскажет.</p></div>');
   }
+  /* 01.11.2026: служебные страницы (политика, возврат, декларация, дилерам, 404) — данные window.DOCS (data/legal.js) */
+  P.doc = function () {
+    var k = window.B79_DOC_SLUG || new URLSearchParams(location.search).get("d") || "error", d = (window.DOCS || {})[k] || (window.DOCS || {}).error || { title: "Страница", html: "" };
+    try { if (!window.B79_NATIVE) document.title = d.title + " | Falcon Bike"; } catch (e) {}
+    return head((d.crumb ? "<span>" + esc(d.crumb) + '</span><span aria-hidden="true">/</span>' : "") + "<span>" + esc(d.title) + "</span>", d.title, d.lead || "") +
+      sec("", "", '<article class="doc">' + d.html + "</article>");
+  };
   P.legal = function () {
     var d = (window.LEGAL || {})[document.body.getAttribute("data-doc")] || { title: "Документ", html: "" };
     return head('<span>Клиентам</span><span aria-hidden="true">/</span><span>' + esc(d.title) + "</span>", d.title, "") +
