@@ -36,7 +36,7 @@ function asset(ref, fromFile) {
   const k = key(ref, fromFile);
   if (!/\.(webp|jpe?g|png|svg|gif|avif)$/i.test(k)) return null;
   // спрайты иконок встроены в страницу: <use href="…icons.svg#x"> → "#x" (<use> с чужого сервера не работает)
-  if (/(^|\/)(icons|bike)\.svg$/.test(k) && ref.includes("#")) return "#" + ref.split("#")[1];
+  if (/(^|\/)(icons|bike)\.svg$/.test(k) && ref.includes("#")) return "#ic-" + ref.split("#")[1]; // 01.11: префикс ic-, иначе id иконок (menu, compare) совпадали с id блоков страницы и ломали меню
   if (AMAP[k]) return AMAP[k] + (ref.includes("#") ? "#" + ref.split("#")[1] : "");
   missing.add(k);
   return null;
@@ -164,7 +164,7 @@ for (const page of PAGES) {
   }).join("");
   // спрайты иконок — прямо в страницу (с чужого сервера <use> не работает)
   const sprites = ["assets/icons.svg", "assets/bike.svg"].filter((s) => page === "index" || body.includes(s.split("/")[1]))
-    .map((s) => read(s).replace(/<\?xml[^>]*>/, "").replace(/<svg/, '<svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"')).join("");
+    .map((s) => read(s).replace(/<\?xml[^>]*>/, "").replace(/<svg/, '<svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"').replace(/ id="([\w-]+)"/g, ' id="ic-$1"').replace(/href="#([\w-]+)"/g, 'href="#ic-$1"')).join("");
   const out = `<!-- 79BIKE · ${page} · нативная сборка для T123 (${TARGET}). Не редактировать вручную: правки — в репозитории 79bike-tilda-test. -->\n` +
     runtime({ dataPage: attr("data-page") }) + "\n" + `<script data-src="lead-sink">${readFileSync(join(ROOT, "overrides", "lead-sink.js"), "utf8")}</script>` + "\n" + parts.join("\n") + "\n" + sprites + "\n" + body + "\n" + deferred.join("\n");
   writeFileSync(join(OUT, `${page}.html`), out);

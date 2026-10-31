@@ -21,7 +21,7 @@
     var j = p.indexOf("?"), search = j >= 0 ? p.slice(j) : "", q = j >= 0 ? p.slice(0, j) : p;
     var k = q.replace(/^(\.\.[/])+/, "");
     if (!/^(assets|rep)[/]/.test(k)) k = "rep/" + k;
-    if (/[/](icons|bike)\.svg$/.test(k)) return h;               // иконки встроены в страницу
+    if (/[/](icons|bike)\.svg$/.test(k)) return h ? "#ic-" + h.slice(1) : h; /* 01.11: префикс ic- */               // иконки встроены в страницу
     if (M[k]) return M[k] + h;
     var m = /^rep[/]([a-z-]+)\.html$/.exec(k);
     if (m && R[m[1]]) return route(m[1], search, h);

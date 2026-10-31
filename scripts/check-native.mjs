@@ -43,6 +43,7 @@ for (const [path, page] of LIST) for (const w of [390, 1440]) {
     rel: [...document.querySelectorAll("img[src],source[srcset]")].map((i) => i.getAttribute("src") || i.getAttribute("srcset")).filter((s) => !/^(\/site\/|https?:|data:)/.test(s)).slice(0, 4),
     htmlLinks: [...document.querySelectorAll("a[href]")].map((a) => a.getAttribute("href")).filter((h) => /\.html/.test(h)).slice(0, 4), h1: document.querySelectorAll("h1").length,
     uses: [...document.querySelectorAll("use")].map((u) => u.getAttribute("href") || u.getAttribute("xlink:href") || "").filter((h) => !h.startsWith("#") || !document.getElementById(h.slice(1))).slice(0, 4),
+    dups: (() => { const c = {}; document.querySelectorAll("[id]").forEach((e) => { c[e.id] = (c[e.id] || 0) + 1; }); return Object.keys(c).filter((k) => c[k] > 1).slice(0, 5); })(),
     text: document.body.innerText.replace(/\s+/g, " ").length }));
   const orig = await textOf(`${B}/site/rep/${page.replace("?", ".html?").replace(/^([a-z]+)$/, "$1.html")}`, w);
   const tag = `[${page} ${w}px]`;
@@ -52,6 +53,8 @@ for (const [path, page] of LIST) for (const w of [390, 1440]) {
   rec(m.sw <= m.iw + 1, `${tag} нет горизонтальной прокрутки`, `${m.sw}/${m.iw}`);
   rec(m.htmlLinks.length === 0, `${tag} ссылки ведут на адреса Тильды, не на .html`, m.htmlLinks.join(", "));
   rec(m.h1 === 1, `${tag} один H1`, String(m.h1));
+  rec(m.dups.length === 0, `${tag} нет повторяющихся id`, m.dups.join(", "));
+  if (w < 800 && await p.$("#menu-open")) { await p.click("#menu-open"); await p.waitForTimeout(300); const mo = await p.evaluate(() => { const x = document.getElementById("menu"); return !!x && !x.hidden && x.getBoundingClientRect().height > 100; }); rec(mo, `${tag} мобильное меню открывается`); await p.click("#menu-open").catch(() => {}); }
   rec(m.uses.length === 0, `${tag} иконки из встроенного спрайта`, m.uses.join(", "));
   rec(Math.abs(m.text - orig) / orig < 0.03, `${tag} текста столько же, сколько в исходной странице (нет дублей)`, `${m.text} / ${orig}`);
   if (w === 1440) { const nj = await noJsText(B + path); rec(nj / orig > 0.85, `${tag} текст виден поисковикам без JavaScript`, `${nj} из ${orig} (${Math.round(nj / orig * 100)}%)`); }
