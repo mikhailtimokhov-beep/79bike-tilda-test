@@ -56,6 +56,8 @@ const out = `<!-- ${FALCON ? "FALCON-BIKE" : "79BIKE"}: баннер cookie и �
 <style data-b79="cookie-banner">${cssMin}</style>
 <script data-b79="cookie-banner">${jsMin.replace(/<\/script/gi, "<\\/script")}</script>
 `;
+// 01.11.2026: карточки товаров магазина (/tproduct/) Тильда отдаёт без шапки и подвала проекта — оформление нового дизайна держим в HEAD проекта Falcon
+const outAll = FALCON ? out + readFileSync(join(ROOT, "overrides/falcon-tproduct-skin.html"), "utf8") : out;
 mkdirSync(dirname(join(ROOT, OUT)), { recursive: true });
-writeFileSync(join(ROOT, OUT), out);
+writeFileSync(join(ROOT, OUT), outAll);
 console.log(`tilda-head.html: ${out.length} символов`);
