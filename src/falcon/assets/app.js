@@ -2331,7 +2331,7 @@ b.addEventListener("click",function(){var r=matchMedia("(prefers-reduced-motion:
     if (k !== "v") { var v = w.querySelector("video"); if (v && !v.paused) v.pause(); }
   });
   document.addEventListener("play", function (e) { if (e.target.matches && e.target.matches("video[data-hls]")) attach(e.target); }, true);
-  document.addEventListener("click", function (e) { var c = e.target.closest("[data-asm-play]"); if (!c) return; var v = c.parentNode.querySelector("video"); c.hidden = true; if (v) { var r = v.play(); if (r && r.catch) r.catch(function () {}); } }); /* 01.11: заставка → видео */
+  document.addEventListener("click", function (e) { var c = e.target.closest("[data-asm-play]"); if (!c) return; var v = c.parentNode.querySelector("video"), fr = c.parentNode.querySelector("iframe"); c.hidden = true; if (v) { var r = v.play(); if (r && r.catch) r.catch(function () {}); } else if (fr) { fr.src = fr.src + (fr.src.indexOf("?") < 0 ? "?" : "&") + "autoplay=1"; } }); /* 01.11: заставка → видео */
   document.addEventListener("click", function (e) { var v = e.target.closest && e.target.closest(".asm__v"); if (v) attach(v.querySelector("video")); }, true);
 })();
 
