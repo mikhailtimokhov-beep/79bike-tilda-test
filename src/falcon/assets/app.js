@@ -1359,7 +1359,11 @@
   P.manual = function () {
     var s = document.body.getAttribute("data-model"), D = (window.MANUALS || {})[s], m = bySlug(s);
     if (!D) return head('<a href="instructions.html">Инструкции</a>', "Инструкция не найдена", "") + sec("", "", '<a class="btn btn--main" href="instructions.html">Все инструкции</a>');
-    var S = D.sections, toc = "<ol>" + S.map(function (x) { return '<li><a href="#' + x.id + '">' + esc(x.title) + "</a></li>"; }).join("") + "</ol>";
+    /* 01.11 (Михаил): сборка — в самом верху инструкции: на телефоне раскрывающаяся плашка, на компьютере сразу открыта */
+    var ASM = null, S = D.sections.filter(function (x) { if (x.id === "assembly" && !ASM) { ASM = x; return false; } return true; });
+    var asmTop = ASM ? '<div class="wrap"><details class="mn-asmtop" id="assembly" data-asmtop><summary><span class="mn-asmtop__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg></span><span class="mn-asmtop__t"><b>' + esc(ASM.title) + '</b><small>Видео и пошаговая инструкция — начните с неё после доставки</small></span><svg class="mn-asmtop__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><div class="mn-asmtop__body">' +
+      ASM.blocks.map(function (b) { return mnBlock(b, m, "falcon:manual:" + s + ":check", D); }).join("") + "</div></details></div>" : "";
+    var toc = "<ol>" + S.map(function (x) { return '<li><a href="#' + x.id + '">' + esc(x.title) + "</a></li>"; }).join("") + "</ol>";
     var body = S.map(function (x, i) {
       var prev = S[i - 1], next = S[i + 1], n = (i < 9 ? "0" : "") + (i + 1);
       return '<section class="mn-s" id="' + x.id + '" aria-labelledby="h-' + x.id + '"><h2 class="h2" id="h-' + x.id + '"><span class="mn-n">' + n + "</span>" + esc(x.title) + "</h2>" +
@@ -1370,6 +1374,7 @@
     return '<div class="mn-bar" id="mn-bar"><div class="wrap"><button type="button" id="mn-open" aria-haspopup="dialog" aria-controls="mn-sheet"><b>Раздел</b><span id="mn-cur">' + esc(S[0].title) + '</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button></div><i class="mn-bar__prog" id="mn-prog-m"></i></div>' +
       head('<span>Клиентам</span><span aria-hidden="true">/</span><a href="instructions.html">Инструкции</a><span aria-hidden="true">/</span><span>' + esc(SHORT[s]) + "</span>", "Инструкция " + esc(D.name), D.lead) +
       '<div class="wrap">' + mnSwitch(s) + "</div>" +
+      asmTop +
       '<div class="wrap mn-layout"><aside class="mn-toc" aria-label="Содержание инструкции"><p class="mn-toc__h">Содержание</p><nav id="mn-toc-list">' + toc + '</nav><div class="mn-toc__prog" aria-hidden="true"><i id="mn-prog"></i></div><div class="mn-toc__aside">Не нашли ответ?<a href="' + PHONE_HREF + '">' + PHONE + '</a><button type="button" class="mn-linkbtn" data-msgr>Написать в мессенджер</button></div></aside>' +
       '<article class="mn-body" id="manual">' + body + other + "</article></div>" +
       '<dialog class="mn-sheet" id="mn-sheet" aria-label="Содержание"><div class="mn-sheet__in"><div class="mn-sheet__h"><p>Содержание</p><button class="icon-btn" type="button" id="mn-close" aria-label="Закрыть">' + ICON.close + '</button></div><nav class="mn-toc mn-toc--sheet" aria-label="Содержание">' + toc + "</nav></div></dialog>";
@@ -1394,6 +1399,10 @@
   document.title = document.title || "Falcon 79BIKE";
 
   /* 26.10: инструкция — подсветка раздела, прогресс, мобильное оглавление, чек-лист */
+  if (page === "manual") (function () { var d = document.querySelector("[data-asmtop]"); if (!d) return;
+    if ((window.matchMedia && matchMedia("(min-width: 900px)").matches) || location.hash === "#assembly") d.open = true;
+    window.addEventListener("hashchange", function () { if (location.hash === "#assembly") d.open = true; });
+  })();
   if (page === "manual" && $("manual")) (function () {
     var links = [].slice.call(document.querySelectorAll("#mn-toc-list a")), all = [].slice.call(document.querySelectorAll(".mn-toc a[href^='#']"));
     var secs = links.map(function (a) { return document.getElementById(a.getAttribute("href").slice(1)); });
