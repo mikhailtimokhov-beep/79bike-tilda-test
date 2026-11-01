@@ -1339,6 +1339,7 @@
   function mnBlock(b, m, ck, D) {
     var t = b[0];
     if (t === "p") return "<p>" + b[1] + "</p>";
+    if (t === "kin") return '<div class="mn-kin"><p class="mn-kin__h"><b>' + esc(b[1].title) + "</b>" + (b[1].meta ? "<small>" + esc(b[1].meta) + "</small>" : "") + '</p><div class="mn-kin__v"><iframe src="https://kinescope.io/embed/' + esc(b[1].id) + '" title="' + esc(b[1].title) + '" loading="lazy" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowfullscreen></iframe></div></div>'; /* 01.11 */
     if (t === "h") return '<h3 class="h3">' + esc(b[1]) + "</h3>";
     if (t === "ul") return '<ul class="list">' + b[1].map(function (x) { return "<li><span>" + x + "</span></li>"; }).join("") + "</ul>";
     if (t === "ol") return '<ol class="mn-ol">' + b[1].map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ol>";
@@ -1361,7 +1362,7 @@
     if (!D) return head('<a href="instructions.html">Инструкции</a>', "Инструкция не найдена", "") + sec("", "", '<a class="btn btn--main" href="instructions.html">Все инструкции</a>');
     /* 01.11 (Михаил): сборка — в самом верху инструкции: на телефоне раскрывающаяся плашка, на компьютере сразу открыта */
     var ASM = null, S = D.sections.filter(function (x) { if (x.id === "assembly" && !ASM) { ASM = x; return false; } return true; });
-    var asmTop = ASM ? '<div class="wrap"><details class="mn-asmtop" id="assembly" data-asmtop><summary><span class="mn-asmtop__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg></span><span class="mn-asmtop__t"><b>' + esc(ASM.title) + '</b><small>Видео и пошаговая инструкция — начните с неё после доставки</small></span><svg class="mn-asmtop__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><div class="mn-asmtop__body">' +
+    var asmTop = ASM ? '<div class="wrap"><details class="mn-asmtop" id="assembly" data-asmtop><summary><span class="mn-asmtop__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg></span><span class="mn-asmtop__t"><b>' + esc(ASM.title) + '</b><small>' + (ASM.blocks.some(function (b) { return b[0] === "asm"; }) ? "Видео и фото по шагам — начните с неё после доставки" : ASM.blocks.some(function (b) { return b[0] === "kin"; }) ? (ASM.blocks.some(function (b) { return b[0] === "steps"; }) ? "Видео и пошаговая инструкция — начните с неё после доставки" : "Видеоинструкция — начните с неё после доставки") : "Пошаговая инструкция — начните с неё после доставки") + '</small></span><svg class="mn-asmtop__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><div class="mn-asmtop__body">' +
       ASM.blocks.map(function (b) { return mnBlock(b, m, "falcon:manual:" + s + ":check", D); }).join("") + "</div></details></div>" : "";
     var toc = "<ol>" + S.map(function (x) { return '<li><a href="#' + x.id + '">' + esc(x.title) + "</a></li>"; }).join("") + "</ol>";
     var body = S.map(function (x, i) {
@@ -1380,10 +1381,10 @@
       '<dialog class="mn-sheet" id="mn-sheet" aria-label="Содержание"><div class="mn-sheet__in"><div class="mn-sheet__h"><p>Содержание</p><button class="icon-btn" type="button" id="mn-close" aria-label="Закрыть">' + ICON.close + '</button></div><nav class="mn-toc mn-toc--sheet" aria-label="Содержание">' + toc + "</nav></div></dialog>";
   };
   function mnCards(cur) {
-    var L = MN_ORDER.map(function (s) { return [s, mnFile(s), s === cur ? "Вы здесь" : "Инструкция"]; }).concat([["lynx-x", FILE["lynx-x"], "К старту продаж"]]);
+    var L = MN_ORDER.map(function (s) { return [s, mnFile(s), s === cur ? "Вы здесь" : ""]; }).concat([["lynx-x", FILE["lynx-x"], "К старту продаж"]]);
     return '<div class="mn-other">' + L.map(function (x) {
       var off = x[0] === "lynx-x";
-      return '<a href="' + x[1] + '"' + (x[0] === cur ? ' aria-current="page"' : "") + (off ? ' class="is-off"' : "") + '><span class="mn-other__pic"><img src="' + cutSrc(x[0]) + '" alt="" loading="lazy" decoding="async"></span>' + esc(SHORT[x[0]]) + "<small>" + esc(x[2]) + "</small></a>";
+      return '<a href="' + x[1] + '"' + (x[0] === cur ? ' aria-current="page"' : "") + (off ? ' class="is-off"' : "") + '><span class="mn-other__pic"><img src="' + cutSrc(x[0]) + '" alt="" loading="lazy" decoding="async"></span>' + esc(SHORT[x[0]]) + (x[2] ? "<small>" + esc(x[2]) + "</small>" : '<span class="mn-other__go">Открыть инструкцию <span aria-hidden="true">→</span></span>') + "</a>"; /* 01.11: явная кнопка */
     }).join("") + "</div>";
   }
   P.instructions = function () {
