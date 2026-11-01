@@ -1339,7 +1339,7 @@
   function mnBlock(b, m, ck, D) {
     var t = b[0];
     if (t === "p") return "<p>" + b[1] + "</p>";
-    if (t === "kin") return '<div class="mn-kin"><p class="mn-kin__h"><b>' + esc(b[1].title) + "</b>" + (b[1].meta ? "<small>" + esc(b[1].meta) + "</small>" : "") + '</p><div class="mn-kin__v"><iframe src="https://kinescope.io/embed/' + esc(b[1].id) + '" title="' + esc(b[1].title) + '" loading="lazy" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowfullscreen></iframe></div></div>'; /* 01.11 */
+    if (t === "kin") { var K = b[1]; return '<div class="mn-kin"><p class="mn-kin__h"><b>' + esc(K.title) + "</b>" + (K.meta ? "<small>" + esc(K.meta) + "</small>" : "") + '</p><a class="mn-kp" href="https://kinescope.io/' + esc(K.id) + '" data-embed="https://kinescope.io/embed/' + esc(K.id) + '?autoplay=1" data-vp="kinescope" data-vt="' + esc(K.title) + '" aria-label="Смотреть: ' + esc(K.title) + '">' + kpIn(K) + "</a></div>"; } /* 01.11: своя заставка вместо пустого окна; ролик — во всплывающем плеере */
     if (t === "h") return '<h3 class="h3">' + esc(b[1]) + "</h3>";
     if (t === "ul") return '<ul class="list">' + b[1].map(function (x) { return "<li><span>" + x + "</span></li>"; }).join("") + "</ul>";
     if (t === "ol") return '<ol class="mn-ol">' + b[1].map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ol>";
@@ -1353,9 +1353,12 @@
     if (t === "asm") { var A = b[1];
       return '<div class="asm" data-asm>' +
         '<div class="asm__tabs" role="tablist" aria-label="Формат инструкции"><button type="button" role="tab" aria-selected="true" data-asm-tab="v"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>Видеоинструкция</button><button type="button" role="tab" aria-selected="false" data-asm-tab="t"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 10v10"/></svg>Текст и кадры</button></div>' +
-        '<div class="asm__p" data-asm-p="v"><h3 class="h3 asm__h">Видеоинструкция: сборка ' + esc(A.model) + '</h3><div class="asm__v"><video controls playsinline preload="none" poster="' + esc(A.poster) + '" data-hls="' + esc(A.hls) + '"></video></div><p class="asm__meta">' + esc(A.meta) + '</p></div>' +
+        '<div class="asm__p" data-asm-p="v"><h3 class="h3 asm__h">Видеоинструкция: сборка ' + esc(A.model) + '</h3><div class="asm__v"><video controls playsinline preload="none" poster="' + esc(A.poster) + '" data-hls="' + esc(A.hls) + '"></video>' + (A.cut ? '<button type="button" class="mn-kp mn-kp--over" data-asm-play aria-label="Смотреть видеоинструкцию: сборка ' + esc(A.model) + '">' + kpIn({ cut: A.cut, poster: "Сборка " + A.model, dur: (A.meta || "").split(" ")[0] }) + "</button>" : "") + '</div><p class="asm__meta">' + esc(A.meta) + '</p></div>' +
         '<div class="asm__p" data-asm-p="t" hidden><h3 class="h3 asm__h">Фотоинструкция: сборка ' + esc(A.model) + ' по шагам</h3><ol class="asm__steps">' + A.steps.map(function (x, i) { return '<li><figure role="img" aria-label="' + esc(x[0]) + '" style="background-image:url(' + A.sprite + ');background-size:' + (A.cols * 100) + '% ' + (A.rows * 100) + '%;background-position:' + ((i % A.cols) / (A.cols - 1) * 100) + '% ' + (A.rows > 1 ? (Math.floor(i / A.cols) / (A.rows - 1) * 100) : 0) + '%"></figure><div><p class="asm__n">Шаг ' + (i + 1) + '</p><b>' + esc(x[0]) + '</b>' + (x[1].replace(/[.!]$/, "") !== x[0] ? '<p>' + esc(x[1]) + '</p>' : "") + '</div></li>'; }).join("") + '</ol></div></div>'; }
     return "";
+  }
+  function kpIn(K) { /* 01.11: заставка видео в стиле сайта */
+    return '<span class="mn-kp__glow" aria-hidden="true"></span>' + (K.cut ? '<img class="mn-kp__bike" src="assets/photos/cut/' + esc(K.cut) + '.webp" alt="" loading="lazy" decoding="async">' : "") + '<span class="mn-kp__txt"><span class="mn-kp__tag">' + esc(K.tag || "Видеоинструкция") + '</span><span class="mn-kp__t">' + esc(K.poster || K.title) + '</span><span class="mn-kp__brand">FALCON BIKE · 79BIKE</span></span><span class="mn-kp__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></span>' + (K.dur ? '<span class="mn-kp__dur">' + esc(K.dur) + "</span>" : "");
   }
   P.manual = function () {
     var s = document.body.getAttribute("data-model"), D = (window.MANUALS || {})[s], m = bySlug(s);
@@ -2142,7 +2145,7 @@ b.addEventListener("click",function(){var r=matchMedia("(prefers-reduced-motion:
       dlg.querySelector(".vmodal__x").focus();
     }
     function close() { if (frame) { frame.remove(); frame = null; } dlg.hidden = true; document.body.style.overflow = ""; if (lastFocus) lastFocus.focus(); }
-    document.addEventListener("click", function (e) { var a = e.target.closest("a.vcard[data-embed]"); if (!a || e.ctrlKey || e.metaKey) return; e.preventDefault(); open(a); });
+    document.addEventListener("click", function (e) { var a = e.target.closest("a.vcard[data-embed], a.mn-kp[data-embed]"); if (!a || e.ctrlKey || e.metaKey) return; e.preventDefault(); open(a); });
   })();
   /* фотогалерея: фильтр по цвету, мозаика, вкладки на главной, лайтбокс */
   (function () {
@@ -2328,6 +2331,7 @@ b.addEventListener("click",function(){var r=matchMedia("(prefers-reduced-motion:
     if (k !== "v") { var v = w.querySelector("video"); if (v && !v.paused) v.pause(); }
   });
   document.addEventListener("play", function (e) { if (e.target.matches && e.target.matches("video[data-hls]")) attach(e.target); }, true);
+  document.addEventListener("click", function (e) { var c = e.target.closest("[data-asm-play]"); if (!c) return; var v = c.parentNode.querySelector("video"); c.hidden = true; if (v) { var r = v.play(); if (r && r.catch) r.catch(function () {}); } }); /* 01.11: заставка → видео */
   document.addEventListener("click", function (e) { var v = e.target.closest && e.target.closest(".asm__v"); if (v) attach(v.querySelector("video")); }, true);
 })();
 
