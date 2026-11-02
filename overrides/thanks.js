@@ -12,7 +12,7 @@
   function kindOf(f, site) {
     var id = f.id || "";
     if (site === "falcon") {
-      if (id === "f-visit") return "testdrive";
+      if (id === "f-visit") return "testdrive"; if (id === "f-contact") return "visit";
       if (id === "f-order") return f.querySelector('input[name="ads"]') ? "notify" : "order";
       if (id === "f-credit") return "credit";
       if (id === "f-service") return "service";
@@ -55,7 +55,8 @@
     var T = {
       testdrive: { h: "Записали вас на тест-драйв", lead: (d.d ? "Дата визита: " + dateRu(d.d) + (d.t ? ", около " + d.t + ":00" : "") + ". " : "") + "Менеджер свяжется, согласует время и подтвердит визит.",
         steps: ["Менеджер свяжется с вами и подтвердит дату и время. " + back, "Условия: с 18 лет; залог за байк — наличными; при повреждениях вы платите за байк.", "Адрес шоурума: " + ADDR + ". Визит — по предварительному звонку."],
-        links: [["/contacts", "Как добраться"], ["/compare", "Сравнить модели"], ["/faq", "Вопрос-ответ"]] },
+        links: [["/compare", "Сравнить модели"], ["/faq", "Вопрос-ответ"]] },
+      visit: { h: "Заявка принята", lead: "Визит в шоурум — только после подтверждения менеджера. Менеджер свяжется с вами и согласует время.", steps: ["Менеджер свяжется с вами и подтвердит время визита. " + back, "Шоурум: " + ADDR + ". Когда подъедете — позвоните, менеджер встретит."], links: [["/compare", "Сравнить модели"], ["/faq", "Вопрос-ответ"]] },
       order: { h: "Заявка" + (m ? " на " + m : "") + " принята", lead: "Менеджер подтвердит заказ и уточнит доставку и способ оплаты. Заполнять анкету не нужно.",
         steps: ["Менеджер свяжется с вами. " + back].concat(DELIV), links: [["/delivery", "Доставка и оплата"], ["/rassrochka", "Рассрочка"], ["/test-drive", "Тест-драйв"]] },
       notify: { h: "Сообщим о старте продаж", lead: "Как только " + (m || "модель") + " можно будет заказать, мы позвоним или напишем.",
@@ -96,6 +97,7 @@
       '<div><h2 class="ty__h">Не хотите ждать?</h2><div class="ty__row"><a class="btn btn--main" href="' + TEL + '">Позвонить ' + PHONE + '</a>' +
       '<a class="btn btn--ghost" href="https://wa.me/79999005588" target="_blank" rel="noopener">WhatsApp</a><a class="btn btn--ghost" href="https://t.me/Meliso_group" target="_blank" rel="noopener">Telegram</a><a class="btn btn--ghost" href="https://vk.me/79bike" target="_blank" rel="noopener">VK Мессенджер</a></div></div>' +
       '<div><h2 class="ty__h">Пока ждёте</h2><div class="ty__row">' + c.links.map(function (l) { return '<a class="chip" href="' + l[0] + '">' + esc(l[1]) + "</a>"; }).join("") + "</div></div>" +
+      (site === "falcon" && (d.k === "testdrive" || d.k === "visit") ? '<div><h2 class="ty__h">Как пройти в шоурум</h2><p>Москва, ул. Речников, 21 — от въезда до шоурума. Приезжайте после подтверждения менеджера.</p><div style="max-width:420px;aspect-ratio:9/16;border-radius:16px;overflow:hidden;background:#111"><iframe src="https://kinescope.io/embed/q9M64MSqSkQtPJgAjdXd72" loading="lazy" title="Видео: как пройти от въезда на ул. Речников, 21 до шоурума 79BIKE" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowfullscreen frameborder="0" style="display:block;width:100%;height:100%;border:0"></iframe></div></div>' : "") +
       '<div class="ty__row">' + back + "</div></div></div></section>";
   };
 })();
