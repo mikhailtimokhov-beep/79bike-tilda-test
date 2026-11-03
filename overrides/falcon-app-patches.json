@@ -125,6 +125,11 @@
    "var pic = a.video ? '<video src=\"' + esc(a.video) + '\" poster=\"' + esc(a.img) + '\" controls playsinline preload=\"none\" aria-label=\"' + esc(a.title) + '\"></video>'",
    "var pic = a.video ? '<iframe src=\"https://kinescope.io/embed/{{snowKit}}\" title=\"' + esc(a.title) + '\" allow=\"autoplay; fullscreen; picture-in-picture; encrypted-media\" frameborder=\"0\" loading=\"lazy\" style=\"width:100%;height:100%;border:0;display:block\"></iframe>'",
    "03.11: видео снежного комплекта — Kinescope"
+  ],
+  [
+   "sec(\"\", \"\", '<div class=\"callout\">' + ICON.alert + '<p>Черновик документа. Перед публикацией его проверит юрист; места, выделенные цветом, заполнит владелец.</p></div><article class=\"doc\">' + d.html + \"</article>\");",
+   "sec(\"\", \"\", (window.LEGAL_FINAL ? \"\" : '<div class=\"callout\">' + ICON.alert + '<p>Черновик документа. Перед публикацией его проверит юрист; места, выделенные цветом, заполнит владелец.</p></div>') + '<article class=\"doc\">' + d.html + \"</article>\");",
+   "03.11 «Перенос»: у финальных /privacy и /consent (overrides/falcon-legal.js, LEGAL_FINAL) нет плашки «Черновик»"
   ]
  ]
 }

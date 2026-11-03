@@ -188,6 +188,7 @@ function assemble(file, pre, seoKey) {
     if (SHARED.includes(k)) continue; // в подвале проекта
     let js = readFileSync(join(SRC, k), "utf8");
     if (k === "data/seo.js") js = seoFor(seoKey);
+    if (k === "data/legal.js") js = legalJs(js);
     if (k === "assets/app.js") js = patchApp(js);
     scripts.push(`<script data-src="${k}">${js.replace(/<\/script/gi, "<\\/script")}</script>`);
   }
@@ -204,6 +205,8 @@ function assemble(file, pre, seoKey) {
     (seoKey ? staticLd(seoKey) + "\n" : "") + `<div id="b79-root" hidden></div>\n` + markPre(markup(pre)) + "\n" + scripts.join("\n");
 }
 
+/* 03.11 «Перенос»: финальные /privacy и /consent (LEGAL-01 v2 + LEGAL-02) из overrides/falcon-legal.js — только когда в falcon-legal-vars.json задан адрес оператора */
+function legalJs(js) { const vf = join(ROOT, "overrides", "falcon-legal-vars.json"); const lv = existsSync(vf) ? JSON.parse(readFileSync(vf, "utf8")) : {}; return lv.ADDR ? readFileSync(join(ROOT, "overrides", "falcon-legal.js"), "utf8").replace(/\{\{ADDR\}\}/g, lv.ADDR) : js; }
 // --- пререндер прототипа ---
 const { createServer } = await import("node:http");
 const { chromium } = await import("playwright");
@@ -212,6 +215,7 @@ const srv = createServer((q, r) => {
   const u = decodeURIComponent(q.url.split("?")[0]); const f = join(SRC, u === "/" ? "index.html" : u);
   if (!existsSync(f)) { r.writeHead(404); return r.end(); }
   r.writeHead(200, { "Content-Type": TYPES[extname(f)] || "application/octet-stream" });
+  if (/data[/\\]legal\.js$/.test(f)) return r.end(legalJs(readFileSync(f, "utf8")));
   if (/assets[/\\]app\.js$/.test(f)) return r.end(patchApp(readFileSync(f, "utf8"))); // пререндер — с теми же правками, что на сайте (ролики Kinescope и т. д.)
   if (/\.(html|js)$/.test(f) && !/assets[/\\]app\.js$/.test(f)) return r.end(FIX_TITLE(readFileSync(f, "utf8")).replace(/<title>([^<]*)<\/title>/, (a, t) => "<title>" + FIX_TITLE(t) + "</title>"));
   r.end(readFileSync(f));
