@@ -312,7 +312,7 @@
   }
   function orderForm(id, title, text, btn, ok, o) {
     o = o || {};
-    var pre = o.model ? recall() : null;
+    var pre = o.model ? (o.pre || recall()) : null;
     return '<div class="cta-band"><div style="flex:1 1 340px"><h2>' + title + "</h2><p>" + text + '</p></div><form class="form" id="' + id + '" style="flex:1 1 400px" novalidate>' +
       (o.sum ? '<div class="osum" id="osum"><span class="osum__pic">' + imgTag(o.sum, firstImg(o.sum), "", ' id="osum-img"') + '</span><span class="osum__txt"><span class="osum__cap">Ваш выбор</span><b>' + esc(bySlug(o.sum).name) + '</b><span id="osum-color"></span></span><span class="osum__price"><b class="num">' + money(bySlug(o.sum).price) + "</b>" + (bySlug(o.sum).oldPrice ? "<s>" + money(bySlug(o.sum).oldPrice) + "</s>" : "") + '</span><input type="hidden" name="color" id="osum-in"></div>' : "") +
       (o.city && o.cityFirst ? '<label for="' + id + '-city">Город</label><input id="' + id + '-city" data-req="Укажите город." type="text" autocomplete="address-level2" placeholder="Например, Екатеринбург">' : "") +
@@ -852,6 +852,9 @@
       sec("about", "", '<details class="size-scheme"><summary>Подробнее о ' + esc(SHORT[slug]) + '</summary><div class="prose" style="padding:0 18px 18px">' + (mc.body || []).map(function (p) { return "<p>" + esc(p) + "</p>"; }).join("") + "</div></details>") +
       ((((C.modelPage || {}).accessories || {}).byModel || {})[slug] ? sec("acc", "Рекомендуем купить к " + esc(SHORT[slug]), accHtml(slug) + '<p class="acc__all"><a class="btn btn--ghost" href="parts.html">Все запчасти</a></p>') : "") +
       (mc.faq && mc.faq.length ? sec("faq", "Вопросы о " + esc(SHORT[slug]), faqHtml(mc.faq, true)) : "") +
+      /* 03.11 (Михаил): внизу страницы модели — отзывы и запись на тест-драйв (без дублей: блок отзывов один, форма тест-драйва только у моделей с тест-драйвом) */
+      (function () { var Q = (C.ownerReviews && C.ownerReviews.items || []).slice(0, 3); return Q.length ? sec("owners", "Отзывы владельцев", '<div class="trio">' + Q.map(function (q) { var t = nb(q.text.replace(/79 ?bike pro/gi, "79BIKE Pro").replace(/79 ?bike/gi, "79BIKE").replace(/суррон/gi, "Sur-Ron").replace(/Талария/g, "Talaria")); return '<figure class="quote"><blockquote>' + esc(t) + '</blockquote><figcaption><span class="ava" aria-hidden="true">' + esc(q.name[0]) + "</span><span>" + esc(q.name) + '<span class="quote__model">' + esc(q.model ? "Владелец " + q.model : "Покупатель 79BIKE") + '</span></span></figcaption></figure>'; }).join("") + '</div><p class="owners__more"><a class="btn btn--ghost btn--wide" href="https://www.avito.ru/user/2304cbf6145715d8d9c460c84c03212a/profile" target="_blank" rel="noopener">Ещё отзывы — наш профиль на Авито</a></p>') : ""; })() +
+      (soon || slug === "surge-v" ? "" : sec("visit", "", orderForm("f-visit", "Тест-драйв " + esc(SHORT[slug]), "Тест-драйв проводим для жителей Москвы и Московской области. Оставьте телефон — перезвоним и согласуем время визита.", "Записаться", "Спасибо! Перезвоним и согласуем время.", { model: true, when: true, pre: slug }))) +
       sec("others", "Другие модели", modelCards(others));
   };
   P.compare = function () {
@@ -1050,12 +1053,12 @@
           '<dialog class="pcd" id="pcd" aria-labelledby="pcd-t"><div class="pcd__in" id="pcd-in"></div></dialog>' +
           '<dialog class="pcd pcd--cart" id="pck" aria-labelledby="pck-t"><div class="pcd__in" id="pck-in"></div></dialog>' +
           '<button type="button" class="pc__fab" id="pc-fab" hidden aria-label="Открыть корзину"></button>') +
-        sec("order", "", orderForm("f-parts", "Не нашли нужную деталь?", "Оставьте телефон или пришлите фото детали в мессенджер. Менеджер подберёт запчасть под вашу модель и год выпуска.", "Подобрать", "Спасибо! Менеджер скоро позвонит."));
+        sec("order", "", orderForm("f-parts", "Не нашли нужную деталь?", "Оставьте телефон или ник в мессенджере (WhatsApp, Telegram, VK) — или пришлите фото детали. Менеджер подберёт запчасть под вашу модель и год выпуска.", "Подобрать", "Спасибо! Менеджер скоро позвонит."));
     }
     return head('<span>Клиентам</span><span aria-hidden="true">/</span><span>Запчасти и аксессуары</span>', "Запчасти и аксессуары", "Оригинальные запчасти, зарядные устройства и расходники для Falcon, Lynx и Y-Volt. Если доставка нашим курьером — привезём вместе с байком, если транспортной компанией — отправим СДЭКом.") +
       sec("", "Запчасти", '<div class="tech">' + items.map(function (a) { return '<article class="card"><h3 class="h3">' + esc(a.title) + "</h3><p>" + esc(a.text) + "</p></article>"; }).join("") + "</div>") +
       sec("", "Запчасти", '<div class="duo"><div class="card"><h3 class="h3">Держим в наличии</h3><ul class="list"><li><span>Расходники: колодки, камеры, покрышки, цепи.</span></li><li><span>Штатные зарядные устройства.</span></li><li><span>Детали подвески и пластик — уточняйте у менеджера.</span></li></ul></div><div class="card"><h3 class="h3">Как заказать</h3><ul class="list"><li><span>Назовите модель и деталь менеджеру или пришлите фото в мессенджер.</span></li><li><span>Отправим СДЭК в любой город или выдадим в шоуруме.</span></li></ul></div></div>') +
-      sec("order", "", orderForm("f-parts", "Подобрать запчасть", "Оставьте телефон. Менеджер уточнит модель и наличие.", "Подобрать", "Спасибо! Менеджер скоро позвонит."));
+      sec("order", "", orderForm("f-parts", "Подобрать запчасть", "Оставьте телефон или ник в мессенджере — WhatsApp, Telegram или VK. Менеджер уточнит модель и наличие.", "Подобрать", "Спасибо! Менеджер скоро позвонит."));
   };
   function faqGroups() {
     var seen = {}, all = (C.faq || []).filter(function (f) { if (seen[f.q]) return false; seen[f.q] = 1; return true; });
@@ -1656,7 +1659,7 @@
     i.addEventListener("change", sync); i.addEventListener("input", sync);
   });
   document.addEventListener("click", function (e) { var a = e.target.closest("#r-try, #r-cmp"); if (a && window.__pick) remember(window.__pick); });
-  if ($("f-visit")) { var mv = recall(); if (mv) { var t = $("f-visit").parentNode.querySelector("h2"); if (t) t.textContent = "Тест-драйв " + bySlug(mv).name; } }
+  if ($("f-visit") && page !== "model") { var mv = recall(); if (mv) { var t = $("f-visit").parentNode.querySelector("h2"); if (t) t.textContent = "Тест-драйв " + bySlug(mv).name; } }
 
   /* сравнение: выбор моделей (по умолчанию 3: последняя просмотренная и соседи по цене) */
   if ($("cmp-pick")) {
@@ -2408,4 +2411,34 @@ b.addEventListener("click",function(){var r=matchMedia("(prefers-reduced-motion:
   }
   window.addEventListener("hashchange", go);
   if (document.readyState === "complete") setTimeout(go, 300); else window.addEventListener("load", function () { setTimeout(go, 300); });
+})();
+/* 03.11 (Михаил): разделы запчастей на Тильде (страница tstore) — если поиск в текущем разделе ничего не нашёл, сразу показываем совпадения из других разделов под заголовком «В других разделах» */
+(function () {
+  if (document.body.getAttribute("data-page") !== "tstore") return;
+  var key = document.body.getAttribute("data-sk") || ""; if (!key) return; /* в «Все запчасти» ищем и так по всем разделам */
+  var timer = 0, shownOnce = false;
+  function E(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function M(n) { return n == null ? "" : String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽"; }
+  function N(s) { return String(s || "").toLowerCase().replace(/ё/g, "е"); }
+  function items() { var P = window.PARTS, out = []; if (!P || !P.sites) return out; P.sites.forEach(function (s) { if (s.key !== "falcon") return; (s.items || []).forEach(function (it) { out.push(it); }); }); return out; }
+  function catName(c) { var T = window.B79_TSTORE || { cats: [] }, f = T.cats.filter(function (x) { return x[0] === c; })[0]; return f ? f[1] : ""; }
+  function box() { var b = document.getElementById("b79-xs"); if (b) return b; var slot = document.getElementById("b79-tilda-slot"); if (!slot) return null; b = document.createElement("div"); b.id = "b79-xs"; b.className = "xs"; b.hidden = true; slot.parentNode.insertBefore(b, slot.nextSibling); return b; }
+  function run(q) {
+    var b = box(); if (!b) return; q = N(q).trim();
+    if (q.length < 2) { b.hidden = true; return; }
+    var W = q.split(/\s+/), L = items(), here = 0, other = [], seen = {};
+    L.forEach(function (it) { var h = N(it.t + " " + (it.sku || "")); if (!W.every(function (w) { return h.indexOf(w) >= 0; })) return; if ((it.c || []).indexOf(key) >= 0) { here++; return; } var k = N(it.t) + "|" + it.p; if (seen[k]) return; seen[k] = 1; other.push(it); });
+    if (here || !other.length) { b.hidden = true; return; }
+    b.innerHTML = '<h2 class="h3 xs__h">В других разделах</h2><p class="xs__sub">В этом разделе по запросу «' + E(q) + '» ничего нет — нашли в других:</p><div class="xs__grid">' + other.slice(0, 24).map(function (it) {
+      var c = (it.c || [])[0], src = it.img || it.loc || "";
+      return '<a class="xs__card" href="' + E(it.url || "/accessories") + '">' + (src ? '<span class="xs__pic"><img src="' + E(src) + '" alt="" loading="lazy" decoding="async"></span>' : "") + '<span class="xs__cat">' + E(catName(c)) + '</span><b class="xs__t">' + E(it.t) + '</b><span class="xs__p">' + (it.p ? M(it.p) : "Цена по запросу") + "</span></a>";
+    }).join("") + "</div>" + (other.length > 24 ? '<p class="xs__sub"><a href="/accessories">Ещё ' + (other.length - 24) + " — в каталоге «Все запчасти»</a></p>" : "");
+    b.hidden = false;
+    if (!shownOnce) { shownOnce = true; var r = b.getBoundingClientRect(); if (r.top > innerHeight * 0.85) b.scrollIntoView({ block: "start", behavior: "smooth" }); }
+  }
+  function isSearch(el) { return el && el.tagName === "INPUT" && el.closest && el.closest("#b79-tilda-slot") && (/search|query/i.test((el.className || "") + " " + (el.name || "") + " " + (el.type || "")) || /поиск/i.test(el.placeholder || "")); }
+  document.addEventListener("input", function (e) { if (!isSearch(e.target)) return; var v = e.target.value; clearTimeout(timer); timer = setTimeout(function () { run(v); }, 250); }, true);
+  /* 03.11 (Михаил): «все запчасти загружались сразу» — пока у каталога Тильды есть кнопка «Загрузить ещё», нажимаем её сами */
+  (function more() { var n = 0, iv = setInterval(function () { var b = document.querySelector("#b79-tilda-slot .js-store-load-more-btn, #b79-tilda-slot .t-store__load-more-btn"); if (b && b.offsetParent) { b.click(); n = 0; } else if (++n > 40) clearInterval(iv); }, 500); var st = document.createElement("style"); st.textContent = "#b79-tilda-slot .t-store__load-more-btn-wrap{height:0!important;margin:0!important;padding:0!important;overflow:hidden!important;opacity:0!important}"; document.head.appendChild(st); })();
+  document.addEventListener("keydown", function (e) { if (e.key === "Enter" && isSearch(e.target)) run(e.target.value); }, true);
 })();

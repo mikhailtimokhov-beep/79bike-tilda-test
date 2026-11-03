@@ -1890,3 +1890,17 @@ a[href^="mailto:"],a[href^="http"]{overflow-wrap:anywhere}
 .menu__kv{display:block;font-size:12px;font-weight:500;color:var(--soft);line-height:1.3;margin-top:-2px}
 .menu__price{display:block;font-size:14px;font-weight:800;line-height:1.25}
 .menu__price s{font-weight:500;color:var(--mute);font-size:12px;margin-left:4px;white-space:nowrap}
+/* 03.11: «В других разделах» — поиск по всем разделам запчастей на страницах каталога */
+.xs{margin-top:24px;padding:18px;border-radius:20px;background:var(--panel)}
+.xs[hidden]{display:none}
+.xs__h{margin:0}
+.xs__sub{margin:6px 0 14px;color:var(--soft);font-size:14px}
+.xs__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (min-width:900px){.xs__grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.xs__card{display:flex;flex-direction:column;gap:4px;padding:10px;border-radius:14px;background:var(--bg);color:inherit;text-decoration:none;border:1px solid rgba(255,255,255,.08);min-width:0}
+.xs__pic{display:block;aspect-ratio:1/1;border-radius:10px;background:#fff;overflow:hidden}
+.xs__pic img{width:100%;height:100%;object-fit:contain}
+.xs__cat{font-size:12px;color:var(--soft)}
+.xs__t{font-size:14px;line-height:1.3;overflow-wrap:anywhere}
+.xs__p{font-size:14px;font-weight:800}
+.owners__more{margin:18px 0 0}.owners__more .btn{display:flex;width:100%;justify-content:center}
