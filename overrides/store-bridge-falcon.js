@@ -11,6 +11,8 @@
   css.textContent = '.t706,.t706__cartwin,.t-popup,.t-store{color-scheme:light}body.fb-native .t706__carticon{display:none!important}' +
     /* 03.11 Михаил (sites-change-log): поле «Промокод» в корзине не показываем */
     '.t706 .t-inputpromocode__wrapper,.t706 .t-input-group_pc{display:none!important}' +
+    /* 03.11 Михаил, UX-01 п.3 «Убери вообще»: в нижней панели нет картинки, модели и цены — чат и главная кнопка */
+    'body.fb-native .dock__pic,body.fb-native .dock__txt{display:none!important}body.fb-native .dock .btn{flex:1}' +
     'body.fb-native[data-page="model"] .t-rec[data-record-type="744"],body.fb-native[data-page="model"] .t-rec[data-record-type="786"]{position:absolute!important;left:-10000px!important;top:0!important;width:1200px!important;height:1px!important;overflow:hidden!important}';
   (document.head || document.documentElement).appendChild(css);
   // каталоги магазина (/accessories и разделы): каталог t786 и поиск t838 Тильды переезжают в оболочку нового дизайна (#b79-tilda-slot),
