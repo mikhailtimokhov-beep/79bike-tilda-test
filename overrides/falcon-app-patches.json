@@ -68,7 +68,7 @@
   ],
   [
    "if (p === \"local\") { /* 29.10: свой ролик — встроенный плеер браузера */",
-   "var KM = { \"sv-detali\": \"{{svDetali}}\", \"sv-sborka\": \"{{svSborka}}\", \"water-1\": \"{{water1}}\", \"water-2\": \"{{water2}}\" }, kf = /([\\w-]+)\\.mp4/.exec(src || \"\"); if (p === \"local\" && kf && KM[kf[1]]) { src = \"https://kinescope.io/embed/\" + KM[kf[1]] + \"?autoplay=1\"; p = \"kinescope\"; } /* 31.10: на Тильде своих mp4 нет — ролики из Kinescope */\n      if (p === \"local\") { /* 29.10: свой ролик — встроенный плеер браузера */",
+   "var KM = { \"sv-detali\": \"{{svDetali}}\", \"sv-sborka\": \"{{svSborka}}\", \"water-1\": \"{{water1}}\", \"water-2\": \"{{water2}}\", \"surge-v-zapusk\": \"{{svZapusk}}\" }, kf = /([\\w-]+)\\.mp4/.exec(src || \"\"); if (p === \"local\" && kf && KM[kf[1]]) { src = \"https://kinescope.io/embed/\" + KM[kf[1]] + \"?autoplay=1\"; p = \"kinescope\"; } /* 31.10: на Тильде своих mp4 нет — ролики из Kinescope */\n      if (p === \"local\") { /* 29.10: свой ролик — встроенный плеер браузера */",
    "31.10: свои ролики (Surge V, тест на воду) — Kinescope; на Тильде mp4 нет"
   ],
   [
@@ -105,6 +105,26 @@
    "\"Тест-драйв проводим для жителей Москвы и Московской области. Выберите модель и оставьте телефон. Перезвоним и согласуем время визита.\"",
    "\"<b>Визит — только после подтверждения менеджера.</b> Тест-драйв проводим для жителей Москвы и Московской области. Выберите модель и оставьте телефон. Перезвоним и согласуем время визита.\"",
    "03.11 Михаил: над формой — «визит после подтверждения менеджера» (/contacts; первая форма f-visit в app.js)"
+  ],
+  [
+   "var a = 16 / 9, f = document.createElement(\"iframe\"); f.src = \"https://kinescope.io/embed/",
+   "var a = +(w.getAttribute(\"data-a\") || 16 / 9), f = document.createElement(\"iframe\"); f.src = \"https://kinescope.io/embed/\" + (w.getAttribute(\"data-kin\") || \"{{hero}}\") + \"?background=1\"; if (0) f.src = \"",
+   "03.11: фоновый Kinescope берёт ролик и пропорции из data-kin / data-a"
+  ],
+  [
+   "<div class=\"fh__media mh__media\"><video class=\"fh__video\" muted loop playsinline autoplay preload=\"metadata\" poster=\"' + B(h.p) + '\"' + (mob ? ' data-m=\"' + mob + '\" data-pm=\"' + B(h.pm) + '\"' : \"\") + ' aria-hidden=\"true\">' + (mob ? '<source src=\"' + mob + '\" type=\"video/mp4\" media=\"(max-width: 900px)\">' : \"\") + '<source src=\"' + B(h.d) + '\" type=\"video/mp4\"></video>' +\n      '<button type=\"button\" class=\"fh__snd\" aria-pressed=\"false\" aria-label=\"Включить звук\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M4 9v6h4l5 4V5L8 9z\"/><path class=\"fh__snd-off\" d=\"M16 9l5 6M21 9l-5 6\"/><path class=\"fh__snd-on\" d=\"M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12\"/></svg></button>' +",
+   "<div class=\"fh__media mh__media\">' + (function () { /* на Тильде — фоновый Kinescope (без звука, по кругу); у GT на телефоне — вертикальный 4:5 */ var KMH = { gt: \"{{mhGt}}\", \"gt-m\": \"{{mhGtM}}\", pro: \"{{mhPro}}\", light: \"{{mhLight}}\", \"lynx-trail\": \"{{mhLynxTrail}}\", \"surge-v\": \"{{mhSurgeV}}\", \"lynx-x\": \"{{mhLynxX}}\" }, useM = !!mob && window.matchMedia && matchMedia(\"(max-width: 900px)\").matches; return '<div class=\"fh__video\" id=\"fh-kin\" data-kin=\"' + KMH[useM ? slug + \"-m\" : slug] + '\" data-a=\"' + (useM ? 0.8 : 16 / 9) + '\" aria-hidden=\"true\" style=\"overflow:hidden;background:#000\"></div>'; })() +",
+   "03.11: баннер модели — ролик через Kinescope (фоновый режим), без кнопки звука"
+  ],
+  [
+   "return '<video class=\"adv__v\" src=\"' + v + '\" poster=\"' + p + '\" controls playsinline preload=\"none\" aria-label=\"Ролик ' + esc(SHORT[slug]) + '\"></video>';",
+   "var KAD = { \"ad-falcon-gt\": \"{{adGt}}\", \"ad-falcon-pro\": \"{{adPro}}\", \"ad-falcon-lite\": \"{{adLite}}\", \"ad-falcon-lynx-trail\": \"{{adLynxTrail}}\", \"ad-surge-v\": \"{{adSurgeV}}\" }; return '<div class=\"adv__v\" style=\"position:relative;aspect-ratio:9/16;background:#000;overflow:hidden\"><iframe src=\"https://kinescope.io/embed/' + KAD[n] + '\" title=\"Ролик ' + esc(SHORT[slug]) + '\" allow=\"autoplay; fullscreen; picture-in-picture; encrypted-media\" frameborder=\"0\" loading=\"lazy\" style=\"position:absolute;inset:0;width:100%;height:100%;border:0\"></iframe></div>';",
+   "03.11: рекламные ролики 9:16 — Kinescope"
+  ],
+  [
+   "var pic = a.video ? '<video src=\"' + esc(a.video) + '\" poster=\"' + esc(a.img) + '\" controls playsinline preload=\"none\" aria-label=\"' + esc(a.title) + '\"></video>'",
+   "var pic = a.video ? '<iframe src=\"https://kinescope.io/embed/{{snowKit}}\" title=\"' + esc(a.title) + '\" allow=\"autoplay; fullscreen; picture-in-picture; encrypted-media\" frameborder=\"0\" loading=\"lazy\" style=\"width:100%;height:100%;border:0;display:block\"></iframe>'",
+   "03.11: видео снежного комплекта — Kinescope"
   ]
  ]
 }

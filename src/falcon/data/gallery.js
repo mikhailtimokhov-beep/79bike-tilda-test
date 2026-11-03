@@ -3,8 +3,97 @@
 // 25.10 вечер: живые кадры из Instagram @79bike_official (Lite 6–8, Lynx Trail 13–14). pos — object-position, чтобы байк был по центру плитки и не срезался.
 // 25.10 вечер (2): оригиналы с компьютера владельца — Falcon GT 15–21 (живые фото Белый US, GT_EURO, чёрный GT из презентации для салонов), Lynx Trail 15–16 (съёмка завода).
 // 27.10: Falcon GT 25–26 — живые фото белого GT 2026 из Instagram classificados_offroad (решение Михаила: в конец галереи GT).
+// 02.11.2026 (Михаил: «очень мало фото… студийные, продающие»): студийные кадры завода/официальных сайтов — в начало галереи; детали — в конец. Хранилище прототипа (/_blob).
 window.GALLERY = {
  "gt": [
+  {
+   "src": "assets/gallery/studio/gt-01.webp",
+   "thumb": "assets/gallery/studio/gt-01.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Falcon GT белый, вид три четверти спереди слева",
+   "color": "Exclusive White (эксклюзивный белый)",
+   "tag": "студия",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Falcon GT/Белый US/DSC00078.jpg",
+   "pos": "50% 55%"
+  },
+  {
+   "src": "assets/gallery/studio/gt-02.webp",
+   "thumb": "assets/gallery/studio/gt-02.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Falcon GT белый, три четверти спереди справа",
+   "color": "Exclusive White (эксклюзивный белый)",
+   "tag": "студия",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Falcon GT/Белый US/DSC00083.jpg",
+   "pos": "50% 55%"
+  },
+  {
+   "src": "assets/gallery/studio/gt-03.webp",
+   "thumb": "assets/gallery/studio/gt-03.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Falcon GT белый, вид три четверти сзади",
+   "color": "Exclusive White (эксклюзивный белый)",
+   "tag": "студия",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Falcon GT/Белый US/DSC00091.jpg",
+   "pos": "50% 55%"
+  },
+  {
+   "src": "assets/gallery/studio/gt-04.webp",
+   "thumb": "assets/gallery/studio/gt-04.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Falcon GT белый в профиль, студийный фон",
+   "color": "Exclusive White (эксклюзивный белый)",
+   "tag": "студия",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Falcon GT/Белый US/DSC00041.jpg",
+   "pos": "50% 55%"
+  },
+  {
+   "src": "assets/gallery/studio/gt-05.webp",
+   "thumb": "assets/gallery/studio/gt-05.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Falcon GT чёрный, три четверти спереди слева",
+   "color": "Exclusive Black (эксклюзивный чёрный)",
+   "tag": "студия",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Falcon GT/Черный _US/Каталожные фото/DSC00014.jpg",
+   "pos": "50% 55%"
+  },
+  {
+   "src": "assets/gallery/studio/gt-06.webp",
+   "thumb": "assets/gallery/studio/gt-06.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Falcon GT чёрный, три четверти спереди справа",
+   "color": "Exclusive Black (эксклюзивный чёрный)",
+   "tag": "студия",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Falcon GT/Черный _US/Каталожные фото/DSC00020.jpg",
+   "pos": "50% 55%"
+  },
+  {
+   "src": "assets/gallery/studio/gt-07.webp",
+   "thumb": "assets/gallery/studio/gt-07.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Falcon GT чёрный, вид три четверти сзади",
+   "color": "Exclusive Black (эксклюзивный чёрный)",
+   "tag": "студия",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Falcon GT/Черный _US/Каталожные фото/DSC00026.jpg",
+   "pos": "50% 55%"
+  },
+  {
+   "src": "assets/gallery/studio/gt-08.webp",
+   "thumb": "assets/gallery/studio/gt-08.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Falcon GT чёрный в профиль, студийный фон",
+   "color": "Exclusive Black (эксклюзивный чёрный)",
+   "tag": "студия",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Falcon GT/Черный _US/Каталожные фото/DSC00003.jpg",
+   "pos": "50% 55%"
+  },
   {
    "src": "assets/gallery/gt/15.webp",
    "thumb": "assets/gallery/gt/15-s.webp",
@@ -124,9 +213,185 @@ window.GALLERY = {
    "color": "Exclusive White (эксклюзивный белый)",
    "tag": "лайфстайл",
    "source": "https://www.instagram.com/p/DeK8zxLGs9m/ (classificados_offroad, 06.10.2026)"
+  },
+  {
+   "src": "assets/gallery/studio/gt-09.webp",
+   "thumb": "assets/gallery/studio/gt-09.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Тройная светодиодная фара Falcon GT крупным планом",
+   "color": "Exclusive White (эксклюзивный белый)",
+   "tag": "детали",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Falcon GT/Белый US/DSC00008.jpg",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/gt-10.webp",
+   "thumb": "assets/gallery/studio/gt-10.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Мотор Falcon GT с подсветкой, белая рама",
+   "color": "Exclusive White (эксклюзивный белый)",
+   "tag": "детали",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Falcon GT/Белый US/DSC00052.jpg",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/gt-11.webp",
+   "thumb": "assets/gallery/studio/gt-11.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Цветной дисплей Falcon GT на руле",
+   "color": "Exclusive White (эксклюзивный белый)",
+   "tag": "детали",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Falcon GT/Белый US/DSC00060.jpg",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/gt-12.webp",
+   "thumb": "assets/gallery/studio/gt-12.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Задний амортизатор Falcon GT, чёрная рама",
+   "color": "Exclusive Black (эксклюзивный чёрный)",
+   "tag": "детали",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Falcon GT/Черный _US/Каталожные фото/DSC00013.jpg",
+   "pos": "50% 50%"
   }
  ],
  "pro": [
+  {
+   "src": "assets/gallery/studio/pro-01.webp",
+   "thumb": "assets/gallery/studio/pro-01.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Falcon Pro серебристый с фиолетовым, вид сбоку",
+   "color": "Silver Purple (серебристый с фиолетовым)",
+   "tag": "студия",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Pro/Новые цвета 2026/紫色左.png",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/pro-02.webp",
+   "thumb": "assets/gallery/studio/pro-02.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Falcon Pro серебристо-фиолетовый, три четверти спереди",
+   "color": "Silver Purple (серебристый с фиолетовым)",
+   "tag": "студия",
+   "source": "https://79bike.com/products/79bike-falcon-pro (cdn.shopify.com/s/files/1/0772/3823/9525/files/DSC00047.jpg)",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/pro-03.webp",
+   "thumb": "assets/gallery/studio/pro-03.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Falcon Pro чёрный с фиолетовым, вид сбоку",
+   "color": "Black Purple (чёрный с фиолетовым)",
+   "tag": "студия",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Pro/Новые цвета 2026/黑紫左.png",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/pro-04.webp",
+   "thumb": "assets/gallery/studio/pro-04.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Falcon Pro чёрно-фиолетовый, три четверти спереди",
+   "color": "Black Purple (чёрный с фиолетовым)",
+   "tag": "студия",
+   "source": "https://79bike.com/products/79bike-falcon-pro (cdn.shopify.com/s/files/1/0772/3823/9525/files/DSC00165.jpg)",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/pro-05.webp",
+   "thumb": "assets/gallery/studio/pro-05.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Falcon Pro чёрный с красным, правый борт",
+   "color": "Black Red (чёрный с красным)",
+   "tag": "студия",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Pro/Новые цвета 2026/黑红右.png",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/pro-06.webp",
+   "thumb": "assets/gallery/studio/pro-06.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Falcon Pro чёрный с красным, левый борт",
+   "color": "Black Red (чёрный с красным)",
+   "tag": "студия",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Pro/Новые цвета 2026/黑红左.png",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/pro-07.webp",
+   "thumb": "assets/gallery/studio/pro-07.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Falcon Pro чёрный с жёлтым, правый борт",
+   "color": "Black Yellow (чёрный с жёлтым)",
+   "tag": "студия",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Pro/Новые цвета 2026/黑黄右.png",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/pro-08.webp",
+   "thumb": "assets/gallery/studio/pro-08.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Falcon Pro чёрный с жёлтым, левый борт",
+   "color": "Black Yellow (чёрный с жёлтым)",
+   "tag": "студия",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Pro/Новые цвета 2026/黑黄左.png",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/pro-09.webp",
+   "thumb": "assets/gallery/studio/pro-09.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Falcon Pro серебристый с красным, правый борт",
+   "color": "Silver Red (серебристый с красным)",
+   "tag": "студия",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Pro/Новые цвета 2026/红色右.png",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/pro-10.webp",
+   "thumb": "assets/gallery/studio/pro-10.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Falcon Pro серебристый с красным, левый борт",
+   "color": "Silver Red (серебристый с красным)",
+   "tag": "студия",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Pro/Новые цвета 2026/红色左.png",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/pro-11.webp",
+   "thumb": "assets/gallery/studio/pro-11.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Falcon Pro серебристый с жёлтым, правый борт",
+   "color": "Silver Yellow (серебристый с жёлтым)",
+   "tag": "студия",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Pro/Новые цвета 2026/黄色右.png",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/pro-12.webp",
+   "thumb": "assets/gallery/studio/pro-12.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Falcon Pro серебристый с жёлтым, левый борт",
+   "color": "Silver Yellow (серебристый с жёлтым)",
+   "tag": "студия",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Pro/Новые цвета 2026/黄色左.png",
+   "pos": "50% 50%"
+  },
   {
    "src": "assets/gallery/pro/13.webp",
    "thumb": "assets/gallery/pro/13-s.webp",
@@ -280,19 +545,40 @@ window.GALLERY = {
    "color": "Black Purple (чёрный с фиолетовым)",
    "tag": "детали",
    "source": "https://79bike.com/products/79bike-falcon-pro"
-  },
-  {
-   "src": "assets/gallery/pro/12.webp",
-   "thumb": "assets/gallery/pro/12-s.webp",
-   "w": 1600,
-   "h": 943,
-   "alt": "Falcon Pro, чёрный — студийный кадр производителя (расцветки 2026)",
-   "color": "Black Edition (чёрная серия)",
-   "tag": "студия",
-   "source": "Оригинал с компьютера владельца: ПРОЕКТ 79BIKE/ФОТО и ВИДЕО/Pro/Новые цвета 2026/黑色.jpg (файл завода)"
   }
+ 
  ],
  "lynx-x": [
+  {
+   "src": "assets/gallery/lynx-x/5.webp",
+   "thumb": "assets/gallery/lynx-x/5-s.webp",
+   "w": 1600,
+   "h": 1066,
+   "alt": "Falcon Lynx X, чёрный — вид спереди три четверти, фара и вилка Fastace",
+   "color": "Black Gold (чёрный с золотым)",
+   "tag": "студия",
+   "source": "Студийное фото от владельца (чат «Сайты», 02.11.2026)"
+  },
+  {
+   "src": "assets/gallery/lynx-x/6.webp",
+   "thumb": "assets/gallery/lynx-x/6-s.webp",
+   "w": 1600,
+   "h": 1066,
+   "alt": "Falcon Lynx X, чёрный — вид сбоку справа",
+   "color": "Black Gold (чёрный с золотым)",
+   "tag": "студия",
+   "source": "Студийное фото от владельца (чат «Сайты», 02.11.2026)"
+  },
+  {
+   "src": "assets/gallery/lynx-x/7.webp",
+   "thumb": "assets/gallery/lynx-x/7-s.webp",
+   "w": 1600,
+   "h": 1066,
+   "alt": "Falcon Lynx X, чёрный — вид сбоку слева",
+   "color": "Black Gold (чёрный с золотым)",
+   "tag": "студия",
+   "source": "Студийное фото от владельца (чат «Сайты», 02.11.2026)"
+  },
   {
    "src": "assets/gallery/lynx-x/1.webp",
    "thumb": "assets/gallery/lynx-x/1-s.webp",
@@ -332,19 +618,75 @@ window.GALLERY = {
    "color": "Black Gold (чёрный с золотым)",
    "tag": "детали",
    "source": "https://www.instagram.com/p/DeojFQctXYk/"
-  },
-  {
-   "src": "assets/photos/lynx-x-black-1.webp",
-   "thumb": "assets/photos/lynx-x-black-1.webp",
-   "w": 800,
-   "h": 575,
-   "alt": "Falcon Lynx X — официальное фото производителя (предсерийный образец)",
-   "color": "",
-   "tag": "студия",
-   "source": "Спецификация производителя 79BIKE «LYNX X» (передана владельцем 19.10.2026)"
   }
  ],
  "light": [
+  {
+   "src": "assets/gallery/studio/light-01.webp",
+   "thumb": "assets/gallery/studio/light-01.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Falcon Lite чёрный, три четверти спереди справа",
+   "color": "Black Edition (чёрная серия)",
+   "tag": "студия",
+   "source": "https://79bike.com/products/79bike-lite (cdn.shopify.com/s/files/1/0772/3823/9525/files/DSC00024.png)",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/light-02.webp",
+   "thumb": "assets/gallery/studio/light-02.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Falcon Lite чёрный в профиль, белый фон",
+   "color": "Black Edition (чёрная серия)",
+   "tag": "студия",
+   "source": "https://79bike.com/products/79bike-lite (cdn.shopify.com/s/files/1/0772/3823/9525/files/DSC00025.png)",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/light-03.webp",
+   "thumb": "assets/gallery/studio/light-03.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Falcon Lite чёрный, вид три четверти сзади",
+   "color": "Black Edition (чёрная серия)",
+   "tag": "студия",
+   "source": "https://79bike.com/products/79bike-lite (cdn.shopify.com/s/files/1/0772/3823/9525/files/DSC00026.png)",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/light-04.webp",
+   "thumb": "assets/gallery/studio/light-04.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Falcon Lite чёрный, три четверти сзади слева",
+   "color": "Black Edition (чёрная серия)",
+   "tag": "студия",
+   "source": "https://79bike.com/products/79bike-lite (cdn.shopify.com/s/files/1/0772/3823/9525/files/DSC00027.png)",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/light-05.webp",
+   "thumb": "assets/gallery/studio/light-05.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Falcon Lite чёрный, левый борт целиком",
+   "color": "Black Edition (чёрная серия)",
+   "tag": "студия",
+   "source": "https://79bike.com/products/79bike-lite (cdn.shopify.com/s/files/1/0772/3823/9525/files/DSC00028.png)",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/light-06.webp",
+   "thumb": "assets/gallery/studio/light-06.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Falcon Lite чёрный, три четверти спереди слева",
+   "color": "Black Edition (чёрная серия)",
+   "tag": "студия",
+   "source": "https://79bike.com/products/79bike-lite (cdn.shopify.com/s/files/1/0772/3823/9525/files/DSC00029.png)",
+   "pos": "50% 50%"
+  },
   {
    "src": "assets/gallery/light/6.webp",
    "thumb": "assets/gallery/light/6-s.webp",
@@ -430,6 +772,138 @@ window.GALLERY = {
   }
  ],
  "lynx-trail": [
+  {
+   "src": "assets/gallery/studio/lynx-trail-01.webp",
+   "thumb": "assets/gallery/studio/lynx-trail-01.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Lynx Trail чёрно-фиолетовый, три четверти спереди",
+   "color": "Black Purple (чёрный с фиолетовым)",
+   "tag": "студия",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Lynx/补全充电口位的猞猁透明底图/紫色猞猁右侧45.png",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/lynx-trail-02.webp",
+   "thumb": "assets/gallery/studio/lynx-trail-02.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Lynx Trail чёрно-фиолетовый, три четверти сзади",
+   "color": "Black Purple (чёрный с фиолетовым)",
+   "tag": "студия",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Lynx/补全充电口位的猞猁透明底图/紫色左后45.png",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/lynx-trail-03.webp",
+   "thumb": "assets/gallery/studio/lynx-trail-03.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Lynx Trail чёрно-фиолетовый, правый борт",
+   "color": "Black Purple (чёрный с фиолетовым)",
+   "tag": "студия",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Lynx/补全充电口位的猞猁透明底图/紫色猞猁右侧.png",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/lynx-trail-04.webp",
+   "thumb": "assets/gallery/studio/lynx-trail-04.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Lynx Trail чёрно-фиолетовый, левый борт",
+   "color": "Black Purple (чёрный с фиолетовым)",
+   "tag": "студия",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Lynx/补全充电口位的猞猁透明底图/紫色猞猁左侧.png",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/lynx-trail-05.webp",
+   "thumb": "assets/gallery/studio/lynx-trail-05.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Lynx Trail чёрный с золотым, три четверти спереди",
+   "color": "Black Gold (чёрный с золотым)",
+   "tag": "студия",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Lynx/补全充电口位的猞猁透明底图/金色猞猁右侧45.png",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/lynx-trail-06.webp",
+   "thumb": "assets/gallery/studio/lynx-trail-06.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Lynx Trail чёрно-золотой, три четверти спереди слева",
+   "color": "Black Gold (чёрный с золотым)",
+   "tag": "студия",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Lynx/补全充电口位的猞猁透明底图/金色猞猁左侧45.png",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/lynx-trail-07.webp",
+   "thumb": "assets/gallery/studio/lynx-trail-07.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Lynx Trail чёрный с золотым, правый борт",
+   "color": "Black Gold (чёрный с золотым)",
+   "tag": "студия",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Lynx/补全充电口位的猞猁透明底图/金色猞猁右侧.png",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/lynx-trail-08.webp",
+   "thumb": "assets/gallery/studio/lynx-trail-08.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Lynx Trail чёрный с золотым, левый борт",
+   "color": "Black Gold (чёрный с золотым)",
+   "tag": "студия",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Lynx/补全充电口位的猞猁透明底图/金色猞猁左侧.png",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/lynx-trail-09.webp",
+   "thumb": "assets/gallery/studio/lynx-trail-09.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Lynx Trail чёрный с жёлтым, три четверти спереди",
+   "color": "Black Yellow (чёрный с жёлтым)",
+   "tag": "студия",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Lynx/补全充电口位的猞猁透明底图/黄色右侧45.png",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/lynx-trail-10.webp",
+   "thumb": "assets/gallery/studio/lynx-trail-10.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Lynx Trail чёрно-жёлтый, три четверти сзади",
+   "color": "Black Yellow (чёрный с жёлтым)",
+   "tag": "студия",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Lynx/补全充电口位的猞猁透明底图/黄色左侧45.png",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/lynx-trail-11.webp",
+   "thumb": "assets/gallery/studio/lynx-trail-11.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Lynx Trail чёрный с жёлтым, правый борт",
+   "color": "Black Yellow (чёрный с жёлтым)",
+   "tag": "студия",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Lynx/补全充电口位的猞猁透明底图/黄色猞猁右侧.png",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/lynx-trail-12.webp",
+   "thumb": "assets/gallery/studio/lynx-trail-12.webp",
+   "w": 1400,
+   "h": 933,
+   "alt": "Lynx Trail чёрный с жёлтым, левый борт",
+   "color": "Black Yellow (чёрный с жёлтым)",
+   "tag": "студия",
+   "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Lynx/补全充电口位的猞猁透明底图/黄色猞猁左侧.png",
+   "pos": "50% 50%"
+  },
   {
    "src": "assets/gallery/lynx-trail/13.webp",
    "thumb": "assets/gallery/lynx-trail/13-s.webp",
@@ -595,6 +1069,28 @@ window.GALLERY = {
  ],
  "surge-v": [
   {
+   "src": "assets/gallery/studio/surge-v-01.webp",
+   "thumb": "assets/gallery/studio/surge-v-01.webp",
+   "w": 1400,
+   "h": 1050,
+   "alt": "Y-VOLT Surge V серый графит, студийный свет",
+   "color": "Серый графит",
+   "tag": "студия",
+   "source": "https://www.yvolt.com/products/surge-v (cdn.shopify.com/s/files/1/0640/4463/0150/files/main-3-t.jpg)",
+   "pos": "45% 60%"
+  },
+  {
+   "src": "assets/gallery/studio/surge-v-02.webp",
+   "thumb": "assets/gallery/studio/surge-v-02.webp",
+   "w": 1400,
+   "h": 1050,
+   "alt": "Y-VOLT Surge V белый графит в студии",
+   "color": "Белый графит",
+   "tag": "студия",
+   "source": "https://www.yvolt.com/products/surge-v (cdn.shopify.com/s/files/1/0640/4463/0150/files/main-14.jpg)",
+   "pos": "45% 60%"
+  },
+  {
    "src": "assets/gallery/surge-v/1.webp",
    "thumb": "assets/gallery/surge-v/1-s.webp",
    "w": 1903,
@@ -693,6 +1189,61 @@ window.GALLERY = {
    "color": "Белый графит",
    "tag": "лайфстайл",
    "source": "https://www.yvolt.com/products/surge-v"
+  },
+  {
+   "src": "assets/gallery/studio/surge-v-03.webp",
+   "thumb": "assets/gallery/studio/surge-v-03.webp",
+   "w": 1400,
+   "h": 1050,
+   "alt": "Y-образная LED-фара Surge V крупным планом",
+   "color": "Белый графит",
+   "tag": "детали",
+   "source": "https://www.yvolt.com/products/surge-v (cdn.shopify.com/s/files/1/0640/4463/0150/files/main-11.jpg)",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/surge-v-04.webp",
+   "thumb": "assets/gallery/studio/surge-v-04.webp",
+   "w": 1400,
+   "h": 1050,
+   "alt": "Бак Surge V с подсветкой и логотипом Y-VOLT",
+   "color": "Серый графит",
+   "tag": "детали",
+   "source": "https://www.yvolt.com/products/surge-v (cdn.shopify.com/s/files/1/0640/4463/0150/files/DSC03161.jpg)",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/surge-v-05.webp",
+   "thumb": "assets/gallery/studio/surge-v-05.webp",
+   "w": 1400,
+   "h": 1050,
+   "alt": "Цветной дисплей Surge V на руле",
+   "color": "",
+   "tag": "детали",
+   "source": "https://www.yvolt.com/products/surge-v (cdn.shopify.com/s/files/1/0640/4463/0150/files/DSC03204.jpg)",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/surge-v-06.webp",
+   "thumb": "assets/gallery/studio/surge-v-06.webp",
+   "w": 1400,
+   "h": 1050,
+   "alt": "Задний амортизатор Surge V крупным планом",
+   "color": "",
+   "tag": "детали",
+   "source": "https://www.yvolt.com/products/surge-v (cdn.shopify.com/s/files/1/0640/4463/0150/files/DSC03188.jpg)",
+   "pos": "50% 50%"
+  },
+  {
+   "src": "assets/gallery/studio/surge-v-07.webp",
+   "thumb": "assets/gallery/studio/surge-v-07.webp",
+   "w": 1400,
+   "h": 1050,
+   "alt": "Светодиодный задний фонарь Surge V",
+   "color": "",
+   "tag": "детали",
+   "source": "https://www.yvolt.com/products/surge-v (cdn.shopify.com/s/files/1/0640/4463/0150/files/main-30.png)",
+   "pos": "50% 50%"
   }
  ]
 };

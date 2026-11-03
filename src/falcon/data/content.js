@@ -411,7 +411,7 @@ window.CONTENT = {
 
   delivery: {
     title: "Оплата и доставка",
-    // оплата зависит от региона клиента (решение Михаила 24.10.2026): Москва и МО — наличными при получении; другие города — банковской картой
+    // оплата зависит от региона клиента (решение Михаила 24.10.2026): 02.11 (Михаил): оплата при получении — Москва, до 600 км от Москвы и СПб; наличные не указываем
     payment: [
       // 25.10 (Михаил): способ оплаты не указываем — только условия по региону, плюс рассрочка с процентами
       // 26.10 (Михаил): три варианта — Москва и МО · до 600 км (наш курьер) · другой город
@@ -516,10 +516,7 @@ window.CONTENT = {
         { cap: "Самовывоз · шоурум «Речников 21»", h: "Бесплатно", p: "Оплата при получении в шоуруме." },
         { cap: "Любой байк из каталога", h: "Рассрочка", p: "Т-Банк или POSCREDIT, с процентами.", link: { text: "Условия рассрочки →", href: "credit.html" }, accent: true }
       ],
-      check: { title: "Что проверить при получении", items: [
-        ["Целостность коробки.", "Осмотрите упаковку со всех сторон — нет ли вмятин и разрывов."],
-        ["Комплектность.", "Сверьте содержимое с заказом."],
-        ["Осмотр — до подписи.", "Проверьте байк при курьере или в терминале ТК и только после этого подписывайте документы."]] },
+      check: {}, // 02.11 Михаил: блок «Что проверить при получении» убран
       parts: "**Запчасти и аксессуары** отправляем СДЭК. Если байк везёт наш курьер — запчасти привезём вместе с байком. [Каталог запчастей](parts.html)",
       calc: { title: "Рассчитать доставку", text: "Укажите город и модель — менеджер подберёт способ доставки и пришлёт стоимость в выбранный мессенджер.", btn: "Рассчитать", ok: "Спасибо! Менеджер подберёт способ доставки и пришлёт стоимость.", legal: "Менеджер пришлёт стоимость в выбранный мессенджер." }
     }
@@ -554,7 +551,7 @@ window.CONTENT = {
       "Возраст — от 18 лет.",
       "Только по предварительной записи, для жителей Москвы и Московской области.",
       "Шлем и защиту выдаём.",
-      "Нужен залог наличными — сумму назовёт менеджер при записи.",
+      "Нужен залог в размере полной стоимости байка.",
       "Ущерб байку, причинённый по вине райдера, оплачивает райдер."
     ],
     footerNote: "Шоурум — по предварительному звонку, в удобное для вас время. Тест-драйв — Москва и МО"
@@ -648,6 +645,10 @@ window.CONTENT = {
           { title: "Зеркала оригинальные 79BIKE", price: 2800, img: "assets/photos/acc/mirror.webp", fits: "универсальные" },
           { title: "Колодки тормозные Lynx Trail, оригинал", price: 2500, img: "assets/photos/acc/pads-lynx.webp", fits: "Lynx Trail" }
         ],
+        /* 03.11 (Михаил): снежный комплект — дополнение к Surge V, цена по запросу через форму. Источник: reel 79bike_yola DeUevQav-Wv (новинка, ещё не в продаже) */
+        "surge-v": [
+          { title: "Снежный комплект Y-VOLT для Surge V", price: null, badge: "Новинка", img: "assets/video/mh/snowkit-surge-v.webp", video: "assets/video/snowkit-surge-v.mp4", fits: "Y-VOLT Surge V", text: "Лыжа вместо переднего колеса и гусеница вместо заднего — Surge V превращается в электрический сноубайк. Цену и сроки поставки назовёт менеджер." }
+        ],
         "light": [
           { title: "Крыло заднее удлинённое", price: 2500, img: "assets/photos/acc/fender.webp", fits: "Falcon Pro, GT, Lite" },
           { title: "Защита рук с креплением 79BIKE, чёрная", price: 5000, img: "assets/photos/acc/hand.webp", fits: "универсальная" },
@@ -686,34 +687,45 @@ window.CONTENT = {
         { title: "Falcon GT: зимний тест-драйв", url: "https://vkvideo.ru/video-230887691_456239256", platform: "vk", duration: "4:49", views: "929 просмотров", date: "2026", author: "79BIKE", desc: "Falcon GT на снегу и в мороз: как байк справляется с минусовой температурой. Плюс полезные функции для зимних поездок.", cover: "assets/video/vk-456239256.webp" },
         { title: "НЕ ПОКУПАЙ пока не посмотришь!", url: "https://vkvideo.ru/video-219881478_456239122", platform: "vk", duration: "17:21", views: "2,9 тыс. просмотров", date: "2026", author: "Fastmotion", desc: "Сравнение и тест-драйв: Falcon GT против доработанного Sur-Ron Light Bee X. Мощность, динамика, подвеска и управляемость на бездорожье.", cover: "assets/video/vk-219881478_456239122.webp" },
         { title: "E-Bikes Keep Getting Better… This Might Be the Best Yet", url: "https://www.youtube.com/watch?v=DeYs2Hzooq4", platform: "youtube", duration: "20:24", views: "217 тыс. просмотров", date: "2025", author: "Zay Solis", desc: "Большой обзор и тест-драйв Falcon GT: скорость, мощность, управляемость. На английском.", cover: "assets/video/yt-DeYs2Hzooq4.webp" },
-        { title: "Интервью: Роман Курбатов", url: "https://vkvideo.ru/video-230887691_456239289", platform: "vk", duration: "4:05", views: "157 просмотров", date: "2026", author: "79BIKE", desc: "Блогер, который около полугода ездит на Falcon GT, отвечает на вопросы, которые чаще всего задают перед покупкой.", cover: "assets/video/vk-456239289.webp" }
+        { title: "Интервью: Роман Курбатов", url: "https://vkvideo.ru/video-230887691_456239289", platform: "vk", duration: "4:05", views: "157 просмотров", date: "2026", author: "79BIKE", desc: "Блогер, который около полугода ездит на Falcon GT, отвечает на вопросы, которые чаще всего задают перед покупкой.", cover: "assets/video/vk-456239289.webp" },
+        { title: "Falcon GT — флагман линейки Falcon", url: "https://vkvideo.ru/video-230887691_456239364", platform: "vk", vertical: true, duration: "0:26", views: "", date: "2026", author: "79BIKE", desc: "17 кВт, 610 Н·м и до 95 км/ч — короткий ролик о флагмане.", cover: "assets/video/vk-456239364.webp" },
+        { title: "Какой байк 79BIKE выбрать? Часть 1", url: "https://vkvideo.ru/video-230887691_456239321", platform: "vk", vertical: true, duration: "", views: "1,3 тыс. просмотров", date: "2026", author: "79BIKE", desc: "Разбираем отличия моделей 79BIKE: кому подойдёт каждая.", cover: "assets/video/vk-456239321.webp" }
       ],
       pro: [
         { title: "Сравнение Falcon Pro и Falcon GT", url: "https://vkvideo.ru/video-230887691_456239303", platform: "vk", duration: "1:31", views: "499 просмотров", date: "2026", author: "79BIKE", desc: "Чем отличаются Pro и GT: аккумулятор, мощность, запас хода. Коротко — чтобы выбрать свою модель.", cover: "assets/video/vk-456239303.webp" },
         { title: "I Bought The All NEW 79 Bike Falcon Pro — Best E-Bike Yet?", url: "https://www.youtube.com/watch?v=MyHrqF9hfyw", platform: "youtube", duration: "11:21", views: "446 тыс. просмотров", date: "2024", author: "Zay Solis", desc: "Самый просматриваемый обзор Falcon Pro: блогер купил байк и тестирует его. На английском.", cover: "assets/video/yt-MyHrqF9hfyw.webp" },
-        { title: "Полный гайд по настройке приложения для Falcon Pro и Falcon GT", url: "https://vkvideo.ru/video-230887691_456239317", platform: "vk", duration: "6:36", views: "432 просмотра", date: "2026", author: "79BIKE", desc: "Как подключить байк к телефону через Tuya Smart и что значит каждая настройка — чтобы подстроить байк под свой стиль езды.", cover: "assets/video/vk-456239317.webp" }
+        { title: "Гайд по настройке приложения — только для Falcon Pro и Falcon GT 2025 года сборки", url: "https://vkvideo.ru/video-230887691_456239357", platform: "vk", duration: "6:48", views: "", date: "2026", author: "79BIKE", desc: "Только для байков 2025 года сборки. Falcon Pro и Falcon GT 2026 года к приложениям не подключаются; сторонние приложения не рекомендуем — они могут навредить байку.", cover: "assets/video/vk-456239317.webp" },
+        { title: "Falcon Pro — самый лёгкий Falcon", url: "https://vkvideo.ru/video-230887691_456239365", platform: "vk", vertical: true, duration: "0:30", views: "", date: "2026", author: "79BIKE", desc: "59 кг, 10 кВт, до 90 км/ч и мягкий старт для новичка.", cover: "assets/video/vk-456239365.webp" },
+        { title: "Falcon Pro: испытание водой", url: "https://vkvideo.ru/video-230887691_456239194", platform: "vk", vertical: true, duration: "", views: "6 тыс. просмотров", date: "2026", author: "79BIKE", desc: "Погрузили Falcon Pro в воду — байк продолжил работать, защита IP67. Повторять не стоит: попадание воды внутрь узлов не покрывается гарантией.", cover: "assets/video/vk-456239194.webp" },
+        { title: "Lynx Trail или Falcon Pro — что выбрать", url: "https://vkvideo.ru/video-230887691_456239323", platform: "vk", vertical: true, duration: "", views: "1,1 тыс. просмотров", date: "2026", author: "79BIKE", desc: "Сравнили Lynx Trail с базовой моделью Falcon Pro: ключевые отличия.", cover: "assets/video/vk-456239323.webp" }
       ],
       "lynx-trail": [
         { title: "Я купил электромотоцикл! 79bike Lynx Trail — для чего он нужен?", url: "https://www.youtube.com/watch?v=IFieb93HdpU", platform: "youtube", duration: "47:48", views: "21 тыс. просмотров", date: "2026", author: "EXPLOSIVE MIKE", desc: "Блогер купил Lynx Trail и рассказывает о новой «игрушке»: обычная покатушка по району превращается в приключение.", cover: "assets/video/yt-IFieb93HdpU.webp" },
         { title: "Falcon Lynx — обзор + замер максималки", url: "https://vkvideo.ru/video-211112299_456239274", platform: "vk", duration: "22:21", views: "5,4 тыс. просмотров", date: "2026", author: "Raptor TV", desc: "Обзор Lynx с замером максимальной скорости и ответом на вопрос «стоит ли своих денег?».", cover: "assets/video/vk-211112299_456239274.webp" },
         { title: "Обзор на новый электробайк 2026 года — Lynx Trail от 79BIKE", url: "https://vkvideo.ru/video-230887691_456239314", platform: "vk", duration: "6:32", views: "950 просмотров", date: "2026", author: "79BIKE", desc: "Что вы получаете, покупая Lynx Trail: тест-драйв, замер максимальной скорости, главные особенности и первые впечатления.", cover: "assets/video/vk-456239314.webp" },
-        { title: "Обзор Lynx Trail — новый электробайк бренда 79BIKE", url: "https://vkvideo.ru/video-230887691_456239310", platform: "vk", duration: "7:10", views: "382 просмотра", date: "2026", author: "79BIKE", desc: "Проверка на выносливость, тест-драйв и замер скорости. Чем Lynx Trail отличается от Falcon Pro и что в нём улучшили.", cover: "assets/video/vk-456239310.webp" }
+        { title: "Обзор Lynx Trail — новый электробайк бренда 79BIKE", url: "https://vkvideo.ru/video-230887691_456239310", platform: "vk", duration: "7:10", views: "382 просмотра", date: "2026", author: "79BIKE", desc: "Проверка на выносливость, тест-драйв и замер скорости. Чем Lynx Trail отличается от Falcon Pro и что в нём улучшили.", cover: "assets/video/vk-456239310.webp" },
+        { title: "Falcon Lynx Trail — для высоких райдеров", url: "https://vkvideo.ru/video-230887691_456239367", platform: "vk", vertical: true, duration: "0:26", views: "", date: "2026", author: "79BIKE", desc: "Рост 155–195 см, сиденье 855 мм, 10 кВт и мотор с редуктором.", cover: "assets/video/vk-456239367.webp" },
+        { title: "Lynx Trail или Falcon Pro — что выбрать", url: "https://vkvideo.ru/video-230887691_456239323", platform: "vk", vertical: true, duration: "", views: "1,1 тыс. просмотров", date: "2026", author: "79BIKE", desc: "Сравнили Lynx Trail с базовой моделью Falcon Pro: ключевые отличия.", cover: "assets/video/vk-456239323.webp" }
       ],
       light: [
         { title: "Обзор на новый электробайк 2026 года — Falcon Lite", url: "https://vkvideo.ru/video-230887691_456239320", platform: "vk", duration: "5:27", views: "1,1 тыс. просмотров", date: "2026", author: "79BIKE", desc: "Все ключевые характеристики, тест-драйв и замер максимальной скорости. И о главном плюсе этого байка.", cover: "assets/video/vk-456239320.webp" },
+        { title: "Falcon Lite в деле", url: "https://vkvideo.ru/video-230887691_456239324", platform: "vk", vertical: true, duration: "", views: "519 тыс. просмотров", date: "2026", author: "79BIKE", desc: "Самый популярный ролик нашей группы ВКонтакте.", cover: "assets/video/vk-456239324.webp" },
         { title: "79BIKE Falcon Lite — обзор и замер максималки", url: "https://vkvideo.ru/video-211112299_456239355", platform: "vk", duration: "18:55", views: "1,4 тыс. просмотров", date: "2026", author: "Raptor TV", desc: "Подробный обзор Falcon Lite: характеристики, плюсы и минусы, проверка максимальной скорости.", cover: "assets/video/vk-211112299_456239355.webp" },
-        { title: "The BEST E-Bike $2500 Can Buy? — 79Bike Falcon Lite Review", url: "https://www.youtube.com/watch?v=jp1CPP2l5nw", platform: "youtube", duration: "8:55", views: "72 тыс. просмотров", date: "2026", author: "Dankwheelie", desc: "Самый популярный зарубежный обзор Lite: байк, похожий на Pro и GT, но доступнее. На английском.", cover: "assets/video/yt-jp1CPP2l5nw.webp" }
+        { title: "The BEST E-Bike $2500 Can Buy? — 79Bike Falcon Lite Review", url: "https://www.youtube.com/watch?v=jp1CPP2l5nw", platform: "youtube", duration: "8:55", views: "72 тыс. просмотров", date: "2026", author: "Dankwheelie", desc: "Самый популярный зарубежный обзор Lite: байк, похожий на Pro и GT, но доступнее. На английском.", cover: "assets/video/yt-jp1CPP2l5nw.webp" },
+        { title: "Новый электробайк Falcon Lite", url: "https://vkvideo.ru/video-230887691_456239318", platform: "vk", vertical: true, duration: "", views: "15 тыс. просмотров", date: "2026", author: "79BIKE", desc: "Самая доступная модель бренда: лёгкий и манёвренный байк для первого знакомства с электроэндуро.", cover: "assets/video/vk-456239318.webp" },
+        { title: "Falcon Lite — первый электробайк", url: "https://vkvideo.ru/video-230887691_456239366", platform: "vk", vertical: true, duration: "0:29", views: "", date: "2026", author: "79BIKE", desc: "8 кВт, 63 кг и сиденье 820 мм — уверенно стоите на земле.", cover: "assets/video/vk-456239366.webp" }
       ],
       "lynx-x": [ // 01.11 (Михаил): первым — ролик Lynx X (Reels 79BIKE «Lynx X — 26KW», перенесён в Kinescope); обзор Lynx Trail убран
         { title: "Falcon Lynx X — 26 кВт на бездорожье", url: "https://kinescope.io/vz5NznzgB8GvpnUSntuhTf", platform: "kinescope", vertical: true, duration: "0:20", views: "", date: "2026", author: "79BIKE", desc: "Первые кадры Lynx X: прыжки, повороты и каменистый трейл. Старт продаж в России — 2027 год.", cover: "https://static.tildacdn.com/tila3762-6561-4330-b164-343032383030/fb0443.webp" },
         { title: "Какой электробайк выбрать?", url: "https://vkvideo.ru/video-230887691_456239312", platform: "vk", duration: "1:21", views: "1,2 тыс. просмотров", date: "2026", author: "79BIKE", desc: "Короткий ролик о выборе электробайка под свои задачи. На видео — Lynx Trail.", cover: "assets/video/vk-456239312.webp" }
       ],
       "surge-v": [
-        { title: "Китайский убийца Stark Varg? Собрал Y-VOLT и сразу поехал на гонку!", url: "https://www.youtube.com/watch?v=73we1FlIKYQ", platform: "youtube", duration: "53:39", views: "146 тыс. просмотров", date: "2026", author: "Роман Курбатов", desc: "Роман Курбатов собирает Y-Volt Surge V и сразу едет на нём на гонку.", cover: "assets/video/yt-73we1FlIKYQ.webp" },
+        { title: "Убийца Старварга? Собрал Y-VOLT и сразу поехал на гонку!", url: "https://www.youtube.com/watch?v=73we1FlIKYQ", platform: "youtube", duration: "53:39", views: "146 тыс. просмотров", date: "2026", author: "Роман Курбатов", desc: "Роман Курбатов собирает Y-Volt Surge V и сразу едет на нём на гонку.", cover: "assets/video/yt-73we1FlIKYQ.webp" },
         { title: "Surge V: качество в деталях", url: "assets/video/sv-detali.mp4", platform: "local", duration: "1:03", views: "", date: "2026", author: "Y-VOLT · русская версия 79BIKE", desc: "Узлы, материалы и отделка Surge V крупным планом — с русскими подписями.", cover: "assets/video/yt-B2Fz94pA6CY.webp" },
         { title: "Surge V: распаковка и сборка", url: "assets/video/sv-sborka.mp4", platform: "local", duration: "2:53", views: "", date: "2026", author: "Y-VOLT · русская версия 79BIKE", desc: "Как Surge V приходит в коробке и как его собрать — по шагам, с русскими подписями.", cover: "assets/video/yt-0KXWISZglIE.webp" },
         { title: "Самый мощный электробайк, на котором я ездил? 35 000 W", url: "https://www.youtube.com/watch?v=5d6XZ6-bFMs", platform: "youtube", duration: "30:03", views: "36 тыс. просмотров", date: "2026", author: "Tim Ston", desc: "Целый день с Surge V: скорость, песок, подъёмы и реальные впечатления.", cover: "assets/video/yt-5d6XZ6-bFMs.webp" },
-        { title: "Surge V Official Launch — The Wider, The Wilder", url: "https://www.youtube.com/watch?v=FjOEczaiMxQ", platform: "youtube", duration: "1:29", views: "65 тыс. просмотров", date: "2026", author: "Y-VOLT Official", desc: "Официальный ролик запуска Surge V: три года разработки и испытаний — за полторы минуты.", cover: "assets/video/yt-FjOEczaiMxQ.webp" }
+        { title: "Surge V: официальный запуск", url: "assets/video/surge-v-zapusk.mp4", platform: "local", duration: "1:45", views: "", date: "2026", author: "Y-VOLT · русская версия 79BIKE", desc: "Официальный ролик запуска Surge V с русской озвучкой: три года разработки и испытаний, 35 кВт и 948 Н·м.", cover: "assets/video/surge-v-zapusk.webp" },
+        { title: "Y-VOLT Surge V — полноразмерный электроэндуро", url: "https://vkvideo.ru/video-230887691_456239368", platform: "vk", vertical: true, duration: "0:27", views: "", date: "2026", author: "79BIKE", desc: "35 кВт, 948 Н·м и до 115 км/ч на электричестве.", cover: "assets/video/vk-456239368.webp" }
       ]
     },
     // Главная: три сильных ролика разных моделей

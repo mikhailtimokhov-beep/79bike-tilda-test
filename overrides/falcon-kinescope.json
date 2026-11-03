@@ -1,5 +1,5 @@
 {
- "_comment": "Ролики Falcon в Kinescope (проект «79bike.ru — сайт»), загружены 29.10.2026 из прототипа: первый экран (falcon-hero.mp4, 0:18) и маршрут до шоурума (falcon-route.mp4, 0:40). Подставляются в правки app.js ({{hero}}, {{route}}). 31.10: ролики сборки (asmPro, asmLynx, asmGt) и свои ролики Surge V / тест на воду (svDetali, svSborka, water1, water2) — загружены «Сайтами» по ссылке с GitHub Pages.",
+ "_comment": "Ролики Falcon в Kinescope (проект «79bike.ru — сайт»), загружены 29.10.2026 из прототипа: первый экран (falcon-hero.mp4, 0:18) и маршрут до шоурума (falcon-route.mp4, 0:40). Подставляются в правки app.js ({{hero}}, {{route}}). 31.10: ролики сборки (asmPro, asmLynx, asmGt) и свои ролики Surge V / тест на воду (svDetali, svSborka, water1, water2) — загружены «Сайтами» по ссылке с GitHub Pages. 03.11: баннеры страниц моделей (mh*: gt, gt-m вертикальный 4:5, pro, light, lynx-trail, surge-v, lynx-x) — загружены «Сайтами» файлами. 03.11 (позже): mhSurgeV — белый Surge V; рекламные ролики 9:16 (ad*), снежный комплект (snowKit), Surge V запуск (svZapusk).",
  "hero": "wDxutmuHYgpsLxrSVtVBxT",
  "route": "q9M64MSqSkQtPJgAjdXd72",
  "asmPro": "0aWktAcqzbXmA9bJHQWu9D",
@@ -8,5 +8,19 @@
  "svDetali": "ezfFzJDQf2uzoenF3PsPrv",
  "svSborka": "o5o4CXRpzQ6LJq5M8qvZed",
  "water1": "mRnCEWxS56k1yfuqSnTcKS",
- "water2": "42xopqjkr8tkY9cPv3Xe8q"
+ "water2": "42xopqjkr8tkY9cPv3Xe8q",
+ "mhGt": "qywq5bdEYCrYHDRW9s7a8K",
+ "mhGtM": "i14QGCkGcVrABayxQ3CRBx",
+ "mhPro": "eQ4xozxiiDTV9BnDt6DmGC",
+ "mhLight": "a45zk1xCsGmLozvsTQqkqr",
+ "mhLynxTrail": "2Dke6TQctdihwbx6k8qJM5",
+ "mhSurgeV": "5gFAqxzdGos49e9ZquhQbJ",
+ "mhLynxX": "fpPHvrChVXbpQzpuMtXWDh",
+ "adGt": "5gAhU6F2Pqitj9K7JS8PjW",
+ "adPro": "4NAfvJvs6bpvDi3wMFKrNd",
+ "adLite": "6v7duHQzgVp3wCSzWbqmGR",
+ "adLynxTrail": "3Qd4qFwjTU9WWZb3HSQ26p",
+ "adSurgeV": "gNyaWve7QcJxg6bnxcCTNA",
+ "snowKit": "gajb7Ga1r8oWfcfxjJLf4P",
+ "svZapusk": "7Chanin295UsCx3v2hb1q1"
 }

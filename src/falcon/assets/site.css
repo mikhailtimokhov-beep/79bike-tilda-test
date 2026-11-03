@@ -1838,3 +1838,55 @@ a[href^="mailto:"],a[href^="http"]{overflow-wrap:anywhere}
 @media (max-width:520px){.mn-kp__txt{max-width:56%;top:10%;gap:6px}.mn-kp__bike{width:66%;bottom:10%}.mn-kp__brand{display:none}}
 .asm__v{position:relative}.mn-kp--over{position:absolute;inset:0;aspect-ratio:auto;border-radius:inherit;z-index:2}.mn-kp[hidden]{display:none}
 @media (max-width:520px){.mn-kp__t{font-size:17px}.mn-kp__tag{font-size:10px;padding:4px 8px}.mn-kp__txt{max-width:50%;left:5%;top:9%}.mn-kp__bike{width:60%;right:-4%;bottom:8%}.mn-kp__play{width:48px;left:5%;bottom:9%;box-shadow:0 0 0 6px rgba(118,88,245,.22),0 8px 20px rgba(118,88,245,.45)}}
+/* 02.11: эко-режим около мощности; блок «Инструкции» на странице модели */
+.kpi-note{margin:-4px 0 0;font-size:12px;line-height:1.35;color:var(--soft)}
+.dd-note{display:block;margin-top:2px;font-size:12px;font-weight:400;color:var(--soft)}
+.mnb{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.mnb__t{position:relative;display:flex;flex-direction:column;gap:6px;min-height:112px;padding:18px 18px 16px;border-radius:18px;background:var(--card,#16161c);border:1px solid rgba(255,255,255,.08);color:inherit;text-decoration:none;transition:border-color .2s,transform .2s}
+.mnb__t:hover{border-color:var(--acc,#7b5cff);transform:translateY(-2px)}
+.mnb__t b{font-size:17px;line-height:1.25}.mnb__t>span{font-size:13px;color:var(--soft)}
+.mnb__t::after{content:"→";position:absolute;right:16px;bottom:14px;color:var(--acc,#8b6dff);font-weight:700}
+.mnb__v{align-self:flex-start;font-size:11px!important;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:99px;background:rgba(123,92,255,.18);color:#b9a6ff!important}
+@media (max-width:900px){.mnb{grid-template-columns:1fr 1fr}.mnb__t{min-height:96px;padding:14px 14px 34px}.mnb__t b{font-size:15px}}
+/* 02.11: рекламные ролики 9:16 */
+.adv{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.adv__c{margin:0;display:flex;flex-direction:column;gap:10px}
+.adv__v{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:18px;background:#111;display:block}
+.adv__c figcaption a{display:flex;flex-direction:column;gap:2px;color:inherit;text-decoration:none}
+.adv__c figcaption b{font-size:16px}.adv__c figcaption span{font-size:13px;color:var(--soft)}
+.adv1{display:grid;grid-template-columns:minmax(240px,320px) 1fr;gap:32px;align-items:center}
+.adv1__t{display:flex;flex-direction:column;gap:12px}.adv1__t b{font-size:28px;line-height:1.2}.adv1__t p{color:var(--soft);margin:0}
+.adv1__b{display:flex;gap:10px;flex-wrap:wrap}
+@media (max-width:900px){.adv{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:62%;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px}.adv__c{scroll-snap-align:start}
+.adv1{grid-template-columns:1fr}.adv1 .adv__v{max-width:340px;margin:0 auto}.adv1__t b{font-size:22px}}
+/* 02.11: мощность и батарея в мини-карточках первого экрана */
+.fh__m .fh__kv{font-size:11px;line-height:1.2;color:var(--stage-mute);font-weight:600;font-variant-numeric:tabular-nums}
+@media (min-width:901px){.fh__m .fh__kv{font-size:12.5px}}
+/* 03.11: видео-баннер вверху страницы модели — в стиле первого экрана главной */
+.mh{margin-top:14px}
+.mh .fh__media{max-width:1440px;margin-inline:auto}
+@media (min-width:1441px){.mh .fh__media{border-radius:20px}}
+.mh--tall .fh__media{aspect-ratio:4/5;max-height:calc(100svh - 200px)}
+@media (min-width:640px){.mh--tall .fh__media{aspect-ratio:16/9}}
+@media (min-width:1024px){.mh .fh__media,.mh--tall .fh__media{aspect-ratio:auto;height:clamp(320px,calc(100svh - 360px),520px)}}
+.mh__txt{position:absolute;z-index:1;left:max(16px,env(safe-area-inset-left,0px));right:16px;bottom:clamp(14px,3vw,32px);display:grid;gap:4px;pointer-events:none}
+.mh__name{font-weight:800;font-size:clamp(30px,5vw,60px);line-height:1;color:#fff;letter-spacing:-.01em}
+.mh__tag{color:#E6E4EF;font-size:clamp(14px,1.4vw,18px)}
+@media (min-width:1024px){.mh__txt{left:max(32px,calc((100% - 1200px)/2))}}
+/* 03.11: позиция с видео (снежный комплект Surge V) */
+.acc__card--video .acc__pic{aspect-ratio:4/5;background:#0b0b0f}
+.acc__pic video{width:100%;height:100%;object-fit:cover;display:block}
+.acc__badge{display:inline-block;justify-self:start;background:var(--accent);color:#fff;font-weight:800;font-size:12px;border-radius:999px;padding:3px 10px;margin-bottom:6px}
+.acc__card--video{grid-column:1/-1}
+@media (min-width:640px){.acc__card--video{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);align-items:stretch}.acc__card--video .acc__body{align-content:center}}
+.acc__badge{width:max-content;align-self:flex-start}
+/* 03.11: раскрывающееся пояснение к согласию в формах */
+.form__more{margin:-4px 0 4px 34px;font-size:13px;color:var(--mute)}
+.form__more summary{cursor:pointer;text-decoration:underline;text-underline-offset:3px;list-style:none;width:max-content;min-height:32px;display:flex;align-items:center}
+.form__more summary::-webkit-details-marker{display:none}
+.form__more p{margin:4px 0 0}
+.v-more{display:flex;width:100%;justify-content:center;margin-top:18px}
+/* 03.11: характеристики и цена у моделей в меню */
+.menu__kv{display:block;font-size:12px;font-weight:500;color:var(--soft);line-height:1.3;margin-top:-2px}
+.menu__price{display:block;font-size:14px;font-weight:800;line-height:1.25}
+.menu__price s{font-weight:500;color:var(--mute);font-size:12px;margin-left:4px;white-space:nowrap}

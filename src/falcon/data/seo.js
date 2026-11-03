@@ -255,7 +255,7 @@ window.SEO_LD = {
         }
       ],
       "currenciesAccepted": "RUB",
-      "paymentAccepted": "Банковская карта, наличные, рассрочка",
+      "paymentAccepted": "Банковская карта, рассрочка",
       "sameAs": [
         "https://rutube.ru/channel/65461061/",
         "https://vk.com/79bike",
@@ -371,7 +371,7 @@ window.SEO_LD = {
         }
       ],
       "currenciesAccepted": "RUB",
-      "paymentAccepted": "Банковская карта, наличные, рассрочка",
+      "paymentAccepted": "Банковская карта, рассрочка",
       "sameAs": [
         "https://rutube.ru/channel/65461061/",
         "https://vk.com/79bike",
