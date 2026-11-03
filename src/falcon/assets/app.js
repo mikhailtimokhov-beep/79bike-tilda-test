@@ -316,7 +316,7 @@
     return '<div class="cta-band"><div style="flex:1 1 340px"><h2>' + title + "</h2><p>" + text + '</p></div><form class="form" id="' + id + '" style="flex:1 1 400px" novalidate>' +
       (o.sum ? '<div class="osum" id="osum"><span class="osum__pic">' + imgTag(o.sum, firstImg(o.sum), "", ' id="osum-img"') + '</span><span class="osum__txt"><span class="osum__cap">Ваш выбор</span><b>' + esc(bySlug(o.sum).name) + '</b><span id="osum-color"></span></span><span class="osum__price"><b class="num">' + money(bySlug(o.sum).price) + "</b>" + (bySlug(o.sum).oldPrice ? "<s>" + money(bySlug(o.sum).oldPrice) + "</s>" : "") + '</span><input type="hidden" name="color" id="osum-in"></div>' : "") +
       (o.city && o.cityFirst ? '<label for="' + id + '-city">Город</label><input id="' + id + '-city" data-req="Укажите город." type="text" autocomplete="address-level2" placeholder="Например, Екатеринбург">' : "") +
-      (o.model ? '<label for="' + id + '-m">Модель</label><select id="' + id + '-m" class="form__sel"><option value="">Ещё не выбрал</option>' + ORDER.map(function (s) { return '<option value="' + s + '"' + (s === pre ? " selected" : "") + ">" + esc(bySlug(s).name) + "</option>"; }).join("") + '</select>' : "") +
+      (o.model ? '<label for="' + id + '-m">Модель</label><select id="' + id + '-m" class="form__sel"><option value="">Ещё не выбрал</option>' + ORDER.filter(function (s) { return !(id === "f-visit" && s === "surge-v"); }).map(function (s) { return '<option value="' + s + '"' + (s === pre ? " selected" : "") + ">" + esc(bySlug(s).name) + "</option>"; }).join("") + '</select>' : "") +
       (o.city && !o.cityFirst ? '<label for="' + id + '-city">Город</label><input id="' + id + '-city" data-req="Укажите город." type="text" autocomplete="address-level2" placeholder="Например, Екатеринбург">' : "") +
       contactHtml(id) +
       (o.when ? '<div class="form__when"><div><label for="' + id + '-date">Дата визита</label><input id="' + id + '-date" type="date" data-req="Выберите дату визита." data-visit-date></div></div><p class="form__hint">Время согласуем по телефону — в удобное для вас. После записи пришлём видео, как пройти в шоурум.</p>' : "") +
@@ -837,7 +837,7 @@
       '<aside class="buy"><div><p class="t-cap">' + esc(TAG[slug]) + '</p><h1 id="m-h1" style="margin-top:6px">' + esc(mc.h1 || m.name) + '</h1></div><p style="color:var(--soft)">' + esc(mc.lead || m.tagline) + "</p>" +
       '<dl class="kpis" style="margin:0"><div><dt>Мощность</dt><dd class="num">' + num(s.powerKw) + ' <small>кВт</small></dd></div><div><dt>Скорость</dt><dd class="num">' + s.speedKmh + ' <small>км/ч</small></dd></div><div><dt>Батарея</dt><dd class="num">' + s.capacityAh + ' <small>Ач</small></dd></div><div><dt>Вес</dt><dd class="num">' + s.weightKg + ' <small>кг</small></dd></div></dl>' + (ecoNote(m) ? '<p class="kpi-note">' + ecoNote(m) + '</p>' : '') +
             (soon ? '<div class="buy__price"><b>Старт продаж в ' + esc(m.launch || "2027") + "</b></div>" : '<div class="buy__price"><b class="num">' + money(m.price) + "</b>" + (m.oldPrice ? "<s>" + money(m.oldPrice) + "</s>" : "") + (save ? '<span class="save">−' + money(save) + "</span>" : "") + "</div>") +
-      '<div class="buy__actions">' + (soon ? '<a class="btn btn--main" href="#order">Сообщить о старте продаж</a>' : '<a class="btn btn--main" href="#order">Заказать</a>') + (soon ? "" : '<button type="button" class="btn btn--ghost buy__cart" id="buy-cart" data-ci="0">' + ICON.cartS + 'В корзину</button><a class="btn btn--ghost" href="testdrive.html#visit">Тест-драйв (Москва и МО)</a>') + '</div>' +
+      '<div class="buy__actions">' + (soon ? '<a class="btn btn--main" href="#order">Сообщить о старте продаж</a>' : '<a class="btn btn--main" href="#order">Заказать</a>') + (soon ? "" : '<button type="button" class="btn btn--ghost buy__cart" id="buy-cart" data-ci="0">' + ICON.cartS + 'В корзину</button>' + (slug === "surge-v" ? '<a class="btn btn--ghost" href="contacts.html">Посмотреть в шоуруме</a>' : '<a class="btn btn--ghost" href="testdrive.html#visit">Тест-драйв (Москва и МО)</a>')) + '</div>' +
       (soon ? "" : '<ul class="buy__links"><li><a href="credit.html">' + (creditMin(slug) ? 'Рассрочка от ' + money(creditMin(slug)) + ' в месяц (с процентами)*' : 'Рассрочка Т-Банк или POSCREDIT на 6–24 месяца (с процентами)') + '</a></li><li><a href="delivery.html#calc">Доставка в ваш город — рассчитать</a></li>' + (MN_ORDER.indexOf(slug) >= 0 ? '<li><a href="#manuals">Инструкция и видео сборки</a></li>' : "") + '</ul>' + (creditMin(slug) ? '<p class="fine">* Кредит банков-партнёров (Т-Банк, кредиторы через POSCREDIT) на 24 мес., с переплатой. Ставку и полную стоимость кредита определяет кредитор. Не является офертой. <a href="credit.html#plans">Условия</a></p>' : '')) +
       '<p class="buy__trust">' + ICON.shield + '<span>Байк из фирменного магазина 79BIKE: официальная поставка, не блокируется после активации, гарантия и сервис в России.</span></p>' +
       '<div class="hl">' + (m.highlights || []).map(function (h) { return "<span>" + esc(h) + "</span>"; }).join("") + "</div></aside></section>" +
@@ -1192,8 +1192,8 @@
 
   /* 29.10: отдельная страница тест-драйва (согласовано в «Главной» 28.10, вопрос 10): Москва и МО, модели без Lynx X */
   P.testdrive = function () {
-    var sh = C.showroom || {}, list = ["pro", "gt", "light", "lynx-trail", "surge-v"].filter(function (s) { return bySlug(s); });
-    return head("<span>Тест-драйв</span>", "Тест-драйв электромотоциклов в Москве и МО", "Тест-драйв Falcon GT, Falcon Pro, Falcon Lite, Falcon Lynx Trail и Y-Volt Surge V — в шоуруме «Речников 21» в Москве, для жителей Москвы и Московской области. Только по предварительной записи: позвоните или оставьте заявку — подготовим нужную модель.") +
+    var sh = C.showroom || {}, list = ["pro", "gt", "light", "lynx-trail"].filter /* 03.11 Михаил: у Surge V тест-драйва нет */(function (s) { return bySlug(s); });
+    return head("<span>Тест-драйв</span>", "Тест-драйв электромотоциклов в Москве и МО", "Тест-драйв Falcon GT, Falcon Pro, Falcon Lite и Falcon Lynx Trail — в шоуруме «Речников 21» в Москве, для жителей Москвы и Московской области. Только по предварительной записи: позвоните или оставьте заявку — подготовим нужную модель.") +
       '<div class="wrap blog-hero-cta"><a class="btn btn--main" href="#visit">Записаться на тест-драйв</a><a class="btn btn--ghost" href="' + PHONE_HREF + '">Позвонить</a></div>' +
       sec("td-models", "Какие модели можно попробовать", modelCards(list)) +
       ((sh.testDriveRules && sh.testDriveRules.length) ? sec("td-rules", "Условия тест-драйва", '<ul class="td-rules">' + sh.testDriveRules.map(function (r) { return "<li>" + esc(r) + "</li>"; }).join("") + "</ul>") : "") +
@@ -1265,7 +1265,7 @@
       '<div><span class="buy-a__badge">' + esc(x.audience || "") + '</span><span class="buy-a__name">' + esc(x.name) + "</span>" +
       '<ul class="buy-a__kv"><li>сиденье <b>' + sp.seatMm + " мм</b></li><li>нагрузка <b>до " + sp.payloadKg + " кг</b></li><li><b>" + String(sp.powerKw).replace(".", ",") + " кВт</b></li></ul>" +
       '<div class="buy-a__price">' + price + "</div></div>" +
-      '<div class="buy-a__btns"><a class="btn btn--main" href="' + href + '">Подробнее</a><a class="btn btn--ghost" href="testdrive.html#visit">Тест-драйв</a></div></aside>';
+      '<div class="buy-a__btns"><a class="btn btn--main" href="' + href + '">Подробнее</a>' + (s === "surge-v" ? '<a class="btn btn--ghost" href="contacts.html">Посмотреть в шоуруме</a>' : '<a class="btn btn--ghost" href="testdrive.html#visit">Тест-драйв</a>') + '</div></aside>';
   }
   function buyEnd(ms) {
     if (!ms.length) return "";
@@ -1659,7 +1659,7 @@
     i.addEventListener("change", sync); i.addEventListener("input", sync);
   });
   document.addEventListener("click", function (e) { var a = e.target.closest("#r-try, #r-cmp"); if (a && window.__pick) remember(window.__pick); });
-  if ($("f-visit") && page !== "model") { var mv = recall(); if (mv) { var t = $("f-visit").parentNode.querySelector("h2"); if (t) t.textContent = "Тест-драйв " + bySlug(mv).name; } }
+  if ($("f-visit") && page !== "model") { var mv = recall(); if (mv && mv !== "surge-v") { var t = $("f-visit").parentNode.querySelector("h2"); if (t) t.textContent = "Тест-драйв " + bySlug(mv).name; } }
 
   /* сравнение: выбор моделей (по умолчанию 3: последняя просмотренная и соседи по цене) */
   if ($("cmp-pick")) {
