@@ -59,7 +59,7 @@ const HERO_NEW = `var p=window.matchMedia&&matchMedia("(max-width: 600px)").matc
 
 // Ссылки на falcon-bike.ru: пока сайт Falcon не обновлён — ведём на существующие страницы старых сайтов (overrides/falcon-links.json).
 // Будущий адрес остаётся в data-release-href. Заглушки на прототип Claude заменяются всегда — на живом сайте их быть не должно.
-const FL = JSON.parse(readFileSync(join(ROOT, "overrides", "falcon-links.json"), "utf8")); delete FL._comment; /* 03.11: когда финальные /privacy и /consent Falcon включены (адрес в falcon-legal-vars.json) — ссылки ведут на них */ try { if (JSON.parse(readFileSync(join(ROOT, "overrides", "falcon-legal-vars.json"), "utf8")).ADDR) { delete FL["https://falcon-bike.ru/privacy"]; delete FL["https://falcon-bike.ru/consent"]; } } catch (e) {}
+const FL = JSON.parse(readFileSync(join(ROOT, "overrides", "falcon-links.json"), "utf8")); delete FL._comment; /* 03.11: когда финальные /privacy и /consent Falcon опубликованы на живом сайте (LIVE: true в falcon-legal-vars.json) — ссылки ведут на них */ try { if (JSON.parse(readFileSync(join(ROOT, "overrides", "falcon-legal-vars.json"), "utf8")).LIVE) { delete FL["https://falcon-bike.ru/privacy"]; delete FL["https://falcon-bike.ru/consent"]; } } catch (e) {}
 const reEsc = (x) => x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const NOW = (u) => FL[u] || u;
 const FALCON_TEXT = [ // подписи, которые меняются вместе с адресом (блога на старом Falcon нет — ведём в «Вопросы и ответы»)
