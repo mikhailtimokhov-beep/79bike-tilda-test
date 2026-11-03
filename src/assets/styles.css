@@ -1375,3 +1375,5 @@ figure.media-figure figcaption { font-size: var(--fs-sm); color: var(--ink-2); }
 .cpick--single { display: flex; gap: 10px; align-items: baseline; font-size: var(--fs-sm); }
 .cpick[data-size="sm"] .cchip { min-height: 32px; padding: 0 10px 0 7px; font-size: 13px; }
 @media (pointer: coarse) { .cchip { min-height: 44px; } }
+/* 02.11: эко-режим около мощности */
+.stat-note{display:block;margin:6px 0 0;font-size:12px;line-height:1.35;font-weight:400;opacity:.7}

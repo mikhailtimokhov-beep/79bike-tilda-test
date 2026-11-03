@@ -704,8 +704,11 @@
       specStat(model, "capacityAh", "Батарея")
     ];
     if (opts.withRange) cells.push(specStat(model, "rangeKm", "Запас хода"));
-    return '<div class="stat-row' + (opts.withRange ? " stat-row--4" : "") + (opts.hero ? " stat-row--hero" : "") + '">' + cells.join("") + "</div>";
+    return '<div class="stat-row' + (opts.withRange ? " stat-row--4" : "") + (opts.hero ? " stat-row--hero" : "") + '">' + cells.join("") + "</div>" +
+      (opts.hero && ecoNote(model) ? '<p class="stat-note">' + ecoNote(model) + "</p>" : "");
   }
+  /* 02.11 (Михаил): пометка про эко-режим около мощности — у моделей, где в specs.modes есть ограничение 3,9 кВт */
+  function ecoNote(m) { return /3,9\s*кВт/.test(get(m, ["specs", "modes"], "") || "") ? "Мощность модели может быть ограничена 3,9 кВт (эко-режим)" : ""; }
 
   /* ---------- карточка модели ----------
      opts: { headingLevel: 3, view: "вид сбоку", showSwatches: true, showTags: true, compact: false } */
@@ -792,6 +795,7 @@
       var label = esc(own || r.label) + unitInLabel;
       return '<tr data-key="' + esc(k) + '"><th scope="row">' + label + "</th>" + models.map(function (m) {
         var html = fmtSpec(m, k, { unit: false });
+        if (single && k === "powerKw" && ecoNote(m)) html += '<small class="stat-note">' + ecoNote(m) + "</small>";
         return "<td" + cc(m) + ">" + html + "</td>";
       }).join("") + "</tr>";
     });
