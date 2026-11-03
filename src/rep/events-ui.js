@@ -4,6 +4,8 @@
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   var SHOP = "https://falcon-bike.ru/";
   function img(src, w) { return "../assets/" + src + "-" + w + ".webp"; }
+  /* 03.11: ссылка «открыть фото» на живом сайте — адрес картинки на сервере Тильды (иначе 404 на 79bike.ru) */
+  function big(src) { var u = img(src, 1600); return window.B79_ASSET ? window.B79_ASSET(u) : u; }
   function list() {
     var E = (window.EVENTS || []).slice();
     function k(e) { return e.date ? String(e.date) : ""; }
@@ -13,15 +15,15 @@
   function card(e) {
     var ph = e.photos || [], p0 = ph[0];
     return '<article class="ev" data-type="' + esc(e.type) + '">' +
-      (p0 ? '<a class="ev__pic" href="' + img(p0.src, 1600) + '" target="_blank" rel="noopener"><img src="' + img(p0.src, 640) + '" alt="' + esc(p0.alt || e.title) + '" loading="lazy" decoding="async"><span class="ev__type">' + esc(e.type) + "</span></a>" : "") +
+      (p0 ? '<a class="ev__pic" href="' + big(p0.src) + '" target="_blank" rel="noopener"><img src="' + img(p0.src, 640) + '" alt="' + esc(p0.alt || e.title) + '" loading="lazy" decoding="async"><span class="ev__type">' + esc(e.type) + "</span></a>" : "") +
       '<div class="ev__body">' + meta(e) + '<h3 class="h3">' + esc(e.title) + "</h3><p>" + esc(e.text) + "</p>" +
-      (ph.length > 1 ? '<div class="ev__thumbs">' + ph.slice(1).map(function (q) { return '<a href="' + img(q.src, 1600) + '" target="_blank" rel="noopener"><img src="' + img(q.src, 640) + '" alt="' + esc(q.alt || "") + '" loading="lazy" decoding="async"></a>'; }).join("") + "</div>" : "") +
+      (ph.length > 1 ? '<div class="ev__thumbs">' + ph.slice(1).map(function (q) { return '<a href="' + big(q.src) + '" target="_blank" rel="noopener"><img src="' + img(q.src, 640) + '" alt="' + esc(q.alt || "") + '" loading="lazy" decoding="async"></a>'; }).join("") + "</div>" : "") +
       (e.link && e.link.url ? '<a class="ev__link" href="' + esc(e.link.url) + '" target="_blank" rel="noopener">' + esc(e.link.text || "Подробнее") + "</a>" : "") +
       "</div></article>";
   }
   function up(e) {
     var p0 = (e.photos || [])[0];
-    return '<article class="ev-up">' + (p0 ? '<a class="ev-up__pic" href="' + img(p0.src, 1600) + '" target="_blank" rel="noopener"><img src="' + img(p0.src, 1600) + '" alt="' + esc(p0.alt || e.title) + '" loading="lazy" decoding="async"></a>' : "") +
+    return '<article class="ev-up">' + (p0 ? '<a class="ev-up__pic" href="' + big(p0.src) + '" target="_blank" rel="noopener"><img src="' + img(p0.src, 1600) + '" alt="' + esc(p0.alt || e.title) + '" loading="lazy" decoding="async"></a>' : "") +
       '<div class="ev-up__body"><p class="ev-up__tag">' + (e.date && /^\d{4}-\d\d(-\d\d)?$/.test(e.date) ? "Ближайшее событие" : "Действует сейчас") + " · " + esc(e.type) + '</p><h3 class="h3">' + esc(e.title) + "</h3>" + meta(e) + "<p>" + esc(e.text) + '</p><div class="visit-cta">' + cta(e) + "</div></div></article>";
   }
   /* свои кнопки события (поле cta); ссылки вида "contacts.html#visit" ведут в магазин falcon-bike.ru */

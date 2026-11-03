@@ -20,7 +20,7 @@ window.DOCS = {
     "<figure class=\"doc-img\"><img src=\"https://static.tildacdn.com/tild6562-3662-4839-b331-306436333637/photo.png\" alt=\"Декларация соответствия на электромотоциклы Falcon Pro\" loading=\"lazy\"></figure>" },
   "dealer": { crumb: "Партнёрам", title: "Стать дилером 79BIKE", lead: "Заявки от дилеров принимает официальное представительство 79BIKE в России.", html:
     "<p>Мы приглашаем к сотрудничеству специализированные компании: мотосалоны, магазины электротранспорта и сервисы. Условия сотрудничества — по запросу.</p>" +
-    "<p><a class=\"btn btn--main\" href=\"https://79bike.ru/#dealers\" target=\"_blank\" rel=\"noopener\">Оставить заявку на 79bike.ru</a></p>" },
+    "<p>Позвоните или напишите нам — расскажем об условиях.</p><p><a class=\"btn btn--main\" href=\"contacts.html\">Связаться с нами</a></p>" },
   "error": { crumb: "", title: "Страница не найдена", lead: "Возможно, страница переехала или адрес набран с ошибкой.", html:
     "<p class=\"doc-btns\"><a class=\"btn btn--main\" href=\"index.html\">На главную</a> <a class=\"btn btn--ghost\" href=\"index.html#models\">Модели</a> <a class=\"btn btn--ghost\" href=\"parts.html\">Запчасти</a> <a class=\"btn btn--ghost\" href=\"contacts.html\">Контакты</a></p>" }
 };

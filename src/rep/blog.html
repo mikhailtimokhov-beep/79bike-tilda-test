@@ -40,7 +40,7 @@
 
 </style>
 <script src="../assets/models.js?v=20261029b"></script>
-<script src="blog.js?v=20261029b"></script>
+<script src="blog.js?v=20261103"></script>
 <script data-top>/* 26.10 (Михаил): переход на другую страницу — всегда с самого верха (если в ссылке нет #раздела) */
 try{if("scrollRestoration" in history)history.scrollRestoration="manual"}catch(e){}
 (function(){var moved=false,t0=Date.now();["wheel","touchstart","keydown","mousedown"].forEach(function(ev){window.addEventListener(ev,function(){moved=true},{passive:true,once:true})});
@@ -174,7 +174,8 @@ top();document.addEventListener("DOMContentLoaded",top);window.addEventListener(
     return '<article class="bcard" data-rub="' + esc(p.rubric) + '"><a href="blog.html?s=' + encodeURIComponent(p.slug) + '"><span class="bcard__pic">' + (p.cover ? '<img src="' + esc(p.cover) + '" alt="' + esc(p.coverAlt || p.title) + '" loading="lazy" decoding="async">' : "") + '</span><span class="bcard__body"><span class="bcard__meta">' + esc(rub(p.rubric).name) + " · " + p.readMin + ' мин</span><span class="bcard__t">' + esc(p.title) + '</span><span class="bcard__lead">' + esc(p.lead) + "</span></span></a></article>";
   }
   function links() {
-    return '<div class="blog-foot">' + [B.shop, B.shopBlog].filter(Boolean).map(function (x) { return '<a class="card blog-rep" href="' + esc(x.href) + '"><span class="t-cap">falcon-bike.ru</span><b>' + esc(x.text) + "</b><span>" + esc(x.note) + "</span></a>"; }).join("") + "</div>";
+    /* 03.11 Михаил: материалы блога оставляют читателя на 79bike.ru — карточки falcon-bike.ru убраны */
+    return '<div class="blog-foot">' + [].map(function (x) { return '<a class="card blog-rep" href="' + esc(x.href) + '"><span class="t-cap">falcon-bike.ru</span><b>' + esc(x.text) + "</b><span>" + esc(x.note) + "</span></a>"; }).join("") + "</div>";
   }
   function sec(id, title, inner, extra) { return '<section class="sec"' + (id ? ' id="' + id + '"' : "") + '><div class="wrap">' + (title ? '<div class="sec-head"><h2 class="h2">' + title + "</h2>" + (extra || "") + "</div>" : "") + inner + "</div></section>"; }
   function head(crumb, h1, lead) { return '<section class="page-head"><div class="wrap"><nav class="crumbs" aria-label="Навигация"><a href="index.html">Главная</a><span aria-hidden="true">/</span>' + crumb + "</nav><h1>" + h1 + "</h1>" + (lead ? '<p class="t-lead">' + lead + "</p>" : "") + "</div></section>"; }
@@ -211,7 +212,7 @@ top();document.addEventListener("DOMContentLoaded",top);window.addEventListener(
       '<section class="sec post-sec"><div class="wrap post">' + (toc.length > 2 ? '<nav class="post-toc" aria-label="Содержание"><details' + (wide ? " open" : "") + "><summary>Содержание</summary><ol>" + toc.map(function (t) { return '<li><a href="#' + t[0] + '">' + esc(t[1]) + "</a></li>"; }).join("") + "</ol></details></nav>" : "<div></div>") +
       '<article class="prose blog-body">' + body + "</article></div></section>" +
       (p.faq && p.faq.length ? sec("post-faq", "Вопрос-ответ", '<div class="qa">' + p.faq.map(function (f, i) { return "<details" + (i ? "" : " open") + "><summary>" + esc(f.q) + '<span aria-hidden="true">' + PLUS + "</span></summary><p>" + esc(f.a) + "</p></details>"; }).join("") + "</div>") : "") +
-      (ms.length ? sec("post-models", "Модели из статьи", '<div class="rbikes">' + ms.map(function (m) { return '<a class="rbike" href="' + SHOP + (LIVE[m.slug] || "") + '"><span class="rbike__pic"><img src="../assets/photos/cut/' + m.slug + '.webp" alt="' + esc(m.name) + ', вид сбоку" loading="lazy"></span><b>' + esc(m.name) + "</b><span>" + esc(m.tagline || "") + "</span><span>" + (m.price ? "Цена в магазине Falcon-Bike: " + money(m.price) : "Старт продаж — 2027") + '</span><span class="rbike__go">Купить на falcon-bike.ru →</span></a>'; }).join("") + "</div>") : "") +
+      (ms.length ? sec("post-models", "Модели из статьи", '<div class="rbikes">' + ms.map(function (m) { return '<a class="rbike" href="index.html#models"><span class="rbike__pic"><img src="../assets/photos/cut/' + m.slug + '.webp" alt="' + esc(m.name) + ', вид сбоку" loading="lazy"></span><b>' + esc(m.name) + "</b><span>" + esc(m.tagline || "") + "</span><span>" + (m.price ? "Цена в магазине Falcon-Bike: " + money(m.price) : "Старт продаж — 2027") + '</span><span class="rbike__go">Купить на falcon-bike.ru →</span></a>'; }).join("") + "</div>") : "") +
       (rel.length ? sec("post-rel", "Читайте также", '<div class="bgrid">' + rel.slice(0, 3).map(card).join("") + "</div>", '<a class="btn btn--ghost" href="blog.html">Все статьи</a>') : "") +
       sec("", "", links());
   } else {

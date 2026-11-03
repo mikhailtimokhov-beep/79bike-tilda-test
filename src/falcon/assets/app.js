@@ -1120,7 +1120,7 @@
     if (!e.cta || !e.cta.length) return '<a class="btn btn--main" href="testdrive.html#visit">Записаться</a><a class="btn btn--ghost" href="' + PHONE_HREF + '">Позвонить</a>';
     return e.cta.map(function (c, i) { var ext = /^https?:/.test(c.url); return '<a class="btn ' + (i ? "btn--ghost" : "btn--main") + '" href="' + esc(c.url) + '"' + (ext ? ' target="_blank" rel="noopener"' : "") + ">" + esc(c.text) + "</a>"; }).join("");
   }
-  function evRepLink() { return '<a class="ev-rep" href="' + REP_EVENTS + '" target="_blank" rel="noopener">Все события 79BIKE на сайте бренда 79bike.ru<span aria-hidden="true"> →</span></a>'; }
+  function evRepLink() { return ""; /* 03.11 Михаил: с falcon-bike.ru не уводим на 79bike.ru */ return '<a class="ev-rep" href="' + REP_EVENTS + '" target="_blank" rel="noopener">Все события 79BIKE на сайте бренда 79bike.ru<span aria-hidden="true"> →</span></a>'; }
   function homeEvents() {
     var E = evList(); if (!E.length) return "";
     return sec("events", "События", '<div class="ev-grid ev-grid--home">' + E.slice(0, 3).map(function (e) { return evCard(e, true); }).join("") + "</div>", '<a class="btn btn--ghost" href="events.html">Все события</a>');
