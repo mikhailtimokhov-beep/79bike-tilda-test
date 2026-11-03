@@ -247,16 +247,6 @@ window.GALLERY = {
    "tag": "детали",
    "source": "Оригинал с компьютера владельца: ФОТО и ВИДЕО/Falcon GT/Черный _US/Каталожные фото/DSC00013.jpg",
    "pos": "50% 50%"
-  },
-  {
-   "src": "assets/gallery/gt/2.webp",
-   "thumb": "assets/gallery/gt/2-s.webp",
-   "w": 1600,
-   "h": 1217,
-   "alt": "Falcon GT — прыжок с каменного уступа",
-   "color": "",
-   "tag": "езда",
-   "source": "https://www.youtube.com/watch?v=XZe9LfxpgHE"
   }
  ],
  "pro": [
@@ -577,6 +567,16 @@ window.GALLERY = {
    "color": "Black Gold (чёрный с золотым)",
    "tag": "езда",
    "source": "https://www.instagram.com/p/DeojFQctXYk/"
+  },
+  {
+   "src": "assets/gallery/gt/2.webp",
+   "thumb": "assets/gallery/gt/2-s.webp",
+   "w": 1600,
+   "h": 1217,
+   "alt": "Lynx X — прыжок с каменного уступа",
+   "color": "",
+   "tag": "езда",
+   "source": "https://www.youtube.com/watch?v=XZe9LfxpgHE"
   },
   {
    "src": "assets/gallery/lynx-x/5.webp",
