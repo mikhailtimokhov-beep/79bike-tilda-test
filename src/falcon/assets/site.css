@@ -1887,9 +1887,8 @@ a[href^="mailto:"],a[href^="http"]{overflow-wrap:anywhere}
 .form__more p{margin:4px 0 0}
 .v-more{display:flex;width:100%;justify-content:center;margin-top:18px}
 /* 03.11: характеристики и цена у моделей в меню */
-.menu__kv{display:block;font-size:12px;font-weight:500;color:var(--soft);line-height:1.3;margin-top:-2px}
-.menu__price{display:block;font-size:14px;font-weight:800;line-height:1.25}
-.menu__price s{font-weight:500;color:var(--mute);font-size:12px;margin-left:4px;white-space:nowrap}
+.menu__kv{display:block;font-size:12px!important;font-weight:400!important;color:var(--mute)!important;line-height:1.35!important;margin-top:-2px;letter-spacing:0;text-transform:none}
+.menu__price{display:block;font-size:15px!important;font-weight:800!important;line-height:1.25!important;font-variant-numeric:tabular-nums;margin-top:auto;letter-spacing:0;text-transform:none}
 /* 03.11: «В других разделах» — поиск по всем разделам запчастей на страницах каталога */
 .xs{margin-top:24px;padding:18px;border-radius:20px;background:var(--panel)}
 .xs[hidden]{display:none}
