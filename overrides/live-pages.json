@@ -1,5 +1,5 @@
 {
-  "_comment": "Страницы наших сайтов, которые существуют сейчас (проверено в Chrome). 29.10.2026 — добавлены новые адреса Falcon после переноса.",
+  "_comment": "Страницы наших сайтов, которые существуют сейчас (проверено в Chrome). 29.10.2026 — добавлены новые адреса Falcon после переноса. 04.11: /privacy и /consent опубликованы (LEGAL-01).",
   "pages": [
     "https://79bike.ru/policy",
     "https://falcon-bike.ru/",
@@ -8,6 +8,7 @@
     "https://falcon-bike.ru/blog",
     "https://falcon-bike.ru/bloggers",
     "https://falcon-bike.ru/compare",
+    "https://falcon-bike.ru/consent",
     "https://falcon-bike.ru/contacts",
     "https://falcon-bike.ru/declaration",
     "https://falcon-bike.ru/delivery",
@@ -30,6 +31,7 @@
     "https://falcon-bike.ru/manual-surge-v",
     "https://falcon-bike.ru/pay",
     "https://falcon-bike.ru/podbor",
+    "https://falcon-bike.ru/privacy",
     "https://falcon-bike.ru/rassrochka",
     "https://falcon-bike.ru/surge-v",
     "https://falcon-bike.ru/test-drive",
