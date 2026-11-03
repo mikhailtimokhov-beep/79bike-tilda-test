@@ -127,7 +127,7 @@
   function footSoc() {
     function a(k, t, h) { return '<a class="soc__a" href="' + (h || "#") + '"' + (h ? ' target="_blank" rel="noopener"' : ' aria-disabled="true"') + '><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + SOC_IC[k] + "</svg>" + t + "</a>"; }
     return '<div class="soc"><p class="soc__h">Написать нам</p><div class="soc__row">' + a("tg", "Telegram", "https://t.me/Meliso_group") + a("wa", "WhatsApp", "https://wa.me/79999005588") + a("vkm", "VK Мессенджер", "https://vk.me/79bike") + "</div>" +
-      '<p class="soc__h">Мы в соцсетях</p><div class="soc__row">' + a("vk", "ВКонтакте", "https://vk.com/79bike") + a("rt", "RUTUBE", RUTUBE) + a("dz", "Дзен", DZEN) + "</div></div>";
+      '<p class="soc__h">Мы в соцсетях</p><div class="soc__row">' + a("tg", "Telegram-канал", "https://t.me/bike79russia") + a("vk", "ВКонтакте", "https://vk.com/79bike") + a("rt", "RUTUBE", RUTUBE) + a("dz", "Дзен", DZEN) + "</div></div>";
   }
   function footer() {
     return '<footer class="foot"><div class="wrap"><h2 class="vh">Разделы сайта и контакты</h2><div class="foot__grid">' +
