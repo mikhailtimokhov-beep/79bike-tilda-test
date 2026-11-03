@@ -1,0 +1,125 @@
+<!-- 79BIKE · лендинг /motozima26 (EXPO-04-LAND, ТЗ claude/motozima-landing-brief.md v2). «Перенос», 03.11.2026.
+     Заявка уходит через скрытую форму Тильды на странице (lead-sink.js в подвале проекта: window.B79_TILDA_SEND). -->
+<div class="mz" id="mz">
+<style>
+.mz{--bg:#0b0b0f;--card:#15151c;--line:#2a2a35;--fg:#fff;--mute:#a3a3b2;--acc:#7b5cff;--err:#ff6b6b;background:var(--bg);color:var(--fg);font-family:Montserrat,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;padding:32px 16px 56px;box-sizing:border-box}
+.mz *{box-sizing:border-box}.mz__w{max-width:760px;margin:0 auto}
+.mz h1{font-size:clamp(26px,5vw,40px);line-height:1.15;margin:0 0 10px;font-weight:800;text-transform:uppercase;letter-spacing:.01em}
+.mz__lead{color:var(--mute);font-size:15px;line-height:1.5;margin:0 0 22px}
+.mz__tabs{display:grid;gap:10px;grid-template-columns:repeat(3,1fr);margin:0 0 22px}
+@media(max-width:640px){.mz__tabs{grid-template-columns:1fr}}
+.mz__tab{background:var(--card);border:1.5px solid var(--line);color:var(--fg);border-radius:16px;padding:16px;text-align:left;cursor:pointer;font:inherit}
+.mz__tab b{display:block;font-size:16px;margin-bottom:4px}.mz__tab span{font-size:13px;color:var(--mute)}
+.mz__tab[aria-pressed="true"]{border-color:var(--acc);box-shadow:0 0 0 1px var(--acc) inset}
+.mz__f{display:none;background:var(--card);border-radius:18px;padding:20px}.mz__f.is-on{display:block}
+.mz__f h2{font-size:20px;margin:0 0 6px}.mz__bon{margin:0 0 16px;padding-left:18px;color:#e5e5ee;font-size:14px;line-height:1.5}
+.mz label.mz__l{display:block;margin:0 0 12px;font-size:13px;color:var(--mute)}
+.mz input[type=text],.mz input[type=tel],.mz input[type=url],.mz select{display:block;width:100%;margin-top:5px;background:#0f0f15;border:1px solid var(--line);border-radius:12px;color:var(--fg);font:inherit;font-size:16px;padding:12px 14px}
+.mz input:focus,.mz select:focus{outline:2px solid var(--acc);outline-offset:1px}
+.mz__row{display:grid;gap:12px;grid-template-columns:1fr 1fr}@media(max-width:520px){.mz__row{grid-template-columns:1fr}}
+.mz__ck{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.45;color:#d9d9e3;margin:10px 0}
+.mz__ck input{width:20px;height:20px;flex:none;margin-top:1px;accent-color:var(--acc)}.mz__ck a{color:#fff}
+.mz__btn{width:100%;margin-top:8px;background:var(--acc);color:#fff;border:0;border-radius:999px;padding:15px 20px;font:inherit;font-weight:700;font-size:16px;cursor:pointer}
+.mz__btn[disabled]{opacity:.6;cursor:wait}
+.mz__msg{min-height:20px;margin-top:10px;font-size:14px;color:var(--err)}
+.mz__ok{display:none;background:var(--card);border-radius:18px;padding:22px;font-size:15px;line-height:1.55}.mz__ok.is-on{display:block}
+.mz__ok h2{margin:0 0 10px;font-size:22px}.mz__ok ul{padding-left:18px;margin:10px 0}
+.mz__foot{margin-top:22px;font-size:13px;color:var(--mute);line-height:1.5}.mz__foot a{color:#fff}
+</style>
+<div class="mz__w">
+<h1>79BIKE на Мотозиме: получите бонус за&nbsp;регистрацию</h1>
+<p class="mz__lead">Официальное представительство 79BIKE в России и официальный магазин Falcon-Bike. Выберите, кто вы, — форма займёт минуту.</p>
+<div class="mz__tabs" role="group" aria-label="Кто вы">
+<button type="button" class="mz__tab" data-seg="buy" aria-pressed="false"><b>Покупаю для себя или семьи</b><span>подбор модели и тест-драйв</span></button>
+<button type="button" class="mz__tab" data-seg="rent" aria-pressed="false"><b>Прокат</b><span>база отдыха, парк, трасса</span></button>
+<button type="button" class="mz__tab" data-seg="dealer" aria-pressed="false"><b>Дилер</b><span>магазин или мотосалон</span></button>
+</div>
+
+<form class="mz__f" data-seg="buy" novalidate>
+<h2>Покупатель</h2>
+<ul class="mz__bon"><li>фото на байке со стенда — в мессенджер в тот же день;</li><li>персональный подбор модели по росту и весу и видеообзоры;</li><li>приоритетная запись на тест-драйв в шоуруме «Речников 21» (Москва и МО).</li></ul>
+<div class="mz__row"><label class="mz__l">Имя*<input type="text" name="name" autocomplete="name" required></label><label class="mz__l">Телефон*<input type="tel" name="tel" autocomplete="tel" inputmode="tel" placeholder="+7" required></label></div>
+<div class="mz__row"><label class="mz__l">Мессенджер<select name="msgr"><option>Telegram</option><option>VK Мессенджер</option><option>WhatsApp</option><option>Звонок</option></select></label>
+<label class="mz__l">Модель<select name="model"><option value="">Пока не выбрал</option><option>Falcon Pro</option><option>Falcon GT</option><option>Falcon Lite</option><option>Lynx Trail</option><option>Lynx X</option><option>Y-Volt Surge V</option></select></label></div>
+<div class="mz__row"><label class="mz__l">Рост и вес<input type="text" name="hw" placeholder="например, 178 см, 80 кг"></label><label class="mz__l">Город*<input type="text" name="city" autocomplete="address-level2" required></label></div>
+<label class="mz__l">Когда планируете покупку<select name="when"><option>Сейчас</option><option>Весной</option><option>Пока смотрю</option></select></label>
+</form>
+
+<form class="mz__f" data-seg="rent" novalidate>
+<h2>Прокат</h2>
+<ul class="mz__bon"><li>расчёт окупаемости парка под вашу площадку;</li><li>подбор моделей под прокат и требования к зарядке;</li><li>официальные фото и видео для продвижения;</li><li>инструктаж персонала: эксплуатация, зарядка, ежедневная проверка.</li></ul>
+<div class="mz__row"><label class="mz__l">Компания*<input type="text" name="company" required></label><label class="mz__l">Город*<input type="text" name="city" required></label></div>
+<div class="mz__row"><label class="mz__l">Площадка<select name="place"><option>База отдыха</option><option>Парк</option><option>Трасса</option><option>Другое</option></select></label><label class="mz__l">Сайт<input type="url" name="site" placeholder="необязательно"></label></div>
+<div class="mz__row"><label class="mz__l">Сколько байков в парке сейчас<input type="text" name="now" inputmode="numeric"></label><label class="mz__l">Сколько планируете<input type="text" name="plan" inputmode="numeric"></label></div>
+<div class="mz__row"><label class="mz__l">Имя*<input type="text" name="name" autocomplete="name" required></label><label class="mz__l">Телефон*<input type="tel" name="tel" autocomplete="tel" inputmode="tel" placeholder="+7" required></label></div>
+</form>
+
+<form class="mz__f" data-seg="dealer" novalidate>
+<h2>Дилер</h2>
+<ul class="mz__bon"><li>каталог для дилеров;</li><li>звонок менеджера в течение 1 рабочего дня;</li><li>условия сотрудничества — по запросу.</li></ul>
+<div class="mz__row"><label class="mz__l">Компания*<input type="text" name="company" required></label><label class="mz__l">Город*<input type="text" name="city" required></label></div>
+<div class="mz__row"><label class="mz__l">Формат<select name="format"><option>Салон</option><option>Сервис</option><option>Онлайн-магазин</option><option>Несколько вариантов</option></select></label><label class="mz__l">Сайт<input type="url" name="site" placeholder="необязательно"></label></div>
+<label class="mz__l">Какие бренды мототехники уже продаёте<input type="text" name="brands"></label>
+<div class="mz__row"><label class="mz__l">Имя*<input type="text" name="name" autocomplete="name" required></label><label class="mz__l">Телефон*<input type="tel" name="tel" autocomplete="tel" inputmode="tel" placeholder="+7" required></label></div>
+</form>
+
+<div class="mz__ok" data-ok="buy" role="status"><h2>Спасибо!</h2><p>Менеджер представительства ответит в рабочее время 10:00–20:00 в течение 30 минут.</p><p>Ваши бонусы:</p><ul><li>фото на байке со стенда — в мессенджер сегодня;</li><li>персональный подбор модели по росту и весу и видеообзоры;</li><li>приоритетная запись на тест-драйв в шоуруме «Речников 21» (Москва и МО).</li></ul><p>Подарок при покупке — подробности уточняйте у менеджера.</p></div>
+<div class="mz__ok" data-ok="rent" role="status"><h2>Спасибо!</h2><p>Менеджер представительства свяжется с вами в рабочее время 10:00–20:00. Подготовим расчёт окупаемости парка под вашу площадку, подберём модели под прокат и требования к зарядке, пришлём официальные фото и видео для продвижения и проведём инструктаж персонала.</p><p>Коммерческое предложение — по запросу.</p></div>
+<div class="mz__ok" data-ok="dealer" role="status"><h2>Спасибо!</h2><p>Менеджер представительства свяжется с вами в течение 1 рабочего дня. Каталог для дилеров пришлёт менеджер.</p><p>Условия сотрудничества — по запросу, коммерческое предложение пришлём после разговора.</p></div>
+
+<div class="mz__common" hidden>
+<label class="mz__ck"><input type="checkbox" name="pd"><span>Даю <a href="https://falcon-bike.ru/consent" target="_blank" rel="noopener">согласие на обработку персональных данных</a> и ознакомлен с <a href="https://falcon-bike.ru/privacy" target="_blank" rel="noopener">Политикой</a></span></label>
+<label class="mz__ck"><input type="checkbox" name="ads"><span>Согласен получать новости и предложения 79BIKE в мессенджере или по телефону (отписаться можно в любой момент)</span></label>
+<button type="button" class="mz__btn">Отправить</button>
+<p class="mz__msg" aria-live="polite"></p>
+</div>
+<p class="mz__foot">Вопросы — по телефону <a href="tel:+79999005588">+7 (999) 900-55-88</a>. Шоурум: Москва, ул. Речников, 21 — визит по предварительной договорённости.</p>
+</div>
+<script>
+(function () {
+  var root = document.getElementById("mz"); if (!root || root.__mz) return; root.__mz = 1;
+  var q = new URLSearchParams(location.search);
+  var MODELS = { pro: "Falcon Pro", gt: "Falcon GT", lite: "Falcon Lite", "lynx-trail": "Lynx Trail", lynx: "Lynx Trail", "lynx-x": "Lynx X", "surge-v": "Y-Volt Surge V", surge: "Y-Volt Surge V" };
+  var SEG = { buy: "Покупатель", rent: "Прокат", dealer: "Дилер" };
+  var common = root.querySelector(".mz__common"), tabs = root.querySelectorAll(".mz__tab"), cur = null;
+  function show(seg) {
+    cur = seg;
+    Array.prototype.forEach.call(tabs, function (t) { t.setAttribute("aria-pressed", t.getAttribute("data-seg") === seg ? "true" : "false"); });
+    Array.prototype.forEach.call(root.querySelectorAll(".mz__f"), function (f) { var on = f.getAttribute("data-seg") === seg; f.classList.toggle("is-on", on); if (on) { f.appendChild(common); common.hidden = false; } });
+    root.querySelector(".mz__msg").textContent = "";
+  }
+  Array.prototype.forEach.call(tabs, function (t) { t.addEventListener("click", function () { show(t.getAttribute("data-seg")); var f = root.querySelector(".mz__f.is-on"); if (f) f.scrollIntoView({ behavior: "smooth", block: "start" }); }); });
+  var m = MODELS[String(q.get("m") || "").toLowerCase()];
+  if (m) { root.querySelector('.mz__f[data-seg="buy"] select[name="model"]').value = m; show("buy"); }
+  function labelOf(el) { var l = el.closest("label"); if (!l) return el.name; var c = l.cloneNode(true); Array.prototype.forEach.call(c.querySelectorAll("input,select"), function (x) { x.remove(); }); return c.textContent.replace(/\*/g, "").replace(/\s+/g, " ").trim(); }
+  root.querySelector(".mz__btn").addEventListener("click", function () {
+    var f = root.querySelector(".mz__f.is-on"), msg = root.querySelector(".mz__msg"), btn = this;
+    if (!f) { msg.textContent = "Выберите, кто вы: покупатель, прокат или дилер."; return; }
+    var bad = null;
+    Array.prototype.forEach.call(f.querySelectorAll("[required]"), function (x) { if (!bad && !String(x.value).trim()) bad = x; });
+    var tel = f.querySelector('[name="tel"]');
+    if (!bad && String(tel.value).replace(/\D/g, "").length < 10) bad = tel;
+    if (bad) { msg.textContent = bad === tel && tel.value ? "Проверьте номер телефона." : "Заполните поле «" + labelOf(bad) + "»."; bad.focus(); return; }
+    if (!f.querySelector('[name="pd"]').checked) { msg.textContent = "Чтобы отправить заявку, отметьте согласие на обработку персональных данных"; return; }
+    var rows = [["Сегмент", SEG[cur]], ["Канал", "Выставка Мотозима 2026"]];
+    Array.prototype.forEach.call(f.querySelectorAll("input[name],select[name]"), function (x) { if (x.type === "checkbox") return; var v = String(x.value).trim(); if (v) rows.push([labelOf(x), v]); });
+    rows.push(["Согласие на обработку ПД", "да (falcon-bike.ru/consent, редакция 03.11.2026)"]);
+    rows.push(["Согласие на рекламу", f.querySelector('[name="ads"]').checked ? "да" : "нет"]);
+    ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "m"].forEach(function (k) { if (q.get(k)) rows.push([k, q.get(k)]); });
+    rows.push(["Страница", location.href.split("#")[0]]);
+    if (cur === "buy") rows.push(["Менеджеру", "назвать подарок по телефону"]);
+    var name = f.querySelector('[name="name"]').value;
+    if (typeof window.B79_TILDA_SEND !== "function") { msg.textContent = "Не удалось отправить. Позвоните нам: +7 (999) 900-55-88."; return; }
+    btn.disabled = true; msg.style.color = "#a3a3b2"; msg.textContent = "Отправляем…";
+    var hint = setTimeout(function () { msg.textContent = "Если появилось окно «Я не робот» — подтвердите его, и заявка уйдёт."; }, 8000);
+    window.B79_TILDA_SEND({ title: "Мотозима 2026 — " + SEG[cur], name: name, rows: rows }, function (ok) {
+      clearTimeout(hint); btn.disabled = false; msg.style.color = "";
+      if (!ok) { msg.textContent = "Не удалось отправить. Позвоните нам: +7 (999) 900-55-88."; return; }
+      try { if (window.ym) Object.keys(window).filter(function (k) { return /^yaCounter\d+$/.test(k); }).forEach(function (k) { window[k].reachGoal("motozima26_" + cur); }); } catch (e) {}
+      root.querySelector(".mz__tabs").hidden = true; f.classList.remove("is-on");
+      var ok2 = root.querySelector('.mz__ok[data-ok="' + cur + '"]'); ok2.classList.add("is-on"); ok2.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+})();
+</script>
+</div>
