@@ -1907,3 +1907,23 @@ a[href^="mailto:"],a[href^="http"]{overflow-wrap:anywhere}
 .xs__t{font-size:14px;line-height:1.3;overflow-wrap:anywhere}
 .xs__p{font-size:14px;font-weight:800}
 .owners__more{margin:18px 0 0}.owners__more .btn{display:flex;width:100%;justify-content:center}
+
+/* 04.11.2026: лента отзывов с Авито (модели + главная). Карточки не растягиваются по высоте соседей */
+.av{margin-top:22px}
+.av__h{margin:0 0 12px;font-size:18px;font-weight:700}
+.av__rate{color:#FFB800;margin-left:6px}
+.av__row{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;align-items:flex-start;padding-bottom:8px;scrollbar-width:thin}
+.av__row:focus-visible{outline:2px solid var(--accent,#7B5CFF);outline-offset:4px}
+.av__card{flex:0 0 min(320px,82vw);scroll-snap-align:start;background:var(--panel);border-radius:var(--r-md);padding:16px;display:flex;flex-direction:column;gap:10px}
+.av__top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.av__stars{color:#FFB800;letter-spacing:2px;font-size:14px}
+.av__model{font-size:12px;font-weight:600;background:var(--panel-2);border-radius:999px;padding:4px 10px}
+.av__ph{display:flex;gap:6px}.av__ph:empty{display:none}
+.av__ph img{width:88px;height:88px;object-fit:cover;border-radius:10px;background:var(--panel-2);display:block}
+.av__text{margin:0;font-size:14px;line-height:1.55;color:#E3E4EA}
+.av__card.is-long .av__text{display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
+.av__card.is-open .av__text{display:block;-webkit-line-clamp:unset}
+.av__more{align-self:flex-start;background:none;border:0;padding:0;color:#A895FF;font:inherit;font-size:13px;font-weight:600;cursor:pointer;min-height:24px}
+.av__foot{margin:0;display:flex;flex-wrap:wrap;gap:4px 10px;font-size:12.5px;color:var(--mute)}
+.av__foot b{color:var(--fg)}
+.av__foot a{margin-left:auto;color:var(--mute)}
