@@ -45,6 +45,7 @@ window.MODELS = [
       frontSuspension: "Fastace, перевёрнутая, ход 200 мм · регулировка сжатия и отскока",
       rearSuspension: "Ход 85 мм",
       weightKg: 69,
+      box: "168 × 34 × 88 см, 86 кг",   // коробка: размер и вес с упаковкой — данные Михаила 24.10.2026
       payloadKg: 120,            // макс. нагрузка — как на falcon-bike.ru (Lynx Trail: ответ Михаила 26.10.2026)
       chargeH: 3.5,
       modes: "Eco (мощность можно ограничить до 3,9 кВт), Drive, Sport, N, задний ход",
@@ -88,6 +89,7 @@ window.MODELS = [
       frontSuspension: "Fastace, перевёрнутая, ход 200 мм · регулировка сжатия и отскока",
       rearSuspension: "Ход 85 мм",
       weightKg: 59,
+      box: "168 × 34 × 88 см, 86 кг",   // коробка: размер и вес с упаковкой — данные Михаила 24.10.2026
       payloadKg: 120,            // макс. нагрузка — как на falcon-bike.ru (Lynx Trail: ответ Михаила 26.10.2026)
       chargeH: 3.5,
       modes: "Eco (мощность можно ограничить до 3,9 кВт), Drive, Sport, N, задний ход",
@@ -134,6 +136,7 @@ window.MODELS = [
       frontSuspension: "Fastace, перевёрнутая, ход 200 мм · регулировка сжатия и отскока",
       rearSuspension: "Ход 200 мм",
       weightKg: 69,
+      box: "168 × 34 × 88 см, 86 кг",   // коробка: размер и вес с упаковкой — данные Михаила 24.10.2026
       payloadKg: 120,            // макс. нагрузка — как на falcon-bike.ru (Lynx Trail: ответ Михаила 26.10.2026)
       chargeH: 4,
       modes: "Eco (мощность можно ограничить до 3,9 кВт), Drive, Sport, N, задний ход",
@@ -179,6 +182,7 @@ window.MODELS = [
       frontSuspension: "Fastace, перевёрнутая, ход 200 мм · регулировка сжатия и отскока",
       rearSuspension: "Ход 85 мм",
       weightKg: 63,
+      box: "168 × 34 × 88 см, 86 кг",   // коробка: размер и вес с упаковкой — данные Михаила 24.10.2026
       payloadKg: 120,            // макс. нагрузка — как на falcon-bike.ru (Lynx Trail: ответ Михаила 26.10.2026)
       chargeH: 3,
       modes: "Eco (мощность можно ограничить до 3,9 кВт), Drive, Sport, N, задний ход",
@@ -289,6 +293,7 @@ window.MODELS = [
       frame: "Кованая алюминиевая, трёхбалочная",
       commPort: "CAN",
       weightKg: 95,
+      box: "212 × 45 × 118 см, 146 кг",   // коробка: размер и вес с упаковкой — данные Михаила 24.10.2026
       chargeH: 3,
       chargeCurrent: "15 А",
       modes: "Eco (E) — ограничение 40 км/ч · Drive (D) — ограничение 80 км/ч · Sport (S) · R — задний ход · P — парковка · N — удержание", // официальное руководство Y-VOLT (решение Михаила 26.10.2026)
@@ -322,6 +327,7 @@ window.SPEC_ROWS = [
   { key: "frontSuspension", label: "Передняя подвеска", unit: "" },
   { key: "rearSuspension", label: "Задняя подвеска", unit: "" },
   { key: "weightKg", label: "Вес", unit: "кг" },
+  { key: "box", label: "Коробка: Д × Ш × В, вес с упаковкой", unit: "" },
   { key: "chargeH", label: "Время зарядки", unit: "ч" },
   { key: "modes", label: "Режимы езды", unit: "" },
   { key: "ip", label: "Влагозащита", unit: "" },

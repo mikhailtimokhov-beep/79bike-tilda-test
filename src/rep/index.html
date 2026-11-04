@@ -13,7 +13,7 @@
      rep.css — копия pub3/assets/site.css; старый ../assets/styles.css этой страницей больше не подключается.
      Данные (модели, фото, тексты) и демо-формы — из общих ../assets/*.js, как раньше. -->
 <link rel="stylesheet" href="rep.css?v=20261029a">
-<script src="../assets/models.js?v=20261029b"></script>
+<script src="../assets/models.js?v=20261103a"></script>
 <script src="../assets/photos.js?v=20261030a"></script>
 <script src="../assets/content.js?v=20261029b"></script>
 <script src="../assets/videos.js?v=20261023"></script>
@@ -899,7 +899,7 @@ top();document.addEventListener("DOMContentLoaded",top);window.addEventListener(
       <ul class="dlg__list">
         <li>Каждый аккаунт рассматриваем индивидуально.</li>
         <li>На тест-драйв даём Falcon Lite, Pro, GT или Lynx Trail.</li>
-        <li>Техника выдаётся только под залог полной стоимости.</li>
+        <li>Техника выдаётся только под залог полной стоимости байка.</li>
         <li>Доставка оплачивается отдельно.</li>
         <li>Готовый обзор публикуем в наших каналах и в каналах блогера.</li>
       </ul></div>
@@ -907,7 +907,9 @@ top();document.addEventListener("DOMContentLoaded",top);window.addEventListener(
         <label>Имя<input name="name" autocomplete="name" placeholder="Как к вам обращаться" required></label>
         <label>Ссылка на канал<input type="url" name="channel" inputmode="url" placeholder="https://" required></label>
         <fieldset class="pchips"><legend>Площадки</legend><label class="pchip"><input type="checkbox" name="platforms" value="YouTube"><span>YouTube</span></label><label class="pchip"><input type="checkbox" name="platforms" value="VK Видео"><span>VK Видео</span></label><label class="pchip"><input type="checkbox" name="platforms" value="RUTUBE"><span>RUTUBE</span></label><label class="pchip"><input type="checkbox" name="platforms" value="Telegram"><span>Telegram</span></label><label class="pchip"><input type="checkbox" name="platforms" value="Instagram"><span>Instagram</span></label><label class="pchip"><input type="checkbox" name="platforms" value="TikTok"><span>TikTok</span></label><label class="pchip"><input type="checkbox" name="platforms" value="Дзен"><span>Дзен</span></label><label class="pchip"><input type="checkbox" name="platforms" value="Другая"><span>Другая</span></label></fieldset>
-        <fieldset class="fhow" data-how><legend>Как удобнее связаться</legend><label class="fhow__o"><input type="radio" name="how" value="call" checked><span>Позвонить</span></label><label class="fhow__o"><input type="radio" name="how" value="whatsapp"><span>WhatsApp</span></label><label class="fhow__o"><input type="radio" name="how" value="telegram"><span>Telegram</span></label><label class="fhow__o"><input type="radio" name="how" value="vk"><span>VK Мессенджер</span></label></fieldset><label><span data-tel-l>Телефон</span><input class="input--tel" type="tel" name="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" data-contact required></label><label class="form__check"><input type="checkbox" name="age18" data-req-check="Подтвердите, что вам есть 18 лет и вы готовы внести залог."><span>Мне есть 18 лет, я готов внести залог на случай повреждений</span></label>
+        <fieldset class="fhow" data-how><legend>Как удобнее связаться</legend><label class="fhow__o"><input type="radio" name="how" value="call" checked><span>Позвонить</span></label><label class="fhow__o"><input type="radio" name="how" value="whatsapp"><span>WhatsApp</span></label><label class="fhow__o"><input type="radio" name="how" value="telegram"><span>Telegram</span></label><label class="fhow__o"><input type="radio" name="how" value="vk"><span>VK Мессенджер</span></label></fieldset><label><span data-tel-l>Телефон</span><input class="input--tel" type="tel" name="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" data-contact required></label>
+        <label class="form__check"><input type="checkbox" name="age18" data-req-check="Подтвердите, что вам есть 18 лет."><span>Мне есть 18 лет</span></label>
+        <label class="form__check"><input type="checkbox" name="deposit" data-req-check="Подтвердите готовность внести залог в размере полной стоимости байка."><span>Готов(а) внести залог в размере полной стоимости байка</span></label>
         <label class="form__check"><input type="checkbox" name="pd" data-req-check="Чтобы отправить заявку, отметьте согласие на обработку персональных данных."><span>Даю <a href="https://claude.ai/artifact/AyD6SKmq1hL2juyCRy7Tk1" data-release-href="https://falcon-bike.ru/consent" target="_blank" rel="noopener">согласие на обработку персональных данных</a>. Подробнее — в <a href="https://claude.ai/artifact/AyD6SKmq1hL2juyCRy7Tk1" data-release-href="https://falcon-bike.ru/privacy" target="_blank" rel="noopener">Политике обработки персональных данных</a>.</span></label>
         <button class="btn btn--main" type="submit">Отправить заявку</button>
         <p class="form-msg" role="status" aria-live="polite"></p>
@@ -1033,7 +1035,7 @@ top();document.addEventListener("DOMContentLoaded",top);window.addEventListener(
       </div>
     </div>
     <div class="legal">
-      <span>© Официальное представительство 79BIKE в России. Копирование материалов сайта без письменного разрешения правообладателя не допускается.</span>
+      <span>© <span data-year>2026</span> Официальное представительство 79BIKE в России. Копирование материалов сайта без письменного разрешения правообладателя не допускается.</span>
       <span>Фирменный магазин 79BIKE — <a href="https://falcon-bike.ru/">falcon-bike.ru</a></span>
       <a href="warranty.html">Гарантийная политика</a>
       <a href="#official">Дилеры</a>
@@ -1968,5 +1970,6 @@ b.addEventListener("click",function(){var r=matchMedia("(prefers-reduced-motion:
 <script data-ina-more>(function(){var b=document.querySelector(".ina-more__btn"),box=document.getElementById("ina-more");if(!b||!box)return;
 b.addEventListener("click",function(){var o=box.hidden;box.hidden=!o;b.setAttribute("aria-expanded",String(o));b.textContent=o?"Скрыть фото":"Ещё фото (10)";
 if(o)box.querySelectorAll("img[data-src]").forEach(function(i){i.srcset=i.getAttribute("data-srcset");i.src=i.getAttribute("data-src");i.removeAttribute("data-src");});});})();</script>
+<script>document.querySelectorAll("[data-year]").forEach(function(e){e.textContent=new Date().getFullYear()})</script>
 </body>
 </html>

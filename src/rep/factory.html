@@ -46,7 +46,7 @@
 @media (prefers-reduced-motion:reduce){.totop{transition:none}}
 
 </style>
-<script src="../assets/models.js?v=20261029b"></script>
+<script src="../assets/models.js?v=20261103a"></script>
 <script data-top>/* 26.10 (Михаил): переход на другую страницу — всегда с самого верха (если в ссылке нет #раздела) */
 try{if("scrollRestoration" in history)history.scrollRestoration="manual"}catch(e){}
 (function(){var moved=false,t0=Date.now();["wheel","touchstart","keydown","mousedown"].forEach(function(ev){window.addEventListener(ev,function(){moved=true},{passive:true,once:true})});
@@ -166,7 +166,7 @@ top();document.addEventListener("DOMContentLoaded",top);window.addEventListener(
       </div>
     </div>
     <div class="legal">
-      <span>© Официальное представительство 79BIKE в России. Копирование материалов сайта без письменного разрешения правообладателя не допускается.</span>
+      <span>© <span data-year>2026</span> Официальное представительство 79BIKE в России. Копирование материалов сайта без письменного разрешения правообладателя не допускается.</span>
       <span>Фирменный магазин 79BIKE — <a href="https://falcon-bike.ru/">falcon-bike.ru</a></span>
       <a href="https://claude.ai/artifact/AyD6SKmq1hL2juyCRy7Tk1" data-release-href="https://falcon-bike.ru/privacy" target="_blank" rel="noopener">Политика обработки персональных данных</a>
       <a href="https://claude.ai/artifact/AyD6SKmq1hL2juyCRy7Tk1" data-release-href="https://falcon-bike.ru/consent" target="_blank" rel="noopener">Согласие на обработку ПД</a>
@@ -234,5 +234,6 @@ document.addEventListener("click",function(e){if(!e.target.closest(".nav__item")
 </script>
 <script src="range-q.js?v=1" defer></script>
 <script src="vplay.js?v=2" defer></script>
+<script>document.querySelectorAll("[data-year]").forEach(function(e){e.textContent=new Date().getFullYear()})</script>
 </body>
 </html>
