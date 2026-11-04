@@ -6,7 +6,8 @@ const { chromium } = createRequire(import.meta.url)('playwright'); // работ
 
 const BASE = 'https://juliettes.ru';
 const MUST_OPEN = ['/about', '/delivery', '/kontakti', '/garantii', '/payments', '/gravirovka', '/podarochnie-sertificaty'];
-const EXTRA_PAGES = ['/'];
+const EXTRA_PAGES = ['/', '/otsivi'];
+const BAD_DATE = /\b(3[01]\.02|31\.0[469]|31\.11)\.20\d\d\b/g; // SITE-004: несуществующие даты
 const META_NOTE = /Meta Platforms|экстремистск/i;
 
 const rows = [];
@@ -39,6 +40,10 @@ for (const path of [...MUST_OPEN, ...EXTRA_PAGES]) {
   if (info.hasInsta) {
     add('SITE-002', path, META_NOTE.test(info.text), META_NOTE.test(info.text) ? 'пометка есть' : 'нет пометки о Meta');
   }
+
+  const bad = [...new Set(info.text.match(BAD_DATE) || [])];
+  if (path === '/' || path === '/otsivi' || path === '/delivery' || bad.length)
+    add('SITE-004', path, bad.length === 0, bad.length ? 'несуществующие даты: ' + bad.join(', ') : 'дат-ошибок нет');
 
   if (path === '/podarochnie-sertificaty') {
     const problems = [];
