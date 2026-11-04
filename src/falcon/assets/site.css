@@ -1887,8 +1887,12 @@ a[href^="mailto:"],a[href^="http"]{overflow-wrap:anywhere}
 .form__more p{margin:4px 0 0}
 .v-more{display:flex;width:100%;justify-content:center;margin-top:18px}
 /* 03.11: характеристики и цена у моделей в меню */
-.menu__kv{display:block;font-size:12px!important;font-weight:400!important;color:var(--mute)!important;line-height:1.35!important;margin-top:-2px;letter-spacing:0;text-transform:none}
-.menu__price{display:block;font-size:15px!important;font-weight:800!important;line-height:1.25!important;font-variant-numeric:tabular-nums;margin-top:auto;letter-spacing:0;text-transform:none}
+/* 04.11 (Михаил): карточки моделей в меню — как карточки .fh__m на главной: светлая карточка, имя жирным, «кВт · Ач», цена серым */
+.menu__models a:not(.menu__parts){background:var(--stage)!important;color:var(--stage-ink)!important;gap:2px!important;padding:6px 8px 10px!important}
+.menu__models a:not(.menu__parts) .menu__pic{background:none}
+.menu__name{display:block;font-size:15px!important;font-weight:700!important;line-height:1.15!important;color:var(--stage-ink)!important;letter-spacing:0;text-transform:none;margin-top:2px}
+.menu__kv{display:block;font-size:12.5px!important;font-weight:600!important;color:var(--stage-mute)!important;line-height:1.2!important;font-variant-numeric:tabular-nums;letter-spacing:0;text-transform:none}
+.menu__price{display:block;font-size:13px!important;font-weight:400!important;color:var(--stage-mute)!important;line-height:1.25!important;font-variant-numeric:tabular-nums;letter-spacing:0;text-transform:none}
 /* 03.11: «В других разделах» — поиск по всем разделам запчастей на страницах каталога */
 .xs{margin-top:24px;padding:18px;border-radius:20px;background:var(--panel)}
 .xs[hidden]{display:none}
