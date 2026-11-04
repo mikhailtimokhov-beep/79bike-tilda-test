@@ -9,6 +9,7 @@ import { join, normalize, extname } from "node:path";
 import vm from "node:vm";
 
 const ROOT = new URL("..", import.meta.url).pathname;
+const { fixDataText, fixSeoLd } = await import(new URL("../overrides/falcon-seo-fixes.mjs", import.meta.url).href); /* 04.11 «Перенос»: SEO-261103-01 */
 const SRC = join(ROOT, "src", "falcon");
 const OUT = join(ROOT, "dist-native", "falcon");
 const ORIGIN = "https://falcon-bike.ru";
@@ -139,7 +140,7 @@ async function scopeCss(text) {
 const FIX_TITLE = (t) => t.replace(/ \| 79BIKE(?=["'<`]|$)/gm, " | Falcon Bike");
 // данные SEO: на странице нужен только её ключ (data/seo.js ~105 КБ на все страницы)
 function seoFor(key) {
-  const w = {}; vm.runInNewContext(readFileSync(join(SRC, "data/seo.js"), "utf8"), { window: w });
+  const w = {}; vm.runInNewContext(fixDataText("data/seo.js", readFileSync(join(SRC, "data/seo.js"), "utf8")), { window: w }); fixSeoLd(w.SEO_LD);
   for (const v of Object.values(w.SEO || {})) if (v && typeof v.title === "string") v.title = FIX_TITLE(v.title);
   const pick = (o) => (o && o[key] !== undefined ? { [key]: o[key] } : {});
   return `window.SEO=${JSON.stringify(pick(w.SEO))};window.SEO_LD=${JSON.stringify(pick(w.SEO_LD))};window.SEO_DEFAULTS=${JSON.stringify(w.SEO_DEFAULTS || {})};window.SEO_ALT=${JSON.stringify(w.SEO_ALT || {})};`;
@@ -149,7 +150,7 @@ function seoFor(key) {
 // Статичная микроразметка JSON-LD в коде страницы (SEO-план 29.10, Т7): поисковик видит её без выполнения JS.
 // Адреса картинок и логотипа falcon-bike.ru/assets/... → CDN Тильды (overrides/falcon-asset-map.json); без соответствия — поле убирается (иначе 404).
 function staticLd(key) {
-  const w = {}; vm.runInNewContext(readFileSync(join(SRC, "data/seo.js"), "utf8"), { window: w });
+  const w = {}; vm.runInNewContext(fixDataText("data/seo.js", readFileSync(join(SRC, "data/seo.js"), "utf8")), { window: w }); fixSeoLd(w.SEO_LD);
   const list = ((w.SEO_LD || {})[key]) || [];
   const fix = (v) => {
     if (typeof v === "string") { const m = /^https:\/\/falcon-bike\.ru\/(assets\/[^?#]+)/.exec(v); if (m) return AMAP[m[1]] || null; return v; }
@@ -186,7 +187,7 @@ function assemble(file, pre, seoKey) {
     const k = src.split("?")[0];
     if (/cookie-banner/.test(k)) continue; // баннер cookie и Метрика — в HEAD проекта (как на 79bike.ru)
     if (SHARED.includes(k)) continue; // в подвале проекта
-    let js = readFileSync(join(SRC, k), "utf8");
+    let js = fixDataText(k, readFileSync(join(SRC, k), "utf8"));
     if (k === "data/seo.js") js = seoFor(seoKey);
     if (k === "data/legal.js") js = legalJs(js);
     if (k === "assets/app.js") js = patchApp(js);
@@ -217,7 +218,7 @@ const srv = createServer((q, r) => {
   r.writeHead(200, { "Content-Type": TYPES[extname(f)] || "application/octet-stream" });
   if (/data[/\\]legal\.js$/.test(f)) return r.end(legalJs(readFileSync(f, "utf8")));
   if (/assets[/\\]app\.js$/.test(f)) return r.end(patchApp(readFileSync(f, "utf8"))); // пререндер — с теми же правками, что на сайте (ролики Kinescope и т. д.)
-  if (/\.(html|js)$/.test(f) && !/assets[/\\]app\.js$/.test(f)) return r.end(FIX_TITLE(readFileSync(f, "utf8")).replace(/<title>([^<]*)<\/title>/, (a, t) => "<title>" + FIX_TITLE(t) + "</title>"));
+  if (/\.(html|js)$/.test(f) && !/assets[/\\]app\.js$/.test(f)) return r.end(FIX_TITLE(fixDataText(u.replace(/^\//, ""), readFileSync(f, "utf8"))).replace(/<title>([^<]*)<\/title>/, (a, t) => "<title>" + FIX_TITLE(t) + "</title>"));
   r.end(readFileSync(f));
 }).listen(8805);
 const browser = await chromium.launch();
@@ -274,7 +275,7 @@ for (const j of jobs) {
 }
 if (SHARED.length && (!ONLY || ONLY.includes("_shared"))) {
   const mapJs = `<script data-src="falcon-asset-map">window.B79_FB_MAP=${JSON.stringify(LOCAL ? Object.fromEntries(Object.keys(JSON.parse(readFileSync(join(ROOT, "overrides", "falcon-asset-names.json"), "utf8")).names).map((k) => [k, "/src/falcon/" + k])) : AMAP)};</script>\n`;
-  const body = mapJs + SHARED.map((k) => { let js = readFileSync(join(SRC, k), "utf8"); if (k === "assets/app.js") js = patchApp(js);
+  const body = mapJs + SHARED.map((k) => { let js = fixDataText(k, readFileSync(join(SRC, k), "utf8")); if (k === "assets/app.js") js = patchApp(js);
     const code = /^data\//.test(k) ? js : `if (window.B79_NATIVE) {\n${js}\n}`;
     return `<script data-src="${k}">${code.replace(/<\/script/gi, "<\\/script")}</script>`; }).join("\n") +
     ["lead-sink.js", "lead-bridge.js", "thanks.js", "store-bridge-falcon.js", "falcon-fixes.js"].map((f) => `\n<script data-src="${f}">${readFileSync(join(ROOT, "overrides", f), "utf8")}</script>`).join("");

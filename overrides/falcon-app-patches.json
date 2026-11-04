@@ -130,6 +130,16 @@
    "sec(\"\", \"\", '<div class=\"callout\">' + ICON.alert + '<p>Черновик документа. Перед публикацией его проверит юрист; места, выделенные цветом, заполнит владелец.</p></div><article class=\"doc\">' + d.html + \"</article>\");",
    "sec(\"\", \"\", (window.LEGAL_FINAL ? \"\" : '<div class=\"callout\">' + ICON.alert + '<p>Черновик документа. Перед публикацией его проверит юрист; места, выделенные цветом, заполнит владелец.</p></div>') + '<article class=\"doc\">' + d.html + \"</article>\");",
    "03.11 «Перенос»: у финальных /privacy и /consent (overrides/falcon-legal.js, LEGAL_FINAL) нет плашки «Черновик»"
+  ],
+  [
+   "organizer: { \"@type\": \"Organization\", name: \"79BIKE\", url: \"https://falcon-bike.ru\" }, url: \"https://falcon-bike.ru/events#\" + e.id };",
+   "organizer: { \"@type\": \"Organization\", name: \"79BIKE\", url: \"https://falcon-bike.ru\" }, performer: { \"@type\": \"Organization\", name: \"79BIKE\", url: \"https://falcon-bike.ru\" }, image: ({ \"motozima-2026\": \"https://static.tildacdn.com/tila3365-3538-4030-b234-393961643634/fb0039.webp\", \"eicma-2026\": \"https://static.tildacdn.com/tila3164-6162-4364-a136-323436366532/fb0025.webp\" })[e.id], url: \"https://falcon-bike.ru/events#\" + e.id };",
+   "04.11 «Перенос», SEO-261103-01: Event — performer и image"
+  ],
+  [
+   "Копирование материалов сайта без письменного разрешения правообладателя не допускается.</p></div></footer>';",
+   "Копирование материалов сайта без письменного разрешения правообладателя не допускается.</p><p class=\"legal\" style=\"border:0;margin-top:0;padding-top:0\">Сайт — <a href=\"http://meliso.ru/\" target=\"_blank\" rel=\"noopener\" style=\"color:inherit\">Meliso</a></p></div></footer>';",
+   "04.11 «Перенос», SEO-261104-01: подпись «Сайт — Meliso» в подвале (Михаил 04.11 11:14)"
   ]
  ]
 }
