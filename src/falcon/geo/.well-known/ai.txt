@@ -1,0 +1,5 @@
+# ai.txt — правила для ИИ-систем (https://falcon-bike.ru)
+User-Agent: *
+Allow: /
+# Краткая информация для ИИ: https://falcon-bike.ru/llms.txt
+# Цены и наличие — только на страницах сайта, они меняются.

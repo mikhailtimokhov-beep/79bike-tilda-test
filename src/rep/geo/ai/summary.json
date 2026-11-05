@@ -1,0 +1,46 @@
+{
+  "name": "79BIKE в России",
+  "description": "Официальное представительство завода-производителя 79BIKE в России",
+  "url": "https://79bike.ru/",
+  "language": "ru",
+  "updated": "2026-11-05",
+  "shop": "https://falcon-bike.ru/",
+  "models": [
+    {
+      "id": "gt",
+      "name": "Falcon GT",
+      "summary": "Флагман линейки: 17 кВт, 610 Н·м и 95 км/ч. Для райдеров, которые уже уверенно чувствуют байк.",
+      "url": "https://falcon-bike.ru/falcongt"
+    },
+    {
+      "id": "pro",
+      "name": "Falcon Pro",
+      "summary": "10 кВт, 90 км/ч и 59 кг — самый лёгкий Falcon. Простой в управлении: подойдёт новичку и тем, кто катается для удовольствия.",
+      "url": "https://falcon-bike.ru/falcon-pro"
+    },
+    {
+      "id": "lynx-trail",
+      "name": "Falcon Lynx Trail",
+      "summary": "Байк для высоких райдеров: редуктор с моментом 405 Н·м, задняя подвеска с ходом 200 мм и батарея 40 Ач.",
+      "url": "https://falcon-bike.ru/lynx"
+    },
+    {
+      "id": "light",
+      "name": "Falcon Lite",
+      "summary": "Самый доступный Falcon: 8 кВт, 84 км/ч и только то, что действительно нужно для езды.",
+      "url": "https://falcon-bike.ru/falcon_lite"
+    },
+    {
+      "id": "lynx-x",
+      "name": "Falcon Lynx X",
+      "summary": "Самый мощный Falcon: 26 кВт, 550 Н·м и батарея 60 Ач. Старт продаж — 2027: оставьте номер, и мы сообщим о старте первыми.",
+      "url": "https://falcon-bike.ru/lynx-x"
+    },
+    {
+      "id": "surge-v",
+      "name": "Y-Volt Surge V",
+      "summary": "Полноразмерный электроэндуро для профессионалов: 35 кВт пиковой мощности, 948 Н·м на колесе и до 115 км/ч.",
+      "url": "https://falcon-bike.ru/surge-v"
+    }
+  ]
+}

@@ -868,7 +868,7 @@
       return '<article class="av__card' + (long ? " is-long" : "") + '"><div class="av__top"><span class="av__stars" aria-label="Оценка 5 из 5">★★★★★</span>' + (mdl ? '<span class="av__model">' + esc(mdl) + "</span>" : "") + "</div>" +
         (r.photos && r.photos.length ? '<div class="av__ph">' + r.photos.map(function (u) { return '<img src="' + esc(u) + '" alt="Фото покупателя: ' + esc(mdl || "байк") + '" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="88" height="88" onerror="this.remove()">'; }).join("") + "</div>" : "") +
         '<p class="av__text">' + esc(r.text).replace(/\n/g, "<br>") + "</p>" + (long ? '<button type="button" class="av__more">Читать полностью</button>' : "") +
-        '<p class="av__foot"><b>' + esc(r.name) + "</b> <span>" + dt(r.date) + '</span> <a href="' + esc(A.profile) + '" target="_blank" rel="noopener nofollow">Отзыв с Авито</a></p></article>';
+        '<p class="av__foot"><b>' + esc(r.name) + "</b> <span>" + dt(r.date) + '</span> <a href="' + esc(A.profile) + '" target="_blank" rel="ugc nofollow noopener">Отзыв с Авито</a></p></article>';
     }).join("") + "</div></div>";
   }
   P.compare = function () {
