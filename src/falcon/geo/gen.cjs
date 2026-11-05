@@ -9,7 +9,9 @@ const today=new Date().toISOString().slice(0,10);
 const F="https://falcon-bike.ru", R="https://79bike.ru";
 const URLS={gt:F+"/falcongt",pro:F+"/falcon-pro","lynx-trail":F+"/lynx",light:F+"/falcon_lite","lynx-x":F+"/lynx-x","surge-v":F+"/surge-v"};
 const models=Object.entries(C.models).map(([k,m])=>({id:k,name:strip(m.h1).replace(/^Электромотоцикл\s+/,""),summary:strip(m.lead),url:URLS[k]}));
-const faq=(C.faq||[]).map(x=>({q:strip(x.q),a:strip(x.a)})).filter(x=>noPrice(x.a)&&noPrice(x.q));
+// Контролёр-261105-03: в автономном JSON без ссылок «выше/ниже на странице»
+const standalone=s=>s.replace(/Как байки 79BIKE проверяют водой на заводе — в роликах производителя ниже; это испытания на пределе, повторять их не стоит\./,"Заводские испытания водой — это проверка на пределе, повторять их не стоит.").replace(/в блоке «Примерка по росту» выше на странице/g,"в блоке «Примерка по росту» на странице модели");
+const faq=(C.faq||[]).map(x=>({q:strip(x.q),a:standalone(strip(x.a))})).filter(x=>noPrice(x.a)&&noPrice(x.q));
 const sameAs=["https://79bike.ru/","https://vk.com/79bike","https://rutube.ru/channel/65461061/","https://t.me/club79bike","https://www.avito.ru/user/2304cbf6145715d8d9c460c84c03212a/profile"];
 const conds=["Доставка транспортной компанией по всей России.","Оплата при получении — в Москве и Московской области, в городах до 600 км от Москвы и в Санкт-Петербурге (условия — на странице «Оплата и доставка»).","Посмотреть байк и записаться на тест-драйв можно в Москве и Московской области (шоурум: "+strip(C.showroom.addressShort)+", звонок перед приездом).","Отправки в страны СНГ нет.","Комплектация у каждой модели одна."];
 function w(p,s){p=path.join(OUT,p);fs.mkdirSync(path.dirname(p),{recursive:true});fs.writeFileSync(p,s);}

@@ -854,7 +854,7 @@
       (mc.faq && mc.faq.length ? sec("faq", "Вопросы о " + esc(SHORT[slug]), faqHtml(mc.faq, true)) : "") +
       /* 03.11 (Михаил): внизу страницы модели — отзывы и запись на тест-драйв (без дублей: блок отзывов один, форма тест-драйва только у моделей с тест-драйвом) */
       (function () { var Q = (C.ownerReviews && C.ownerReviews.items || []).slice(0, 3); return Q.length ? sec("owners", "Отзывы владельцев", '<div class="trio">' + Q.map(function (q) { var t = nb(q.text.replace(/79 ?bike pro/gi, "79BIKE Pro").replace(/79 ?bike/gi, "79BIKE").replace(/суррон/gi, "Sur-Ron").replace(/Талария/g, "Talaria")); return '<figure class="quote"><blockquote>' + esc(t) + '</blockquote><figcaption><span class="ava" aria-hidden="true">' + esc(q.name[0]) + "</span><span>" + esc(q.name) + '<span class="quote__model">' + esc(q.model ? "Владелец " + q.model : "Покупатель 79BIKE") + '</span></span></figcaption></figure>'; }).join("") + '</div>' + avitoStrip(slug) + '<p class="owners__more"><a class="btn btn--ghost btn--wide" href="https://www.avito.ru/user/2304cbf6145715d8d9c460c84c03212a/profile" target="_blank" rel="noopener">Ещё отзывы — наш профиль на Авито</a></p>') : ""; })() +
-      (soon || slug === "surge-v" ? "" : sec("visit", "", orderForm("f-visit", "Тест-драйв " + esc(SHORT[slug]), "Тест-драйв проводим для жителей Москвы и Московской области. Оставьте телефон — перезвоним и согласуем время визита.", "Записаться", "Спасибо! Перезвоним и согласуем время.", { model: true, when: true, pre: slug }))) +
+      (soon || slug === "surge-v" ? "" : sec("visit", "", orderForm("f-visit", "Тест-драйв " + esc(SHORT[slug]), "Тест-драйв проводим в шоуруме в Москве. Оставьте телефон — перезвоним и согласуем время визита.", "Записаться", "Спасибо! Перезвоним и согласуем время.", { model: true, when: true, pre: slug }))) +
       sec("others", "Другие модели", modelCards(others));
   };
   /* 04.11.2026 (Михаил, вариант «В»): лента отзывов с Авито — на странице модели сначала отзывы о ней, потом остальные; на главной — все */
@@ -1207,7 +1207,7 @@
   /* 29.10: отдельная страница тест-драйва (согласовано в «Главной» 28.10, вопрос 10): Москва и МО, модели без Lynx X */
   P.testdrive = function () {
     var sh = C.showroom || {}, list = ["pro", "gt", "light", "lynx-trail"].filter /* 03.11 Михаил: у Surge V тест-драйва нет */(function (s) { return bySlug(s); });
-    return head("<span>Тест-драйв</span>", "Тест-драйв электромотоциклов в Москве и МО", "Тест-драйв Falcon GT, Falcon Pro, Falcon Lite и Falcon Lynx Trail — в шоуруме «Речников 21» в Москве, для жителей Москвы и Московской области. Только по предварительной записи: позвоните или оставьте заявку — подготовим нужную модель.") +
+    return head("<span>Тест-драйв</span>", "Тест-драйв электромотоциклов в Москве и МО", "Тест-драйв Falcon GT, Falcon Pro, Falcon Lite и Falcon Lynx Trail — в шоуруме «Речников 21» в Москве. Только по предварительной записи: позвоните или оставьте заявку — подготовим нужную модель.") +
       '<div class="wrap blog-hero-cta"><a class="btn btn--main" href="#visit">Записаться на тест-драйв</a><a class="btn btn--ghost" href="' + PHONE_HREF + '">Позвонить</a></div>' +
       sec("td-models", "Какие модели можно попробовать", modelCards(list)) +
       ((sh.testDriveRules && sh.testDriveRules.length) ? sec("td-rules", "Условия тест-драйва", '<ul class="td-rules">' + sh.testDriveRules.map(function (r) { return "<li>" + esc(r) + "</li>"; }).join("") + "</ul>") : "") +
