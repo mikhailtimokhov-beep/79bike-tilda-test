@@ -13,7 +13,9 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 // SITE=falcon → тот же код для проекта falcon-bike.ru (Тильда 12863191), счётчик 101107975 (решение F5 плана переноса Falcon).
 const FALCON = process.env.SITE === "falcon";
 const METRIKA_ID = FALCON ? 101107975 : 102316370; // 102316370 — «79bike.ru», 101107975 — «falcon-bike.ru»; чужой счётчик на сайт не ставим.
-const POLICY = FALCON ? "https://falcon-bike.ru/privacy" : "https://79bike.ru/policy";
+// 05.11 «Перенос», Контролёр-261105-02: финальная политика Falcon опубликована (LIVE) — cookie-баннер 79bike.ru тоже ведёт на неё
+let LEGAL_LIVE = false; try { LEGAL_LIVE = !!JSON.parse(readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "overrides", "falcon-legal-vars.json"), "utf8")).LIVE; } catch (e) {}
+const POLICY = FALCON || LEGAL_LIVE ? "https://falcon-bike.ru/privacy" : "https://79bike.ru/policy";
 // 101183217 — счётчик карточки «Falcon-bike — онлайн-организация» Яндекс Бизнеса (стоял в «Аналитике» Тильды без согласия) — тоже только после согласия.
 const OUT = FALCON ? "dist-native/falcon/tilda-head.html" : "dist-native/live/tilda-head.html";
 

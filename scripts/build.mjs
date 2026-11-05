@@ -63,8 +63,8 @@ const FL = JSON.parse(readFileSync(join(ROOT, "overrides", "falcon-links.json"),
 const reEsc = (x) => x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const NOW = (u) => FL[u] || u;
 const FALCON_TEXT = [ // подписи, которые меняются вместе с адресом (блога на старом Falcon нет — ведём в «Вопросы и ответы»)
-  ["https://falcon-bike.ru/blog", "Блог фирменного магазина 79BIKE", "Вопросы и ответы фирменного магазина 79BIKE"],
-  ["https://falcon-bike.ru/blog", "блоге фирменного магазина 79BIKE", "разделе «Вопросы и ответы» фирменного магазина 79BIKE"],
+  ["https://falcon-bike.ru/blog", "Блог официального магазина 79BIKE", "Вопросы и ответы официального магазина 79BIKE"],
+  ["https://falcon-bike.ru/blog", "блоге официального магазина 79BIKE", "разделе «Вопросы и ответы» официального магазина 79BIKE"],
   ["https://falcon-bike.ru/events", "Шоурум и тест-драйвы в Москве — falcon-bike.ru/events", "Шоурум и тест-драйвы в Москве — falcon-bike.ru/contacts"],
 ];
 const falconStats = { placeholders: 0, direct: 0 };
@@ -72,7 +72,7 @@ function falconLinks(s) {
   // 1) заглушки: href на прототип Claude + data-release-href → href = рабочий адрес сейчас
   s = s.replace(/href="https:\/\/claude\.ai\/artifact\/[^"]*"(\s+data-release-href="([^"]*)")/g, (_, rel, fut) => { falconStats.placeholders++; return `href="${NOW(fut)}"${rel}`; });
   // 1б) старый рабочий адрес, вписанный прямо в исходник, + data-release-href → href = NOW(будущий) (после переноса Falcon — новый адрес)
-  s = s.replace(/href="(https:\/\/(?:falcon-bike|y-volt)\.ru\/[^"]*)"(\s+data-release-href="(https:\/\/falcon-bike\.ru\/[^"]*)")/g, (m, cur, rel, fut) => { const n = NOW(fut); if (n === cur) return m; falconStats.placeholders++; return `href="${n}"${rel}`; });
+  s = s.replace(/href=(\\?)"(https:\/\/(?:falcon-bike|y-volt|79bike)\.ru\/[^"\\]*)\1"(\s+data-release-href=\1"(https:\/\/falcon-bike\.ru\/[^"\\]*)\1")/g, (m, bs, cur, rel, fut) => { const n = NOW(fut); if (n === cur) return m; falconStats.placeholders++; return `href=${bs}"${n}${bs}"${rel}`; }); // 05.11 «Перенос», Контролёр-261105-02: + 79bike.ru/policy и вариант внутри JS-строк (\")
   // 2) прямые адреса (вне data-release-href)
   for (const [fut, now] of Object.entries(FL)) {
     const re = new RegExp(`(?<!data-release-href=")${reEsc(fut)}(?![\\w-])`, "g");
