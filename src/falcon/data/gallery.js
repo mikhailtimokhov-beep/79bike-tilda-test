@@ -888,7 +888,7 @@ window.GALLERY = {
    "thumb": "assets/gallery/lynx-trail/16-s.webp",
    "w": 1600,
    "h": 1067,
-   "alt": "Lynx Trail — три расцветки в фирменном шоуруме 79BIKE",
+   "alt": "Lynx Trail — три расцветки в официальном шоуруме 79BIKE",
    "color": "",
    "tag": "лайфстайл",
    "source": "Оригинал с компьютера владельца: ПРОЕКТ 79BIKE/ФОТО и ВИДЕО/Lynx/Живые фото/WeChat Image_20260328130405.jpg (3880×2587, съёмка завода 28.03.2026)"
