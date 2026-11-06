@@ -2439,8 +2439,46 @@ b.addEventListener("click",function(){var r=matchMedia("(prefers-reduced-motion:
     P + ".t-site-search-dm__result__product{display:flex!important;align-items:flex-start!important;gap:0}" +
     P + ".t-site-search-dm__thubmnail{position:relative!important;overflow:hidden!important;flex:0 0 70px!important;width:70px!important;height:70px!important;min-height:70px!important;background:#fff;box-sizing:border-box}" +
     P + ".t-site-search-dm__result__product_img{position:static!important;inset:auto!important;display:block!important;width:100%!important;height:100%!important;min-height:68px;flex:1 1 auto}" +
-    P + ".t-site-search-dm__result__product_text{min-width:0!important;flex:1 1 auto;overflow-wrap:anywhere}";
+    P + ".t-site-search-dm__result__product_text{min-width:0!important;flex:1 1 auto;overflow-wrap:anywhere}" +
+    /* 06.11 (Михаил): галочки фильтра Тильды были чёрными на тёмном фоне — делаем видимыми */
+    P + ".t-store__filter__checkbox .t-checkbox__indicator{border-color:rgba(255,255,255,.75)!important;opacity:1!important}" +
+    P + ".t-store__filter__checkbox .t-checkbox:checked~.t-checkbox__indicator{background:#7658F5!important;border-color:#7658F5!important}" +
+    P + ".t-store__filter__checkbox .t-checkbox__indicator:after{border-color:#fff!important}" +
+    P + ".t-store__filter__checkbox,.t-store__filter__title,.t-store__filter__item-title,.t-store__filter__opts-mob-btn,.t-store__filter__opts-mob-btn *{color:#fff!important;opacity:1!important}" +
+    P + ".t-store__filter__opts-mob-btn svg,.t-store__filter__opts-mob-btn svg *{stroke:#fff!important}" +
+    P + ".t-store__filter__item-controls-wrap{background:#15151d!important;border-color:rgba(255,255,255,.12)!important;border-radius:14px}" +
+    P + ".b79-hide-opt{display:none!important}";
   document.head.appendChild(st);
+
+  /* 06.11 (Михаил): у запчастей Lynx вместо «Нет в наличии» — «Уточняйте наличие у менеджера» */
+  var SOLD = "Уточняйте наличие у менеджера";
+  function nameOf(el) { var c = el.closest(".js-product, .t-popup, .t-store__product-snippet, .t-store"); var n = c && c.querySelector(".js-store-prod-name, .js-product-name, .t-store__prod-popup__name"); return n ? n.textContent : ""; }
+  function fixSold() {
+    [].forEach.call(document.querySelectorAll(".js-store-prod-sold-out, .t-store__card__sold-out-msg"), function (el) {
+      if (el.textContent.trim() === SOLD) return;
+      if (/нет в наличии/i.test(el.textContent) && /lynx/i.test(nameOf(el))) el.textContent = SOLD;
+    });
+  }
+  /* 06.11 (Михаил): в фильтре «Модель» Lynx и Lynx Trail — одно и то же. Показываем одну галочку «Lynx Trail»,
+     она включает и выключает оба значения каталога Тильды; лишняя плашка «Lynx» в выбранных скрыта */
+  function inp(v) { return document.querySelector('.js-store-filter-opt-chb[data-filter-value="' + v + '"]'); }
+  function fixFilter() {
+    var a = inp("Lynx"), b = inp("Lynx Trail");
+    if (a && b) {
+      var la = a.closest("label"); if (la && !la.classList.contains("b79-hide-opt")) la.classList.add("b79-hide-opt");
+      /* скрытая «Lynx» всегда повторяет состояние «Lynx Trail» (и при снятии плашкой «×») */
+      if (a.checked !== b.checked && !fixFilter.busy) { fixFilter.busy = 1; setTimeout(function () { var x = inp("Lynx"), y = inp("Lynx Trail"); if (x && y && x.checked !== y.checked) x.click(); fixFilter.busy = 0; }, 0); }
+    }
+    [].forEach.call(document.querySelectorAll(".js-store-filter-chosen-item"), function (c) {
+      var hide = c.textContent.trim() === "Lynx" && !!inp("Lynx Trail");
+      if (c.classList.contains("b79-hide-opt") !== hide) c.classList.toggle("b79-hide-opt", hide);
+    });
+  }
+  var t = 0;
+  function tick() { clearTimeout(t); t = setTimeout(function () { fixSold(); fixFilter(); }, 120); }
+  tick();
+  new MutationObserver(tick).observe(document.body, { childList: true, subtree: true, characterData: true });
+  document.addEventListener("change", tick, true); document.addEventListener("click", tick, true);
 })();
 
 /* 03.11 (Михаил): разделы запчастей на Тильде (страница tstore) — если поиск в текущем разделе ничего не нашёл, сразу показываем совпадения из других разделов под заголовком «В других разделах» */
