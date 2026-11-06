@@ -2245,7 +2245,7 @@ window.SEO_LD = {
         },
         {
           "@type": "BlogPosting",
-          "headline": "Электромотоцикл для подростка и новичка: на что смотреть",
+          "headline": "Первый электромотоцикл для новичка: на что смотреть",
           "url": "https://falcon-bike.ru/blog/elektromotocikl-dlya-podrostka-i-novichka",
           "datePublished": "2026-10-24"
         },
