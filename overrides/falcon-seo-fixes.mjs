@@ -18,6 +18,8 @@ function setProp(o, name, value) {
 // правки объектов window.SEO_LD (после выполнения data/seo.js)
 export function fixSeoLd(L) {
   if (!L) return L;
+  // 06.11 «Перенос», SEO-261105-02 / SEO-261106-01 (ПРОВЕРЕНО Контролёр-261105-05): у /lynx-x (продажи с 2027) нет Product — BreadcrumbList, FAQPage, VideoObject остаются
+  if (Array.isArray(L["model:lynx-x"])) L["model:lynx-x"] = L["model:lynx-x"].filter((o) => !(o && o["@type"] === "Product"));
   for (const [key, list] of Object.entries(L)) {
     for (const o of list || []) {
       if (!o || typeof o !== "object") continue;
