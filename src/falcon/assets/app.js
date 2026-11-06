@@ -2427,6 +2427,22 @@ b.addEventListener("click",function(){var r=matchMedia("(prefers-reduced-motion:
   window.addEventListener("hashchange", go);
   if (document.readyState === "complete") setTimeout(go, 300); else window.addEventListener("load", function () { setTimeout(go, 300); });
 })();
+/* 06.11 (Михаил, тест раздела запчастей): на телефоне картинки в выпадающем списке поиска Тильды «уплывали» из строк.
+   У Тильды картинка — position:absolute внутри прокручиваемого списка; делаем её обычным блоком внутри рамки 70×70,
+   а сам список — отдельным слоем прокрутки, чтобы строки и картинки прокручивались вместе на всех ширинах. */
+(function () {
+  if (document.body.getAttribute("data-page") !== "tstore") return;
+  var P = 'body[data-page="tstore"] ', st = document.createElement("style");
+  st.textContent =
+    P + ".t-site-search-dm{-webkit-overflow-scrolling:touch;transform:translateZ(0);overscroll-behavior:contain;box-sizing:border-box}" +
+    P + ".t-site-search-dm__result{margin:12px!important}" +
+    P + ".t-site-search-dm__result__product{display:flex!important;align-items:flex-start!important;gap:0}" +
+    P + ".t-site-search-dm__thubmnail{position:relative!important;overflow:hidden!important;flex:0 0 70px!important;width:70px!important;height:70px!important;min-height:70px!important;background:#fff;box-sizing:border-box}" +
+    P + ".t-site-search-dm__result__product_img{position:static!important;inset:auto!important;display:block!important;width:100%!important;height:100%!important;min-height:68px;flex:1 1 auto}" +
+    P + ".t-site-search-dm__result__product_text{min-width:0!important;flex:1 1 auto;overflow-wrap:anywhere}";
+  document.head.appendChild(st);
+})();
+
 /* 03.11 (Михаил): разделы запчастей на Тильде (страница tstore) — если поиск в текущем разделе ничего не нашёл, сразу показываем совпадения из других разделов под заголовком «В других разделах» */
 (function () {
   if (document.body.getAttribute("data-page") !== "tstore") return;
