@@ -189,7 +189,12 @@
   /* ---------- дилеры: схема и список ---------- */
   .dealers{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(16px,3vw,32px);align-items:start;margin-top:clamp(32px,5vw,56px)}
   .dealers>.sec-head{grid-column:1/-1;margin-bottom:0}
-  @media (max-width:900px){.dealers{grid-template-columns:minmax(0,1fr)}}
+  /* 06.11 (Михаил «поправь вёрстку»): карта справа занимает две строки, список дилеров идёт сразу под текстом — без пустоты слева */
+  .dealers{grid-template-rows:auto auto 1fr}
+  .dealers>.dealers-note{grid-column:1;grid-row:2;margin:0}
+  .dealers>.map{grid-column:2;grid-row:2/4;position:sticky;top:96px}
+  .dealers>.dgroups{grid-column:1;grid-row:3}
+  @media (max-width:900px){.dealers{grid-template-columns:minmax(0,1fr);grid-template-rows:none}.dealers>.dealers-note,.dealers>.map,.dealers>.dgroups{grid-column:auto;grid-row:auto;position:static}}
   .map{margin:0;border-radius:var(--r-lg);background:var(--panel);overflow:hidden}
   .map svg{display:block;width:100%;height:auto}
   .map__dot{fill:#2A2B33}
