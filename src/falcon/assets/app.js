@@ -2434,7 +2434,10 @@ b.addEventListener("click",function(){var r=matchMedia("(prefers-reduced-motion:
   if (document.body.getAttribute("data-page") !== "tstore") return;
   var P = 'body[data-page="tstore"] ', st = document.createElement("style");
   st.textContent =
-    P + ".t-site-search-dm{-webkit-overflow-scrolling:touch;transform:translateZ(0);overscroll-behavior:contain;box-sizing:border-box}" +
+    /* 07.11: transform:translateZ(0) убран — на длинной странице каталога слой не помещался в память видеокарты, страница переставала отрисовываться (чёрный экран / вечная загрузка поиска на телефоне) */
+    P + ".t-site-search-dm{-webkit-overflow-scrolling:touch;overscroll-behavior:contain;box-sizing:border-box}" +
+    /* 07.11: окно «Результаты по запросу» Тильды — класс .t-width попадал под display:contents из склейки сборки, окно теряло белый фон и размеры */
+    P + ".t-site-search-popup.t-width{display:block!important}" +
     P + ".t-site-search-dm__result{margin:12px!important}" +
     P + ".t-site-search-dm__result__product{display:flex!important;align-items:flex-start!important;gap:0}" +
     P + ".t-site-search-dm__thubmnail{position:relative!important;overflow:hidden!important;flex:0 0 70px!important;width:70px!important;height:70px!important;min-height:70px!important;background:#fff;box-sizing:border-box}" +
