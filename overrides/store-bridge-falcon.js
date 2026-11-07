@@ -9,6 +9,8 @@
   // корзина и карточки Тильды — светлые, как на старом сайте (тёмная схема нового дизайна красила поля формы в тёмно-серый);
   // плавающий значок корзины Тильды скрыт — корзину открывает значок в шапке нового дизайна
   css.textContent = '.t706,.t706__cartwin,.t-popup,.t-store{color-scheme:light}body.fb-native .t706__carticon{display:none!important}' +
+    /* 07.11 Михаил (скриншот /accessories): строка поиска Тильды налезала на второй ряд кнопок разделов — отступ между ними */
+    '#b79-tilda-slot{margin-top:24px!important;clear:both}body[data-page="tstore"] .faq-nav{margin-bottom:8px}' +
     /* 03.11 Михаил (sites-change-log): поле «Промокод» в корзине не показываем */
     '.t706 .t-inputpromocode__wrapper,.t706 .t-input-group_pc{display:none!important}' +
     /* 03.11 Михаил, UX-01 п.3 «Убери вообще»: в нижней панели нет картинки, модели и цены — чат и главная кнопка */
