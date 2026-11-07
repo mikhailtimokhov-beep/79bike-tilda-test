@@ -138,7 +138,7 @@
   ],
   [
    "Копирование материалов сайта без письменного разрешения правообладателя не допускается.</p></div></footer>';",
-   "Копирование материалов сайта без письменного разрешения правообладателя не допускается.</p><p class=\"legal\" style=\"border:0;margin-top:0;padding-top:0\">Сайт — <a href=\"http://meliso.ru/\" target=\"_blank\" rel=\"noopener\" style=\"color:inherit\">Meliso</a></p></div></footer>';",
+   "Копирование материалов сайта без письменного разрешения правообладателя не допускается.</p><p class=\"legal legal--dev\" style=\"display:block;border:0;margin-top:0;padding-top:0\">Разработка сайта — агентство <a href=\"https://meliso.ru/\" target=\"_blank\" rel=\"noopener\" style=\"display:inline;padding:0;color:inherit;text-decoration:underline;text-underline-offset:2px\">Meliso</a></p></div></footer>';",
    "04.11 «Перенос», SEO-261104-01: подпись «Сайт — Meliso» в подвале (Михаил 04.11 11:14)"
   ]
  ]
