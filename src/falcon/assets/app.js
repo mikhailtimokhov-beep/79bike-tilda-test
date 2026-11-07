@@ -2484,6 +2484,49 @@ b.addEventListener("click",function(){var r=matchMedia("(prefers-reduced-motion:
   document.addEventListener("change", tick, true); document.addEventListener("click", tick, true);
 })();
 
+/* 07.11 (Михаил: «раздел запчастей долго грузится — ускорить»). На сайте в Тильде отключена оптимизация картинок
+   (data-tilda-imgoptimoff="yes"), поэтому карточки каталога и поиск грузили исходники: одна PNG — 2,2 МБ,
+   10 превью в поиске — 5 МБ, карточки — 7,4 МБ. Подменяем адрес на уменьшенную копию с сервера превью Тильды
+   (thb.tildacdn.com/…/-/resize/Nx/…) до загрузки картинки. Увеличение картинки по клику (зум) не трогаем. */
+(function () {
+  if (document.body.getAttribute("data-page") !== "tstore") return;
+  var RX = /https:\/\/static\.tildacdn\.com\/(stor[^\/"')\s]+)\/([^\/"')\s]+\.(?:png|jpe?g))/gi;
+  var CARD = window.innerWidth < 700 ? 420 : 640;
+  function width(el) {
+    if (el.closest(".t-site-search-dm")) return 160;
+    if (/option-checkmark/.test(el.className)) return 120;
+    if (el.closest(".t-popup, .t-store__prod-popup, .t-slds")) return 1200;
+    return CARD;
+  }
+  function conv(s, w) { return s.replace(RX, function (m, d, f) { return "https://thb.tildacdn.com/" + d + "/-/resize/" + w + "x/" + f; }); }
+  function fix(el) {
+    if (el.nodeType !== 1) return;
+    var o = el.getAttribute("data-original");
+    if (o && o.indexOf("static.tildacdn.com/stor") > -1) { var n = conv(o, width(el)); if (n !== o) el.setAttribute("data-original", n); }
+    var s = el.getAttribute("style");
+    if (s && s.indexOf("static.tildacdn.com/stor") > -1) { var ns = conv(s, width(el)); if (ns !== s) el.setAttribute("style", ns); }
+  }
+  function scan(root) {
+    if (root.nodeType !== 1) return;
+    fix(root);
+    var l = root.querySelectorAll('[data-original*="static.tildacdn.com/stor"],[style*="static.tildacdn.com/stor"]');
+    for (var i = 0; i < l.length; i++) fix(l[i]);
+  }
+  scan(document.body);
+  new MutationObserver(function (ms) {
+    for (var i = 0; i < ms.length; i++) {
+      var m = ms[i];
+      if (m.type === "attributes") fix(m.target);
+      else for (var j = 0; j < m.addedNodes.length; j++) scan(m.addedNodes[j]);
+    }
+  }).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["data-original", "style"] });
+  /* пока каталог не пришёл, держим под него место — блок заявки ниже больше не «прыгает» (CLS 0,20 в PageSpeed) */
+  var st = document.createElement("style");
+  st.textContent = 'body[data-page="tstore"] #b79-tilda-slot:not(:has(.js-product)){min-height:900px}';
+  document.head.appendChild(st);
+  setTimeout(function () { st.remove(); }, 8000); /* раздел без товаров не останется с пустым местом */
+})();
+
 /* 03.11 (Михаил): разделы запчастей на Тильде (страница tstore) — если поиск в текущем разделе ничего не нашёл, сразу показываем совпадения из других разделов под заголовком «В других разделах» */
 (function () {
   if (document.body.getAttribute("data-page") !== "tstore") return;
