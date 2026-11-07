@@ -78,6 +78,8 @@
 <script>
 (function () {
   var root = document.getElementById("mz"); if (!root || root.__mz) return; root.__mz = 1;
+  // 08.11 «Перенос»: страница собрана из сборки «Спасибо» — лендинг встаёт на место её <main> (иначе сверху виден блок «Спасибо!»)
+  (function () { var m = document.getElementById("main"); if (m && !m.contains(root)) { m.innerHTML = ""; m.appendChild(root); } })();
   var q = new URLSearchParams(location.search);
   var MODELS = { pro: "Falcon Pro", gt: "Falcon GT", lite: "Falcon Lite", "lynx-trail": "Lynx Trail", lynx: "Lynx Trail", "lynx-x": "Lynx X", "surge-v": "Y-Volt Surge V", surge: "Y-Volt Surge V" };
   var SEG = { buy: "Покупатель", rent: "Прокат", dealer: "Дилер" };
