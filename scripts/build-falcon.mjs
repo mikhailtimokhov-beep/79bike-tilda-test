@@ -161,6 +161,17 @@ function staticLd(key) {
   return list.map((o) => `<script type="application/ld+json" data-b79-ld>${JSON.stringify(fix(o)).replace(/</g, "\\u003c")}</script>`).join("\n");
 }
 
+// 08.11 «Перенос», SEO-261107-01 п. 3: BreadcrumbList на /accessories и разделах магазина (у них нет ключа в data/seo.js)
+function tstoreLd(file, attrs) {
+  if (attrs["data-page"] !== "tstore") return "";
+  const key = file.replace(/^tstore-|\.html$/g, "");
+  const items = [["Главная", "https://falcon-bike.ru/"], ["Запчасти и аксессуары", "https://falcon-bike.ru/accessories"]];
+  const cat = TSTORE.cats.find((c) => c[0] === key);
+  if (cat) items.push([cat[1], "https://falcon-bike.ru/" + key]);
+  const o = { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: items.map(([name, item], i) => ({ "@type": "ListItem", position: i + 1, name, item })) };
+  return `<script type="application/ld+json" data-b79-ld>${JSON.stringify(o).replace(/</g, "\\u003c")}</script>\n`;
+}
+
 function parse(file) {
   let html = readFileSync(join(SRC, file), "utf8");
   const last = html.lastIndexOf("<!doctype html>"); if (last > 0) html = html.slice(last); // у index.html обёртка артефакта
@@ -203,7 +214,7 @@ function assemble(file, pre, seoKey) {
   if (file === "credit.html") scripts.unshift(`<script data-src="tbank-links">window.B79_TBANK=${JSON.stringify(Object.fromEntries(Object.entries(JSON.parse(readFileSync(join(ROOT, "overrides", "falcon-tbank-links.json"), "utf8"))).filter(([k]) => k[0] !== "_")))};</script>`);
   return `<!-- Falcon Bike · ${file} · нативная сборка для T123. Не редактировать вручную: правки — в репозитории 79bike-tilda-test. -->\n` +
     `<script data-src="native-runtime">${rt}</script>\n` + HIDE_OLD + "\n" + leadSink + styles.join("\n") + "\n" +
-    (seoKey ? staticLd(seoKey) + "\n" : "") + `<div id="b79-root" hidden></div>\n` + markPre(markup(pre)) + "\n" + scripts.join("\n");
+    (seoKey ? staticLd(seoKey) + "\n" : "") + tstoreLd(file, attrs) + `<div id="b79-root" hidden></div>\n` + markPre(markup(pre)) + "\n" + scripts.join("\n");
 }
 
 /* 03.11 «Перенос»: финальные /privacy и /consent (LEGAL-01 v2 + LEGAL-02) из overrides/falcon-legal.js — только когда в falcon-legal-vars.json задан адрес оператора */

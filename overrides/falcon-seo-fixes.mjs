@@ -20,6 +20,19 @@ export function fixSeoLd(L) {
   if (!L) return L;
   // 06.11 «Перенос», SEO-261105-02 / SEO-261106-01 (ПРОВЕРЕНО Контролёр-261105-05): у /lynx-x (продажи с 2027) нет Product — BreadcrumbList, FAQPage, VideoObject остаются
   if (Array.isArray(L["model:lynx-x"])) L["model:lynx-x"] = L["model:lynx-x"].filter((o) => !(o && o["@type"] === "Product"));
+  // 08.11 «Перенос», SEO-261107-01 п. 4 / SEO-261108-01 п. 3: VideoObject ролика Lynx X (первый в списке видео страницы, content.js «lynx-x»)
+  if (Array.isArray(L["model:lynx-x"]) && !L["model:lynx-x"].some((o) => o && o["@type"] === "VideoObject")) L["model:lynx-x"].push({
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    name: "Falcon Lynx X — 26 кВт на бездорожье",
+    description: "Первые кадры Lynx X: прыжки, повороты и каменистый трейл. Старт продаж в России — 2027 год.",
+    thumbnailUrl: ["https://static.tildacdn.com/tila3762-6561-4330-b164-343032383030/fb0443.webp"],
+    uploadDate: "2026-11-01T12:00:00+03:00",
+    duration: "PT20S",
+    embedUrl: "https://kinescope.io/embed/vz5NznzgB8GvpnUSntuhTf",
+    url: "https://falcon-bike.ru/lynx-x",
+    publisher: { "@type": "Organization", name: "79BIKE", url: "https://falcon-bike.ru/" }
+  });
   for (const [key, list] of Object.entries(L)) {
     for (const o of list || []) {
       if (!o || typeof o !== "object") continue;

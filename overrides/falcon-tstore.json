@@ -56,57 +56,69 @@
   {
    "key": "",
    "path": "/accessories",
-   "pageid": "66874979"
+   "pageid": "346087709",
+   "pageid_old_2910": "66874979"
   },
   {
    "key": "kusov",
    "path": "/kusov",
-   "pageid": "118715796"
+   "pageid": "346101709",
+   "pageid_old_2910": "118715796"
   },
   {
    "key": "hodovaya_chast",
    "path": "/hodovaya_chast",
-   "pageid": "118716236"
+   "pageid": "346105809",
+   "pageid_old_2910": "118716236"
   },
   {
    "key": "dvigatel_i_pitanie",
    "path": "/dvigatel_i_pitanie",
-   "pageid": "118716546"
+   "pageid": "346109909",
+   "pageid_old_2910": "118716546"
   },
   {
    "key": "electronika",
    "path": "/electronika",
-   "pageid": "118716756"
+   "pageid": "346116509",
+   "pageid_old_2910": "118716756"
   },
   {
    "key": "sidenya_i_podnozki",
    "path": "/sidenya_i_podnozki",
-   "pageid": "118716926"
+   "pageid": "346123609",
+   "pageid_old_2910": "118716926"
   },
   {
    "key": "krilya",
    "path": "/krilya",
-   "pageid": "118717146"
+   "pageid": "346126409",
+   "pageid_old_2910": "118717146"
   },
   {
    "key": "tormosa",
    "path": "/tormosa",
-   "pageid": "118717276"
+   "pageid": "346129509",
+   "pageid_old_2910": "118717276"
   },
   {
    "key": "amortisaciya",
    "path": "/amortisaciya",
-   "pageid": "118717586"
+   "pageid": "346132309",
+   "pageid_old_2910": "118717586"
   },
   {
    "key": "kolesa",
    "path": "/kolesa",
-   "pageid": "118717716"
+   "pageid": "346135609",
+   "pageid_old_2910": "118717716"
   },
   {
    "key": "aksessuari",
    "path": "/aksessuari",
-   "pageid": "149503336"
+   "pageid": "346138709",
+   "pageid_old_2910": "149503336"
   }
- ]
+ ],
+ "_pageid_note": "08.11: pageid — рабочие страницы в новом дизайне (опубликованы с 29.10); pageid_old_2910 — старые резервы *-old-2910, НЕ публиковать (ошибка 07.11, Перенос-261107-07)"
 }
