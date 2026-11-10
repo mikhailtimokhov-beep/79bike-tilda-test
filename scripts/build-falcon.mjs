@@ -209,6 +209,13 @@ function assemble(file, pre, seoKey) {
   const leadSink = ""; // приёмник заявок — в общем подвале
   // /rassrochka: ссылки Т-Банка по срокам (данные страницы; читает правка bank() в app.js)
   if (attrs["data-page"] === "tstore") scripts.unshift(`<script data-src="tstore">window.B79_TSTORE=${JSON.stringify({ cats: TSTORE.cats })};</script>`);
+  // 10.11: сохранённая копия каталога на случай, когда сервер каталога Тильды недоступен посетителю (разбита на скрипты по ~30 КБ: предел блока Тильды)
+  if (attrs["data-page"] === "tstore" && existsSync(join(ROOT, "overrides", "falcon-store-fallback.json"))) {
+    const FB = JSON.parse(readFileSync(join(ROOT, "overrides", "falcon-store-fallback.json"), "utf8")).items.filter((r) => !attrs["data-sk"] || r[0] === attrs["data-sk"]);
+    let ch = [], size = 0; const flush = () => { if (ch.length) scripts.unshift(`<script data-src="store-fb">(window.B79_FB=window.B79_FB||[]).push(...${JSON.stringify(ch)});</script>`); ch = []; size = 0; };
+    for (const r of FB) { const l = JSON.stringify(r).length; if (size + l > 28000) flush(); ch.push(r); size += l; }
+    flush();
+  }
   // страница модели: какой товар магазина Тильды соответствует цвету (overrides/falcon-store-map.json)
   if (attrs["data-page"] === "model") { const SM = JSON.parse(readFileSync(join(ROOT, "overrides", "falcon-store-map.json"), "utf8")); if (SM[attrs["data-slug"]]) scripts.unshift(`<script data-src="store-map">window.B79_STORE_MAP=${JSON.stringify({ [attrs["data-slug"]]: SM[attrs["data-slug"]] })};</script>`); }
   if (file === "credit.html") scripts.unshift(`<script data-src="tbank-links">window.B79_TBANK=${JSON.stringify(Object.fromEntries(Object.entries(JSON.parse(readFileSync(join(ROOT, "overrides", "falcon-tbank-links.json"), "utf8"))).filter(([k]) => k[0] !== "_")))};</script>`);
