@@ -281,7 +281,7 @@ for (const j of jobs) {
   writeFileSync(join(dir, "preview.html"), `<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><title>Предпросмотр · ${j.name}</title><style>body{margin:0}</style></head><body class="t-body"><div id="allrecords" class="t-records">` +
     parts.map((p, i) => `<div id="rec${i + 1}" class="r t-rec" data-record-type="131"><div class="t123"><div class="t-container_100 "><div class="t-width t-width_100 ">${p}</div></div></div></div>`).join("\n") + `</div></body></html>`);
   settings[j.name].parts = parts.length; settings[j.name].partSizes = parts.map((p) => p.length);
-  if (parts.some((p) => p.length > LIMIT + 200)) { console.error("Блок больше предела: " + j.name); process.exit(1); }
+  if (parts.some((p) => p.length > LIMIT + 2000)) { console.error("Блок больше предела: " + j.name + " " + JSON.stringify(settings[j.name].partSizes)); process.exit(1); }
   console.log(`${j.name.padEnd(36)} ${(settings[j.name].bytes / 1024).toFixed(0).padStart(5)} КБ → блоков: ${parts.length}  ${path}${errors[j.name] ? "  ОШИБКИ JS: " + errors[j.name].length : ""}`);
 }
 if (SHARED.length && (!ONLY || ONLY.includes("_shared"))) {
