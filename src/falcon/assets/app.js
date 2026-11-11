@@ -784,7 +784,7 @@
       sec("", "", avitoStrip("")) +
       sec("", "Отзывы владельцев", '<div class="trio">' + Q.map(function (q) { var t = nb(q.text.replace(/79 ?bike pro/gi, "79BIKE Pro").replace(/79 ?bike/gi, "79BIKE").replace(/суррон/gi, "Sur-Ron").replace(/Талария/g, "Talaria")); return '<figure class="quote"><blockquote>' + esc(t) + '</blockquote><figcaption><span class="ava" aria-hidden="true">' + esc(q.name[0]) + "</span><span>" + esc(q.name) + '<span class="quote__model">' + esc(q.model ? "Владелец " + q.model : "Покупатель 79BIKE") + '</span></span></figcaption></figure>'; }).join("") + "</div>") +
       /* 10.11 (Михаил): под отзывами владельцев — кнопка «Оставить отзыв» (на Тильде открывает форму #popup:review) */
-      sec("", "", '<p class="owners__more"><a class="btn" href="#popup:review">Оставить отзыв</a></p>') +
+      sec("", "", '<p class="owners__more"><a class="btn btn--ghost" href="#popup:review">Оставить отзыв</a></p>') +
       sec("faq", "", '<div class="faq"><div class="faq__aside"><h2 class="h2">Вопрос-ответ</h2><p>Не нашли ответ? Позвоните, менеджер подскажет по модели, доставке и рассрочке.</p><span class="room__phone">' + PHONE + '</span><a class="btn btn--ghost" href="faq.html" style="align-self:flex-start">Все вопросы</a></div>' + faqHtml((C.faq || []).slice(0, 6), true) + "</div>") +
       sec("delivery", "Доставка и оплата", deliveryCards(), '<a class="btn btn--ghost" href="delivery.html">Подробнее</a>') +
       sec("order", "", orderForm("f-home", "Подберём байк и рассчитаем доставку", "Оставьте телефон и город. Менеджер поможет с выбором, посчитает доставку и расскажет о рассрочке.", "Получить консультацию", "Спасибо! Менеджер скоро свяжется.", { city: true }));
