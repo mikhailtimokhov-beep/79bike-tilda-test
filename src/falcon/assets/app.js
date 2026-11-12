@@ -1684,7 +1684,7 @@
   /* сравнение: выбор моделей (по умолчанию 3: последняя просмотренная и соседи по цене) */
   if ($("cmp-pick")) {
     var base = recall() || "pro", bi = SALE.indexOf(base); if (bi < 0) bi = 1;
-    var lo = Math.max(0, Math.min(bi - 1, SALE.length - 3)), on = SALE.slice(lo, lo + 3);
+    var lo = Math.max(0, Math.min(bi - 1, SALE.length - 3)), on = ORDER.slice(); /* 12.11 (Михаил): по умолчанию выбраны все модели */
     var apply = function () {
       document.querySelectorAll("#cmp-pick .chip").forEach(function (b) { b.setAttribute("aria-pressed", on.indexOf(b.dataset.k) >= 0); });
       document.querySelectorAll("#cmp-full [data-col]").forEach(function (c) { c.hidden = on.indexOf(c.dataset.col) < 0; });
