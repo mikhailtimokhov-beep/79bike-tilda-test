@@ -1043,7 +1043,7 @@ body:not(.reg-msk):not(.reg-near):not(.reg-rf) [data-reg]:not([data-reg~="msk"])
 .crumbs a{padding-left:6px;padding-right:6px;margin-left:-6px;margin-right:-6px}
 .post-toc a{display:inline-block;padding:3px 0}
 /* QA 25.10.2026: нижняя панель не закрывает поле/кнопку в фокусе (Tab, переход по якорю) */
-@media (max-width:1180px){html:has(body.dock-on){scroll-padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}}
+
 
 .form__when{grid-template-columns:1fr}
 
