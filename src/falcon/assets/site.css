@@ -65,7 +65,7 @@ button{font:inherit;color:inherit}
 .trust{list-style:none;margin:28px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .trust li{display:flex;flex-direction:column;gap:8px;padding:14px;border-radius:var(--r-md);background:var(--panel);font-size:13px;line-height:1.35;color:var(--soft)}
 .trust b{display:block;color:var(--fg);font-size:14px}
-.trust svg{width:26px;height:26px;color:var(--accent-2)}
+.trust svg{width:26px;height:26px;color:#3BE07F}
 
 /* витрина модели */
 .show{position:relative}
@@ -281,7 +281,7 @@ button{font:inherit;color:inherit}
 .step::before{content:counter(s);width:40px;height:40px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-weight:800}
 .callout{border-radius:var(--r-md);padding:20px 22px;background:#1A1430;box-shadow:inset 0 0 0 1px #3A2C74;display:flex;gap:14px;align-items:flex-start;color:var(--soft)}
 .callout b{color:var(--fg)}
-.callout svg{flex:none;width:24px;height:24px;color:var(--accent-2)}
+.callout svg{flex:none;width:24px;height:24px;color:#3BE07F}
 .list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px;color:var(--soft)}
 .list li{display:flex;gap:12px}
 .list li::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;background:var(--accent);margin-top:9px}
@@ -517,10 +517,10 @@ img.is-studio{filter:brightness(1.17) contrast(1.04)}
 .buy__links{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
 .buy__links a{display:inline-block;padding:9px 0;color:var(--accent-ink);font-weight:600;font-size:15px}
 .buy__trust{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--soft)}
-.buy__trust svg{flex:none;width:20px;height:20px;color:var(--accent-2)}
+.buy__trust svg{flex:none;width:20px;height:20px;color:#3BE07F}
 .strip{list-style:none;margin:16px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .strip li{display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:var(--r-md);background:var(--panel)}
-.strip svg{flex:none;width:22px;height:22px;color:var(--accent-2)}
+.strip svg{flex:none;width:22px;height:22px;color:#3BE07F}
 .strip a{text-decoration:none;font-weight:600;font-size:15px;padding:8px 0}
 @media (max-width:760px){.strip{grid-template-columns:minmax(0,1fr)}}
 .result__more{display:flex;flex-wrap:wrap;gap:4px 18px;margin-top:6px}
@@ -1185,8 +1185,8 @@ html:has(body[data-page="model"]){scroll-padding-top:128px}
 .fh__bul a{display:grid;gap:4px;text-decoration:none;color:var(--fg);min-width:0}
 .fh__bul b{font-size:13.5px;line-height:1.25;font-weight:700}
 .fh__bul small{font-size:12px;color:var(--mute);line-height:1.3}
-.fh__ic{width:38px;height:38px;border-radius:11px;background:var(--accent);display:grid;place-items:center;margin-bottom:4px}
-.fh__ic svg{width:20px;height:20px;color:#fff}
+.fh__ic{width:38px;height:38px;border-radius:11px;background:#23212B;box-shadow:inset 0 0 0 1px rgba(59,224,127,.28);display:grid;place-items:center;margin-bottom:4px}
+.fh__ic svg{width:20px;height:20px;color:#3BE07F}
 .fh__cta{display:grid;gap:10px}
 .fh__cta .btn{width:100%}
 .fh__models{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;min-width:0}
@@ -1932,7 +1932,10 @@ a[href^="mailto:"],a[href^="http"]{overflow-wrap:anywhere}
 .dock{display:none!important}
 .foot{padding-bottom:40px!important}
 .msgr{right:max(16px,env(safe-area-inset-right,0px))!important;bottom:calc(22px + env(safe-area-inset-bottom,0px))!important}
-.msgr__btn{display:grid!important;width:70px!important;height:70px!important;background:rgba(15,42,27,.62)!important;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.msgr__btn{display:grid!important;width:70px!important;height:70px!important;background:rgba(15,42,27,.45)!important;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .msgr__btn svg{width:32px!important;height:32px!important}
 .totop{bottom:calc(104px + env(safe-area-inset-bottom,0px))!important;right:max(24px,env(safe-area-inset-right,0px))!important}
 body[data-page="parts"] .pc__fab{bottom:calc(160px + env(safe-area-inset-bottom,0px))!important}
+
+/* 13.11 Михаил: виджет контактов прозрачнее; значок читаем на светлом фоне */
+.msgr__btn svg{filter:drop-shadow(0 0 2px rgba(0,0,0,.6))}

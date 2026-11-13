@@ -21,8 +21,8 @@
   var TAG = { gt: "Флагман для опытных", pro: "Новичку и любителю", "lynx-trail": "Для высоких райдеров", light: "Первый байк", "lynx-x": "Старт продаж в 2027", "surge-v": "Эндуро для профи" };
   var COVER = {};
   var PAINT = { black: "#1D1D23", white: "#F5F5F7", silver: "#B8BBC4", grey: "#7B7E88", violet: "#7658F5", yellow: "#F4C300", red: "#C8262F", gold: "#C49A3A" };
-  var ORDER = ["light", "pro", "lynx-trail", "gt", "surge-v", "lynx-x"];
-  var TABS = ["pro", "lynx-trail", "light", "gt", "surge-v"];
+  var ORDER = ["pro", "gt", "lynx-trail", "light", "surge-v", "lynx-x"]; /* 13.11 Михаил: Pro → GT → Lynx Trail → Lite → Y-Volt Surge V; Lynx X (скоро) в конце */
+  var TABS = ["pro", "gt", "lynx-trail", "light", "surge-v"];
   var TAB_LABEL = { pro: "Pro", light: "Lite", "lynx-trail": "Lynx", gt: "GT", "surge-v": "Surge V" };
   function TAG_LABEL_FIX(s) { return TAB_LABEL[s]; }
   function nb(t) { return String(t).replace(/Y-Volt/g, "Y\u2011Volt").replace(/Sur-Ron/g, "Sur\u2011Ron"); }
@@ -760,7 +760,7 @@
       [ICON.spring, "Подвеска Fastace с регулировкой", "Перевёрнутая вилка с ходом 200 мм. Сжатие и отскок настраиваются под ваш вес, манеру езды и покрытие.", "fork"],
       [ICON.reverse, "Задний ход", "Выкатить байк из гаража, сдать назад на узкой тропе или развернуться на склоне — без толкания руками.", "reverse"]];
     var Q = (C.ownerReviews && C.ownerReviews.items || []).slice(0, 3);
-    var FH = ["pro", "lynx-trail", "light", "gt", "surge-v", "lynx-x"];
+    var FH = ["pro", "gt", "lynx-trail", "light", "surge-v", "lynx-x"];
     /* 25.10 (Михаил): первый экран — вариант A «Сплит», как на 79bike.ru: ролик сверху, под ним пиктограммы, сетка моделей, кнопки */
     return '<section class="fh" aria-labelledby="h1"><div class="fh__media"><video class="fh__video" muted loop playsinline autoplay preload="metadata" poster="assets/hero/poster.jpg?v=2" aria-hidden="true"><source src="assets/hero/hero-m.mp4?v=4" type="video/mp4" media="(max-width: 900px)"><source src="assets/hero/hero.mp4?v=4" type="video/mp4"></video><button type="button" class="fh__snd" aria-pressed="false" aria-label="Включить звук"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="fh__snd-off" d="M16 9l5 6M21 9l-5 6"/><path class="fh__snd-on" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/></svg></button>' +
       '<div class="wrap fh__txt"><h1 id="h1">Электро&shy;мотоциклы 79BIKE</h1><p class="fh__lead">Falcon, Lynx и Y\u2011Volt с\u00a0гарантией и\u00a0доставкой по\u00a0РФ</p></div></div>' +
@@ -771,7 +771,6 @@
         '<div class="fh__cta"><a class="btn btn--main" href="podbor.html">Подобрать байк</a><a class="btn btn--ghost" href="compare.html">Сравнить модели</a></div></div>' +
       '<div class="fh__models">' + FH.map(function (s) { var m = bySlug(s); return '<a class="fh__m" href="' + FILE[s] + '">' + (m.status === "soon" ? '<i class="fh__new">2027</i>' : "") + '<img src="' + cutSrc(s) + '" alt="" width="1300" height="760" decoding="async"><b>' + esc(SHORT[s]) + '</b><small class="fh__kv">' + num(m.specs.powerKw) + ' кВт · ' + m.specs.capacityAh + ' Ач</small><span>' + (m.price ? money(m.price) : "Скоро") + "</span></a>"; }).join("") + '</div></div></div></section>' +
       sec("", "Технологии Falcon", '<div class="tech">' + T.map(function (t) { var FI = ["motor", "controller", "battery", "light", "dash", "fork", "reverse"].indexOf(t[3]); /* 29.10: 7 фото технологий — один спрайт (лимит файлов артефакта) */ var pic = t[3] ? '<figure class="tcard__pic"><i class="tcard__sp" role="img" aria-label="' + esc(t[1]) + '" style="background-position:0 ' + (FI * 100 / 6).toFixed(3) + '%"></i></figure>' : '<figure class="tcard__pic tcard__pic--rev">' + '<img src="' + cutSrc("pro") + '" alt="" loading="lazy">' + '<span class="tcard__r" aria-hidden="true"><b>R</b>' + ICON.chev + '</span></figure>'; return '<article class="card tcard">' + pic + '<div class="tcard__body"><span class="mark" aria-hidden="true">' + t[0] + '</span><h3 class="h3">' + t[1] + "</h3><p>" + t[2] + "</p></div></article>"; }).join("") + '<a class="card card--cta" href="podbor.html"><b>Не знаете, какой выбрать?</b><span class="btn btn--light" style="align-self:flex-start;min-height:44px">Подобрать за минуту</span></a></div>') +
-      sec("pick", "", pickerHtml()) +
       sec("models", "Выберите свой байк", modelCards(SALE) + '<ul class="strip"><li>' + ICON.truck + '<a href="delivery.html">Доставка байков по всей России</a></li><li>' + ICON.shield + '<a href="credit.html">Рассрочка Т-Банк или POSCREDIT</a></li><li>' + ICON.box + '<a href="delivery.html">Оплата при получении — Москва, до 600 км от Москвы и СПб</a></li></ul><p class="note">Falcon Lynx X, 26 кВт: старт продаж в 2027 году. <a href="lynx-x.html">Узнать первым</a></p>', '<p>Все модели стоят в шоуруме. Цены указаны со скидкой.</p>') +
       sec("clips", "Каждый байк за 30 секунд", advHome()) +
       sec("compare", "Сравнение моделей", cmpTable(SALE, false), '<a class="btn btn--ghost" href="compare.html">Полное сравнение</a>') +
@@ -822,7 +821,7 @@
   }
   function homeGallery() {
     /* порядок — решение Михаила 25.10: Pro, GT, Lynx, Lite, Y-Volt */
-    var list = ["gt", "pro", "lynx-trail", "light", "surge-v"].filter(function (s) { return galItems(s).length >= 3; });
+    var list = ["pro", "gt", "lynx-trail", "light", "surge-v"].filter(function (s) { return galItems(s).length >= 3; });
     if (!list.length) return "";
     return sec("gallery", "Фотогалерея", '<div class="ptabs" role="tablist" aria-label="Модель" id="hgal-tabs">' + list.map(function (s, i) { return '<button type="button" role="tab" id="hgal-t-' + s + '" aria-controls="hgal-' + s + '" aria-selected="' + (i === 0) + '" tabindex="' + (i === 0 ? 0 : -1) + '" data-k="' + s + '">' + esc(SHORT[s]) + "</button>"; }).join("") + "</div>" +
       list.map(function (s, i) { return '<div class="hgal" role="tabpanel" id="hgal-' + s + '" aria-labelledby="hgal-t-' + s + '"' + (i ? " hidden" : "") + ">" + galHtml(s, { max: 5, noChips: true }) + '<a class="pgal__link" href="' + FILE[s] + '#gallery">Все фото ' + esc(SHORT[s]) + " " + ICON.chev + "</a></div>"; }).join(""));
@@ -974,7 +973,7 @@
       sec("order", "", orderForm("f-service", "Нужен сервис?", "Оставьте телефон. Мастер перезвонит и подскажет, что делать.", "Связаться", "Спасибо! Мастер скоро позвонит."));
   };
   /* ---------- запчасти: каталог из data/parts.js (снято с falcon-bike.ru и y-volt.ru) ---------- */
-  var PC_TABS = [["", "Все Falcon и Lynx"], ["light"], ["pro"], ["gt"], ["lynx-trail"], ["surge-v", "Y\u2011Volt Surge V"]];
+  var PC_TABS = [["", "Все Falcon и Lynx"], ["pro"], ["gt"], ["lynx-trail"], ["light"], ["surge-v", "Y\u2011Volt Surge V"]];
   var PC_ICON = { electronika: "chip", electro: "chip", dvigatel_i_pitanie: "battery", amortisaciya: "spring", podveska: "spring", tormosa: "shield", aksessuari: "box", akss: "box" };
   var PC_STEP = 24;
   function pcSite(m) { var S = (window.PARTS || {}).sites || []; for (var i = 0; i < S.length; i++) if (m ? S[i].models.indexOf(m) >= 0 : S[i].key === "falcon") return S[i]; return S[0]; }
@@ -1210,7 +1209,7 @@
 
   /* 29.10: отдельная страница тест-драйва (согласовано в «Главной» 28.10, вопрос 10): Москва и МО, модели без Lynx X */
   P.testdrive = function () {
-    var sh = C.showroom || {}, list = ["pro", "gt", "light", "lynx-trail"].filter /* 03.11 Михаил: у Surge V тест-драйва нет */(function (s) { return bySlug(s); });
+    var sh = C.showroom || {}, list = ["pro", "gt", "lynx-trail", "light"].filter /* 03.11 Михаил: у Surge V тест-драйва нет */(function (s) { return bySlug(s); });
     return head("<span>Тест-драйв</span>", "Тест-драйв электромотоциклов в Москве и МО", "Тест-драйв Falcon GT, Falcon Pro, Falcon Lite и Falcon Lynx Trail — в шоуруме «Речников 21» в Москве. Только по предварительной записи: позвоните или оставьте заявку — подготовим нужную модель.") +
       '<div class="wrap blog-hero-cta"><a class="btn btn--main" href="#visit">Записаться на тест-драйв</a><a class="btn btn--ghost" href="' + PHONE_HREF + '">Позвонить</a></div>' +
       sec("td-models", "Какие модели можно попробовать", modelCards(list)) +
@@ -1274,7 +1273,7 @@
   };
   /* 26.10 (Михаил): блоки покупки в статье — B «подбор по росту» в середине (слот <div class="buy-slot" data-pos="mid"> в data/blog.js,
      без слота — перед средним H2), в конце — A «карточка модели из статьи» и компактная форма заявки. Цифры и цены — только из data/models.js. */
-  var BUY_FIT = ["lynx-trail", "surge-v", "gt", "pro", "light", "lynx-x"];
+  var BUY_FIT = ["pro", "gt", "lynx-trail", "light", "surge-v", "lynx-x"];
   function buyCard(s, mini) {
     var x = bySlug(s), sp = x.specs || {}, href = FILE[s] || x.page;
     var price = x.price ? "<b>" + money(x.price) + "</b>" + (x.oldPrice ? "<s>" + money(x.oldPrice) + "</s>" : "") : "<b>Старт продаж в " + esc(x.launch || "2027") + "</b>";
@@ -1378,7 +1377,7 @@
 
 
   /* ---------- 26.10 (Михаил): инструкции по эксплуатации (data/manuals.js; характеристики — из data/models.js) ---------- */
-  var MN_ORDER = ["gt", "pro", "lynx-trail", "light", "surge-v"]; // 26.10: + Surge V (по руководству Y-VOLT)
+  var MN_ORDER = ["pro", "gt", "lynx-trail", "light", "surge-v"]; // 26.10: + Surge V (по руководству Y-VOLT)
   function mnFile(s) { return "manual-" + s + ".html"; }
   function mnSwitch(cur) {
     return '<nav class="mn-models" aria-label="Инструкции к другим моделям">' + MN_ORDER.map(function (s) { return '<a class="chip" href="' + mnFile(s) + '"' + (s === cur ? ' aria-current="page"' : "") + ">" + esc(SHORT[s]) + "</a>"; }).join("") +
@@ -1812,6 +1811,7 @@ b.addEventListener("click",function(){var r=matchMedia("(prefers-reduced-motion:
       $("r-name").textContent = m.name; $("r-why").textContent = why; $("r-alt").innerHTML = alt; $("r-alt").hidden = !alt; $("h-minus").disabled = h <= H_MIN; $("h-plus").disabled = h >= H_MAX; if (window.__vizPodbor && !pick.fromViz) window.__vizPodbor.setH(h); $("r-price").textContent = money(m.price); $("r-go").href = FILE[k]; $("r-go").textContent = "Смотреть " + SHORT[k].replace("Falcon ", ""); window.__pick = k;
       $("exp-new").setAttribute("aria-pressed", exp === "new"); $("exp-pro").setAttribute("aria-pressed", exp === "pro");
     };
+    if (!$("h-minus")) return; /* 13.11: блок «Подбор за минуту» убран с главной */
     $("h-minus").onclick = function () { h = Math.max(H_MIN, h - 5); pick(); };
     $("h-plus").onclick = function () { h = Math.min(H_MAX, h + 5); pick(); };
     if ($("viz")) $("viz").addEventListener("viz:h", function (e) { h = e.detail; pick.fromViz = true; pick(); pick.fromViz = false; });
