@@ -1092,6 +1092,7 @@
     ], used = {}, out = [];
     G.forEach(function (g) { var items = all.filter(function (f) { if (used[f.q] || !g[2](f.q)) return false; used[f.q] = 1; return true; }); if (items.length) out.push([g[0], g[1], items]); });
     var rest = all.filter(function (f) { return !used[f.q]; }); if (rest.length) out[2] ? out[2][2] = out[2][2].concat(rest) : out.push(["more", "Другие вопросы", rest]);
+    var RANK = { buy: 0, use: 1, pick: 2, pro: 3, gt: 4, "lynx-trail": 5, light: 6, "surge-v": 7, "lynx-x": 8, more: 9 }; out.sort(function (a, b) { return RANK[a[0]] - RANK[b[0]]; }); /* 13.11 Михаил: Pro → GT → Lynx Trail → Lite → Surge V; распределение вопросов по группам прежнее */
     var nav = '<nav class="faq-nav" aria-label="Разделы">' + out.map(function (g) { return '<a class="chip" href="#faq-' + g[0] + '">' + esc(g[1]) + "</a>"; }).join("") + "</nav>";
     return sec("", "", nav) + out.map(function (g) { return sec("faq-" + g[0], g[1], faqHtml(g[2], true)); }).join("") +
       sec("", "", '<div class="callout">' + ICON.phone + '<p>Не нашли ответ? Позвоните <a href="' + PHONE_HREF + '">' + PHONE + '</a> или напишите в мессенджер — менеджер подскажет.</p></div>');
