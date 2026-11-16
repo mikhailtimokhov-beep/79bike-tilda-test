@@ -34,8 +34,9 @@ BAD_MAIL = (".png", ".jpg", ".webp", ".svg", "sentry", "example.", "wixpress", "
 
 def norm_phone(p):
     d = re.sub(r"\D", "", p or "")
-    if len(d) == 11 and d[0] in "78": return "+7" + d[1:]
-    if len(d) == 10: return "+7" + d
+    if len(d) == 11 and d[0] in "78": d = d[1:]
+    # реальные российские коды начинаются с 3/4/8/9; отсекаем мусор вида 0000000 / 2300000000
+    if len(d) == 10 and d[0] in "3489" and len(set(d[3:])) > 2: return "+7" + d
     return ""
 
 
@@ -47,12 +48,12 @@ def norm_site(u):
 
 # ---------- источники ----------
 def src_osm(city, _query):
-    q = f'[out:json][timeout:90];area["name"="{city}"]["place"~"city|town"]->.a;' \
+    q = f'[out:json][timeout:180];area["name"="{city}"]["place"~"city|town"]->.a;' \
         f'(area["name"="{city}"]["boundary"="administrative"];)->.b;(.a;.b;)->.a;({OSM_FILTER});out center tags;'
     for url in OVERPASS:
         try:
-            r = requests.post(url, data={"data": q}, impersonate="chrome", timeout=120)
-            if r.status_code == 200:
+            r = requests.post(url, data={"data": q}, impersonate="chrome", timeout=200)
+            if r.status_code == 200 and r.text.lstrip().startswith("{"):
                 break
         except Exception as e:
             print(f"  overpass {url}: {e}", file=sys.stderr)
@@ -129,7 +130,9 @@ def scan(html, lead):
         m = m.lower()
         if not m.endswith(BAD_MAIL) and not any(b in m for b in BAD_MAIL):
             lead["_emails"].add(m)
-    for m in PHONE_RE.findall(html):
+    # телефоны только из видимого текста и tel:-ссылок, а не из JS
+    vis = re.sub(r"<script.*?</script>|<style.*?</style>", " ", html, flags=re.S | re.I)
+    for m in PHONE_RE.findall(vis) + re.findall(r'tel:([+\d\s()-]{10,20})', html):
         if norm_phone(m): lead["_phones"].add(norm_phone(m))
     for k, rx in SOC.items():
         for m in re.findall(rx, html):
