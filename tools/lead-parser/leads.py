@@ -32,11 +32,18 @@ SOC = {"telegram": r"(?:t\.me|telegram\.me)/[\w+]{3,}", "whatsapp": r"(?:wa\.me|
 BAD_MAIL = (".png", ".jpg", ".webp", ".svg", "sentry", "example.", "wixpress", "domain.")
 
 
+# реальные географические коды РФ (Россвязь, ABC-нумерация) + мобильные 9xx + 800
+ABC = set("301 302 336 341 342 343 345 346 347 349 351 352 353 381 382 383 384 385 388 390 391 394 395 401 411 413 415 416 "
+          "421 423 424 426 427 471 472 473 474 475 481 482 483 484 485 486 487 491 492 493 494 495 496 498 499 811 812 813 814 "
+          "815 816 817 818 820 821 831 833 834 835 836 841 842 843 844 845 846 847 848 851 855 861 862 863 865 866 867 869 871 "
+          "872 873 877 878 879 800 365 369".split())
+
+
 def norm_phone(p):
     d = re.sub(r"\D", "", p or "")
     if len(d) == 11 and d[0] in "78": d = d[1:]
     # реальные российские коды начинаются с 3/4/8/9; отсекаем мусор вида 0000000 / 2300000000
-    if len(d) == 10 and d[0] in "3489" and len(set(d[3:])) > 2: return "+7" + d
+    if len(d) == 10 and (d[0] == "9" or d[:3] in ABC) and len(set(d[3:])) > 2: return "+7" + d
     return ""
 
 
@@ -187,7 +194,8 @@ FIELDS = ["score", "name", "city", "category", "address", "phone", "email", "tel
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--cities", required=True, help="через запятую")
+    ap.add_argument("--cities", default="", help="через запятую")
+    ap.add_argument("--seeds", help="CSV name,city,site,category — обогатить готовый список (например, из поисковой выдачи)")
     ap.add_argument("--source", default="osm", choices=["osm", "2gis", "all"])
     ap.add_argument("--query", default="мототехника", help="запрос для 2gis")
     ap.add_argument("--out", default="leads.csv")
@@ -197,6 +205,11 @@ def main():
 
     srcs = {"osm": [src_osm], "2gis": [src_2gis], "all": [src_osm, src_2gis]}[a.source]
     leads = []
+    if a.seeds:
+        with open(a.seeds, encoding="utf-8") as f:
+            for r in csv.DictReader(f):
+                leads.append(dict(source="search", city=r["city"], name=r["name"], category=r.get("category", ""),
+                                  address="", phone="", site=r["site"], email="", vk="", telegram="", rating=""))
     for city in [c.strip() for c in a.cities.split(",") if c.strip()]:
         for s in srcs:
             got = s(city, a.query)
