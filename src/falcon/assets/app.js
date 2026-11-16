@@ -1252,7 +1252,7 @@
   function blogCard(p) {
     return '<article class="bcard" data-rub="' + esc(p.rubric) + '"><a href="' + blogUrl(p) + '">' +
       '<span class="bcard__pic">' + (p.cover ? '<img src="' + esc(blogThumb(p)) + '" alt="' + esc(p.coverAlt || p.title) + '" loading="lazy" decoding="async">' : "") + "</span>" +
-      '<span class="bcard__body"><span class="bcard__meta">' + esc(blogRub(p.rubric).name) + " · " + p.readMin + " мин</span>" +
+      '<span class="bcard__body"><span class="bcard__meta">' + (p.date ? '<time datetime="' + esc(p.date) + '">' + blogDate(p.date) + "</time> · " : "") + esc(blogRub(p.rubric).name) + " · " + p.readMin + " мин</span>" +
       '<span class="bcard__t">' + esc(p.title) + '</span><span class="bcard__lead">' + esc(p.lead) + "</span></span></a></article>";
   }
   function blogRepLink() {
