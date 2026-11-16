@@ -104,6 +104,50 @@ def src_2gis(city, query):
     return out
 
 
+YM_QUERIES = ["мотосалон", "питбайки", "электромотоциклы", "электротранспорт магазин", "прокат эндуро",
+              "мотосервис", "квадроциклы", "веломагазин"]
+
+
+def _ym_orgs(obj, acc):
+    if isinstance(obj, dict):
+        if "phones" in obj and "title" in obj and "id" in obj:
+            acc.append(obj)
+        for v in obj.values(): _ym_orgs(v, acc)
+    elif isinstance(obj, list):
+        for v in obj: _ym_orgs(v, acc)
+
+
+def src_ymaps(city, query):
+    """Яндекс.Карты: публичная страница поиска, данные из встроенного JSON state-view (25 точек на запрос)."""
+    queries = [query] if query and query != "мототехника" else YM_QUERIES
+    out, seen = [], set()
+    for q in queries:
+        try:
+            r = requests.get("https://yandex.ru/maps/", params={"text": f"{q} {city}"}, impersonate="chrome",
+                             timeout=30, headers={"Accept-Language": "ru-RU,ru"})
+            m = re.search(r'<script type="application/json" class="state-view">(.*?)</script>', r.text, re.S)
+            if not m:
+                print(f"  ymaps «{q}»: нет данных (капча/блок)", file=sys.stderr); time.sleep(5); continue
+            acc = []; _ym_orgs(json.loads(m.group(1)), acc)
+        except Exception as e:
+            print(f"  ymaps «{q}»: {e}", file=sys.stderr); continue
+        for o in acc:
+            if o["id"] in seen: continue
+            seen.add(o["id"])
+            addr = o.get("fullAddress") or o.get("address", "")
+            if city.lower()[:5] not in addr.lower(): continue  # отсекаем точки из других городов
+            site = next((u for u in o.get("urls", []) if "yandex" not in u), "")
+            site = re.sub(r"[?&](yclid|utm_[a-z]+)=[^&]*", "", site).rstrip("?&")
+            rd = o.get("ratingData") or {}
+            out.append(dict(source="ymaps", city=city, name=o["title"],
+                            category=", ".join(c["name"] for c in o.get("categories", [])[:2]),
+                            address=addr, phone="; ".join(p.get("number", "") for p in o["phones"]),
+                            site=site, email="", vk="", telegram="",
+                            rating=f'{rd.get("ratingValue", 0):.1f} ({rd.get("reviewCount", 0)})' if rd else ""))
+        time.sleep(2)  # бережно: не чаще запроса в 2 сек
+    return out
+
+
 # ---------- обогащение сайта ----------
 _browser = None
 
@@ -196,14 +240,14 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--cities", default="", help="через запятую")
     ap.add_argument("--seeds", help="CSV name,city,site,category — обогатить готовый список (например, из поисковой выдачи)")
-    ap.add_argument("--source", default="osm", choices=["osm", "2gis", "all"])
+    ap.add_argument("--source", default="ymaps", choices=["ymaps", "osm", "2gis", "all"])
     ap.add_argument("--query", default="мототехника", help="запрос для 2gis")
     ap.add_argument("--out", default="leads.csv")
     ap.add_argument("--no-js", action="store_true", help="не запускать браузер для SPA-сайтов")
     ap.add_argument("--min-score", type=int, default=0)
     a = ap.parse_args()
 
-    srcs = {"osm": [src_osm], "2gis": [src_2gis], "all": [src_osm, src_2gis]}[a.source]
+    srcs = {"ymaps": [src_ymaps], "osm": [src_osm], "2gis": [src_2gis], "all": [src_ymaps, src_osm]}[a.source]
     leads = []
     if a.seeds:
         with open(a.seeds, encoding="utf-8") as f:
