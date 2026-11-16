@@ -271,7 +271,7 @@
   }
   function advHome() {
     var L = SALE.filter(function (s) { return ADV[s]; });
-    return '<div class="adv">' + L.map(function (s) { return '<figure class="adv__c">' + advVideo(s) + '<figcaption><a href="' + (FILE[s] || bySlug(s).page) + '"><b>' + esc(SHORT[s]) + "</b><span>" + esc(ADV_T[s]) + "</span></a></figcaption></figure>"; }).join("") + "</div>";
+    return '<div class="adv">' + L.map(function (s) { return '<figure class="adv__c">' + advVideo(s) + '<figcaption><a href="' + (FILE[s] || bySlug(s).page) + '"><i class="adv__tag">Видео · 30 секунд</i><b>' + esc(SHORT[s]) + "</b><span>" + esc(ADV_T[s]) + "</span></a></figcaption></figure>"; }).join("") + "</div>";
   }
   /* 03.11 (Михаил): видео-баннер вверху страницы модели — как первый экран главной, ролик только с этой моделью.
      d — ролик для компьютера (16:9), m — для телефона (если есть отдельный вертикальный), p — обложка. Источники: GT — reel hovanzon.79bike DfPOCEBBE5p (студийный ролик 79BIKE);
@@ -768,22 +768,19 @@
         '<li><a href="warranty.html"><span class="fh__ic">' + ICON.shield + '</span><b>Гарантия</b><small>Сервисная поддержка</small></a></li>' +
         '<li><a href="delivery.html"><span class="fh__ic">' + ICON.truck + '</span><b>Доставка по России</b><small>Все посылки застрахованы</small></a></li>' +
         '<li><a href="parts.html"><span class="fh__ic">' + ICON.box + '</span><b>Запчасти</b><small>В наличии, быстрая доставка</small></a></li></ul>' +
-        '<div class="fh__cta"><a class="btn btn--main" href="podbor.html">Подобрать байк</a><a class="btn btn--ghost" href="compare.html">Сравнить модели</a></div></div>' +
+        '<div class="fh__cta"><a class="btn btn--main" href="podbor.html">Подобрать байк по росту</a><a class="btn btn--ghost" href="compare.html">Сравнить модели</a></div></div>' +
       '<div class="fh__models">' + FH.map(function (s) { var m = bySlug(s); return '<a class="fh__m" href="' + FILE[s] + '">' + (m.status === "soon" ? '<i class="fh__new">2027</i>' : "") + '<img src="' + cutSrc(s) + '" alt="" width="1300" height="760" decoding="async"><b>' + esc(SHORT[s]) + '</b><small class="fh__kv">' + num(m.specs.powerKw) + ' кВт · ' + m.specs.capacityAh + ' Ач</small><span>' + (m.price ? money(m.price) : "Скоро") + "</span></a>"; }).join("") + '</div></div></div></section>' +
       sec("", "Технологии Falcon", '<div class="tech">' + T.map(function (t) { var FI = ["motor", "controller", "battery", "light", "dash", "fork", "reverse"].indexOf(t[3]); /* 29.10: 7 фото технологий — один спрайт (лимит файлов артефакта) */ var pic = t[3] ? '<figure class="tcard__pic"><i class="tcard__sp" role="img" aria-label="' + esc(t[1]) + '" style="background-position:0 ' + (FI * 100 / 6).toFixed(3) + '%"></i></figure>' : '<figure class="tcard__pic tcard__pic--rev">' + '<img src="' + cutSrc("pro") + '" alt="" loading="lazy">' + '<span class="tcard__r" aria-hidden="true"><b>R</b>' + ICON.chev + '</span></figure>'; return '<article class="card tcard">' + pic + '<div class="tcard__body"><span class="mark" aria-hidden="true">' + t[0] + '</span><h3 class="h3">' + t[1] + "</h3><p>" + t[2] + "</p></div></article>"; }).join("") + '<a class="card card--cta" href="podbor.html"><b>Не знаете, какой выбрать?</b><span class="btn btn--light" style="align-self:flex-start;min-height:44px">Подобрать за минуту</span></a></div>') +
       sec("models", "Выберите свой байк", modelCards(SALE) + '<ul class="strip"><li>' + ICON.truck + '<a href="delivery.html">Доставка байков по всей России</a></li><li>' + ICON.shield + '<a href="credit.html">Рассрочка Т-Банк или POSCREDIT</a></li><li>' + ICON.box + '<a href="delivery.html">Оплата при получении — Москва, до 600 км от Москвы и СПб</a></li></ul><p class="note">Falcon Lynx X, 26 кВт: старт продаж в 2027 году. <a href="lynx-x.html">Узнать первым</a></p>', '<p>Все модели стоят в шоуруме. Цены указаны со скидкой.</p>') +
-      sec("clips", "Каждый байк за 30 секунд", advHome()) +
+      sec("clips", "Видео: каждый байк за 30 секунд", advHome()) +
       sec("compare", "Сравнение моделей", cmpTable(SALE, false), '<a class="btn btn--ghost" href="compare.html">Полное сравнение</a>') +
       homeGallery() +
       homeEvents() +
       sec("room", "Шоурум в Москве", '<div class="room-home">' + showroomGallery() + '<div class="room-home__txt"><p class="room-home__lead">Приезжайте посмотреть байки вживую: все модели стоят в шоуруме, можно сесть, примерить посадку по росту и сравнить расцветки. Здесь же — большой выбор оригинальных запчастей.</p><ul class="room-home__list"><li>' + ICON.check + 'Примерка посадки под ваш рост</li><li>' + ICON.check + 'Тест-драйв в шоуруме в Москве</li><li>' + ICON.check + 'Большой выбор оригинальных запчастей</li></ul><p class="room__row metro-row"><span class="metro-m" aria-hidden="true">М</span>«Кленовый бульвар» · ул. Речников, 21</p><div class="visit-cta"><a class="btn btn--main" href="testdrive.html#visit">Записаться на визит</a><a class="btn btn--ghost" href="contacts.html#route">Как добраться</a></div></div></div>') +
       sec("video", "Видеообзоры", videoCards(homeVideos()), '<a class="btn btn--ghost" href="video.html">Все видеообзоры</a>') +
       homeBlog() +
-      /* 10.11 (Михаил): сначала отзывы с Авито (с фото), под ними — отзывы владельцев */
-      sec("", "", avitoStrip("")) +
-      sec("", "Отзывы владельцев", '<div class="trio">' + Q.map(function (q) { var t = nb(q.text.replace(/79 ?bike pro/gi, "79BIKE Pro").replace(/79 ?bike/gi, "79BIKE").replace(/суррон/gi, "Sur-Ron").replace(/Талария/g, "Talaria")); return '<figure class="quote"><blockquote>' + esc(t) + '</blockquote><figcaption><span class="ava" aria-hidden="true">' + esc(q.name[0]) + "</span><span>" + esc(q.name) + '<span class="quote__model">' + esc(q.model ? "Владелец " + q.model : "Покупатель 79BIKE") + '</span></span></figcaption></figure>'; }).join("") + "</div>") +
-      /* 10.11 (Михаил): под отзывами владельцев — кнопка «Оставить отзыв» (на Тильде открывает форму #popup:review) */
-      sec("", "", '<p class="owners__more"><a class="btn btn--ghost" href="#popup:review">Оставить отзыв</a></p>') +
+      /* 16.11 (Михаил): один блок отзывов — Авито с фото модели; остальные отзывы (без фото/старые) — в окне «Ещё отзывы» */
+      sec("", "", avitoHome()) +
       sec("faq", "", '<div class="faq"><div class="faq__aside"><h2 class="h2">Вопрос-ответ</h2><p>Не нашли ответ? Позвоните, менеджер подскажет по модели, доставке и рассрочке.</p><span class="room__phone">' + PHONE + '</span><a class="btn btn--ghost" href="faq.html" style="align-self:flex-start">Все вопросы</a></div>' + faqHtml((C.faq || []).slice(0, 6), true) + "</div>") +
       sec("delivery", "Доставка и оплата", deliveryCards(), '<a class="btn btn--ghost" href="delivery.html">Подробнее</a>') +
       sec("order", "", orderForm("f-home", "Подберём байк и рассчитаем доставку", "Оставьте телефон и город. Менеджер поможет с выбором, посчитает доставку и расскажет о рассрочке.", "Получить консультацию", "Спасибо! Менеджер скоро свяжется.", { city: true }));
@@ -873,6 +870,27 @@
         '<p class="av__text">' + esc(r.text).replace(/\n/g, "<br>") + "</p>" + (long ? '<button type="button" class="av__more">Читать полностью</button>' : "") +
         '<p class="av__foot"><b>' + esc(r.name) + "</b> <span>" + dt(r.date) + '</span> <a href="' + esc(A.profile) + '" target="_blank" rel="ugc nofollow noopener">Отзыв с Авито</a></p></article>';
     }).join("") + "</div></div>";
+  }
+  /* 16.11: карточка отзыва Авито (общая для ленты и окна) */
+  function avCard(r, A, noPh) {
+    var M = ["", "января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"], p = r.date.split(".");
+    var long = r.text.length > 230, mdl = SHORT[r.model] || "";
+    return '<article class="av__card' + (long ? " is-long" : "") + '"><div class="av__top"><span class="av__stars" aria-label="Оценка 5 из 5">★★★★★</span>' + (mdl ? '<span class="av__model">' + esc(mdl) + "</span>" : "") + "</div>" +
+      (!noPh && r.photos && r.photos.length ? '<div class="av__ph">' + r.photos.map(function (u) { return '<img src="' + esc(u) + '" alt="Фото покупателя: ' + esc(mdl || "байк") + '" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="88" height="88" onerror="this.remove()">'; }).join("") + "</div>" : "") +
+      '<p class="av__text">' + esc(r.text).replace(/\n/g, "<br>") + "</p>" + (long ? '<button type="button" class="av__more">Читать полностью</button>' : "") +
+      '<p class="av__foot"><b>' + esc(r.name) + "</b> <span>" + (+p[0]) + " " + M[+p[1]] + " " + p[2] + '</span> <a href="' + esc(A.profile) + '" target="_blank" rel="ugc nofollow noopener">Отзыв с Авито</a></p></article>';
+  }
+  /* 16.11 (Михаил): на главной — отзывы с Авито, где фото соответствует отзыву (байк той модели, о которой пишут); остальные — в окне. Фото Дмитрия и Рамиля в ленту не берём, пока не подтверждена модель на снимке */
+  var AV_UNSURE = ["Дмитрий22.08.2026", "Рамиль22.06.2026"];
+  function avitoHome() {
+    var A = C.avitoReviews; if (!A || !A.items || !A.items.length) return "";
+    var main = [], rest = [];
+    A.items.forEach(function (r) { (r.photos && r.photos.length && AV_UNSURE.indexOf(r.name + r.date) < 0 ? main : rest).push(r); });
+    var owners = (C.ownerReviews && C.ownerReviews.items || []);
+    var oHtml = owners.length ? '<h3 class="rvd__h3">Отзывы владельцев</h3><div class="trio">' + owners.map(function (q) { var t = nb(q.text.replace(/79 ?bike pro/gi, "79BIKE Pro").replace(/79 ?bike/gi, "79BIKE").replace(/суррон/gi, "Sur-Ron").replace(/Талария/g, "Talaria")); return '<figure class="quote"><blockquote>' + esc(t) + '</blockquote><figcaption><span class="ava" aria-hidden="true">' + esc(q.name[0]) + "</span><span>" + esc(q.name) + '<span class="quote__model">' + esc(q.model ? "Владелец " + q.model : "Покупатель 79BIKE") + "</span></span></figcaption></figure>"; }).join("") + "</div>" : "";
+    return '<div class="av"><div class="av__head"><div><h2 class="h2">Отзывы покупателей с Авито</h2><p class="av__sub"><span class="av__rate">★ ' + esc(A.rating) + '</span> · рейтинг профиля на Авито. Показываем отзывы с фото купленного байка, без правок.</p></div><div class="av__act"><button type="button" class="btn btn--ghost" data-rv-open aria-haspopup="dialog">Ещё отзывы</button><a class="btn btn--ghost" href="' + esc(A.profile) + '" target="_blank" rel="noopener nofollow">Наш профиль на Авито →</a><a class="btn btn--main" href="#popup:review">Оставить отзыв</a></div></div>' +
+      '<div class="av__row" tabindex="0" aria-label="Отзывы с Авито, листайте вбок">' + main.map(function (r) { return avCard(r, A); }).join("") + "</div></div>" +
+      '<dialog class="rvd" id="rvd" aria-labelledby="rvd-t"><div class="rvd__in"><div class="rvd__top"><h2 id="rvd-t" class="h2">Ещё отзывы</h2><button type="button" class="rvd__x" data-rv-close aria-label="Закрыть">×</button></div><h3 class="rvd__h3">Отзывы с Авито</h3><div class="rvd__grid">' + rest.map(function (r) { return avCard(r, A, true); }).join("") + "</div>" + oHtml + "</div></dialog>";
   }
   P.compare = function () {
     return head("<span>Сравнение</span>", "Сравнение моделей Falcon, Lynx и Y-Volt", "Все характеристики в одной таблице. По умолчанию показываем только различия.") +
@@ -1536,6 +1554,7 @@
     b.addEventListener("click", function (e) { e.stopPropagation(); var o = b.getAttribute("aria-expanded") !== "true"; closeDrops(b); b.setAttribute("aria-expanded", o); $(b.getAttribute("aria-controls")).hidden = !o; });
   });
   document.addEventListener("click", function (e) { if (!e.target.closest(".nav__item")) closeDrops(); });
+  document.addEventListener("click", function (e) { var o = e.target.closest("[data-rv-open]"); if (o) { var d = document.getElementById("rvd"); if (d && d.showModal) d.showModal(); return; } var c = e.target.closest("[data-rv-close]"); if (c) { c.closest("dialog").close(); return; } if (e.target.id === "rvd") e.target.close(); });
   document.addEventListener("click", function (e) { var b = e.target.closest(".av__more"); if (!b) return; var c = b.closest(".av__card"); c.classList.toggle("is-open"); b.textContent = c.classList.contains("is-open") ? "Свернуть" : "Читать полностью"; });
   document.addEventListener("keydown", function (e) {
     if (e.key !== "Escape") return;

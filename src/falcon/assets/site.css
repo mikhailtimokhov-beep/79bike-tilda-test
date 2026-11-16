@@ -1939,3 +1939,10 @@ body[data-page="parts"] .pc__fab{bottom:calc(160px + env(safe-area-inset-bottom,
 
 /* 13.11 Михаил: виджет контактов прозрачнее; значок читаем на светлом фоне */
 .msgr__btn svg{filter:drop-shadow(0 0 2px rgba(0,0,0,.6))}
+
+/* 16.11: главная — отзывы Авито, окно «Ещё отзывы», пометка «Видео» */
+.av__head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:14px}.av__head .h2{margin:0 0 6px}.av__sub{margin:0;color:var(--soft);font-size:14px;max-width:560px}.av__act{display:flex;gap:10px;flex-wrap:wrap}
+.rvd{border:0;padding:0;margin:auto;background:var(--panel);color:var(--fg);border-radius:var(--r-lg);width:min(1000px,calc(100% - 24px));max-height:calc(100dvh - 24px);overflow:auto}.rvd::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(4px)}
+.rvd__in{padding:22px}.rvd__top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.rvd__top .h2{margin:0}.rvd__x{width:44px;height:44px;border-radius:50%;border:0;background:var(--panel-2);color:#fff;font-size:26px;line-height:1;cursor:pointer}
+.rvd__h3{margin:18px 0 10px;font-size:17px}.rvd__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}.rvd__grid .av__card{flex:none}
+.adv__tag{align-self:flex-start;font-style:normal;font-size:11.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:var(--accent,#7B5CFF);color:#fff;border-radius:999px;padding:3px 10px;margin-bottom:4px}
