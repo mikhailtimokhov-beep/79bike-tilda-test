@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="fonts.css?v=1">
 <!-- Блог 79bike.ru: список статей (blog.html) и статья (blog.html?s=<slug>). Данные — blog.js (window.REP_BLOG), модели — ../assets/models.js.
      На боевом сайте: /blog и /blog/<slug> (в Tilda — отдельные страницы или Tilda Feeds). Стили — rep.css (блок «Блог» в конце). -->
-<link rel="stylesheet" href="rep.css?v=20261029a">
+<link rel="stylesheet" href="rep.css?v=20261119b">
 <style>
   .skip{position:absolute;left:12px;top:-60px;z-index:80;padding:12px 16px;border-radius:12px;background:#fff;color:#000;font-weight:700;text-decoration:none}
   .skip:focus{top:12px}
@@ -40,7 +40,7 @@
 
 </style>
 <script src="../assets/models.js?v=20261103a"></script>
-<script src="blog.js?v=20261103b"></script>
+<script src="blog.js?v=20261119a"></script>
 <script data-top>/* 26.10 (Михаил): переход на другую страницу — всегда с самого верха (если в ссылке нет #раздела) */
 try{if("scrollRestoration" in history)history.scrollRestoration="manual"}catch(e){}
 (function(){var moved=false,t0=Date.now();["wheel","touchstart","keydown","mousedown"].forEach(function(ev){window.addEventListener(ev,function(){moved=true},{passive:true,once:true})});
@@ -187,6 +187,16 @@ top();document.addEventListener("DOMContentLoaded",top);window.addEventListener(
     var c = document.head.querySelector('link[rel="canonical"]') || document.head.appendChild(Object.assign(document.createElement("link"), { rel: "canonical" })); c.href = o.canonical;
     (o.ld || []).forEach(function (x) { var t = document.createElement("script"); t.type = "application/ld+json"; t.text = JSON.stringify(x); document.head.appendChild(t); });
   }
+  /* 19.11: блок «Клуб и канал в Telegram» в конце статьи — данные REP_BLOG.tg (blog.js) */
+  function blogTg() {
+    var T = B.tg; if (!T) return "";
+    function col(c) {
+      return '<div class="card tgp__c"><p class="t-cap">' + esc(c.cap) + '</p><h3>' + esc(c.name) + '</h3><a class="tgp__u" href="' + esc(c.url) + '" target="_blank" rel="noopener">' + esc(c.short) + '</a><p>' + esc(c.intro) + '</p><ul class="tgp__l">' +
+        c.items.map(function (i) { return "<li><b>" + esc(i[0]) + "</b> — " + esc(i[1]) + "</li>"; }).join("") + '</ul><p class="tgp__n">' + esc(c.note) + '</p>' +
+        '<a class="btn btn--main" href="' + esc(c.url) + '" target="_blank" rel="noopener">' + esc(c.btn) + "</a></div>";
+    }
+    return sec("post-tg", esc(T.title), '<p class="tgp__lead">' + esc(T.lead) + '</p><div class="tgp">' + col(T.club) + col(T.channel) + '</div><p class="note">' + esc(T.foot) + "</p>");
+  }
   function crumbsLd(items) { return { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: items.map(function (x, i) { return { "@type": "ListItem", position: i + 1, name: x[0], item: x[1] }; }) }; }
   var org = { "@type": "Organization", name: "79BIKE в России", url: SITE + "/" };
 
@@ -210,6 +220,7 @@ top();document.addEventListener("DOMContentLoaded",top);window.addEventListener(
       (p.cover ? '<figure class="post-cover"><img src="' + esc(p.cover) + '" alt="' + esc(p.coverAlt || p.h1) + '" decoding="async"></figure>' : "") + "</div>" +
       '<section class="sec post-sec"><div class="wrap post">' + (toc.length > 2 ? '<nav class="post-toc" aria-label="Содержание"><details' + (wide ? " open" : "") + "><summary>Содержание</summary><ol>" + toc.map(function (t) { return '<li><a href="#' + t[0] + '">' + esc(t[1]) + "</a></li>"; }).join("") + "</ol></details></nav>" : "<div></div>") +
       '<article class="prose blog-body">' + body + "</article></div></section>" +
+      blogTg() +
       (p.faq && p.faq.length ? sec("post-faq", "Вопрос-ответ", '<div class="qa">' + p.faq.map(function (f, i) { return "<details" + (i ? "" : " open") + "><summary>" + esc(f.q) + '<span aria-hidden="true">' + PLUS + "</span></summary><p>" + esc(f.a) + "</p></details>"; }).join("") + "</div>") : "") +
       (ms.length ? sec("post-models", "Модели из статьи", '<div class="rbikes">' + ms.map(function (m) { return '<a class="rbike" href="' + SHOP + (LIVE[m.slug] || "") + '"><span class="rbike__pic"><img src="../assets/photos/cut/' + m.slug + '.webp" alt="' + esc(m.name) + ', вид сбоку" loading="lazy"></span><b>' + esc(m.name) + "</b><span>" + esc(m.tagline || "") + "</span><span>" + (m.price ? "Цена в магазине Falcon-Bike: " + money(m.price) : "Старт продаж — 2027") + '</span><span class="rbike__go">Купить на falcon-bike.ru →</span></a>'; }).join("") + "</div>") : "") +
       (rel.length ? sec("post-rel", "Читайте также", '<div class="bgrid">' + rel.slice(0, 3).map(card).join("") + "</div>", '<a class="btn btn--ghost" href="blog.html">Все статьи</a>') : "") +

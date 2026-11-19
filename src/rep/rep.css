@@ -934,3 +934,18 @@ html body .kpis small{font-size:.68em}
 .fnote{color:var(--mute,#9a9ba7);font-size:13px;margin-top:16px}
 
 .dealers-note{max-width:72ch;margin:0 0 clamp(16px,2.5vw,24px);color:var(--mute);line-height:1.5}
+
+/* 19.11: блок «Клуб и канал в Telegram» в конце статьи */
+.tgp__lead{max-width:760px;color:var(--soft);margin:0 0 20px;font-size:17px}
+.tgp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:stretch}
+.tgp__c{gap:12px;box-shadow:inset 0 0 0 1px var(--accent-line);background:var(--accent-bg)}
+.tgp__c h3{margin:0;font-size:clamp(20px,2vw,24px);font-weight:800;line-height:1.25}
+.tgp__c p{margin:0;color:var(--soft)}
+.tgp__l{margin:0;padding:0;list-style:none;display:grid;gap:8px;color:var(--soft);font-size:15px}
+.tgp__l b{color:var(--fg)}
+.tgp__c .tgp__n{color:var(--mute);font-size:15px}
+.tgp__c .btn{margin-top:auto;align-self:flex-start;text-align:center}
+@media (max-width:760px){.tgp{grid-template-columns:minmax(0,1fr)}.tgp__c .btn{align-self:stretch}}
+
+.tgp__c .tgp__u{color:var(--accent-ink);font-weight:600;font-size:15px;text-decoration:none;margin-top:-6px;align-self:flex-start}
+.tgp__c .tgp__u:hover{text-decoration:underline}

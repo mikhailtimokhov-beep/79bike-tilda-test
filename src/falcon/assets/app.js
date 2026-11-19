@@ -1354,6 +1354,16 @@
     });
     setTimeout(buyFitUpdate, 0);
   }
+  /* 19.11: блок «Клуб и канал в Telegram» в конце статьи — данные BLOG.tg (data/blog.js) */
+  function blogTg() {
+    var T = window.BLOG && window.BLOG.tg; if (!T) return "";
+    function col(c) {
+      return '<div class="card tgp__c"><p class="t-cap">' + esc(c.cap) + '</p><h3>' + esc(c.name) + '</h3><a class="tgp__u" href="' + esc(c.url) + '" target="_blank" rel="noopener">' + esc(c.short) + '</a><p>' + esc(c.intro) + '</p><ul class="tgp__l">' +
+        c.items.map(function (i) { return "<li><b>" + esc(i[0]) + "</b> — " + esc(i[1]) + "</li>"; }).join("") + '</ul><p class="tgp__n">' + esc(c.note) + '</p>' +
+        '<a class="btn btn--main" href="' + esc(c.url) + '" target="_blank" rel="noopener">' + esc(c.btn) + "</a></div>";
+    }
+    return sec("post-tg", esc(T.title), '<p class="tgp__lead">' + esc(T.lead) + '</p><div class="tgp">' + col(T.club) + col(T.channel) + '</div><p class="note">' + esc(T.foot) + "</p>");
+  }
   P.post = function () {
     var qs = new URLSearchParams(location.search), s = qs.get("s") || decodeURIComponent((location.hash || "").replace(/^#/, "")), p = blogPost(s);
     if (!p) {
@@ -1376,6 +1386,7 @@
       '<section class="sec post-sec"><div class="wrap post">' +
         (toc.length > 2 ? '<nav class="post-toc" aria-label="Содержание"><details' + (window.matchMedia && matchMedia("(min-width: 901px)").matches ? " open" : "") + '><summary>Содержание</summary><ol>' + toc.map(function (t) { return '<li><a href="#' + t[0] + '">' + esc(t[1]) + "</a></li>"; }).join("") + "</ol></details></nav>" : "<div></div>") +
         '<article class="prose blog-body">' + buyInsert(body, buyModels(p)) + "</article></div></section>" +
+      blogTg() +
       (faq.length ? sec("post-faq", "Вопрос-ответ", faqHtml(faq, true)) : "") +
       // 26.10: секция «Модели из статьи» (modelCards) убрана — её роль взял блок A в конце статьи (buyEnd)
       // 26.10: карточка «Поможем выбрать…» убрана (решение 77) — дублировала блок A и форму в конце статьи
