@@ -965,7 +965,6 @@ html body .kpis small{font-size:.68em}
 .cc__box span span,.cc__box a span{color:#b4b4be;font-size:14px}
 .cc__cur{background:rgba(118,88,245,.16)}
 .cc__cur>span{color:var(--accent-ink)!important}
-.top .btn+.cc{margin-left:0}
 .cc__cur>span{white-space:nowrap}
 /* место под переключатель (шапка от 1181 px ограничена 1440 px): номер телефона — иконкой «Позвонить», как уже было на 1181–1439;
    подпись «Официальное представительство» скрыта на 1181–1439 (раньше — на 1181–1299) */
@@ -996,3 +995,4 @@ html body .kpis small{font-size:.68em}
   html body .top .icon-btn{width:36px;min-width:36px}
   .cc__flag{width:22px;height:16px}
 }
+@media (min-width:1181px) and (max-width:1339px){.cc summary b,.cc__chev{display:none}.cc summary{padding:0 8px}.top .btn+.cc{margin-left:-14px}.top .wrap{column-gap:28px}}
