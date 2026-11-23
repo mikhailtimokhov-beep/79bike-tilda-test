@@ -949,3 +949,50 @@ html body .kpis small{font-size:.68em}
 
 .tgp__c .tgp__u{color:var(--accent-ink);font-weight:600;font-size:15px;text-decoration:none;margin-top:-6px;align-self:flex-start}
 .tgp__c .tgp__u:hover{text-decoration:underline}
+/* 23.11 переключатель стран (как на 79bikes.eu): RU текущая, ссылки на официальные сайты 79BIKE и дистрибьютора в ОАЭ */
+.cc{position:relative;flex:none;margin-left:auto}
+.cc summary{list-style:none;display:flex;align-items:center;gap:6px;height:40px;padding:0 10px;border-radius:999px;cursor:pointer;font-size:14px;font-weight:700;letter-spacing:.02em;color:#fff;user-select:none;-webkit-user-select:none}
+.cc summary::-webkit-details-marker{display:none}
+.cc summary:hover,.cc[open] summary{background:var(--panel-2)}
+.cc__flag{width:24px;height:18px;border-radius:3px;flex:none;box-shadow:0 0 0 1px rgba(255,255,255,.15)}
+.cc__chev{transition:transform .2s}
+.cc[open] .cc__chev{transform:rotate(180deg)}
+.cc__box{position:absolute;top:calc(100% + 10px);right:0;z-index:60;min-width:240px;padding:8px;border-radius:18px;background:#101015;box-shadow:0 24px 60px rgba(0,0,0,.6),inset 0 0 0 1px var(--line)}
+.cc__title{margin:6px 10px 6px;font-size:12px;color:#9a9aa5;text-transform:uppercase;letter-spacing:.06em}
+.cc__box a,.cc__cur{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:12px;text-decoration:none;color:#fff;font-size:15px}
+.cc__box a:hover,.cc__box a:focus-visible{background:var(--panel-2);color:var(--accent-ink)}
+.cc__box b{min-width:26px}
+.cc__box span span,.cc__box a span{color:#b4b4be;font-size:14px}
+.cc__cur{background:rgba(118,88,245,.16)}
+.cc__cur>span{color:var(--accent-ink)!important}
+.top .btn+.cc{margin-left:0}
+.cc__cur>span{white-space:nowrap}
+/* место под переключатель (шапка от 1181 px ограничена 1440 px): номер телефона — иконкой «Позвонить», как уже было на 1181–1439;
+   подпись «Официальное представительство» скрыта на 1181–1439 (раньше — на 1181–1299) */
+@media (min-width:1181px){.top__phone{display:none}.top .icon-btn[href^="tel"]{display:inline-flex}.top .btn+.cc{margin-left:-12px}}
+@media (min-width:1181px) and (max-width:1439px){.top .rlogo__plate{display:none}}
+@media (max-width:1180px){.cc summary{padding:0 8px;gap:5px}.cc__chev{display:none}}
+@media (max-width:480px){
+  .cc summary b{display:none}.cc summary{padding:0 8px}
+  html body .top .wrap{gap:10px}
+  html body .top .rlogo{gap:8px}
+  html body .top .rlogo img{width:92px;height:auto}
+  html body .top .rlogo__plate{padding-left:8px;font-size:10px;letter-spacing:-.01em}
+  html body .top .icon-btn{width:40px;min-width:40px}
+  .cc__box{right:-88px}
+}
+@media (max-width:400px){
+  html body .top .wrap{gap:6px}
+  html body .top .rlogo img{width:80px}
+  html body .top .rlogo__plate{padding-left:7px;font-size:9px}
+  html body .top .icon-btn{width:38px;min-width:38px}
+  .cc summary{padding:0 5px;height:38px}
+  .cc__box{right:-76px}
+}
+@media (max-width:350px){
+  html body .top .rlogo{gap:6px}
+  html body .top .rlogo img{width:70px}
+  html body .top .rlogo__plate{padding-left:6px;font-size:8px;letter-spacing:-.02em}
+  html body .top .icon-btn{width:36px;min-width:36px}
+  .cc__flag{width:22px;height:16px}
+}
