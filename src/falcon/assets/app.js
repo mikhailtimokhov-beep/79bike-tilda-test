@@ -132,6 +132,7 @@
   function footer() {
     return '<footer class="foot"><div class="wrap"><h2 class="vh">Разделы сайта и контакты</h2><div class="foot__grid">' +
       '<div class="foot__brand" style="display:flex;flex-direction:column;gap:14px"><img class="logo-foot" src="assets/logo/falcon-bike-logo.svg" alt="Falcon Bike — официальный магазин 79BIKE в России" width="545" height="136"><p style="color:var(--mute);font-size:14px;max-width:34ch">' + "Официальный магазин 79BIKE в России: продажа, гарантия, сервис и запчасти для Falcon, Lynx и Y\u2011Volt. Доставка по всей стране." + '</p>' +
+      '<p style="color:var(--mute);font-size:14px;max-width:34ch">Falcon-Bike — официальный магазин бренда 79BIKE в России. Официальное представительство 79BIKE — <a href="https://79bike.ru/" target="_blank" rel="noopener">79bike.ru</a>, там же список официальных дилеров по городам.</p>' +
       footSoc() + '</div>' +
       '<div><h3>Модели</h3><ul>' + ORDER.map(function (s) { return '<li><a href="' + FILE[s] + '">' + esc(nb(bySlug(s).name)) + "</a></li>"; }).join("") + '<li><a href="compare.html">Сравнение моделей</a></li></ul></div>' +
       '<div><h3>Клиентам</h3><ul>' + FOOT_CLIENTS.map(function (c) { return '<li><a href="' + c[0] + '">' + c[1] + "</a></li>"; }).join("") + '</ul></div>' +
