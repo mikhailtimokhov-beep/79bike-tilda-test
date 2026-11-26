@@ -35,7 +35,7 @@ window.MODELS = [
       voltage: 72,
       capacityAh: 40,
       rangeKm: "60–120",
-      seatMm: 830,
+      seatMm: 820,
       wheelbaseMm: 1270,
       clearanceMm: 270,
       handlebarMm: 780,
@@ -79,7 +79,7 @@ window.MODELS = [
       voltage: 72,
       capacityAh: 35,
       rangeKm: "60–120",
-      seatMm: 820,               // как на схеме размеров (ответ Михаила 19.10.2026)
+      seatMm: 830,               // 26.11.2026: по сайту производителя 79bike.com (Pro 830, GT 820); схема размеров показывает 820
       wheelbaseMm: 1260,
       clearanceMm: 270,
       handlebarMm: 780,
@@ -172,7 +172,7 @@ window.MODELS = [
       voltage: 72,
       capacityAh: 30,
       rangeKm: "60–80",
-      seatMm: 820,
+      seatMm: 830,
       wheelbaseMm: 1240,
       clearanceMm: 270,
       handlebarMm: 780,

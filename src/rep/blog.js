@@ -397,9 +397,9 @@ window.REP_BLOG = {
 <table>
   <thead><tr><th>Модель</th><th>Высота сиденья</th><th>Колёсная база</th><th>Клиренс</th><th>Вес</th></tr></thead>
   <tbody>
-    <tr><td>Falcon Lite</td><td>820 мм</td><td>1240 мм</td><td>270 мм</td><td>63 кг</td></tr>
-    <tr><td>Falcon Pro</td><td>820 мм</td><td>1260 мм</td><td>270 мм</td><td>59 кг</td></tr>
-    <tr><td>Falcon GT</td><td>830 мм</td><td>1270 мм</td><td>270 мм</td><td>69 кг</td></tr>
+    <tr><td>Falcon Lite</td><td>830 мм</td><td>1240 мм</td><td>270 мм</td><td>63 кг</td></tr>
+    <tr><td>Falcon Pro</td><td>830 мм</td><td>1260 мм</td><td>270 мм</td><td>59 кг</td></tr>
+    <tr><td>Falcon GT</td><td>820 мм</td><td>1270 мм</td><td>270 мм</td><td>69 кг</td></tr>
     <tr><td>Falcon Lynx Trail</td><td>855 мм</td><td>1270 мм</td><td>270 мм</td><td>69 кг</td></tr>
     <tr><td>Falcon Lynx X</td><td>870 мм</td><td>1320 мм</td><td>280 мм</td><td>83 кг с батареей</td></tr>
     <tr><td>Y-Volt Surge V</td><td>900 мм</td><td>1360 мм</td><td>300 мм</td><td>95 кг</td></tr>
