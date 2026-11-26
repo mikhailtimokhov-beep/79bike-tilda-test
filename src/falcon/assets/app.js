@@ -304,7 +304,7 @@
     return '<nav class="mnav" id="mnav" aria-label="Разделы страницы"><div class="wrap mnav__in">' + L.map(function (x) { return '<a href="#' + x[0] + '" data-sec="' + x[0] + '">' + x[1] + "</a>"; }).join("") + '<a class="mnav__cta" href="#order" data-sec="order">' + (soon ? "Узнать о старте" : "Заказать") + "</a></div></nav>";
   }
   /* 26.10 (правки 4, 33): контакт + способ связи. Позвонить/WhatsApp — маска телефона; Telegram/VK Мессенджер — телефон или @username */
-  var HOW = ["Позвонить", "WhatsApp", "Telegram", "VK Мессенджер"];
+  var HOW = ["Позвонить", "WhatsApp", "Telegram"];
   function contactHtml(id, first) {
     var opts = first ? [first].concat(HOW.filter(function (x) { return x !== first; })) : HOW;
     return '<label for="' + id + '-ph" data-contact-l>Телефон</label><input id="' + id + '-ph" name="tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" maxlength="40" data-contact>' +
