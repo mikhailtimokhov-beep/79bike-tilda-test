@@ -41,7 +41,7 @@ window.CONTENT = {
     },
     reviews: {
       title: "Видеообзоры электромотоциклов Falcon | 79BIKE",
-      description: "Обзоры и тест-драйвы Falcon GT, Pro, Lynx Trail, Lite, Lynx X и Y-Volt Surge V. Смотрите байки в деле на бездорожье и трассе."
+      description: "Видеообзоры Falcon GT, Pro, Lynx Trail, Lite, Lynx X и Y-Volt Surge V. Смотрите байки в деле на бездорожье и трассе."
     }
   },
 

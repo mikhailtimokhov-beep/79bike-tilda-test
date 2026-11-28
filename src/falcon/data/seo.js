@@ -104,7 +104,7 @@ window.SEO = {
   },
   "video": {
     "title": "Видеообзоры электромотоциклов Falcon, Lynx и Y-Volt | 79BIKE",
-    "description": "Обзоры и тест-драйвы Falcon GT, Pro, Lynx Trail, Lite, Lynx X и Y-Volt Surge V на канале 79BIKE в RUTUBE. Смотрите байки на бездорожье и трассе.",
+    "description": "Видеообзоры Falcon GT, Pro, Lynx Trail, Lite, Lynx X и Y-Volt Surge V на канале 79BIKE в RUTUBE. Смотрите байки на бездорожье и трассе.",
     "ogTitle": "Видеообзоры Falcon, Lynx и Y-Volt",
     "ogDescription": "Обзоры и тест-драйвы электромотоциклов Falcon, Lynx и Y-Volt на канале 79BIKE в RUTUBE.",
     "ogImage": "assets/og/brand.jpg",

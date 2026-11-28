@@ -290,7 +290,9 @@
 
     // «ориентир, а не правило» — только в heightNote (из content.js); вторая фраза — без повтора
     var heightNote = get(["ui", "height", "note"], "Это ориентир, а не правило: посадка зависит ещё и от длины ног и опыта.");
-    var tryLive = get(["ui", "height", "tryLive"], "Лучше примерить в шоуруме — тест-драйв по записи.");
+    var NO_TD = get(["showroom", "noTestDrive"], null);
+    var noTd = !!(NO_TD && NO_TD.models && NO_TD.models.indexOf(slug) !== -1);
+    var tryLive = noTd ? NO_TD.tryLive : get(["ui", "height", "tryLive"], "Лучше примерить в шоуруме — тест-драйв по записи.");
     var heightPanel = SEAT == null
       ? '<div class="notice notice--info">' + icon("ruler") +
           '<p class="notice__title">Высота сиденья ' + esc(NAME) + " уточняется" + UI.flagHtml(["Нет в таблице характеристик"]) + "</p>" +
@@ -456,9 +458,9 @@
       "</div>" +
       /* шоурум и гарантия — CONTENT.showroom / CONTENT.warranty */
       '<div class="mp-pay mp-pay--extra">' +
-        '<div class="mp-pay__col mp-pay__card"><h3>' + icon("pin") + esc(SR.title || "Шоурум и тест-драйв в Москве") + "</h3>" +
+        '<div class="mp-pay__col mp-pay__card"><h3>' + icon("pin") + esc((noTd && NO_TD.title) || SR.title || "Шоурум и тест-драйв в Москве") + "</h3>" +
           '<p class="mp-pay__lead">' + esc(SR.address || "Москва, бизнес-пространство «Речников 21»") + "</p>" +
-          "<p>" + esc(SR.text || "Визит строго по предварительной договорённости. Тест-драйв — по записи.") + "</p>" +
+          "<p>" + esc((noTd && NO_TD.text) || SR.text || "Визит строго по предварительной договорённости. Тест-драйв — по записи.") + "</p>" +
           (SR.hours ? '<p class="mp-pay__meta">' + esc(SR.hours) + "</p>" : "") + "</div>" +
         '<div class="mp-pay__col mp-pay__card"><h3>' + icon("shield") + esc(WR.title || "Гарантия 6 месяцев") + "</h3>" +
           "<p>" + esc(WR.text || "На контроллер, батарею, двигатель и раму.") + "</p>" +
